@@ -9,8 +9,57 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "reports",
+    "title": "Reports",
     "section": "",
     "text": "Annual Reports of the wikihistories project."
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "Reports",
+    "section": "",
+    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
+  },
+  {
+    "objectID": "who-counts.html",
+    "href": "who-counts.html",
+    "title": "Who Counts as Australian?",
+    "section": "",
+    "text": "Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia’s population? These questions are easy to ask but hard to answer, because of Wikipedia’s representational multiplicity. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.\nIn this report, we consider several ways that Australians are represented in Wikipedia and Wikidata. We focus on four main modes of representation:\nIn Conclusion: beyond bias, we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of ‘systemic bias’, we suggest that Wikipedians draw attention to the representational multiplicity of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of ‘Australianness’ across the Wikiverse."
+  },
+  {
+    "objectID": "who-counts.html#textual-representation",
+    "href": "who-counts.html#textual-representation",
+    "title": "Who Counts as Australian?",
+    "section": "Textual representation",
+    "text": "Textual representation\nThe first answer Wikipedia gives to the question ‘Who counts as Australian?’ is: any ‘individual’ with a ‘residential, legal, historical or ethno-cultural’ connection to ‘the country of Australia’.1 At the time of writing, the ‘Australians’ comprise an estimated 26,468,200 residents of Australia, and a diaspora of 577,255 Australians overseas.\nTODO: Do we need this section? Where should we go with it?"
+  },
+  {
+    "objectID": "who-counts.html#the-category-system",
+    "href": "who-counts.html#the-category-system",
+    "title": "Who Counts as Australian?",
+    "section": "The category system",
+    "text": "The category system\nTODO"
+  },
+  {
+    "objectID": "who-counts.html#the-search-interface",
+    "href": "who-counts.html#the-search-interface",
+    "title": "Who Counts as Australian?",
+    "section": "The search interface",
+    "text": "The search interface\nTODO"
+  },
+  {
+    "objectID": "who-counts.html#wikidata-properties",
+    "href": "who-counts.html#wikidata-properties",
+    "title": "Who Counts as Australian?",
+    "section": "Wikidata properties",
+    "text": "Wikidata properties\nTODO"
+  },
+  {
+    "objectID": "who-counts.html#conclusion-beyond-bias",
+    "href": "who-counts.html#conclusion-beyond-bias",
+    "title": "Who Counts as Australian?",
+    "section": "Conclusion: beyond bias",
+    "text": "Conclusion: beyond bias\nTODO"
   }
 ]
