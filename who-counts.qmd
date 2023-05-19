@@ -7,6 +7,8 @@ author:
 
 ```{r message=FALSE, include=FALSE}
 devtools::install_github("wikihistories/wikkitidy")
+library(tidyverse)
+data_dir <- "data/who-counts"
 ```
 
 Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
@@ -31,9 +33,32 @@ TODO: Do we need this section? Where should we go with it?
 ## The category system
 
 ```{r include=FALSE}
-
+get_aussies_category_tree <- function(use_cache = T) {
+  data_files <- list.files(data_dir)
+  aussie_cat_files <- stringr::str_detect(data_files, "australian-people-categories")
+  if (!use_cache || length(aussie_cat_files) == 0) {
+    # This takes a long time (> 1 hour)
+    australians <- wikkitidy::build_category_tree("Category:Australian people")
+    readr::write_rds(
+      australians,
+      file.path(
+        data_dir,
+        glue::glue("australian-people-categories-{as.integer(Sys.time())}.rds")
+        ),
+      compress = "gz"
+    )
+  } else {
+    latest_file <- sort(data_files[aussie_cat_files], decreasing = TRUE)[1]
+    australians <- readr::read_rds(file = file.path(data_dir, latest_file))
+  }
+  australians
+}
+australians <- get_aussies_category_tree()
 ```
 
+How many Australian biographies have been included in Wikipedia over time?
+
+TODO
 
 ## The search interface
 
