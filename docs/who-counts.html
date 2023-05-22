@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -26,7 +26,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -171,6 +170,34 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="the-category-system" class="level2">
 <h2 class="anchored" data-anchor-id="the-category-system">The category system</h2>
+<div class="cell">
+
+</div>
+<p>The second answer Wikipedia gives to the question, ‘Who counts as Australian?’ is: everyone who falls under <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian people</a>. There are nearly 100,000 articles on English Wikipedia that relate to Australian people, and the number is growing consistently (<a href="#fig-included-in-ozpeople-over-time">Figure&nbsp;1</a>).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-included-in-ozpeople-over-time" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="who-counts_files/figure-html/fig-included-in-ozpeople-over-time-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Category:Australian people has grown consistently since the early days of Wikipedia</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p>When editors include articles in <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian people</a>, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph</a> of categories. The editor who categorised <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Steve Wozniak</a> as a <a href="https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney">staff member of the University of Technology Sydney</a> was probably unaware that they were thereby categorising Wozniak as an ‘Australian person’. The category for academic staff at UTS lies several layers deep in the category graph, 4 steps away from the root: <a href="https://en.wikipedia.org/wiki/Category:Academic%20staff%20of%20the%20University%20of%20Technology%20Sydney">Category:Academic staff of the University of Technology Sydney</a> → <a href="https://en.wikipedia.org/wiki/Category:People%20from%20Sydney%20by%20occupation">Category:People from Sydney by occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian%20people%20by%20city%20and%20occupation">Category:Australian people by city and occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian%20people%20by%20occupation">Category:Australian people by occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian_people</a>. Perhaps an editor may quibble that a person who works at UTS is not necessarily ‘from Sydney’, but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.</p>
+<div class="cell">
+
+</div>
+<p>Category:Australian people has 9,220 subcategories, many of which are even farther from the root than the staff of UTS. We can get a sense of how vast this structure is by taking <a href="https://en.wikipedia.org/wiki/Distance_(graph_theory)#Related_concepts">diameter</a> of the category graph. In this case, the diameter is 11, which means that the most distant subcategory of Category:Australian people is 11 steps away. Such distant nodes are called ‘eccentric’ in graph theory. In this case, the most distant subcategory truly is eccentric: <a href="https://en.wikipedia.org/wiki/Category:Custard%20(band)%20compilation%20albums">Category:Custard (band) compilation albums</a> does not include articles about ‘Australian people’ at all, but about indie rock records. This case is extreme. The case of UTS staffmembers is more typical. If we consider all the articles that have been placed in Category:Australian people or its subcategories, we find that the subcategories used are on average 3.12 steps away from the root, with a standard deviation of 0.98. In the typical case, when an editor adds an article to an ‘Australian people’ subcategory, the subcategory is 2-4 steps away from the root. It seems likely that editors are mostly unaware of the category graph as a whole. Editors work locally, trying to find the best categorisations for their articles, while Wikipedia’s systems work globally, enforcing the hierarchical logic of the enormous and usually invisible category graph.</p>
+<p>If Category:Australian people can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia’s ‘Australian’ biographies?</p>
+<div class="cell">
+
+</div>
+<p>We can identify the biographies using the <a href="https://en.wikipedia.org/wiki/Template:Infobox_person">person infobox</a> and its many <a href="https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person">subtemplates</a>. When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person’s life, including for instance their date of birth, occupation and photograph. At the time of our analysis, 796,707 Wikipedia articles <a href="https://en.wikipedia.org/wiki/Help:Transclusion">transcluded</a> a person infobox, of which 21,926 fell into Category:Australian people. By this metric, Australians are over-represented in English Wikipedia. They account for approximately 0.36% of the world’s population, but 2.75% of Wikipedia biographies.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p><em>TODO</em>: Dig into category graph to explore gender and indigeneity.</p>
 </section>
 <section id="the-search-interface" class="level2">
 <h2 class="anchored" data-anchor-id="the-search-interface">The search interface</h2>
@@ -192,6 +219,8 @@ ul.task-list li input[type="checkbox"] {
 
 <ol>
 <li id="fn1"><p>Throughout the report, we link to the particular revision of any page that we consulted in our research.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The growth was calculated using the ‘timestamp’ data returned by <a href="https://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>. The ‘timestamp’ records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Of course, this 2.75% reflects the very wide definition of ‘Australianness’ implicit in Category:Australian people, and may include many people who are only tangentially ‘Australian’.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -5,6 +5,16 @@ project:
 website:
   title: "Reports"
   navbar:
+    pinned: true
+    tools:
+      - icon: twitter
+        href: https://twitter.com/wikihistories
+      - icon: github
+        menu:
+          - text: Source Code
+            url: https://github.com/wikihistories/reports
+          - text: Report a Bug
+            url: https://github.com/wikihistories/reports/issues
     left:
       - href: index.qmd
         text: Home
