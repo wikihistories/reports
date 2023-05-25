@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(igraph)
 library(wikkitidy)
+
 data_dir <- "data/who-counts"
 ```
 
@@ -64,7 +65,7 @@ australians <- get_aussies_category_tree()
 
 The second answer Wikipedia gives to the question, 'Who counts as Australian?' is: everyone who falls under [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people). There are nearly 100,000 articles on English Wikipedia that relate to Australian people, and the number is growing consistently (@fig-included-in-ozpeople-over-time).[^2]
 
-[^2]: The growth was calculated using the 'timestamp' data returned by [API:Categorymembers](https://www.mediawiki.org/wiki/API:Categorymembers). The 'timestamp' records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.
+[^2]: The growth was calculated using the `timestamp` data returned by [API:Categorymembers](https://www.mediawiki.org/wiki/API:Categorymembers). The `timestamp` records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.
 
 ```{r}
 #| label: fig-included-in-ozpeople-over-time
@@ -94,7 +95,7 @@ category_graph <- graph_from_data_frame(
 )
 
 vertex_by_id <- function(graph, pageid) {
-  V(graph)[V(graph)$name == pageid]
+  V(graph)[V(graph)$name %in% pageid]
 }
 
 root <- V(category_graph)[[1]]
@@ -104,7 +105,7 @@ category_url <- function(category, collapse = " → ") {
 }
 ```
 
-When editors include articles in [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people), they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) of categories. The editor who categorised [Steve Wozniak](https://en.wikipedia.org/wiki/Category:Australian_people) as a [staff member of the University of Technology Sydney](https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney) was probably unaware that they were thereby categorising Wozniak as an 'Australian person'. The category for academic staff at UTS lies several layers deep in the category graph, `r distances(category_graph, root, vertex_by_id(category_graph, 32435264))` steps away from the root: `r shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264))$vpath[[1]]$title %>% rev() %>% category_url()`. Perhaps an editor may quibble that a person who works at UTS is not necessarily 'from Sydney', but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.
+When editors include articles in `Category:Australian people`, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) of categories. The editor who categorised [Steve Wozniak](https://en.wikipedia.org/wiki/Category:Australian_people) as a [staff member of the University of Technology Sydney](https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney) was probably unaware that they were thereby categorising Wozniak as an 'Australian person'. The category for academic staff at UTS lies several layers deep in the category graph, `r distances(category_graph, root, vertex_by_id(category_graph, 32435264))` steps away from the root: `r shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264))$vpath[[1]]$title %>% rev() %>% category_url()`. Perhaps an editor may quibble that a person who works at UTS is not necessarily 'from Sydney', but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.
 
 ```{r}
 full_graph <- graph_from_data_frame(
@@ -123,9 +124,9 @@ article_distances <- distances(
     )
 ```
 
-Category:Australian people has `r length(category_graph) %>% prettyNum(",")` subcategories, many of which are even farther from the root than the staff of UTS. We can get a sense of how vast this structure is by taking [diameter](https://en.wikipedia.org/wiki/Distance_(graph_theory)#Related_concepts) of the category graph. In this case, the diameter is `r diameter(category_graph)`, which means that the most distant subcategory of Category:Australian people is `r diameter(category_graph)` steps away. Such distant nodes are called 'eccentric' in graph theory. In this case, the most distant subcategory truly is eccentric: `r farthest_vertices(category_graph)$vertices$title[[2]] %>% category_url()` does not include articles about 'Australian people' at all, but about indie rock records. This case is extreme. The case of UTS staffmembers is more typical. If we consider all the articles that have been placed in Category:Australian people or its subcategories, we find that the subcategories used are on average `r (mean(article_distances) - 1) %>% round(2)` steps away from the root, with a standard deviation of `r sd(article_distances) %>% round(2)`. In the typical case, when an editor adds an article to an 'Australian people' subcategory, the subcategory is 2-4 steps away from the root. It seems likely that editors are mostly unaware of the category graph as a whole. Editors work locally, trying to find the best categorisations for their articles, while Wikipedia's systems work globally, enforcing the hierarchical logic of the enormous and usually invisible category graph.
+Category:Australian people has `r length(category_graph) %>% prettyNum(",")` subcategories, many of which are even farther from the root than the staff of UTS. We can get a sense of how vast this structure is by taking [diameter](https://en.wikipedia.org/wiki/Distance_(graph_theory)#Related_concepts) of the category graph. In this case, the diameter is `r diameter(category_graph)`, which means that the most distant subcategory of `Category:Australian people` is `r diameter(category_graph)` steps away. Such distant nodes are called 'eccentric' in graph theory. In this case, the most distant subcategory truly is eccentric: `r farthest_vertices(category_graph)$vertices$title[[2]] %>% category_url()` does not include articles about 'Australian people' at all, but about indie rock records. This case is extreme. The case of UTS staffmembers is more typical. If we consider all the articles that have been placed in `Category:Australian people` or its subcategories, we find that the subcategories used are on average `r (mean(article_distances) - 1) %>% round(2)` steps away from the root, with a standard deviation of `r sd(article_distances) %>% round(2)`. In the typical case, when an editor adds an article to an 'Australian people' subcategory, the subcategory is 2-4 steps away from the root. It seems likely that editors are mostly unaware of the category graph as a whole. Editors work locally, trying to find the best categorisations for their articles, while Wikipedia's systems work globally, enforcing the hierarchical logic of the enormous and usually invisible category graph.
 
-If Category:Australian people can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia's 'Australian' biographies?
+If `Category:Australian people` can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia's 'Australian' biographies?
 
 ```{r}
 get_persons <- function(use_cache = T) {
@@ -165,12 +166,98 @@ get_persons <- function(use_cache = T) {
 }
 persons <- get_persons() %>% 
   filter(ns == 0) %>% 
+  distinct(pageid, .keep_all = TRUE) %>% 
   mutate(australian = pageid %in% australians$nodes$pageid)
 ```
 
-We can identify the biographies using the [person infobox](https://en.wikipedia.org/wiki/Template:Infobox_person) and its many [subtemplates](https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person). When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person's life, including for instance their date of birth, occupation and photograph. At the time of our analysis, `r nrow(persons) %>% prettyNum(",")` Wikipedia articles [transcluded](https://en.wikipedia.org/wiki/Help:Transclusion) a person infobox, of which `r sum(persons$australian) %>% prettyNum(",")` fell into Category:Australian people. By this metric, Australians are over-represented in English Wikipedia. They account for approximately `r round(25e6/7e9*100, 2)`% of the world's population, but `r round(sum(persons$australian) / nrow(persons) * 100, 2)`% of Wikipedia biographies.[^3]
+We can identify the biographies using the [person infobox](https://en.wikipedia.org/wiki/Template:Infobox_person) and its many [subtemplates](https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person). When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person's life, including for instance their date of birth, occupation and photograph. At the time of our analysis, `r nrow(persons) %>% prettyNum(",")` Wikipedia articles [transcluded](https://en.wikipedia.org/wiki/Help:Transclusion) a person infobox, of which `r sum(persons$australian) %>% prettyNum(",")` fell into `Category:Australian people`. By this metric, Australians are over-represented in English Wikipedia. Australia's 25 million inhabitants account for roughly `r round(25e6/7e9*100, 2)`% of the world's population, but `r round(sum(persons$australian) / nrow(persons) * 100, 2)`% of Wikipedia's biographies are categorised as Australian.
 
-[^3]: Of course, this `r round(sum(persons$australian) / nrow(persons) * 100, 2)`% reflects the very wide definition of 'Australianness' implicit in Category:Australian people, and may include many people who are only tangentially 'Australian'. 
+Who are the people with biographies under `Category:Australian people`? In what follows, we consider how the category system represents Indigenous Australians and Australians by gender.
+
+```{r}
+indigenous_persons <- 40537624
+indigenous_tasmanian_persons <- 27672516
+indigenous_peoples <- 1603417
+indigenous_vertices <- ego(full_graph, vertex_by_id(full_graph, c(indigenous_persons, indigenous_tasmanian_persons)), order = diameter(full_graph), mode = "out")
+names(indigenous_vertices) <- c("main", "tasmania")
+```
+
+The category system represents Indigenous Australians in several different ways. Beneath `Category:Australian people` are two key subcategories: `r category_url("Category:Indigenous_Australian_people")` and `r category_url("Category:Indigenous Tasmanian people")`, which is separate. There is an additional category which lies outside Category:Australian people, `r category_url("Category:Indigenous peoples of Australia")`, which is supposed to contain articles about groups of Indigenous Australians. `Category:Indigenous Australian people` contains `r sum(indigenous_vertices$main$type == "subcat") - 1` subcategories and `r sum(indigenous_vertices$main$type == "page")` pages, of which `r sum(indigenous_vertices$main$name %in% persons$pageid)` are biographies.[^3] `Category:Indigenous Tasmanian people` contains `r sum(indigenous_vertices$tasmania$type == "subcat") - 1` subcategories and `r sum(indigenous_vertices$tasmania$type == "page")` pages, of which `r sum(indigenous_vertices$tasmania$name %in% persons$pageid)` are biographies. In fact, on closer inspection all 17 of the pages in `Category:Indigenous Tasmanian people` are biographies of individuals: it is simply that 9 of them lack the crucial `Template:Infobox person`.
+
+By these metrics, it appears that Indigenous Australians are under-represented in Wikipedia. In the 2021 Australian Census, "[812,728 people identified as being of Aboriginal and/or Torres Strait Islander origin, representing 3.2 per cent of the total population.](https://www.abs.gov.au/statistics/people/aboriginal-and-torres-strait-islander-peoples/aboriginal-and-torres-strait-islander-people-census/2021)" As @fig-indigenous-representation shows, Indigenous Australians account for less than 3.2% of `Category:Australian people` on English Wikipedia:
+
+```{r}
+#| label: fig-indigenous-representation
+#| fig-cap: Indigenous Australians are underrepresented in `Category:Australian people`
+indigenous_pageids <- c(indigenous_vertices$main$name, indigenous_vertices$tasmania$name)
+australians$nodes %>% 
+  filter(ns == 0) %>% 
+  mutate(
+    person_type = if_else(pageid %in% indigenous_pageids, "Indigenous", "Non-Indigenous"),
+    page_type = if_else(pageid %in% persons$pageid, "bio", "non_bio")
+    ) %>% 
+  group_by(person_type, page_type) %>% 
+  summarise(n = n()) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = page_type, values_from = n) %>% 
+  mutate(across(2:last_col(), \(x) round(x / sum(x) * 100, 2), .names = "{.col}_prop")) %>% 
+  transmute(
+    `Group` = person_type,
+    `Biography (pages)` = bio,
+    `Biography prop (%)` = bio_prop,
+    `Non-biography (pages)` = non_bio,
+    `Non-biography (prop)` = non_bio_prop
+  ) %>% 
+  add_row(!!!summarise_if(., is.numeric, sum)) %>% 
+  mutate(
+    Group = replace_na(Group, "Category:Australian people")
+  ) %>% 
+  knitr::kable()
+```
+
+[^3]: i.e., which transclude 'Template:Person infobox', as explained above.
+
+Wikipedians may be addressing this gap. Since the beginning of 2010, biographies of Indigenous Australians have increased by a factor of 7.5, while biographies of non-Indigenous Australians have increased by a factor of 6. (@fig-indigenous-biography-growth). Biographies of Indigenous Australians continue to grow more quickly than Non-Indigenous Australian biographies on Wikipedia. The story is different for non-biography pages about Indigenous Australians under `Category:Australian people`. These have only grown by a factor of about 3.6, and continue to grow sluggishly, though perhaps this can be explained by the existence of `Category:Ingigenous peoples of Australia`, which may absorb many articles that could otherwise fall under `Category:Australian people`.
+
+```{r}
+#| fig.width: 6
+#| fig.height: 8
+#| label: fig-indigenous-biography-growth
+#| fig-cap: Biographies of Indigenous Australians are increasing at a faster rate. The scale is relative (number of articles on the 1st of January 2010 = 1.0).
+biography_growth <- australians$nodes %>% 
+  filter(ns == 0) %>% 
+  mutate(
+    group = if_else(pageid %in% indigenous_pageids, "Indigenous", "Non-Indigenous"),
+    page_type = if_else(pageid %in% persons$pageid, "Biography", "Non-Biography")) %>% 
+  left_join(australians$edges, join_by(pageid == target)) %>% 
+  mutate(day = as_datetime(timestamp) %>% round_date("day")) %>% 
+  group_by(pageid) %>% 
+  arrange(day, .by_group = TRUE) %>% 
+  slice(1) %>% 
+  group_by(group, page_type, day) %>% 
+  summarise(n = n()) %>% 
+  arrange(day, .by_group = TRUE)
+
+baseline <- biography_growth %>% 
+  filter(day <= "2010-01-01") %>% 
+  group_by(group, page_type) %>% 
+  summarise(baseline = sum(n))
+
+biography_growth %>% 
+  filter(day >= "2010-01-01") %>% 
+  left_join(baseline, join_by(group, page_type)) %>% 
+  mutate(growth = cumsum(n) / baseline + 1) %>% 
+  ggplot(aes(day, growth, colour = group)) +
+  facet_wrap(vars(page_type), nrow = 2, scales = "free_y") +
+  scale_y_continuous(breaks = 1:7) +
+  geom_line() +
+  labs(
+    x = "Time (days)",
+    y = "Total articles",
+    color = "Group"
+  )
+```
+
 
 *TODO*: Dig into category graph to explore gender and indigeneity.
 
