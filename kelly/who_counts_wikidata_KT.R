@@ -523,7 +523,7 @@ honoursID_aus <- query_wikidata(
   mutate(dob=as_date(dob),
          dod=as_date(dod))
 
-View(honoursID_aus)
+# View(honoursID_aus)
 # View(aus_parliament)
 
 
@@ -884,64 +884,6 @@ aus_olympics<- query_wikidata(
          dod=as_date(dod))
 
 
-##encycolpeida aus science
-# aus_science<- query_wikidata(
-#   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
-#
-#   WHERE {
-#     SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }
-#
-#     {
-#       SELECT DISTINCT ?person WHERE {
-#       ?person wdt:P31 wd:Q5 .
-#         ?person p:P4228 ?statement0.
-#       }
-#     }
-#
-#       OPTIONAL{?person wdt:P21 ?gender.}
-#       OPTIONAL{?person wdt:P569 ?dob.}
-#     OPTIONAL{?person wdt:P570 ?dod.}
-#     OPTIONAL{?person wdt:P19 ?pob.}
-#
-#     OPTIONAL { ?sitelink schema:about ?person ;
-#               schema:inLanguage 'en' ;
-#               schema:isPartOf [ wikibase:wikiGroup 'wikipedia' ] }.
-#   }"
-# ) %>%
-#   mutate(source="aus_science") %>%
-#   mutate(dob=as_date(dob),
-#          dod=as_date(dod))
-
-
-##Aus music centre ID
-# aus_music_centre<- query_wikidata(
-#   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
-#
-#   WHERE {
-#     SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }
-#
-#     {
-#       SELECT DISTINCT ?person WHERE {
-#       ?person wdt:P31 wd:Q5 .
-#         ?person p:P9575 ?statement0.
-#       }
-#     }
-#
-#       OPTIONAL{?person wdt:P21 ?gender.}
-#       OPTIONAL{?person wdt:P569 ?dob.}
-#     OPTIONAL{?person wdt:P570 ?dod.}
-#     OPTIONAL{?person wdt:P19 ?pob.}
-#
-#     OPTIONAL { ?sitelink schema:about ?person ;
-#               schema:inLanguage 'en' ;
-#               schema:isPartOf [ wikibase:wikiGroup 'wikipedia' ] }.
-#   }"
-# ) %>%
-#   mutate(source="aus_music_centre") %>%
-#   mutate(dob=as_date(dob),
-#          dod=as_date(dod))
-
-
 
 ##national maritime museum
 # View(national_maritime_museum)
@@ -1230,32 +1172,7 @@ footy_facts <- query_wikidata(
          dod=as_date(dod))
 
 
-# aus_lit <- query_wikidata(
-#   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
-#
-#   WHERE {
-#     SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }
-#
-#     {
-#       SELECT DISTINCT ?person WHERE {
-#       ?person wdt:P31 wd:Q5 .
-#         ?person p:P8295 ?statement0.
-#       }
-#     }
-#
-#       OPTIONAL{?person wdt:P21 ?gender.}
-#       OPTIONAL{?person wdt:P569 ?dob.}
-#     OPTIONAL{?person wdt:P570 ?dod.}
-#     OPTIONAL{?person wdt:P19 ?pob.}
-#
-#     OPTIONAL { ?sitelink schema:about ?person ;
-#               schema:inLanguage 'en' ;
-#               schema:isPartOf [ wikibase:wikiGroup 'wikipedia' ] }.
-#   }"
-# ) %>%
-#   mutate(source="aus_lit") %>%
-#   mutate(dob=as_date(dob),
-#          dod=as_date(dod))
+
 
 
 dictionary_of_syd <- query_wikidata(
@@ -1685,7 +1602,7 @@ place_of_death_aus <- query_wikidata(
          dod=as_date(dod))
 
 
-View(place_of_death_aus)
+# View(place_of_death_aus)
 
 all_records <- bind_rows (AGSA_creator_aus, athletics_aus, aus_citizens_wd,
                           aus_dictionary_bio, aus_football, aus_golf,
@@ -1700,7 +1617,7 @@ all_records <- bind_rows (AGSA_creator_aus, athletics_aus, aus_citizens_wd,
                           VIC_honour_women,VIC_legislative,Lord_mayor_Melb, place_of_birth_aus, place_of_death_aus)
 
 
-View(all_records_wp)
+# View(all_records_wp)
 
 all_records_wp <- all_records %>%
   filter(!is.na(sitelink)) %>%
@@ -1787,7 +1704,6 @@ all_records_wp <- all_records %>%
                                                                          sitelink =="https://en.wikipedia.org/wiki/Olive_Pink" ~ "not indigenous",
                                                                          sitelink =="https://en.wikipedia.org/wiki/Judith_Wright" ~ "not indigenous",
                                                                          sitelink =="https://en.wikipedia.org/wiki/Janet_Mathews" ~ "not indigenous",
-                                                                         sitelink =="https://en.wikipedia.org/wiki/Janet_Mathews" ~ "not indigenous",
                                                                          sitelink=="https://en.wikipedia.org/wiki/Thomas_King_(novelist)"    ~ "not indigenous",
                                                                          TRUE ~ "not indigenous"))
 
@@ -1797,7 +1713,7 @@ all_records_wp <- all_records %>%
 # all_na <- all_records_wp %>%
 #   filter(is.na(dob))
 
-View(clean_records)
+# View(clean_records)
 
 clean_records <- all_records_wp %>%
   ungroup() %>%
@@ -1837,7 +1753,7 @@ clean_records <- all_records_wp %>%
                            source == "place_of_death_aus" ~"keep",
                                  TRUE ~ "keep"))
 
-View(clean_records2)
+# View(clean_records2)
 clean_records2 <- clean_records %>%
   mutate(clean  = case_when(sitelink =="https://en.wikipedia.org/wiki/Argentine_Australians" ~ "do not keep",
                             sitelink =="https://en.wikipedia.org/wiki/Australians" ~ "do not keep",
@@ -1892,7 +1808,7 @@ years <- unique_records %>%
   mutate(total=sum(year_tally))
 
 
-View(decades)
+# View(decades)
 
 decades <- unique_records %>%
   filter(dob!="2100-01-01") %>%
@@ -1927,7 +1843,8 @@ years_gender_chart <- ggplot(years_gender, aes(year, year_tally)) +
 
 
 ## indigenous focus
-View(indigenous_records)
+# View(indigenous_records)
+
 indigenous_records <- unique_records %>%
   filter(dob!="2100-01-01") %>%
   filter(genderLabel!= "male organism") %>%
@@ -2030,7 +1947,7 @@ name_match_wikipedia <- data_list %>%
   mutate(source = "wikipedia")
 
 
-View(page)
+# View(page)
 
 match <- bind_rows(name_match_wikipedia, name_match_wikidata) %>%
   group_by(title) %>%
@@ -2038,7 +1955,7 @@ match <- bind_rows(name_match_wikipedia, name_match_wikidata) %>%
   mutate(match = case_when(count ==2 ~"match",
                            count ==1 ~ "no match"))
 
-View(match)
+# View(match)
 
 match_summary <- match %>%
   group_by(title, match, source) %>%
@@ -2046,5 +1963,5 @@ match_summary <- match %>%
   group_by(match, source) %>%
   tally()
 
-
+View(match_summary)
 
