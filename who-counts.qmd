@@ -29,6 +29,8 @@ In this report, we consider several ways that Australians are represented in Wik
 
 In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse. 
 
+![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
+
 ## Textual representation
 
 The first answer Wikipedia gives to the question 'Who counts as Australian?' is: [any 'individual' with a 'residential, legal, historical or ethno-cultural' connection to 'the country of Australia'](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782).[^1] At the time of writing, the 'Australians' comprise an estimated [26,468,200](https://en.wikipedia.org/w/index.php?title=Australia&oldid=1153684876) residents of Australia, and a diaspora of [577,255](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782) Australians overseas.
@@ -105,7 +107,7 @@ category_url <- function(category, collapse = " → ") {
 }
 ```
 
-When editors include articles in `Category:Australian people`, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) of categories. The editor who categorised [Steve Wozniak](https://en.wikipedia.org/wiki/Category:Australian_people) as a [staff member of the University of Technology Sydney](https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney) was probably unaware that they were thereby categorising Wozniak as an 'Australian person'. The category for academic staff at UTS lies several layers deep in the category graph, `r distances(category_graph, root, vertex_by_id(category_graph, 32435264))` steps away from the root: `r shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264))$vpath[[1]]$title %>% rev() %>% category_url()`. Perhaps an editor may quibble that a person who works at UTS is not necessarily 'from Sydney', but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.
+When editors include articles in `Category:Australian people`, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) of categories. The editor who categorised [Steve Wozniak](https://en.wikipedia.org/wiki/Steve_Wozniak) as a [staff member of the University of Technology Sydney](https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney) was probably unaware that they were thereby categorising Wozniak as an 'Australian person'. The category for academic staff at UTS lies several layers deep in the category graph, `r distances(category_graph, root, vertex_by_id(category_graph, 32435264))` steps away from the root: `r shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264))$vpath[[1]]$title %>% rev() %>% category_url()`. Perhaps an editor may quibble that a person who works at UTS is not necessarily 'from Sydney', but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.
 
 ```{r}
 full_graph <- graph_from_data_frame(
@@ -201,12 +203,12 @@ australians$nodes %>%
   ungroup() %>% 
   pivot_wider(names_from = page_type, values_from = n) %>% 
   mutate(across(2:last_col(), \(x) round(x / sum(x) * 100, 2), .names = "{.col}_prop")) %>% 
-  transmute(
+  select(
     `Group` = person_type,
     `Biography (pages)` = bio,
     `Biography prop (%)` = bio_prop,
     `Non-biography (pages)` = non_bio,
-    `Non-biography (prop)` = non_bio_prop
+    `Non-biography (%)` = non_bio_prop
   ) %>% 
   add_row(!!!summarise_if(., is.numeric, sum)) %>% 
   mutate(
@@ -220,10 +222,9 @@ australians$nodes %>%
 Wikipedians may be addressing this gap. Since the beginning of 2010, biographies of Indigenous Australians have increased by a factor of 7.5, while biographies of non-Indigenous Australians have increased by a factor of 6. (@fig-indigenous-biography-growth). Biographies of Indigenous Australians continue to grow more quickly than Non-Indigenous Australian biographies on Wikipedia. The story is different for non-biography pages about Indigenous Australians under `Category:Australian people`. These have only grown by a factor of about 3.6, and continue to grow sluggishly, though perhaps this can be explained by the existence of `Category:Ingigenous peoples of Australia`, which may absorb many articles that could otherwise fall under `Category:Australian people`.
 
 ```{r}
-#| fig.width: 6
-#| fig.height: 8
 #| label: fig-indigenous-biography-growth
 #| fig-cap: Biographies of Indigenous Australians are increasing at a faster rate. The scale is relative (number of articles on the 1st of January 2010 = 1.0).
+#| fig.height: 9
 biography_growth <- australians$nodes %>% 
   filter(ns == 0) %>% 
   mutate(
@@ -248,7 +249,7 @@ biography_growth %>%
   left_join(baseline, join_by(group, page_type)) %>% 
   mutate(growth = cumsum(n) / baseline + 1) %>% 
   ggplot(aes(day, growth, colour = group)) +
-  facet_wrap(vars(page_type), nrow = 2, scales = "free_y") +
+  facet_wrap(vars(page_type), nrow = 2) +
   scale_y_continuous(breaks = 1:7) +
   geom_line() +
   labs(
@@ -257,7 +258,12 @@ biography_growth %>%
     color = "Group"
   )
 ```
+Further metrics for proportion of indigenous biographies:
 
+- size in bytes
+- pageviews
+- article ratings
+- number of edits
 
 *TODO*: Dig into category graph to explore gender and indigeneity.
 
@@ -267,7 +273,9 @@ TODO
 
 ## Wikidata properties
 
-TODO
+TODO:
+
+- How do the explicit and impilict markers of Australianness overlap (e.g. citizenship vs. Australian honours)
 
 ## Conclusion: beyond bias
 
