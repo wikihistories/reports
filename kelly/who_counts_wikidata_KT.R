@@ -1791,9 +1791,9 @@ clean_records2 <- clean_records %>%
 # View(filter_records)
 filter_records <- clean_records2 %>%
   filter(clean !="do not keep")
+ 
 
-
-write_csv("aus_profiles_wikidata_prop.csv", filter_records)
+write_csv(filter_records, "aus_profiles_wikidata_prop.csv")
 
 # View(unique_records)
 

@@ -1,10 +1,10 @@
-install.packages("tidygraph")
+# install.packages("tidygraph")
 
 library(tidyverse)
 library(ggraph)
 library(tidygraph)
 
-detach(package:network, unload=TRUE)
+# detach(package:network, unload=TRUE)
 
 ##reading in Michael's WP extraction
 data <- readRDS("australian-people-categories-1684481346.rds")
@@ -40,7 +40,7 @@ wp_network <- tbl_graph(
                       nodes =  node_list,
                       edges = edge_list)
 
-
+ 
 ggraph(wp_network, layout = "auto")+
   geom_edge_link()+
   geom_node_point()+
