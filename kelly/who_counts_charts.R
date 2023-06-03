@@ -5,13 +5,14 @@ library(directlabels)
 
 
 who_counts_format <- theme(
-  legend.background = element_rect(fill = "white", size = 4, colour = "white"),
+  legend.background = element_blank(),
   axis.ticks = element_line(colour = "white", linewidth = 0.2),
   panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
   panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
   panel.grid.minor.y = element_blank(),
   panel.background = element_blank(),
-  axis.title = element_blank()
+  axis.title = element_blank(),
+  legend.key = element_blank()
 )
 
 gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
@@ -22,6 +23,8 @@ gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 
 
 # gender
+
+# View(unique_records)
 
 years <- unique_records %>%
   filter(dob!="2100-01-01") %>%
@@ -46,8 +49,8 @@ decades <- unique_records %>%
 
 
 
-year_of_birth_chart <- ggplot(years, aes(year, year_tally)) +
-  geom_line()
+# year_of_birth_chart <- ggplot(years, aes(year, year_tally)) +
+#   geom_line()
 
 
 decade_of_birth_chart <- ggplot(decades, aes(decade, decade_tally)) +
@@ -94,14 +97,32 @@ decades_gender <- unique_records %>%
 #   geom_line(aes(colour=genderLabel))
 
 
-decade_gender_chart <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
+# decade_gender_chart <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
+#   geom_line(aes(colour=Gender), size=1)+
+#   scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
+#   scale_colour_manual(values=gender_colour)+
+#   who_counts_format+
+#   geom_dl(aes(label=Gender), method=list("first.points", cex=1, vjust=-.7, hjust=-.1))+
+#   theme(legend.position = "none")
+# 
+# decade_gender_chart
+
+decade_gender_chart2 <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
   geom_line(aes(colour=Gender), size=1)+
   scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
   scale_colour_manual(values=gender_colour)+
   who_counts_format+
-  geom_dl(aes(label=Gender), method="first.points", cex=.75, hjust=2)
+  theme(
+    legend.position = c(0.05, .9),
+    legend.justification = c("left", "top"),
+    legend.direction="vertical",
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6)
+  )
+  
+  # geom_dl(aes(label=Gender), method=list("first.points", cex=1, vjust=-.5, hjust=-.1 ))
 
-decade_gender_chart
+decade_gender_chart2
 
 ## indigenous focus
 # View(indigenous_records)
@@ -116,15 +137,21 @@ indigenous_records <- unique_records %>%
   tally(name="decade_tally")
 
 decades_indigenous_chart <- ggplot(indigenous_records, aes(decade, decade_tally)) +
-  geom_col()
+  geom_col(fill="darkolivegreen")+
+  scale_x_continuous(breaks = c( 1700, 1800, 1900, 2000), minor_breaks = c( 1750, 1850, 1950))+
+  who_counts_format
+
+decades_indigenous_chart
 ##
 
 
 
 source_matrix <- filter_records %>% 
   select(person, source) %>%
-  mutate(value=1) %>% 
-  pivot_wider(names_from = source, values_from = value) %>% 
+  mutate(n=1) %>% 
+  # group_by(person) %>%
+  # add_tally() %>% 
+  pivot_wider(names_from = source, values_from = n) %>% 
   mutate(across(everything(), ~replace_na(.x, 0))) %>% 
   select(-person)
 
@@ -135,9 +162,11 @@ corr <- round(cor(source_matrix), 1)
 
 ggcorrplot(corr)
 
-ggcorrplot(corr, method = "circle", type = "lower", hc.order = TRUE)
+ggcorrplot(corr, method = "circle", type="lower")
 
 ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="lower")
-ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="lower", lab="true")
+
+# ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="lower", lab="true")
+
 ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="upper",insig = "blank") 
 

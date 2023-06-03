@@ -583,7 +583,7 @@ aus_football <- query_wikidata(
   mutate(dob=as_date(dob),
          dod=as_date(dod))
 
-
+View(aus_football)
 
 para_oly_aus <- query_wikidata(
   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
@@ -1143,6 +1143,7 @@ qld_footbal_hall_fame <- query_wikidata(
 
 
 ##for an Australian rules football player on the WAFL FootyFacts website
+View(footy_facts)
 
 footy_facts <- query_wikidata(
   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
@@ -1221,6 +1222,7 @@ wp_bio_gov_NSW <- query_wikidata(
         ?statement0 (ps:P39) wd:Q1528895.
       }
     }
+    
 
       OPTIONAL{?person wdt:P21 ?gender.}
       OPTIONAL{?person wdt:P569 ?dob.}
@@ -1237,7 +1239,7 @@ wp_bio_gov_NSW <- query_wikidata(
          dod=as_date(dod))
 
 
-# View(wp_bio_NSW_gg)
+# View(wp_bio_gov_NSW)
 
 ##governors of VIC
 
@@ -1359,6 +1361,14 @@ wp_bio_gov_SA <- query_wikidata(
 
 ##governors of WA
 
+# View(wp_bio_gov_WA)
+# View(gov_check)
+gov_check <- rbind(NSW_legislative, wp_bio_gov_WA) %>%
+  group_by(person) %>%
+  add_tally() %>%
+  filter(n>2)
+
+
 wp_bio_gov_WA <- query_wikidata(
   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
 
@@ -1414,6 +1424,9 @@ aus_stage <- query_wikidata(
   mutate(source="aus_stage") %>%
   mutate(dob=as_date(dob),
          dod=as_date(dod))
+
+nsw_wa_check <- NSW_legislative %>% 
+  
 
 
 NSW_legislative <- query_wikidata(
@@ -1621,21 +1634,24 @@ all_records <- bind_rows (AGSA_creator_aus, athletics_aus, aus_citizens_wd,
 
 all_records_wp <- all_records %>%
   filter(!is.na(sitelink)) %>%
+  
   group_by(person, source) %>%
-  arrange(person, source,dob) %>%
+  arrange(person, source,pobLabel, dob) %>%
   mutate(dob_row_num = row_number()) %>%
   ungroup() %>%
   filter(dob_row_num == 1) %>% ##this takes the first dob entered in / fixes duplicates if two DOB
+  
   group_by(person, source) %>%
   arrange(person, source,dod) %>%
   mutate(dod_row_num = row_number()) %>%
   ungroup() %>%
-  filter(dod_row_num == 1) %>% ##this takes the first dob entered in / fixes duplicates if two DOD
-  group_by(person) %>%
-  arrange(person, pobLabel) %>%
+  filter(dod_row_num == 1) %>% ##this takes the first dod entered in / fixes duplicates if two DOD
+  
+  group_by(person, source) %>%
+  arrange(person, source, pobLabel) %>%
   mutate(pob_row_num = row_number()) %>%
   ungroup() %>%
-  filter(pob_row_num == 1) %>% ##this takes the first dob entered in / fixes duplicates if two DOD
+  filter(pob_row_num == 1) %>% ##this takes the first dob entered in / fixes duplicates if two POB
   group_by(person) %>%
   add_tally() %>%
   arrange(desc(n), sitelink, personLabel) %>%
@@ -1751,6 +1767,8 @@ clean_records <- all_records_wp %>%
                            source == "aus_citizens_wd" ~"keep",
                            source == "place_of_birth_aus" ~"keep",
                            source == "place_of_death_aus" ~"keep",
+                           source== "aus_football" ~ "keep",
+                           source== "footy_facts" ~ "keep",
                                  TRUE ~ "keep"))
 
 # View(clean_records2)
@@ -1775,6 +1793,8 @@ filter_records <- clean_records2 %>%
   filter(clean !="do not keep")
 
 
+write_csv("aus_profiles_wikidata_prop.csv", filter_records)
+
 # View(unique_records)
 
 unique_records <- filter_records %>%
@@ -1792,76 +1812,23 @@ unique_records <- filter_records %>%
   filter(indig_filter =="keep") %>%
   select(-n, -count_row, -total_rows, indig_filter)
 
-# write_csv(unique_records, "australian_records.csv")
+filter(unique_records, indigenous == "indigenous")
+
+
+# write_csv(unique_records, "australian_wikidata_records.csv")
 
 
 #
 #
-years <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(year) %>%
-  tally(name="year_tally") %>%
-  drop_na() %>%
-  ungroup() %>%
-  mutate(total=sum(year_tally))
-
-
-# View(decades)
-
-decades <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(decade) %>%
-  tally(name="decade_tally") %>%
-  drop_na()
-
-
-
-ggplot(years, aes(year, year_tally)) +
-  geom_line()
-
-
-ggplot(decades, aes(decade, decade_tally)) +
-  geom_col()
-
-
-##gender split
-years_gender <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  filter(genderLabel!= "male organism") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, year) %>%
-  tally(name="year_tally") %>%
-  drop_na()
-
-years_gender_chart <- ggplot(years_gender, aes(year, year_tally)) +
-  geom_line(aes(colour=genderLabel))
-
-
-## indigenous focus
-# View(indigenous_records)
-
-indigenous_records <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  filter(genderLabel!= "male organism") %>%
-  filter(indigenous == "indigenous") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, decade) %>%
-  tally(name="decade_tally")
-
-decades_indigenous_chart <- ggplot(indigenous_records, aes(decade, decade_tally)) +
-  geom_col()
 
 
 data <- readRDS("australian-people-categories-1684481346.rds")
 
 data_list <- data$nodes
+data_edge <- data$edge
+
 View(data_list)
+View(data_edge)
 
 ##type of record from wikipedia
 type <- data_list %>%
@@ -1939,8 +1906,6 @@ name_match_wikidata <- unique_records %>%
   mutate(source = "wikidata")
 
 
-
-
 name_match_wikipedia <- data_list %>%
   filter(type =="page") %>%
   select(title) %>%
@@ -1957,11 +1922,18 @@ match <- bind_rows(name_match_wikipedia, name_match_wikidata) %>%
 
 # View(match)
 
+no_match_wikidata <- match %>% 
+  filter(source == "wikidata" & match=="no match")
+
+
+View(no_match_wikidata)
+
 match_summary <- match %>%
   group_by(title, match, source) %>%
   summarise() %>%
   group_by(match, source) %>%
   tally()
 
-View(match_summary)
 
+
+# View(match_summary)
