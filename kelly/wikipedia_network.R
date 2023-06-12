@@ -46,6 +46,13 @@ ggraph(wp_network, layout = "auto")+
   geom_node_point()+
   theme_graph()
 
+# ggsave("wp_hairball.png", width= 25, height = 15, units=c("cm") )
+
+ggraph(wp_network, layout = "linear", circular=TRUE) +
+  geom_edge_arc(colour="lightgrey")+
+  coord_fixed()
+
+
 # node_check1 <- edge_list %>% 
 #   select(from) %>% 
 #   rename(check=from)
