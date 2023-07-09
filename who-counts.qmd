@@ -16,32 +16,8 @@ library(igraph)
 library(wikkitidy)
 
 data_dir <- "data/who-counts"
-```
 
-Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
-
-In this report, we consider several ways that Australians are represented in Wikipedia and Wikidata. We focus on four main modes of representation:
-
-- [Textual representation]: How Wikipedia answers the question 'who counts as Australian' in its articles on the topic
-- [The category system]: How Wikipedia categorises people as 'Australian'—including its categorisation of Indigenous Australians
-- [The search interface]: How Wikipedia selects and sorts 'Australians' when you search the encyclopaedia
-- [Wikidata properties]: How Wikidata splits the concept of 'Australian' across different properties in the database
-
-In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse. 
-
-![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
-
-## Textual representation
-
-The first answer Wikipedia gives to the question 'Who counts as Australian?' is: [any 'individual' with a 'residential, legal, historical or ethno-cultural' connection to 'the country of Australia'](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782).[^1] At the time of writing, the 'Australians' comprise an estimated [26,468,200](https://en.wikipedia.org/w/index.php?title=Australia&oldid=1153684876) residents of Australia, and a diaspora of [577,255](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782) Australians overseas.
-
-[^1]: Throughout the report, we link to the particular revision of any page that we consulted in our research.
-
-TODO: Do we need this section? Where should we go with it? 
-
-## The category system
-
-```{r}
+# Get all pages under Cateegory:Australian People
 get_aussies_category_tree <- function(use_cache = T) {
   data_files <- list.files(data_dir)
   aussie_cat_files <- stringr::str_detect(data_files, "australian-people-categories")
@@ -63,7 +39,33 @@ get_aussies_category_tree <- function(use_cache = T) {
   australians
 }
 australians <- get_aussies_category_tree()
+
+# Get all Wikidata items that are tagged with 'Australian' properties on Wikidata
+wikidata_australians <- readr::read_csv(file.path(data_dir, "australian_wikidata_records.csv"))
 ```
+
+Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
+
+In this report, we consider several ways that Australians are represented in Wikipedia and Wikidata. We focus on four main modes of representation:
+
+- [Textual representation]: How Wikipedia answers the question 'who counts as Australian' in its articles on the topic
+- [The category system]: How Wikipedia categorises people as 'Australian'—including its categorisation of Indigenous Australians
+- [Wikidata properties]: How Wikidata splits the concept of 'Australian' across different properties in the database
+- [The search interface]: How Wikipedia selects and sorts 'Australians' when you search the encyclopaedia
+
+In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse. 
+
+![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
+
+## Textual representation
+
+The first answer Wikipedia gives to the question 'Who counts as Australian?' is: [any 'individual' with a 'residential, legal, historical or ethno-cultural' connection to 'the country of Australia'](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782).[^1] At the time of writing, the 'Australians' comprise an estimated [26,468,200](https://en.wikipedia.org/w/index.php?title=Australia&oldid=1153684876) residents of Australia, and a diaspora of [577,255](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782) Australians overseas.
+
+[^1]: Throughout the report, we link to the particular revision of any page that we consulted in our research.
+
+TODO: Do we need this section? Where should we go with it? 
+
+## The category system
 
 The second answer Wikipedia gives to the question, 'Who counts as Australian?' is: everyone who falls under [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people). There are nearly 100,000 articles on English Wikipedia that relate to Australian people, and the number is growing consistently (@fig-included-in-ozpeople-over-time).[^2]
 
