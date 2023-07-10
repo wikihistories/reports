@@ -6,7 +6,7 @@ author:
 ---
 
 ```{r message=FALSE, include=FALSE}
-devtools::install_github("wikihistories/wikkitidy")
+# devtools::install_github("wikihistories/wikkitidy")
 knitr::opts_chunk$set(
   echo = FALSE,
   message = FALSE
@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(igraph)
 library(wikkitidy)
+
+# Set to FALSE to re-download data
+USE_CACHE <- TRUE
 
 data_dir <- "data/who-counts"
 
@@ -38,7 +41,7 @@ get_aussies_category_tree <- function(use_cache = T) {
   }
   australians
 }
-australians <- get_aussies_category_tree()
+australians <- get_aussies_category_tree(use_cache = USE_CACHE)
 
 # Get all Wikidata items that are tagged with 'Australian' properties on Wikidata
 wikidata_australians <- readr::read_csv(file.path(data_dir, "australian_wikidata_records.csv"))
@@ -130,48 +133,41 @@ article_distances <- distances(
 
 Category:Australian people has `r length(category_graph) %>% prettyNum(",")` subcategories, many of which are even farther from the root than the staff of UTS. We can get a sense of how vast this structure is by taking [diameter](https://en.wikipedia.org/wiki/Distance_(graph_theory)#Related_concepts) of the category graph. In this case, the diameter is `r diameter(category_graph)`, which means that the most distant subcategory of `Category:Australian people` is `r diameter(category_graph)` steps away. Such distant nodes are called 'eccentric' in graph theory. In this case, the most distant subcategory truly is eccentric: `r farthest_vertices(category_graph)$vertices$title[[2]] %>% category_url()` does not include articles about 'Australian people' at all, but about indie rock records. This case is extreme. The case of UTS staffmembers is more typical. If we consider all the articles that have been placed in `Category:Australian people` or its subcategories, we find that the subcategories used are on average `r (mean(article_distances) - 1) %>% round(2)` steps away from the root, with a standard deviation of `r sd(article_distances) %>% round(2)`. In the typical case, when an editor adds an article to an 'Australian people' subcategory, the subcategory is 2-4 steps away from the root. It seems likely that editors are mostly unaware of the category graph as a whole. Editors work locally, trying to find the best categorisations for their articles, while Wikipedia's systems work globally, enforcing the hierarchical logic of the enormous and usually invisible category graph.
 
-If `Category:Australian people` can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia's 'Australian' biographies?
+If `Category:Australian people` can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia's 'Australian' biographies? Wikipedia itself does not clearly distinguish biographies from other kinds of article. To answer this question, we turn to its sister-project, Wikidata.
+
+## Wikidata properties
+
+To build a picture of the Australian *people* in Wikipedia, we queried Wikidata using its SPARQL endpoint. Wikidata clearly distinguishes humans from other kinds of entity. Wikidata is made up of *items* and *properties*. To describe the properties of an item, users insert *statements* into the database. Item [Q5](https://www.wikidata.org/wiki/Q5) represents the concept 'human'. To mark another item as a human, it must be given the property [P31](https://www.wikidata.org/wiki/Property:P31), 'instance of' with the value 'Q5'. So, for example, we can see that [Q1064745](https://www.wikidata.org/wiki/Q1064745), the poet Charles Harpur, is a human because he has the property P31(Q5), 'instance of: human'. While there are of course many gaps in Wikidata, and in theory there could be human 'items' that lack P31(Q5), it seems that Wikidata's contributors do a good job maintaining this part of the database. There are more than [10 million explicitly-marked humans](https://w.wiki/3c2J) in Wikidata, and it seems unlikely that many notable Australians have had their humanity overlooked by the system.
+
+As a first step, we retrieved the Wikidata items for all the pages in `Category:Australian people`, and distinguish them based on whether they have the property P31(Q5), 'instance of: human'.
 
 ```{r}
-get_persons <- function(use_cache = T) {
-  all_files <- list.files(data_dir)
-  these_files <- stringr::str_detect(all_files, "infobox-person-articles")
-  if (!use_cache || sum(these_files) == 0) {
-    # Get infobox person
-    persons <- wiki_action_request() %>% 
-      query_by_title("Template:Infobox person") %>% 
-      query_generate_pages("transcludedin", gtilimit = "max") %>% 
-      retrieve_all()
-    # Get pages that transclude sub-templates of infobox person
-    subtemplates <- persons %>% 
-      filter(
-        ns == 10,
-        stringr::str_detect(title, "Infobox"),
-        !stringr::str_detect(title, "/"),
-        title != "Template:Infobox person")
-    other_persons <- wiki_action_request() %>% 
-      query_by_pageid(subtemplates$pageid) %>% 
-      query_generate_pages("transcludedin", gtilimit = "max") %>% 
-      retrieve_all()
-    all_persons <- dplyr::bind_rows(persons, other_persons) %>% as_tibble()
-    write_rds(
-      all_persons,
-      file.path(
-        data_dir,
-        glue::glue("infobox-person-articles-{as.integer(Sys.time())}.rds")
-      ),
-      compress = "gz"
-    )
-  } else {
-    latest_file <- sort(all_files[these_files], decreasing = TRUE)[1]
-    all_persons <- readr::read_rds(file = file.path(data_dir, latest_file))
-  }
-  all_persons
+get_wikibase_item <- function(pageid) {
+  wiki_action_request() %>% 
+    query_by_pageid(pageid) %>% 
+    query_page_properties("pageprops", ppprop = "wikibase_item", pplimit = 50) %>% 
+    retrieve_all()
 }
-persons <- get_persons() %>% 
-  filter(ns == 0) %>% 
-  distinct(pageid, .keep_all = TRUE) %>% 
-  mutate(australian = pageid %in% australians$nodes$pageid)
+
+if (USE_CACHE == FALSE) {
+  australians_wikidata_items <- purrr::map(
+    split(australians$nodes$pageid, seq_along(australians$nodes$pageid) %/% 50),
+    get_wikibase_item,
+    .progress = T
+  ) %>%
+    dplyr::bind_rows() %>% 
+    readr::write_csv(file.path(data_dir, "australians-wikidata-items.csv"))
+} else {
+  australians_wikidata_items <- readr::read_csv(file.path(data_dir, "australians-wikidata-items.csv"))
+}
+
+```
+
+
+Although Wikidata indicates humanity clearly, it does not so clearly indicate the Australianness of a person. There are many different Wikidata properties that indicate a person could be Australian. Australia is item [Q408](https://www.wikidata.org/wiki/Q408). The three main ways a person can be linked to Australia in the database is by their citizenship ([P27](https://www.wikidata.org/wiki/P27)), place of birth ([P19](https://www.wikidata.org/wiki/P19)) or place of death ([P20](https://www.wikidata.org/wiki/P20)). 
+
+```{r}
+
 ```
 
 We can identify the biographies using the [person infobox](https://en.wikipedia.org/wiki/Template:Infobox_person) and its many [subtemplates](https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person). When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person's life, including for instance their date of birth, occupation and photograph. At the time of our analysis, `r nrow(persons) %>% prettyNum(",")` Wikipedia articles [transcluded](https://en.wikipedia.org/wiki/Help:Transclusion) a person infobox, of which `r sum(persons$australian) %>% prettyNum(",")` fell into `Category:Australian people`. By this metric, Australians are over-represented in English Wikipedia. Australia's 25 million inhabitants account for roughly `r round(25e6/7e9*100, 2)`% of the world's population, but `r round(sum(persons$australian) / nrow(persons) * 100, 2)`% of Wikipedia's biographies are categorised as Australian.
@@ -272,12 +268,6 @@ Further metrics for proportion of indigenous biographies:
 ## The search interface
 
 TODO
-
-## Wikidata properties
-
-TODO:
-
-- How do the explicit and impilict markers of Australianness overlap (e.g. citizenship vs. Australian honours)
 
 ## Conclusion: beyond bias
 
