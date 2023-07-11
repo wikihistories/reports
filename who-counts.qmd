@@ -44,7 +44,8 @@ get_aussies_category_tree <- function(use_cache = T) {
 australians <- get_aussies_category_tree(use_cache = USE_CACHE)
 
 # Get all Wikidata items that are tagged with 'Australian' properties on Wikidata
-wikidata_australians <- readr::read_csv(file.path(data_dir, "australian_wikidata_records.csv"))
+wikidata_australians <- file.path(data_dir, "aus_profiles_wikidata_prop.csv") %>% 
+  read_csv()
 ```
 
 Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
@@ -139,7 +140,49 @@ If `Category:Australian people` can include articles about indie rock albums, th
 
 To build a picture of the Australian *people* in Wikipedia, we queried Wikidata using its SPARQL endpoint. Wikidata clearly distinguishes humans from other kinds of entity. Wikidata is made up of *items* and *properties*. To describe the properties of an item, users insert *statements* into the database. Item [Q5](https://www.wikidata.org/wiki/Q5) represents the concept 'human'. To mark another item as a human, it must be given the property [P31](https://www.wikidata.org/wiki/Property:P31), 'instance of' with the value 'Q5'. So, for example, we can see that [Q1064745](https://www.wikidata.org/wiki/Q1064745), the poet Charles Harpur, is a human because he has the property P31(Q5), 'instance of: human'. While there are of course many gaps in Wikidata, and in theory there could be human 'items' that lack P31(Q5), it seems that Wikidata's contributors do a good job maintaining this part of the database. There are more than [10 million explicitly-marked humans](https://w.wiki/3c2J) in Wikidata, and it seems unlikely that many notable Australians have had their humanity overlooked by the system.
 
-As a first step, we retrieved the Wikidata items for all the pages in `Category:Australian people`, and distinguish them based on whether they have the property P31(Q5), 'instance of: human'.
+As a first step, we queried Wikidata to find all humans that were marked as 'Australian' in some way. Humans can be marked as Australian in two main ways on Wikidata:
+
+1. They can be explicitly linked to Australia through properties such as citizenship [], place of birth [] or place of death [], or
+2. They can be implicitly linked to Australia by being linked to a known database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
+
+We queried Wikidata by `r wikidata_australians$source %>% unique() %>% length()` properties that denote Australianness. Together, these properties are linked to `r wikidata_australians$person %>% unique() %>% length()` unique humans in the database.
+
+```{r}
+combined_data <- wikidata_australians %>% 
+  nest(source = source) %>% 
+  mutate(
+    title = str_remove(sitelink, "https://en.wikipedia.org/wiki/"),
+    title = str_replace_all(title, "_", " ")
+  ) %>% 
+  full_join(filter(australians$nodes, ns == 0), by = "title")
+```
+
+The Wikidata dataset and the Wikipedia dataset do not perfectly overlap, as shown in (@fig-overlap-table). A small number of the Wikidata Australians have Wikipedia articles that fall outside `Category:Australian People`, while there are more than 30,000 articles in `Category:Australian People` which do not correspond to an Australian person has recorded in Wikidata.
+
+```{r}
+#| label: fig-overlap-table
+#| fig-cap: Many of the Wikidata items correspond to a Wikipedia page in `Category:Australian People`, but many do not
+overlap_data <- combined_data %>% 
+  transmute(
+    title = title,
+    in_wikidata_set = !is.na(person),
+    in_wikipedia_set = !is.na(pageid)
+  ) %>% 
+  count(in_wikidata_set, in_wikipedia_set)
+
+overlap_data %>% 
+  pivot_wider(
+    names_from = in_wikidata_set:in_wikidata_set,
+    values_from = n
+  ) %>%
+  rename(`In Wikipedia Set?` = in_wikipedia_set) %>%  
+  knitr::kable() %>% 
+  kableExtra::add_header_above(
+    c(" " = 1, "In Wikidata set?" = 2)
+  ) %>% 
+  kableExtra::kable_styling("striped")
+```
+
 
 ```{r}
 get_wikibase_item <- function(pageid) {
@@ -150,113 +193,44 @@ get_wikibase_item <- function(pageid) {
 }
 
 if (USE_CACHE == FALSE) {
-  australians_wikidata_items <- purrr::map(
+  australians_wikidata_items <- map(
     split(australians$nodes$pageid, seq_along(australians$nodes$pageid) %/% 50),
     get_wikibase_item,
     .progress = T
   ) %>%
-    dplyr::bind_rows() %>% 
-    readr::write_csv(file.path(data_dir, "australians-wikidata-items.csv"))
+    bind_rows() %>% 
+    write_csv(file.path(data_dir, "australians-wikidata-items.csv"))
 } else {
-  australians_wikidata_items <- readr::read_csv(file.path(data_dir, "australians-wikidata-items.csv"))
+  australians_wikidata_items <- read_csv(file.path(data_dir, "australians-wikidata-items.csv"))
 }
 
-```
-
-
-Although Wikidata indicates humanity clearly, it does not so clearly indicate the Australianness of a person. There are many different Wikidata properties that indicate a person could be Australian. Australia is item [Q408](https://www.wikidata.org/wiki/Q408). The three main ways a person can be linked to Australia in the database is by their citizenship ([P27](https://www.wikidata.org/wiki/P27)), place of birth ([P19](https://www.wikidata.org/wiki/P19)) or place of death ([P20](https://www.wikidata.org/wiki/P20)). 
-
-```{r}
-
-```
-
-We can identify the biographies using the [person infobox](https://en.wikipedia.org/wiki/Template:Infobox_person) and its many [subtemplates](https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person). When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person's life, including for instance their date of birth, occupation and photograph. At the time of our analysis, `r nrow(persons) %>% prettyNum(",")` Wikipedia articles [transcluded](https://en.wikipedia.org/wiki/Help:Transclusion) a person infobox, of which `r sum(persons$australian) %>% prettyNum(",")` fell into `Category:Australian people`. By this metric, Australians are over-represented in English Wikipedia. Australia's 25 million inhabitants account for roughly `r round(25e6/7e9*100, 2)`% of the world's population, but `r round(sum(persons$australian) / nrow(persons) * 100, 2)`% of Wikipedia's biographies are categorised as Australian.
-
-Who are the people with biographies under `Category:Australian people`? In what follows, we consider how the category system represents Indigenous Australians and Australians by gender.
-
-```{r}
-indigenous_persons <- 40537624
-indigenous_tasmanian_persons <- 27672516
-indigenous_peoples <- 1603417
-indigenous_vertices <- ego(full_graph, vertex_by_id(full_graph, c(indigenous_persons, indigenous_tasmanian_persons)), order = diameter(full_graph), mode = "out")
-names(indigenous_vertices) <- c("main", "tasmania")
-```
-
-The category system represents Indigenous Australians in several different ways. Beneath `Category:Australian people` are two key subcategories: `r category_url("Category:Indigenous_Australian_people")` and `r category_url("Category:Indigenous Tasmanian people")`, which is separate. There is an additional category which lies outside Category:Australian people, `r category_url("Category:Indigenous peoples of Australia")`, which is supposed to contain articles about groups of Indigenous Australians. `Category:Indigenous Australian people` contains `r sum(indigenous_vertices$main$type == "subcat") - 1` subcategories and `r sum(indigenous_vertices$main$type == "page")` pages, of which `r sum(indigenous_vertices$main$name %in% persons$pageid)` are biographies.[^3] `Category:Indigenous Tasmanian people` contains `r sum(indigenous_vertices$tasmania$type == "subcat") - 1` subcategories and `r sum(indigenous_vertices$tasmania$type == "page")` pages, of which `r sum(indigenous_vertices$tasmania$name %in% persons$pageid)` are biographies. In fact, on closer inspection all 17 of the pages in `Category:Indigenous Tasmanian people` are biographies of individuals: it is simply that 9 of them lack the crucial `Template:Infobox person`.
-
-By these metrics, it appears that Indigenous Australians are under-represented in Wikipedia. In the 2021 Australian Census, "[812,728 people identified as being of Aboriginal and/or Torres Strait Islander origin, representing 3.2 per cent of the total population.](https://www.abs.gov.au/statistics/people/aboriginal-and-torres-strait-islander-peoples/aboriginal-and-torres-strait-islander-people-census/2021)" As @fig-indigenous-representation shows, Indigenous Australians account for less than 3.2% of `Category:Australian people` on English Wikipedia:
-
-```{r}
-#| label: fig-indigenous-representation
-#| fig-cap: Indigenous Australians are underrepresented in `Category:Australian people`
-indigenous_pageids <- c(indigenous_vertices$main$name, indigenous_vertices$tasmania$name)
-australians$nodes %>% 
-  filter(ns == 0) %>% 
-  mutate(
-    person_type = if_else(pageid %in% indigenous_pageids, "Indigenous", "Non-Indigenous"),
-    page_type = if_else(pageid %in% persons$pageid, "bio", "non_bio")
-    ) %>% 
-  group_by(person_type, page_type) %>% 
-  summarise(n = n()) %>% 
-  ungroup() %>% 
-  pivot_wider(names_from = page_type, values_from = n) %>% 
-  mutate(across(2:last_col(), \(x) round(x / sum(x) * 100, 2), .names = "{.col}_prop")) %>% 
-  select(
-    `Group` = person_type,
-    `Biography (pages)` = bio,
-    `Biography prop (%)` = bio_prop,
-    `Non-biography (pages)` = non_bio,
-    `Non-biography (%)` = non_bio_prop
+has_human_property <- function(wikidata_id) {
+  instance_of <- httr2::request(
+    glue::glue("https://www.wikidata.org/w/api.php?action=wbgetclaims&entity={wikidata_id}&property=P31")
   ) %>% 
-  add_row(!!!summarise_if(., is.numeric, sum)) %>% 
-  mutate(
-    Group = replace_na(Group, "Category:Australian people")
-  ) %>% 
-  knitr::kable()
+    httr2::req_error(is_error = function(x) FALSE) %>% 
+    httr2::req_perform()
+  if (!httr2::resp_is_error(response)) {
+    response_body <- httr2::resp_body_json(response)
+    value <- purrr::pluck(response_body, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = FALSE)
+  } else {
+    value <- FALSE
+  }
+  "Q5" %in% value
+}
+
+is_human <- function(wikidata_id) {
+  url <- paste0(
+    "https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=",
+    wikidata_id,
+    "&property=P31&props="
+    )
+  map_lgl(url, has_human_property, .progress = T)
+}
 ```
 
-[^3]: i.e., which transclude 'Template:Person infobox', as explained above.
 
-Wikipedians may be addressing this gap. Since the beginning of 2010, biographies of Indigenous Australians have increased by a factor of 7.5, while biographies of non-Indigenous Australians have increased by a factor of 6. (@fig-indigenous-biography-growth). Biographies of Indigenous Australians continue to grow more quickly than Non-Indigenous Australian biographies on Wikipedia. The story is different for non-biography pages about Indigenous Australians under `Category:Australian people`. These have only grown by a factor of about 3.6, and continue to grow sluggishly, though perhaps this can be explained by the existence of `Category:Ingigenous peoples of Australia`, which may absorb many articles that could otherwise fall under `Category:Australian people`.
 
-```{r}
-#| label: fig-indigenous-biography-growth
-#| fig-cap: Biographies of Indigenous Australians are increasing at a faster rate. The scale is relative (number of articles on the 1st of January 2010 = 1.0).
-#| fig.height: 9
-biography_growth <- australians$nodes %>% 
-  filter(ns == 0) %>% 
-  mutate(
-    group = if_else(pageid %in% indigenous_pageids, "Indigenous", "Non-Indigenous"),
-    page_type = if_else(pageid %in% persons$pageid, "Biography", "Non-Biography")) %>% 
-  left_join(australians$edges, join_by(pageid == target)) %>% 
-  mutate(day = as_datetime(timestamp) %>% round_date("day")) %>% 
-  group_by(pageid) %>% 
-  arrange(day, .by_group = TRUE) %>% 
-  slice(1) %>% 
-  group_by(group, page_type, day) %>% 
-  summarise(n = n()) %>% 
-  arrange(day, .by_group = TRUE)
-
-baseline <- biography_growth %>% 
-  filter(day <= "2010-01-01") %>% 
-  group_by(group, page_type) %>% 
-  summarise(baseline = sum(n))
-
-biography_growth %>% 
-  filter(day >= "2010-01-01") %>% 
-  left_join(baseline, join_by(group, page_type)) %>% 
-  mutate(growth = cumsum(n) / baseline + 1) %>% 
-  ggplot(aes(day, growth, colour = group)) +
-  facet_wrap(vars(page_type), nrow = 2) +
-  scale_y_continuous(breaks = 1:7) +
-  geom_line() +
-  labs(
-    x = "Time (days)",
-    y = "Total articles",
-    color = "Group"
-  )
-```
-Further metrics for proportion of indigenous biographies:
 
 - size in bytes
 - pageviews

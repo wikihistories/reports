@@ -62,6 +62,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -137,8 +140,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#textual-representation" id="toc-textual-representation" class="nav-link active" data-scroll-target="#textual-representation">Textual representation</a></li>
   <li><a href="#the-category-system" id="toc-the-category-system" class="nav-link" data-scroll-target="#the-category-system">The category system</a></li>
-  <li><a href="#the-search-interface" id="toc-the-search-interface" class="nav-link" data-scroll-target="#the-search-interface">The search interface</a></li>
   <li><a href="#wikidata-properties" id="toc-wikidata-properties" class="nav-link" data-scroll-target="#wikidata-properties">Wikidata properties</a></li>
+  <li><a href="#the-search-interface" id="toc-the-search-interface" class="nav-link" data-scroll-target="#the-search-interface">The search interface</a></li>
   <li><a href="#conclusion-beyond-bias" id="toc-conclusion-beyond-bias" class="nav-link" data-scroll-target="#conclusion-beyond-bias">Conclusion: beyond bias</a></li>
   </ul>
 </nav>
@@ -205,71 +208,75 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>When editors include articles in <code>Category:Australian people</code>, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast tree-like <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph</a> of categories. The editor who categorised <a href="https://en.wikipedia.org/wiki/Steve_Wozniak">Steve Wozniak</a> as a <a href="https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney">staff member of the University of Technology Sydney</a> was probably unaware that they were thereby categorising Wozniak as an ‘Australian person’. The category for academic staff at UTS lies several layers deep in the category graph, 4 steps away from the root: <a href="https://en.wikipedia.org/wiki/Category:Academic%20staff%20of%20the%20University%20of%20Technology%20Sydney">Category:Academic staff of the University of Technology Sydney</a> → <a href="https://en.wikipedia.org/wiki/Category:People%20from%20Sydney%20by%20occupation">Category:People from Sydney by occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian%20people%20by%20city%20and%20occupation">Category:Australian people by city and occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian%20people%20by%20occupation">Category:Australian people by occupation</a> → <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian_people</a>. Perhaps an editor may quibble that a person who works at UTS is not necessarily ‘from Sydney’, but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.</p>
 <p>Category:Australian people has 9,220 subcategories, many of which are even farther from the root than the staff of UTS. We can get a sense of how vast this structure is by taking <a href="https://en.wikipedia.org/wiki/Distance_(graph_theory)#Related_concepts">diameter</a> of the category graph. In this case, the diameter is 11, which means that the most distant subcategory of <code>Category:Australian people</code> is 11 steps away. Such distant nodes are called ‘eccentric’ in graph theory. In this case, the most distant subcategory truly is eccentric: <a href="https://en.wikipedia.org/wiki/Category:Custard%20(band)%20compilation%20albums">Category:Custard (band) compilation albums</a> does not include articles about ‘Australian people’ at all, but about indie rock records. This case is extreme. The case of UTS staffmembers is more typical. If we consider all the articles that have been placed in <code>Category:Australian people</code> or its subcategories, we find that the subcategories used are on average 3.12 steps away from the root, with a standard deviation of 0.98. In the typical case, when an editor adds an article to an ‘Australian people’ subcategory, the subcategory is 2-4 steps away from the root. It seems likely that editors are mostly unaware of the category graph as a whole. Editors work locally, trying to find the best categorisations for their articles, while Wikipedia’s systems work globally, enforcing the hierarchical logic of the enormous and usually invisible category graph.</p>
-<p>If <code>Category:Australian people</code> can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia’s ‘Australian’ biographies?</p>
-<p>We can identify the biographies using the <a href="https://en.wikipedia.org/wiki/Template:Infobox_person">person infobox</a> and its many <a href="https://en.wikipedia.org/wiki/Category:Templates_calling_Infobox_person">subtemplates</a>. When an editor adds a person infobox to an article, it is a strong (though not foolproof) indicator that the article is a biography. The infobox typically appears near the start of the article, and contains structured data about the person’s life, including for instance their date of birth, occupation and photograph. At the time of our analysis, 683,761 Wikipedia articles <a href="https://en.wikipedia.org/wiki/Help:Transclusion">transcluded</a> a person infobox, of which 17,878 fell into <code>Category:Australian people</code>. By this metric, Australians are over-represented in English Wikipedia. Australia’s 25 million inhabitants account for roughly 0.36% of the world’s population, but 2.61% of Wikipedia’s biographies are categorised as Australian.</p>
-<p>Who are the people with biographies under <code>Category:Australian people</code>? In what follows, we consider how the category system represents Indigenous Australians and Australians by gender.</p>
-<p>The category system represents Indigenous Australians in several different ways. Beneath <code>Category:Australian people</code> are two key subcategories: <a href="https://en.wikipedia.org/wiki/Category:Indigenous_Australian_people">Category:Indigenous_Australian_people</a> and <a href="https://en.wikipedia.org/wiki/Category:Indigenous%20Tasmanian%20people">Category:Indigenous Tasmanian people</a>, which is separate. There is an additional category which lies outside Category:Australian people, <a href="https://en.wikipedia.org/wiki/Category:Indigenous%20peoples%20of%20Australia">Category:Indigenous peoples of Australia</a>, which is supposed to contain articles about groups of Indigenous Australians. <code>Category:Indigenous Australian people</code> contains 64 subcategories and 1873 pages, of which 473 are biographies.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <code>Category:Indigenous Tasmanian people</code> contains 0 subcategories and 17 pages, of which 6 are biographies. In fact, on closer inspection all 17 of the pages in <code>Category:Indigenous Tasmanian people</code> are biographies of individuals: it is simply that 9 of them lack the crucial <code>Template:Infobox person</code>.</p>
-<p>By these metrics, it appears that Indigenous Australians are under-represented in Wikipedia. In the 2021 Australian Census, “<a href="https://www.abs.gov.au/statistics/people/aboriginal-and-torres-strait-islander-peoples/aboriginal-and-torres-strait-islander-people-census/2021">812,728 people identified as being of Aboriginal and/or Torres Strait Islander origin, representing 3.2 per cent of the total population.</a>” As <a href="#fig-indigenous-representation">Figure&nbsp;2</a> shows, Indigenous Australians account for less than 3.2% of <code>Category:Australian people</code> on English Wikipedia:</p>
+<p>If <code>Category:Australian people</code> can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia’s ‘Australian’ biographies? Wikipedia itself does not clearly distinguish biographies from other kinds of article. To answer this question, we turn to its sister-project, Wikidata.</p>
+</section>
+<section id="wikidata-properties" class="level2">
+<h2 class="anchored" data-anchor-id="wikidata-properties">Wikidata properties</h2>
+<p>To build a picture of the Australian <em>people</em> in Wikipedia, we queried Wikidata using its SPARQL endpoint. Wikidata clearly distinguishes humans from other kinds of entity. Wikidata is made up of <em>items</em> and <em>properties</em>. To describe the properties of an item, users insert <em>statements</em> into the database. Item <a href="https://www.wikidata.org/wiki/Q5">Q5</a> represents the concept ‘human’. To mark another item as a human, it must be given the property <a href="https://www.wikidata.org/wiki/Property:P31">P31</a>, ‘instance of’ with the value ‘Q5’. So, for example, we can see that <a href="https://www.wikidata.org/wiki/Q1064745">Q1064745</a>, the poet Charles Harpur, is a human because he has the property P31(Q5), ‘instance of: human’. While there are of course many gaps in Wikidata, and in theory there could be human ‘items’ that lack P31(Q5), it seems that Wikidata’s contributors do a good job maintaining this part of the database. There are more than <a href="https://w.wiki/3c2J">10 million explicitly-marked humans</a> in Wikidata, and it seems unlikely that many notable Australians have had their humanity overlooked by the system.</p>
+<p>As a first step, we queried Wikidata to find all humans that were marked as ‘Australian’ in some way. Humans can be marked as Australian in two main ways on Wikidata:</p>
+<ol type="1">
+<li>They can be explicitly linked to Australia through properties such as citizenship [], place of birth [] or place of death [], or</li>
+<li>They can be implicitly linked to Australia by being linked to a known database of Australians, such as the Dictionary of Australian Biography (<a href="https://www.wikidata.org/wiki/Property:P1907">P1907</a>), Indigenous Australia(<a href="https://www.wikidata.org/wiki/Property:P9246">P9246</a>), or Convict Records of Australia (<a href="https://www.wikidata.org/wiki/Property:P9919">P9919</a>)</li>
+</ol>
+<p>We queried Wikidata by 51 properties that denote Australianness. Together, these properties are linked to 63260 unique humans in the database.</p>
+<p>The Wikidata dataset and the Wikipedia dataset do not perfectly overlap, as shown in (<a href="#fig-overlap-table">Figure&nbsp;2</a>). A small number of the Wikidata Australians have Wikipedia articles that fall outside <code>Category:Australian People</code>, while there are more than 30,000 articles in <code>Category:Australian People</code> which do not correspond to an Australian person has recorded in Wikidata.</p>
 <div class="cell">
-<div id="fig-indigenous-representation" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-overlap-table" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 17%">
-<col style="width: 18%">
-<col style="width: 21%">
-<col style="width: 17%">
-</colgroup>
+
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">Group</th>
-<th style="text-align: right;">Biography (pages)</th>
-<th style="text-align: right;">Biography prop (%)</th>
-<th style="text-align: right;">Non-biography (pages)</th>
-<th style="text-align: right;">Non-biography (%)</th>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+In Wikidata set?
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+In Wikipedia Set?
+</th>
+<th style="text-align:right;">
+FALSE
+</th>
+<th style="text-align:right;">
+TRUE
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Indigenous</td>
-<td style="text-align: right;">473</td>
-<td style="text-align: right;">2.65</td>
-<td style="text-align: right;">1400</td>
-<td style="text-align: right;">1.74</td>
+<tr>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+37401
+</td>
+<td style="text-align:right;">
+60817
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Non-Indigenous</td>
-<td style="text-align: right;">17405</td>
-<td style="text-align: right;">97.35</td>
-<td style="text-align: right;">78843</td>
-<td style="text-align: right;">98.26</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Category:Australian people</td>
-<td style="text-align: right;">17878</td>
-<td style="text-align: right;">100.00</td>
-<td style="text-align: right;">80243</td>
-<td style="text-align: right;">100.00</td>
+<tr>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+2546
+</td>
 </tr>
 </tbody>
+
 </table>
-<figcaption class="figure-caption">Figure&nbsp;2: Indigenous Australians are underrepresented in <code>Category:Australian people</code></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2: Many of the Wikidata items correspond to a Wikipedia page in <code>Category:Australian People</code>, but many do not</figcaption>
 </figure>
 </div>
 </div>
-<p>Wikipedians may be addressing this gap. Since the beginning of 2010, biographies of Indigenous Australians have increased by a factor of 7.5, while biographies of non-Indigenous Australians have increased by a factor of 6. (<a href="#fig-indigenous-biography-growth">Figure&nbsp;3</a>). Biographies of Indigenous Australians continue to grow more quickly than Non-Indigenous Australian biographies on Wikipedia. The story is different for non-biography pages about Indigenous Australians under <code>Category:Australian people</code>. These have only grown by a factor of about 3.6, and continue to grow sluggishly, though perhaps this can be explained by the existence of <code>Category:Ingigenous peoples of Australia</code>, which may absorb many articles that could otherwise fall under <code>Category:Australian people</code>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-indigenous-biography-growth" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-indigenous-biography-growth-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Biographies of Indigenous Australians are increasing at a faster rate. The scale is relative (number of articles on the 1st of January 2010 = 1.0).</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Further metrics for proportion of indigenous biographies:</p>
 <ul>
 <li>size in bytes</li>
 <li>pageviews</li>
@@ -281,13 +288,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-search-interface" class="level2">
 <h2 class="anchored" data-anchor-id="the-search-interface">The search interface</h2>
 <p>TODO</p>
-</section>
-<section id="wikidata-properties" class="level2">
-<h2 class="anchored" data-anchor-id="wikidata-properties">Wikidata properties</h2>
-<p>TODO:</p>
-<ul>
-<li>How do the explicit and impilict markers of Australianness overlap (e.g.&nbsp;citizenship vs.&nbsp;Australian honours)</li>
-</ul>
 </section>
 <section id="conclusion-beyond-bias" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion-beyond-bias">Conclusion: beyond bias</h2>
@@ -302,7 +302,6 @@ ul.task-list li input[type="checkbox"] {
 <ol>
 <li id="fn1"><p>Throughout the report, we link to the particular revision of any page that we consulted in our research.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The growth was calculated using the <code>timestamp</code> data returned by <a href="https://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>. The <code>timestamp</code> records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>i.e., which transclude ‘Template:Person infobox’, as explained above.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
