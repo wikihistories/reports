@@ -44,32 +44,27 @@ get_aussies_category_tree <- function(use_cache = T) {
 australians <- get_aussies_category_tree(use_cache = USE_CACHE)
 
 # Get all Wikidata items that are tagged with 'Australian' properties on Wikidata
-wikidata_australians <- file.path(data_dir, "aus_profiles_wikidata_prop.csv") %>% 
-  read_csv()
+# Supplement with missing 'Australian citizens'
+wikidata_australians <- read_csv(file.path(data_dir, "aus_profiles_wikidata_prop.csv")) %>% 
+  mutate(
+    title = str_remove(sitelink, "https://en.wikipedia.org/wiki/"),
+    title = str_replace_all(title, "_", " "),
+    person = str_remove(person, "http://www.wikidata.org/entity/")
+  )
+citizens <- read_csv(file.path(data_dir, "all-wikidata-australian-citizens.csv")) %>% 
+  filter(!personLabel %in% wikidata_australians$personLabel)
+wikidata_australians <- bind_rows(wikidata_australians, citizens)
 ```
 
 Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
 
-In this report, we consider several ways that Australians are represented in Wikipedia and Wikidata. We focus on four main modes of representation:
-
-- [Textual representation]: How Wikipedia answers the question 'who counts as Australian' in its articles on the topic
-- [The category system]: How Wikipedia categorises people as 'Australian'—including its categorisation of Indigenous Australians
-- [Wikidata properties]: How Wikidata splits the concept of 'Australian' across different properties in the database
-- [The search interface]: How Wikipedia selects and sorts 'Australians' when you search the encyclopaedia
-
-In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse. 
+In this report, we consider several ways that Australians are represented in Wikipedia and Wikidata. More specifically, we focus on how *individual* Australians are represented, in the form of biographical articles (Wikipedia) or 'items' (Wikidata). Our analysis unfolds in three main sections. In [Data], we explain how we built our datasets for analysis: by leveraging Wikipedia's category system, and Wikidata's query engine. In [#who-counts-1-properties], we consider the various ways that a person can be marked as 'Australian' in Wikidata. In [#who-counts-2-quality], we use article quality statistics from XTools to explore how Wikipedia and its users divide their attention between different kinds of Australians. In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
 
 ![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
 
-## Textual representation
+## Data
 
-The first answer Wikipedia gives to the question 'Who counts as Australian?' is: [any 'individual' with a 'residential, legal, historical or ethno-cultural' connection to 'the country of Australia'](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782).[^1] At the time of writing, the 'Australians' comprise an estimated [26,468,200](https://en.wikipedia.org/w/index.php?title=Australia&oldid=1153684876) residents of Australia, and a diaspora of [577,255](https://en.wikipedia.org/w/index.php?title=Australians&oldid=1150975782) Australians overseas.
-
-[^1]: Throughout the report, we link to the particular revision of any page that we consulted in our research.
-
-TODO: Do we need this section? Where should we go with it? 
-
-## The category system
+### Wikipedia: The category system
 
 The second answer Wikipedia gives to the question, 'Who counts as Australian?' is: everyone who falls under [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people). There are nearly 100,000 articles on English Wikipedia that relate to Australian people, and the number is growing consistently (@fig-included-in-ozpeople-over-time).[^2]
 
@@ -136,32 +131,29 @@ Category:Australian people has `r length(category_graph) %>% prettyNum(",")` sub
 
 If `Category:Australian people` can include articles about indie rock albums, then the question arises: How many of the articles are actually biographies of people connected to Australia? If we can isolate these articles, then more detailed questions become possible: How are different kinds of people represented among Wikipedia's 'Australian' biographies? Wikipedia itself does not clearly distinguish biographies from other kinds of article. To answer this question, we turn to its sister-project, Wikidata.
 
-## Wikidata properties
+### Wikidata: The query engine
 
-To build a picture of the Australian *people* in Wikipedia, we queried Wikidata using its SPARQL endpoint. Wikidata clearly distinguishes humans from other kinds of entity. Wikidata is made up of *items* and *properties*. To describe the properties of an item, users insert *statements* into the database. Item [Q5](https://www.wikidata.org/wiki/Q5) represents the concept 'human'. To mark another item as a human, it must be given the property [P31](https://www.wikidata.org/wiki/Property:P31), 'instance of' with the value 'Q5'. So, for example, we can see that [Q1064745](https://www.wikidata.org/wiki/Q1064745), the poet Charles Harpur, is a human because he has the property P31(Q5), 'instance of: human'. While there are of course many gaps in Wikidata, and in theory there could be human 'items' that lack P31(Q5), it seems that Wikidata's contributors do a good job maintaining this part of the database. There are more than [10 million explicitly-marked humans](https://w.wiki/3c2J) in Wikidata, and it seems unlikely that many notable Australians have had their humanity overlooked by the system.
+To build a picture of the Australian *people* in Wikipedia, we queried Wikidata in two different ways.
+
+1. We queried Wikidata for items representing Australian people
+2. We fetched the Wikidata item for each article in `Category:Australian people`, and checked to see if the item was labelled 'human' in Wikidata
+
+It turns out that these two approaches return different sets of people, as we explain below. There are many people who have Wikipedia articles in `Category:Australian people` who are not clearly marked as 'Australian' in Wikidata. Likewise, there are many people who are marked as 'Australian' in Wikidata, but who lack a Wikipedia article in `Category:Australian people`. 
+
+Wikidata clearly distinguishes humans from other kinds of entity. Wikidata is made up of *items* and *properties*. To describe the properties of an item, users insert *statements* into the database. Item [Q5](https://www.wikidata.org/wiki/Q5) represents the concept 'human'. To mark another item as a human, it must be given the property [P31](https://www.wikidata.org/wiki/Property:P31), 'instance of' with the value 'Q5'. So, for example, we can see that [Q1064745](https://www.wikidata.org/wiki/Q1064745), the poet Charles Harpur, is a human because he has the property P31(Q5), 'instance of: human'. While there are of course many gaps in Wikidata, and in theory there could be human 'items' that lack P31(Q5), it seems that Wikidata's contributors do a good job maintaining this part of the database. There are more than [10 million explicitly-marked humans](https://w.wiki/3c2J) in Wikidata, and it seems unlikely that many notable Australians have had their humanity overlooked by the system.
 
 As a first step, we queried Wikidata to find all humans that were marked as 'Australian' in some way. Humans can be marked as Australian in two main ways on Wikidata:
 
-1. They can be explicitly linked to Australia through properties such as citizenship [], place of birth [] or place of death [], or
-2. They can be implicitly linked to Australia by being linked to a known database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
+1. They can be explicitly linked to Australia through properties such as citizenship ([P27](https://www.wikidata.org/wiki/Property:P27)), place of birth ([P19](https://www.wikidata.org/wiki/Property:P19)) or place of death ([P570](https://www.wikidata.org/wiki/Property:P570)); or
+2. They can be implicitly linked to Australia by being linked to a known database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia ([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
 
 We queried Wikidata by `r wikidata_australians$source %>% unique() %>% length()` properties that denote Australianness. Together, these properties are linked to `r wikidata_australians$person %>% unique() %>% length()` unique humans in the database.
 
 ```{r}
 combined_data <- wikidata_australians %>% 
   nest(source = source) %>% 
-  mutate(
-    title = str_remove(sitelink, "https://en.wikipedia.org/wiki/"),
-    title = str_replace_all(title, "_", " ")
-  ) %>% 
   full_join(filter(australians$nodes, ns == 0), by = "title")
-```
 
-The Wikidata dataset and the Wikipedia dataset do not perfectly overlap, as shown in (@fig-overlap-table). A small number of the Wikidata Australians have Wikipedia articles that fall outside `Category:Australian People`, while there are more than 30,000 articles in `Category:Australian People` which do not correspond to an Australian person has recorded in Wikidata.
-
-```{r}
-#| label: fig-overlap-table
-#| fig-cap: Many of the Wikidata items correspond to a Wikipedia page in `Category:Australian People`, but many do not
 overlap_data <- combined_data %>% 
   transmute(
     title = title,
@@ -169,20 +161,9 @@ overlap_data <- combined_data %>%
     in_wikipedia_set = !is.na(pageid)
   ) %>% 
   count(in_wikidata_set, in_wikipedia_set)
-
-overlap_data %>% 
-  pivot_wider(
-    names_from = in_wikidata_set:in_wikidata_set,
-    values_from = n
-  ) %>%
-  rename(`In Wikipedia Set?` = in_wikipedia_set) %>%  
-  knitr::kable() %>% 
-  kableExtra::add_header_above(
-    c(" " = 1, "In Wikidata set?" = 2)
-  ) %>% 
-  kableExtra::kable_styling("striped")
 ```
 
+The Wikidata dataset and the Wikipedia dataset do not perfectly overlap. There are `r overlap_data %>% filter(!in_wikipedia_set, in_wikidata_set) %>% pull(n) %>% prettyNum(",")` people we found in our queries to Wikidata who lack a Wikipedia article in `Category:Australian People`. Likewise, there are `r overlap_data %>% filter(in_wikipedia_set, !in_wikidata_set) %>% pull(n) %>% prettyNum(",")` articles in `Category:Australian people` which did not turn up when we queried Wikidata. Of course, many of these `r overlap_data %>% filter(in_wikipedia_set, !in_wikidata_set) %>% pull(n) %>% prettyNum(",")` articles do not represent individual people. We have already seen that one of the articles represents a compilation album by the Melbourne band Custard. There are also many lists, general articles about groups of people and other miscellaneous articles in `Category:Australian people`. How can the datasets be compared?
 
 ```{r}
 get_wikibase_item <- function(pageid) {
@@ -204,33 +185,78 @@ if (USE_CACHE == FALSE) {
   australians_wikidata_items <- read_csv(file.path(data_dir, "australians-wikidata-items.csv"))
 }
 
-has_human_property <- function(wikidata_id) {
-  instance_of <- httr2::request(
-    glue::glue("https://www.wikidata.org/w/api.php?action=wbgetclaims&entity={wikidata_id}&property=P31")
-  ) %>% 
-    httr2::req_error(is_error = function(x) FALSE) %>% 
-    httr2::req_perform()
-  if (!httr2::resp_is_error(response)) {
-    response_body <- httr2::resp_body_json(response)
-    value <- purrr::pluck(response_body, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = FALSE)
-  } else {
-    value <- FALSE
-  }
-  "Q5" %in% value
+# See scripts/check-if-human.R
+load_biography_data <- function() {
+  data_files <- list.files(data_dir)
+  which_biography <- str_detect(data_files, "category-australia-biographies")
+  biography_tbl <- data_files[which_biography] %>%
+    file.path(data_dir, .) %>% 
+    map(read_csv) %>% 
+    bind_rows()
+  biography_tbl
 }
 
-is_human <- function(wikidata_id) {
-  url <- paste0(
-    "https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=",
-    wikidata_id,
-    "&property=P31&props="
-    )
-  map_lgl(url, has_human_property, .progress = T)
-}
+combined_data <- load_biography_data() %>% 
+  select(pageid, biography) %>% 
+  right_join(combined_data, by = "pageid") %>% 
+  mutate(biography = biography | !is.na(person))
 ```
 
+To make the datasets comparable, we filtered out non-biographies from the Wikipedia dataset. To do this, we retrieved the Wikidata item for each Wikipedia article, and checked if it had property P31(Q5), 'instance of: human'. This left `r filter(combined_data, biography & !is.na(pageid)) %>% nrow() %>% prettyNum(",")` Wikipedia articles from `Category:Australian people` which we were confident are biographies. These biographies overlap substantially, but not perfectly, with the set of people we found on Wikidata by querying Australian properties (@fig-biography-overlap-table).
+
+```{r}
+#| label: fig-biography-overlap-table
+#| fig-cap: There is substantial, but incomplete overlap between the biographies in the two datasets
+bio_overlap <- combined_data %>% 
+  filter(biography) %>% 
+  transmute(
+    title = title,
+    in_wikidata_set = !is.na(person),
+    in_wikipedia_set = !is.na(pageid)
+  ) %>% 
+  count(in_wikidata_set, in_wikipedia_set)
+
+bio_overlap %>% 
+  pivot_wider(
+    names_from = in_wikidata_set:in_wikidata_set,
+    values_from = n
+  ) %>%
+  select(1,3,2) %>% 
+  rename(`In Wikipedia Set?` = in_wikipedia_set) %>%  
+  knitr::kable() %>% 
+  kableExtra::add_header_above(
+    c(" " = 1, "In Wikidata set?" = 2)
+  ) %>% 
+  kableExtra::kable_styling("striped")
+```
+
+## Who Counts (1)? Properties
+
+We have seen how difficult it is to judge whether someone is 'Australian'. This difficulty has two sides: space and time.
+
+In space, it is difficult to judge whether a person is close enough to Australia to count as Australian. At one end is someone who is born, lives and dies in Australia, such as [Oodgeroo Noonuccal](https://en.wikipedia.org/wiki/Oodgeroo_Noonuccal). At the other end of the spectrum is someone who has only a passing cultural or economic connection to Australia, such as [Steve Wozniak](https://en.wikipedia.org/wiki/Steve_Wozniak).
+
+In time, it is difficult to judge when in history it becomes reasonable to describe someone as 'Australian'. The term 'Terra Australis' ('Southern Land') was coined in the 16th century, before Europeans knew about either Australia or Antarctica. In the end, neither Australia nor Antarctica matched European expectations about the 'Southern Land', though Australia, being discovered by Europeans first, acquired the name. New South Wales was invaded by the British in 1788. The term 'Australia' was substituted for 'Terra Australis' in 1813. The colonies of Australia federated into a single Commonwealth in 1901. The resulting Commonwealth of Australia only achieved full independence from Britain in 1988. Of course, human occupation predates the British invasion by tens of thousands of years. In the course of that human occupation, the very shape of the Australian landmass has varied. 10,000 years ago, the Australian mainland, Papua New Guinea and Tasmania formed a single contiguous landmass that geologers call [Sahul](https://en.wikipedia.org/wiki/Sahul). Are all the people who occupied Sahul at any point in time 'Australians'? Or can only residents or citizens of the country 'Australia' be so named? Like space, time wreaks havoc on the category 'Australian'.
+
+Wikidata's contributors are aware of these difficulties. The simplest way to mark someone as 'Australian' in Wikidata is to give 'Australia' as the person's 'country of citizenship ([P27](https://www.wikidata.org/wiki/Property:P27)). Our dataset contains `r wikidata_australians %>% filter(source == "aus_citizens_wd") %>% nrow() %>% prettyNum(',')` 'Australian citizens' according to 'country of citizenship'. A glance at [the Talk page for P27](https://www.wikidata.org/wiki/Property_talk:P27) reveals that Wikimedians are keenly aware of the difficulties of space and time.
+
+The user Ghouston clearly clearly articulated the problem of time in a post from 2018:
+
+> It's not easy. Australian citizenship didn't exist before 1949, yet Australia as a federation has existed since 1901 and the term "Australian" was in use in the 19th century. To say that the United Kingdom was created in 1927 or the Netherlands perhaps in 1815 or 1945 or China in 1949 is to ignore much of the history of these countries as states.
+
+Two years later, Ghouston provided additional sources and mentioned a possible solution:
+
+> Separate items for citizenships and nationalities have been proposed previously. Perhaps it would help. The term "Australian" for people living in Australia was already used in the 19th century, before Australia had even been federated as a state, e.g., [[2](https://trove.nla.gov.au/newspaper/article/197054485)]. According to [[3](https://www.passport-collector.com/evolution-australian-passport/)], Australia started issuing passports after federation, and didn't even restrict it to British subjects until 1938, but it seems that passports were not used much prior to WW1, and there was a more flexible attitude to nationality.
+
+At the time of writing, there is [no Wikidata property for 'nationality'](https://www.wikidata.org/w/index.php?title=Wikidata:Property_proposal/Nationality&oldid=1232071609). Instead, the property of citizenship is limited according to the 'inception' ([P571](https://www.wikidata.org/wiki/Property:P571)) of the given country and the death date of the given person. The start date of Australia is given as [1 January 1901 in Wikidata](https://www.wikidata.org/wiki/Q408#P571). If a person is assigned Australian citizenship in Wikidata, and their death date occurs before 1 January 1901, then a warning appears in their Wikidata page. At the time of writing, [the Wikidata item for colonial poet Charles Harpur](https://www.wikidata.org/w/index.php?title=Q1064745&oldid=1933534532) contains such a warning (@fig-citizenship-warning). Harpur, who proudly described him as as 'An Australian' [in newspaper publications from the 1830s](http://nla.gov.au/nla.news-article32148201), died in 1868.
+
+![Citzenship warning banner for Charles Harpur](assets/citizenship-warning.png){#fig-citizenship-warning}
+
+On the talk page for P27 ('country of citizenship'), the difficulty of space is less clearly articulated. Perhaps this is because of the way citizenship is defined in Wikidata: '[the object is a country that recognizes the subject as its citizen](https://www.wikidata.org/wiki/Property:P27)'. This definition is open to the difficulty of time (when did what country start recognising citizens, exactly?), but is  less open to the difficulty of space. Either a person is recognised as a citizen or they are not.
 
 
+
+## Who Counts (2)? Quality
 
 - size in bytes
 - pageviews
@@ -238,10 +264,6 @@ is_human <- function(wikidata_id) {
 - number of edits
 
 *TODO*: Dig into category graph to explore gender and indigeneity.
-
-## The search interface
-
-TODO
 
 ## Conclusion: beyond bias
 
