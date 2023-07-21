@@ -217,8 +217,8 @@ rowing_aus <- query_wikidata(
 
 
 
-##Vic Parliament
-Vic_parliament_aus <- query_wikidata(
+##Design and art aus
+design_and_art_aus <- query_wikidata(
   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
 
   WHERE {
@@ -1222,7 +1222,7 @@ wp_bio_gov_NSW <- query_wikidata(
         ?statement0 (ps:P39) wd:Q1528895.
       }
     }
-    
+
 
       OPTIONAL{?person wdt:P21 ?gender.}
       OPTIONAL{?person wdt:P569 ?dob.}
@@ -1425,8 +1425,8 @@ aus_stage <- query_wikidata(
   mutate(dob=as_date(dob),
          dod=as_date(dod))
 
-nsw_wa_check <- NSW_legislative %>% 
-  
+nsw_wa_check <- NSW_legislative %>%
+
 
 
 NSW_legislative <- query_wikidata(
@@ -1634,19 +1634,19 @@ all_records <- bind_rows (AGSA_creator_aus, athletics_aus, aus_citizens_wd,
 
 all_records_wp <- all_records %>%
   filter(!is.na(sitelink)) %>%
-  
+
   group_by(person, source) %>%
   arrange(person, source,pobLabel, dob) %>%
   mutate(dob_row_num = row_number()) %>%
   ungroup() %>%
   filter(dob_row_num == 1) %>% ##this takes the first dob entered in / fixes duplicates if two DOB
-  
+
   group_by(person, source) %>%
   arrange(person, source,dod) %>%
   mutate(dod_row_num = row_number()) %>%
   ungroup() %>%
   filter(dod_row_num == 1) %>% ##this takes the first dod entered in / fixes duplicates if two DOD
-  
+
   group_by(person, source) %>%
   arrange(person, source, pobLabel) %>%
   mutate(pob_row_num = row_number()) %>%
@@ -1791,7 +1791,7 @@ clean_records2 <- clean_records %>%
 # View(filter_records)
 filter_records <- clean_records2 %>%
   filter(clean !="do not keep")
- 
+
 
 write_csv(filter_records, "aus_profiles_wikidata_prop.csv")
 
@@ -1922,7 +1922,7 @@ match <- bind_rows(name_match_wikipedia, name_match_wikidata) %>%
 
 # View(match)
 
-no_match_wikidata <- match %>% 
+no_match_wikidata <- match %>%
   filter(source == "wikidata" & match=="no match")
 
 
