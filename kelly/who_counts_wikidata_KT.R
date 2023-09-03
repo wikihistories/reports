@@ -523,9 +523,19 @@ honoursID_aus <- query_wikidata(
   mutate(dob=as_date(dob),
          dod=as_date(dod))
 
+gender_order_wikidata <- honoursID_aus %>%
+  filter(!is.na(sitelink)) %>% 
+  group_by(personLabel) %>% 
+  slice_head() %>% 
+  ungroup() %>% 
+  select(genderLabel) %>% 
+  group_by(genderLabel) %>% 
+  tally() %>% 
+  mutate(prop = n/sum(n))
+  
+
 # View(honoursID_aus)
 # View(aus_parliament)
-
 
 parliament_aus <- query_wikidata(
   "SELECT DISTINCT  ?person ?personLabel ?personDescription ?genderLabel ?dob ?dod ?pobLabel ?sitelink
