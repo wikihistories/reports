@@ -2,6 +2,9 @@ library(tidyverse)
 library(ggcorrplot)
 library(directlabels)
 library(GGally)
+library(ggvenn)
+library(readr)
+library(scales)
 
 
 
@@ -27,122 +30,14 @@ gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 
 # View(unique_records)
 
-years <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(year) %>%
-  tally(name="year_tally") %>%
-  drop_na() %>%
-  ungroup() %>%
-  mutate(total=sum(year_tally))
-
-
-# View(decades)
-
-decades <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(decade) %>%
-  tally(name="decade_tally") %>%
-  drop_na()
 
 
 
-# year_of_birth_chart <- ggplot(years, aes(year, year_tally)) +
-#   geom_line()
 
-
-decade_of_birth_chart <- ggplot(decades, aes(decade, decade_tally)) +
-  geom_col(fill="darkolivegreen")+
-  scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
-  who_counts_format
-  
-decade_of_birth_chart
-
-
-##gender split
-years_gender <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  filter(genderLabel!= "male organism") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, year) %>%
-  tally(name="year_tally") %>%
-  drop_na()
-
-decades_gender <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  filter(genderLabel!= "male organism") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, decade) %>%
-  tally(name="decade_tally") %>%
-  drop_na() %>% 
-  mutate(Gender = case_when(genderLabel == "non-binary" | 
-                            genderLabel == "trans woman" | 
-                            genderLabel == "trans man" | 
-                            genderLabel == "genderfluid" |
-                              genderLabel == "intersex" |
-                              genderLabel == "transgender" 
-                            ~ "Transgender, Non-Binary or Intersex",
-                            genderLabel=="female" ~ "Female",
-                            genderLabel=="male" ~ "Male",
-                            TRUE ~ as.character(genderLabel)))
-  
-
-
-
-# years_gender_chart <- ggplot(years_gender, aes(year, year_tally)) +
-#   geom_line(aes(colour=genderLabel))
-
-
-# decade_gender_chart <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
-#   geom_line(aes(colour=Gender), size=1)+
-#   scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
-#   scale_colour_manual(values=gender_colour)+
-#   who_counts_format+
-#   geom_dl(aes(label=Gender), method=list("first.points", cex=1, vjust=-.7, hjust=-.1))+
-#   theme(legend.position = "none")
-# 
-# decade_gender_chart
-
-decade_gender_chart2 <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
-  geom_line(aes(colour=Gender), linewidth=1)+
-  scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
-  scale_colour_manual(values=gender_colour)+
-  who_counts_format+
-  theme(
-    legend.position = c(0.05, .9),
-    legend.justification = c("left", "top"),
-    legend.direction="vertical",
-    legend.box.just = "right",
-    legend.margin = margin(6, 6, 6, 6)
-  )
-  
-  # geom_dl(aes(label=Gender), method=list("first.points", cex=1, vjust=-.5, hjust=-.1 ))
-
-decade_gender_chart2
 
 ## indigenous focus
 # View(indigenous_records)
 
-indigenous_records <- unique_records %>%
-  filter(dob!="2100-01-01") %>%
-  filter(genderLabel!= "male organism") %>%
-  filter(indigenous == "indigenous") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, decade) %>%
-  tally(name="decade_tally")
-
-decades_indigenous_chart <- ggplot(indigenous_records, aes(decade, decade_tally)) +
-  geom_col(fill="darkolivegreen")+
-  scale_x_continuous(breaks = c( 1700, 1800, 1900, 2000), minor_breaks = c( 1750, 1850, 1950))+
-  who_counts_format
-
-decades_indigenous_chart
 ##
 # 
 # source_list <- filter_records %>% 
@@ -257,3 +152,280 @@ corr_plot +
 
 # ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="upper",insig = "blank") 
 
+
+# bios <- paste("bio",1:93261,sep="")
+# chart_data <- list(
+#   'Wikidata Only' = sample(bios,13962), 
+#   Both = sample(bios,60817), 
+#   'Wikipedia Only' = sample(bios,18482)
+# )
+# 
+# 
+# ggvenn(chart_data, columns = "Wikidata Only", "Wikipedia Only")
+
+
+##below is based on data from Michael - what is this file? Need to confirm this is mix of the two?
+
+##removing animals and the prot jackson painter
+remove <- c(37964165, 232584,2149459)
+
+combined_data <- read_rds("combined_file") %>% 
+  mutate(created_at = ymd(created_at),
+         dob = ymd(dob),
+         dod=ymd(dod)) %>% 
+  filter(!(pageid %in% remove),
+         !is.na(pageid)) %>% 
+  filter(!is.na(genderLabel)) %>% 
+  mutate(gender = case_when(genderLabel == "non-binary" | 
+                              genderLabel == "trans woman" | 
+                              genderLabel == "trans man" | 
+                              genderLabel == "genderfluid" |
+                              genderLabel == "intersex" |
+                              genderLabel == "transgender" 
+                            ~ "Transgender, Non-Binary or Intersex",
+                            genderLabel=="female" ~ "Female",
+                            genderLabel=="male" ~ "Male",
+                            TRUE ~ as.character(genderLabel)))
+  
+
+combined_gender_check <- combined_data %>% 
+  group_by(gender) %>% 
+  tally()
+
+View(combined_gender_check)
+
+
+##page creation over time
+
+page_creation <- combined_data %>% 
+  select(created_at) %>% 
+  group_by(created_at) %>% 
+  tally() %>% 
+  ungroup() %>% 
+  mutate(cumulative = cumsum(n))
+
+# quantile(dates, probs = c(0.001, 0.025, 0.975, 0.999), type = 1)
+
+
+page_creation_raw <- ggplot(page_creation, aes(created_at, cumulative))+
+  geom_line()+
+  geom_area(alpha=.5, fill="darkolivegreen")+
+  geom_line(colour="darkolivegreen")+
+  theme_minimal()
+
+page_creation_raw
+
+page_creation_3month <- combined_data %>% 
+  select(created_at) %>% 
+  mutate(month_creation = floor_date(created_at, months(6))) %>% 
+  group_by(month_creation) %>% 
+  tally() %>% 
+  ungroup() %>% 
+  mutate(cumulative = cumsum(n))
+
+page_creation_3Month_chart <- ggplot(page_creation_3month, aes(month_creation, cumulative))+
+  geom_area(alpha=.5, fill="darkolivegreen")+
+  geom_line(colour="darkolivegreen")+
+  theme_minimal()
+
+page_creation_3Month_chart
+
+
+page_creation_gender <- combined_data %>% 
+  filter(!is.na(gender)) %>% 
+  group_by(gender, created_at) %>% 
+  tally() %>% 
+  group_by(gender) %>% 
+  mutate(cumulative = cumsum(n)) 
+
+
+page_creation_gender_prop <- combined_data %>% 
+  filter(!is.na(gender)) %>% 
+  group_by(gender, created_at) %>% 
+  tally() %>% 
+  group_by(gender) %>% 
+  mutate(cumulative = cumsum(n),
+         cum_prop = cumulative / sum(n)) 
+
+
+View(page_creation_gender)
+  
+ggplot(page_creation_gender, aes(created_at, cumulative, fill=gender))+
+  geom_area()+
+  facet_wrap(~gender)+
+  scale_fill_manual(values = gender_colour)+
+  theme_minimal()
+  
+
+ggplot(page_creation_gender_prop, aes(created_at, cum_prop, fill=gender))+
+  geom_area()+
+  facet_wrap(~gender)+
+  scale_fill_manual(values = gender_colour)+
+  theme_minimal()
+
+page_creation_heat <- combined_data %>% 
+  filter(!is.na(dob)) %>% 
+  mutate(month_creation = floor_date(created_at, months(6)),
+         decade_dob = floor_date(dob, years(5)),
+         ) %>% 
+  group_by(month_creation,decade_dob) %>% 
+  tally() %>% 
+  mutate(cumulative = cumsum(n))
+  
+  # View(page_creation_heat)
+
+heat_map_all <- ggplot(page_creation_heat, aes(month_creation, decade_dob, fill=n))+
+  geom_tile()+
+  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
+  scale_fill_distiller(palette = "BuPu")
+
+page_creation_heat_gender <- combined_data %>% 
+  filter(!is.na(dob)) %>% 
+  mutate(month_creation = floor_date(created_at, months(6)),
+         decade_dob = floor_date(dob, years(5)),
+  ) %>% 
+  group_by(gender,month_creation,decade_dob) %>% 
+  tally() %>% 
+  mutate(cumulative = cumsum(n))
+
+heat_map_gender <- ggplot(page_creation_heat_gender, aes(month_creation, decade_dob, fill=n))+
+  geom_tile()+
+  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
+  scale_fill_distiller(palette = "BuPu")+
+  facet_wrap(~gender)
+
+# Quartiles
+
+quarters <- combined_data %>% 
+  ungroup() %>% 
+  select(created_at, gender) %>%
+  filter(gender=="Male" | gender=="Female") %>% 
+  group_by(gender) %>%
+  add_tally(name="gender_tally") %>%
+  mutate(gender_label=paste0(gender,"\n(",gender_tally,")")) %>%
+  group_by(gender) %>%
+  reframe(qt = quantile(created_at, c(0.25, 0.5, .75, 1), type=1, na.rm = TRUE))  %>% 
+  mutate(quartile = c(0.25, 0.5, .75,1, 0.25, 0.5, .75, 1)) %>% 
+  mutate(text = c("25%: Apr 2008 ",
+                  "50%: Nov 2013",
+                  "75%: Mar 2018",
+                  "100%: Jul 2023",
+                  
+                  "25%: Jul 2007 ",
+                  "50%: Aug 2011",
+                  "75%: May 2015",
+                  "100%: Jul 2023")) 
+
+cum_page_creation_MF <- combined_data %>% 
+  filter(gender=="Male" | gender=="Female") %>% 
+  group_by(gender, created_at) %>% 
+  tally() %>% 
+  group_by(gender) %>% 
+  mutate(cumulative = cumsum(n),
+         cum_prop = cumulative/sum(n)) 
+
+gender_quarter <- ggplot(cum_page_creation_MF, aes(created_at, cum_prop, fill=gender))+
+  geom_area(alpha=.7, show.legend = FALSE)+
+  facet_wrap(~gender)+
+  geom_segment(data=quarters, aes(x=ymd(qt), y=0, xend=qt, yend=quartile+.15))+
+  scale_fill_manual(values = gender_colour)+
+  theme_minimal()+
+  scale_y_continuous(labels = percent, breaks = c(.25, .5, .75, 1))+
+  geom_point(data=quarters,aes(x=ymd(qt), y=quartile),shape=21, fill="white")+
+  geom_text(data=quarters, aes(x=ymd(qt), y=quartile+0.2, label=text), hjust=1, size=3)
+  
+
+years <- combined_data %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(year) %>%
+  tally(name="year_tally") %>%
+  drop_na() %>%
+  ungroup() %>%
+  mutate(total=sum(year_tally))
+
+
+# View(decades)
+
+decades <- combined_data %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(decade) %>%
+  tally(name="decade_tally") %>%
+  drop_na()
+
+decade_of_birth_chart <- ggplot(decades, aes(decade, decade_tally)) +
+  geom_col(fill="darkolivegreen")+
+  scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
+  who_counts_format
+
+decade_of_birth_chart
+
+
+##gender split
+years_gender <- combined_data %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(gender, year) %>%
+  tally(name="year_tally") %>%
+  drop_na()
+
+decades_gender <- combined_data %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(genderLabel, decade) %>%
+  tally(name="decade_tally") %>%
+  drop_na() %>% 
+  mutate(Gender = case_when(genderLabel == "non-binary" | 
+                              genderLabel == "trans woman" | 
+                              genderLabel == "trans man" | 
+                              genderLabel == "genderfluid" |
+                              genderLabel == "intersex" |
+                              genderLabel == "transgender" 
+                            ~ "Transgender, Non-Binary or Intersex",
+                            genderLabel=="female" ~ "Female",
+                            genderLabel=="male" ~ "Male",
+                            TRUE ~ as.character(genderLabel)))
+
+
+decade_gender_chart2 <- ggplot(decades_gender, aes(decade, decade_tally, colour=Gender)) +
+  geom_line(aes(colour=Gender), linewidth=1)+
+  scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
+  scale_colour_manual(values=gender_colour)+
+  who_counts_format+
+  theme(
+    legend.position = c(0.05, .9),
+    legend.justification = c("left", "top"),
+    legend.direction="vertical",
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6)
+  )
+
+indigenous_records_dob <- combined_data %>%
+  filter(indigenous == "indigenous") %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(decade) %>%
+  tally(name="decade_tally")
+
+decades_indigenous_dob_chart <- ggplot(indigenous_records_dob, aes(decade, decade_tally)) +
+  geom_col(fill="darkolivegreen")+
+  scale_x_continuous(breaks = c( 1700, 1800, 1900, 2000), minor_breaks = c( 1750, 1850, 1950))+
+  who_counts_format
+
+decades_indigenous_dob_chart
+
+
+indigenous_records_cum <- combined_data %>%
+  filter(indigenous == "indigenous") %>%
+  mutate(week = week(created_at)) %>%
+  # mutate(decade = round(year / 10) *10) %>%
+  group_by(week) %>%
+  tally(name="tally") %>% 
+  mutate(cum_creation = cumsum(tally))
+
+indig_records_cum_chart <- ggplot(indigenous_records_cum, aes(week, cum_creation))+
+  geom_line()
+
+
+##word analysis / token analysis on words OR clustering?
