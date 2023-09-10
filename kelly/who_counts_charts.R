@@ -26,24 +26,7 @@ gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 
 
 
-# gender
-
-# View(unique_records)
-
-
-
-
-
-
-## indigenous focus
-# View(indigenous_records)
-
-##
-# 
-# source_list <- filter_records %>% 
-#   select(source) %>% 
-#   distinct() %>% 
-#   print(n=51)
+##corr plot
 
 filter_records <- filter_records %>% 
   mutate(source2 = case_when(source=="Vic_parliament_aus"~"VIC Parliament",
@@ -137,36 +120,15 @@ corr_plot <- ggcorrplot(corr,
            legend.title = "Correlation"
            )
 
-corr_plot + 
+aus_corr_plot <- corr_plot + 
   who_counts_format2
   
 
-# head(corr[, 1:6])
+ggsave("aus_corr_plot.png", aus_corr_plot, width= 15, height = 15, units=c("cm") )
 
 
-
-# ggcorrplot(corr, method = "circle", type="lower")
-
-
-# ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="lower", lab="true")
-
-# ggcorrplot(corr, hc.order = TRUE, outline.col = "white", type="upper",insig = "blank") 
-
-
-# bios <- paste("bio",1:93261,sep="")
-# chart_data <- list(
-#   'Wikidata Only' = sample(bios,13962), 
-#   Both = sample(bios,60817), 
-#   'Wikipedia Only' = sample(bios,18482)
-# )
-# 
-# 
-# ggvenn(chart_data, columns = "Wikidata Only", "Wikipedia Only")
-
-
-##below is based on data from Michael - what is this file? Need to confirm this is mix of the two?
-
-##removing animals and the prot jackson painter
+##combined data - this is the combined file of files Micheal exacted additional information 
+##removing animals and the Port jackson painter
 remove <- c(37964165, 232584,2149459)
 
 combined_data <- read_rds("combined_file") %>% 
@@ -185,8 +147,14 @@ combined_data <- read_rds("combined_file") %>%
                             ~ "Transgender, Non-Binary or Intersex",
                             genderLabel=="female" ~ "Female",
                             genderLabel=="male" ~ "Male",
-                            TRUE ~ as.character(genderLabel)))
-  
+                            TRUE ~ as.character(genderLabel))) %>% 
+  mutate(indigenous = case_when(personLabel =="Judith Wright" ~ "not indigenous",
+                                TRUE ~ as.character(indigenous)))
+
+View(combined_indigenous)  
+
+combined_indigenous <- combined_data %>% 
+  filter(indigenous=="indigenous")
 
 combined_gender_check <- combined_data %>% 
   group_by(gender) %>% 
@@ -204,32 +172,32 @@ page_creation <- combined_data %>%
   ungroup() %>% 
   mutate(cumulative = cumsum(n))
 
-# quantile(dates, probs = c(0.001, 0.025, 0.975, 0.999), type = 1)
 
 
-page_creation_raw <- ggplot(page_creation, aes(created_at, cumulative))+
+page_creation_cumulative <- ggplot(page_creation, aes(created_at, cumulative))+
   geom_line()+
   geom_area(alpha=.5, fill="darkolivegreen")+
   geom_line(colour="darkolivegreen")+
-  theme_minimal()
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Cumulative page count")+
+  annotate("text", x = ymd("2001-03-15"), y = 40000, label = "First Australian biography was\nmade for Sherrié Austin on \n26 January 2001", hjust=0, size=4, vjust=1)+
+  geom_segment(aes(x=ymd("2001-01-26"), y=0, xend=ymd("2001-01-26"), yend=40000))+
+  geom_point(aes(x=ymd("2001-01-26"), y=0),shape=21, fill="white")+
+  
+  annotate("text", x = ymd("2002-09-19"), y = 20000, label = "First Indigenous Australian\nbiography was made for \nBennelong on 19 July 2002", hjust=0, size=4, vjust=1)+
+  geom_segment(aes(x=ymd("2002-07-19"), y=0, xend=ymd("2002-07-19"), yend=20000))+
+  geom_point(aes(x=ymd("2002-07-19"), y=0),shape=21, fill="white")
+  
 
-page_creation_raw
 
-page_creation_3month <- combined_data %>% 
-  select(created_at) %>% 
-  mutate(month_creation = floor_date(created_at, months(6))) %>% 
-  group_by(month_creation) %>% 
-  tally() %>% 
-  ungroup() %>% 
-  mutate(cumulative = cumsum(n))
+page_creation_cumulative
 
-page_creation_3Month_chart <- ggplot(page_creation_3month, aes(month_creation, cumulative))+
-  geom_area(alpha=.5, fill="darkolivegreen")+
-  geom_line(colour="darkolivegreen")+
-  theme_minimal()
+ggsave("page_creation_cumulative.png", page_creation_cumulative,width= 20, height = 10, units=c("cm") )
 
-page_creation_3Month_chart
 
+
+#page creation by gender
 
 page_creation_gender <- combined_data %>% 
   filter(!is.na(gender)) %>% 
@@ -248,53 +216,39 @@ page_creation_gender_prop <- combined_data %>%
          cum_prop = cumulative / sum(n)) 
 
 
-View(page_creation_gender)
+# View(page_creation_gender)
   
-ggplot(page_creation_gender, aes(created_at, cumulative, fill=gender))+
+gender_page_creation_facet <- ggplot(page_creation_gender, aes(created_at, cumulative, fill=gender))+
   geom_area()+
   facet_wrap(~gender)+
   scale_fill_manual(values = gender_colour)+
-  theme_minimal()
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Cumulative page count",
+       fill="Gender")+
+  theme(panel.spacing.x = unit(2,"line"))
+
+gender_page_creation_facet
+
+ggsave("gender_page_creation_facet.png", gender_page_creation_facet, width= 20, height = 10, units=c("cm") )
+
+
+gender_page_creation_line <- ggplot(page_creation_gender, aes(created_at, cumulative, colour=gender))+
+  geom_line(linewidth=1)+
+  scale_colour_manual(values=gender_colour)+
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Cumulative page count",
+       colour="Gender")+
+  theme(legend.position = c(0.15, 0.8))
+
+gender_page_creation_line
+
+ggsave("gender_page_creation_line.png", gender_page_creation_line, width= 20, height = 10, units=c("cm") )
+  
   
 
-ggplot(page_creation_gender_prop, aes(created_at, cum_prop, fill=gender))+
-  geom_area()+
-  facet_wrap(~gender)+
-  scale_fill_manual(values = gender_colour)+
-  theme_minimal()
-
-page_creation_heat <- combined_data %>% 
-  filter(!is.na(dob)) %>% 
-  mutate(month_creation = floor_date(created_at, months(6)),
-         decade_dob = floor_date(dob, years(5)),
-         ) %>% 
-  group_by(month_creation,decade_dob) %>% 
-  tally() %>% 
-  mutate(cumulative = cumsum(n))
-  
-  # View(page_creation_heat)
-
-heat_map_all <- ggplot(page_creation_heat, aes(month_creation, decade_dob, fill=n))+
-  geom_tile()+
-  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
-  scale_fill_distiller(palette = "BuPu")
-
-page_creation_heat_gender <- combined_data %>% 
-  filter(!is.na(dob)) %>% 
-  mutate(month_creation = floor_date(created_at, months(6)),
-         decade_dob = floor_date(dob, years(5)),
-  ) %>% 
-  group_by(gender,month_creation,decade_dob) %>% 
-  tally() %>% 
-  mutate(cumulative = cumsum(n))
-
-heat_map_gender <- ggplot(page_creation_heat_gender, aes(month_creation, decade_dob, fill=n))+
-  geom_tile()+
-  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
-  scale_fill_distiller(palette = "BuPu")+
-  facet_wrap(~gender)
-
-# Quartiles
+# Quartiles - page creation proportion
 
 quarters <- combined_data %>% 
   ungroup() %>% 
@@ -332,17 +286,65 @@ gender_quarter <- ggplot(cum_page_creation_MF, aes(created_at, cum_prop, fill=ge
   theme_minimal()+
   scale_y_continuous(labels = percent, breaks = c(.25, .5, .75, 1))+
   geom_point(data=quarters,aes(x=ymd(qt), y=quartile),shape=21, fill="white")+
-  geom_text(data=quarters, aes(x=ymd(qt), y=quartile+0.2, label=text), hjust=1, size=3)
+  geom_text(data=quarters, aes(x=ymd(qt), y=quartile+0.2, label=text), hjust=1, size=3)+
+  labs(x="Page Creation Date",
+       y="Proportion of Cumulative pages (%)",
+       colour="Gender")
+
+gender_quarter
+
+ggsave("gender_quarter.png", gender_quarter, width= 20, height = 10, units=c("cm") )
+
+page_creation_heat <- combined_data %>% 
+  filter(!is.na(dob)) %>% 
+  mutate(month_creation = floor_date(created_at, months(6)),
+         decade_dob = floor_date(dob, years(5)),
+         ) %>% 
+  group_by(month_creation,decade_dob) %>% 
+  tally() %>% 
+  mutate(cumulative = cumsum(n))
+  
+  # View(page_creation_heat)
+
+heat_map_all <- ggplot(page_creation_heat, aes(month_creation, decade_dob, fill=n))+
+  geom_tile()+
+  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
+  scale_fill_distiller(palette = "BuPu")+
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Cumulative page count",
+       colour="Gender",
+       fill="Number of pages")
+heat_map_all
+
+ggsave("heat_map_all.png", heat_map_all, width= 20, height = 10, units=c("cm") )
+
+page_creation_heat_gender <- combined_data %>% 
+  filter(!is.na(dob)) %>% 
+  mutate(month_creation = floor_date(created_at, months(6)),
+         decade_dob = floor_date(dob, years(5)),
+  ) %>% 
+  group_by(gender,month_creation,decade_dob) %>% 
+  tally() %>% 
+  mutate(cumulative = cumsum(n))
+
+heat_map_gender <- ggplot(page_creation_heat_gender, aes(month_creation, decade_dob, fill=n))+
+  geom_tile()+
+  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
+  scale_fill_distiller(palette = "BuPu")+
+  facet_wrap(~gender)+
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Cumulative page count",
+       colour="Gender",
+       fill="Number of pages")+
+  theme(panel.spacing.x = unit(2,"line"))
+
+heat_map_gender
+
+ggsave("heat_map_gender.png", heat_map_gender, width= 20, height = 10, units=c("cm") )
   
 
-years <- combined_data %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(year) %>%
-  tally(name="year_tally") %>%
-  drop_na() %>%
-  ungroup() %>%
-  mutate(total=sum(year_tally))
 
 
 # View(decades)
@@ -357,9 +359,14 @@ decades <- combined_data %>%
 decade_of_birth_chart <- ggplot(decades, aes(decade, decade_tally)) +
   geom_col(fill="darkolivegreen")+
   scale_x_continuous(breaks = c(1600, 1700, 1800, 1900, 2000), minor_breaks = c(1650, 1750, 1850, 1950))+
-  who_counts_format
+  theme_minimal()+
+  labs(x="Decade of birth",
+       y="Number of biographies")
 
 decade_of_birth_chart
+
+ggsave("decade_of_birth_chart.png", decade_of_birth_chart, width= 20, height = 10, units=c("cm") )
+
 
 
 ##gender split
@@ -429,3 +436,26 @@ indig_records_cum_chart <- ggplot(indigenous_records_cum, aes(week, cum_creation
 
 
 ##word analysis / token analysis on words OR clustering?
+
+page_creation_3month <- combined_data %>% 
+  select(created_at) %>% 
+  mutate(month_creation = floor_date(created_at, months(6))) %>% 
+  group_by(month_creation) %>% 
+  tally() %>% 
+  ungroup() %>% 
+  mutate(cumulative = cumsum(n))
+
+page_creation_3Month_chart <- ggplot(page_creation_3month, aes(month_creation, cumulative))+
+  geom_area(alpha=.5, fill="darkolivegreen")+
+  geom_line(colour="darkolivegreen")+
+  theme_minimal()
+
+page_creation_3Month_chart
+years <- combined_data %>%
+  mutate(year = year(dob)) %>%
+  mutate(decade = round(year / 10) *10) %>%
+  group_by(year) %>%
+  tally(name="year_tally") %>%
+  drop_na() %>%
+  ungroup() %>%
+  mutate(total=sum(year_tally))
