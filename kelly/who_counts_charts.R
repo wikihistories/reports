@@ -184,7 +184,6 @@ page_creation_cumulative <- ggplot(page_creation, aes(created_at, cumulative))+
   annotate("text", x = ymd("2001-03-15"), y = 40000, label = "First Australian biography was\nmade for Sherrié Austin on \n26 January 2001", hjust=0, size=4, vjust=1)+
   geom_segment(aes(x=ymd("2001-01-26"), y=0, xend=ymd("2001-01-26"), yend=40000))+
   geom_point(aes(x=ymd("2001-01-26"), y=0),shape=21, fill="white")+
-  
   annotate("text", x = ymd("2002-09-19"), y = 20000, label = "First Indigenous Australian\nbiography was made for \nBennelong on 19 July 2002", hjust=0, size=4, vjust=1)+
   geom_segment(aes(x=ymd("2002-07-19"), y=0, xend=ymd("2002-07-19"), yend=20000))+
   geom_point(aes(x=ymd("2002-07-19"), y=0),shape=21, fill="white")
@@ -312,7 +311,7 @@ heat_map_all <- ggplot(page_creation_heat, aes(month_creation, decade_dob, fill=
   scale_fill_distiller(palette = "BuPu")+
   theme_minimal()+
   labs(x="Page Creation Date",
-       y="Cumulative page count",
+       y="Year of birth",
        colour="Gender",
        fill="Number of pages")
 heat_map_all
@@ -406,7 +405,10 @@ decade_gender_chart2 <- ggplot(decades_gender, aes(decade, decade_tally, colour=
     legend.direction="vertical",
     legend.box.just = "right",
     legend.margin = margin(6, 6, 6, 6)
-  )
+  )+
+  labs(x="Year of birth",
+       y="Number of biographies")
+
 
 indigenous_records_dob <- combined_data %>%
   filter(indigenous == "indigenous") %>%
@@ -425,14 +427,22 @@ decades_indigenous_dob_chart
 
 indigenous_records_cum <- combined_data %>%
   filter(indigenous == "indigenous") %>%
-  mutate(week = week(created_at)) %>%
+  # mutate(year = year(created_at)) %>%
   # mutate(decade = round(year / 10) *10) %>%
-  group_by(week) %>%
+  group_by(created_at) %>%
   tally(name="tally") %>% 
   mutate(cum_creation = cumsum(tally))
 
-indig_records_cum_chart <- ggplot(indigenous_records_cum, aes(week, cum_creation))+
-  geom_line()
+indig_records_cum_chart <- ggplot(indigenous_records_cum, aes(created_at, cum_creation))+
+  geom_area(alpha=.5, fill="darkolivegreen")+
+  geom_line(colour="darkolivegreen")+
+  labs(x="Page Creation Date",
+       y="Cumulative page count")+
+  theme_minimal()
+
+indig_records_cum_chart
+
+ggsave("indig_records_cum_chart.png", indig_records_cum_chart, width= 20, height = 10, units=c("cm") )
 
 
 ##word analysis / token analysis on words OR clustering?
