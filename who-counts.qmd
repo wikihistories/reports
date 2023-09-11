@@ -3,6 +3,8 @@ title: "Who Counts as Australian?"
 author:
   - Kelly Tall
   - Michael Falk
+  - Heather Ford
+  - Tamson Pietsch
 ---
 
 ```{r message=FALSE, include=FALSE}
