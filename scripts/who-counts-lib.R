@@ -119,11 +119,10 @@ get_wikidata_australians <- function(use_cache = USE_CACHE, data_dir = DATA_DIR)
   if (rlang::is_true(use_cache)) {
     readr::read_rds(file.path(data_dir, "wikidata-australians.rds"))
   } else {
-    #silence readr messages
-    old_opt <- options("readr.show_col_types" = FALSE)
-    query_params <- cross_join(FILTER_PROPERTIES, DATA_PROPERTIES)
-    results <- purrr::pmap(query_params, query_one, .progress = "Query Wikidata for Australians")
-    options("readr.show_col_types" = old_opt)
+    withr::with_options(list(readr.show_col_types = FALSE), {
+      query_params <- cross_join(FILTER_PROPERTIES, DATA_PROPERTIES)
+      results <- purrr::pmap(query_params, query_one, .progress = "Query Wikidata for Australians")
+    })
     tibble::tibble(query_params, results)
   }
 }
