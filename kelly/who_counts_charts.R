@@ -5,6 +5,7 @@ library(GGally)
 library(ggvenn)
 library(readr)
 library(scales)
+library(patchwork)
 
 
 
@@ -28,7 +29,7 @@ gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 
 ##corr plot
 
-filter_records <- filter_records %>% 
+filter_records <- filter_records |> 
   mutate(source2 = case_when(source=="Vic_parliament_aus"~"VIC Parliament",
                              source=="AGSA_creator_aus"~"Gallery SA Creator",
                             source=="aus_citizens_wd"~"Aus Citizen",
@@ -82,13 +83,13 @@ filter_records <- filter_records %>%
                             source=="aus_golf"~"Aus Golf",
                             TRUE ~ as.character(source)))
 
-source_matrix <- filter_records %>% 
-  select(person, source2) %>%
-  mutate(n=1) %>% 
-  # group_by(person) %>%
-  # add_tally() %>% 
-  pivot_wider(names_from = source2, values_from = n) %>% 
-  mutate(across(everything(), ~replace_na(.x, 0))) %>% 
+source_matrix <- filter_records |> 
+  select(person, source2) |>
+  mutate(n=1) |> 
+  # group_by(person) |>
+  # add_tally() |> 
+  pivot_wider(names_from = source2, values_from = n) |> 
+  mutate(across(everything(), ~replace_na(.x, 0))) |> 
   select(-person)
 
 
@@ -131,13 +132,13 @@ ggsave("aus_corr_plot.png", aus_corr_plot, width= 15, height = 15, units=c("cm")
 ##removing animals and the Port jackson painter
 remove <- c(37964165, 232584,2149459)
 
-combined_data <- read_rds("combined_file") %>% 
+combined_data <- read_rds("combined_file") |> 
   mutate(created_at = ymd(created_at),
          dob = ymd(dob),
-         dod=ymd(dod)) %>% 
+         dod=ymd(dod)) |> 
   filter(!(pageid %in% remove),
-         !is.na(pageid)) %>% 
-  filter(!is.na(genderLabel)) %>% 
+         !is.na(pageid)) |> 
+  filter(!is.na(genderLabel)) |> 
   mutate(gender = case_when(genderLabel == "non-binary" | 
                               genderLabel == "trans woman" | 
                               genderLabel == "trans man" | 
@@ -147,17 +148,17 @@ combined_data <- read_rds("combined_file") %>%
                             ~ "Transgender, Non-Binary or Intersex",
                             genderLabel=="female" ~ "Female",
                             genderLabel=="male" ~ "Male",
-                            TRUE ~ as.character(genderLabel))) %>% 
+                            TRUE ~ as.character(genderLabel))) |> 
   mutate(indigenous = case_when(personLabel =="Judith Wright" ~ "not indigenous",
                                 TRUE ~ as.character(indigenous)))
 
 View(combined_indigenous)  
 
-combined_indigenous <- combined_data %>% 
+combined_indigenous <- combined_data |> 
   filter(indigenous=="indigenous")
 
-combined_gender_check <- combined_data %>% 
-  group_by(gender) %>% 
+combined_gender_check <- combined_data |> 
+  group_by(gender) |> 
   tally()
 
 View(combined_gender_check)
@@ -165,11 +166,11 @@ View(combined_gender_check)
 
 ##page creation over time
 
-page_creation <- combined_data %>% 
-  select(created_at) %>% 
-  group_by(created_at) %>% 
-  tally() %>% 
-  ungroup() %>% 
+page_creation <- combined_data |> 
+  select(created_at) |> 
+  group_by(created_at) |> 
+  tally() |> 
+  ungroup() |> 
   mutate(cumulative = cumsum(n))
 
 
@@ -198,19 +199,19 @@ ggsave("page_creation_cumulative.png", page_creation_cumulative,width= 20, heigh
 
 #page creation by gender
 
-page_creation_gender <- combined_data %>% 
-  filter(!is.na(gender)) %>% 
-  group_by(gender, created_at) %>% 
-  tally() %>% 
-  group_by(gender) %>% 
+page_creation_gender <- combined_data |> 
+  filter(!is.na(gender)) |> 
+  group_by(gender, created_at) |> 
+  tally() |> 
+  group_by(gender) |> 
   mutate(cumulative = cumsum(n)) 
 
 
-page_creation_gender_prop <- combined_data %>% 
-  filter(!is.na(gender)) %>% 
-  group_by(gender, created_at) %>% 
-  tally() %>% 
-  group_by(gender) %>% 
+page_creation_gender_prop <- combined_data |> 
+  filter(!is.na(gender)) |> 
+  group_by(gender, created_at) |> 
+  tally() |> 
+  group_by(gender) |> 
   mutate(cumulative = cumsum(n),
          cum_prop = cumulative / sum(n)) 
 
@@ -249,16 +250,16 @@ ggsave("gender_page_creation_line.png", gender_page_creation_line, width= 20, he
 
 # Quartiles - page creation proportion
 
-quarters <- combined_data %>% 
-  ungroup() %>% 
-  select(created_at, gender) %>%
-  filter(gender=="Male" | gender=="Female") %>% 
-  group_by(gender) %>%
-  add_tally(name="gender_tally") %>%
-  mutate(gender_label=paste0(gender,"\n(",gender_tally,")")) %>%
-  group_by(gender) %>%
-  reframe(qt = quantile(created_at, c(0.25, 0.5, .75, 1), type=1, na.rm = TRUE))  %>% 
-  mutate(quartile = c(0.25, 0.5, .75,1, 0.25, 0.5, .75, 1)) %>% 
+quarters <- combined_data |> 
+  ungroup() |> 
+  select(created_at, gender) |>
+  filter(gender=="Male" | gender=="Female") |> 
+  group_by(gender) |>
+  add_tally(name="gender_tally") |>
+  mutate(gender_label=paste0(gender,"\n(",gender_tally,")")) |>
+  group_by(gender) |>
+  reframe(qt = quantile(created_at, c(0.25, 0.5, .75, 1), type=1, na.rm = TRUE))  |> 
+  mutate(quartile = c(0.25, 0.5, .75,1, 0.25, 0.5, .75, 1)) |> 
   mutate(text = c("25%: Apr 2008 ",
                   "50%: Nov 2013",
                   "75%: Mar 2018",
@@ -269,11 +270,11 @@ quarters <- combined_data %>%
                   "75%: May 2015",
                   "100%: Jul 2023")) 
 
-cum_page_creation_MF <- combined_data %>% 
-  filter(gender=="Male" | gender=="Female") %>% 
-  group_by(gender, created_at) %>% 
-  tally() %>% 
-  group_by(gender) %>% 
+cum_page_creation_MF <- combined_data |> 
+  filter(gender=="Male" | gender=="Female") |> 
+  group_by(gender, created_at) |> 
+  tally() |> 
+  group_by(gender) |> 
   mutate(cumulative = cumsum(n),
          cum_prop = cumulative/sum(n)) 
 
@@ -294,13 +295,13 @@ gender_quarter
 
 ggsave("gender_quarter.png", gender_quarter, width= 20, height = 10, units=c("cm") )
 
-page_creation_heat <- combined_data %>% 
-  filter(!is.na(dob)) %>% 
+page_creation_heat <- combined_data |> 
+  filter(!is.na(dob)) |> 
   mutate(month_creation = floor_date(created_at, months(6)),
          decade_dob = floor_date(dob, years(5)),
-         ) %>% 
-  group_by(month_creation,decade_dob) %>% 
-  tally() %>% 
+         ) |> 
+  group_by(month_creation,decade_dob) |> 
+  tally() |> 
   mutate(cumulative = cumsum(n))
   
   # View(page_creation_heat)
@@ -318,14 +319,16 @@ heat_map_all
 
 ggsave("heat_map_all.png", heat_map_all, width= 20, height = 10, units=c("cm") )
 
-page_creation_heat_gender <- combined_data %>% 
-  filter(!is.na(dob)) %>% 
+page_creation_heat_gender <- combined_data |> 
+  filter(!is.na(dob)) |> 
   mutate(month_creation = floor_date(created_at, months(6)),
          decade_dob = floor_date(dob, years(5)),
-  ) %>% 
-  group_by(gender,month_creation,decade_dob) %>% 
-  tally() %>% 
-  mutate(cumulative = cumsum(n))
+  ) |> 
+  group_by(gender,month_creation,decade_dob) |> 
+  tally() |> 
+  mutate(cumulative = cumsum(n)) |> 
+  group_by(gender) |> 
+  mutate(prop = n/sum(n))
 
 heat_map_gender <- ggplot(page_creation_heat_gender, aes(month_creation, decade_dob, fill=n))+
   geom_tile()+
@@ -334,25 +337,41 @@ heat_map_gender <- ggplot(page_creation_heat_gender, aes(month_creation, decade_
   facet_wrap(~gender)+
   theme_minimal()+
   labs(x="Page Creation Date",
-       y="Cumulative page count",
+       y="Year of birth",
        colour="Gender",
        fill="Number of pages")+
   theme(panel.spacing.x = unit(2,"line"))
 
 heat_map_gender
 
+
+
 ggsave("heat_map_gender.png", heat_map_gender, width= 20, height = 10, units=c("cm") )
   
 
+heat_map_gender_prop <- ggplot(page_creation_heat_gender, aes(month_creation, decade_dob, fill=prop))+
+  geom_tile()+
+  # scale_fill_continuous(high="darkolivegreen", low="cornsilk")
+  scale_fill_distiller(palette = "BuPu")+
+  facet_wrap(~gender)+
+  theme_minimal()+
+  labs(x="Page Creation Date",
+       y="Year of Birth",
+       colour="Gender",
+       fill="% of pages")+
+  theme(panel.spacing.x = unit(2,"line"))
+
+heat_map_gender_prop
+ggsave("heat_map_gender_prop.png", heat_map_gender_prop, width= 20, height = 10, units=c("cm") )
 
 
 # View(decades)
 
-decades <- combined_data %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(decade) %>%
-  tally(name="decade_tally") %>%
+decades <- combined_data |>
+  mutate(year = year(dob)) |>
+  mutate(decade = round(year / 10) *10) |>
+  group_by(decade) |>
+  tally(name="decade_tally") |>
   drop_na()
 
 decade_of_birth_chart <- ggplot(decades, aes(decade, decade_tally)) +
@@ -369,19 +388,19 @@ ggsave("decade_of_birth_chart.png", decade_of_birth_chart, width= 20, height = 1
 
 
 ##gender split
-years_gender <- combined_data %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(gender, year) %>%
-  tally(name="year_tally") %>%
+years_gender <- combined_data |>
+  mutate(year = year(dob)) |>
+  mutate(decade = round(year / 10) *10) |>
+  group_by(gender, year) |>
+  tally(name="year_tally") |>
   drop_na()
 
-decades_gender <- combined_data %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(genderLabel, decade) %>%
-  tally(name="decade_tally") %>%
-  drop_na() %>% 
+decades_gender <- combined_data |>
+  mutate(year = year(dob)) |>
+  mutate(decade = round(year / 10) *10) |>
+  group_by(genderLabel, decade) |>
+  tally(name="decade_tally") |>
+  drop_na() |> 
   mutate(Gender = case_when(genderLabel == "non-binary" | 
                               genderLabel == "trans woman" | 
                               genderLabel == "trans man" | 
@@ -410,11 +429,11 @@ decade_gender_chart2 <- ggplot(decades_gender, aes(decade, decade_tally, colour=
        y="Number of biographies")
 
 
-indigenous_records_dob <- combined_data %>%
-  filter(indigenous == "indigenous") %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(decade) %>%
+indigenous_records_dob <- combined_data |>
+  filter(indigenous == "indigenous") |>
+  mutate(year = year(dob)) |>
+  mutate(decade = round(year / 10) *10) |>
+  group_by(decade) |>
   tally(name="decade_tally")
 
 decades_indigenous_dob_chart <- ggplot(indigenous_records_dob, aes(decade, decade_tally)) +
@@ -425,12 +444,12 @@ decades_indigenous_dob_chart <- ggplot(indigenous_records_dob, aes(decade, decad
 decades_indigenous_dob_chart
 
 
-indigenous_records_cum <- combined_data %>%
-  filter(indigenous == "indigenous") %>%
-  # mutate(year = year(created_at)) %>%
-  # mutate(decade = round(year / 10) *10) %>%
-  group_by(created_at) %>%
-  tally(name="tally") %>% 
+indigenous_records_cum <- combined_data |>
+  filter(indigenous == "indigenous") |>
+  # mutate(year = year(created_at)) |>
+  # mutate(decade = round(year / 10) *10) |>
+  group_by(created_at) |>
+  tally(name="tally") |> 
   mutate(cum_creation = cumsum(tally))
 
 indig_records_cum_chart <- ggplot(indigenous_records_cum, aes(created_at, cum_creation))+
@@ -445,27 +464,91 @@ indig_records_cum_chart
 ggsave("indig_records_cum_chart.png", indig_records_cum_chart, width= 20, height = 10, units=c("cm") )
 
 
+
+##distribution of page views
+
+page_views_dist <- combined_data |> 
+  select(gender,pageviews) 
+
+page_views_dist_chart <- ggplot(page_views_dist, aes(pageviews, colour=gender))+
+  geom_density(aes(fill=gender), alpha=.3)+
+  scale_x_log10(labels = label_comma())+
+  scale_fill_manual(values = gender_colour)+
+  scale_colour_manual(values = gender_colour)+
+  theme_minimal()+
+  scale_y_continuous(labels = percent)+
+  labs(title= "Number of page views (log scale)",
+       x=NULL, y=NULL)+
+  theme(
+    legend.position = c(0.9, .9),
+    legend.justification = c("right", "top"),
+    legend.direction="vertical",
+    legend.box.just = "left",
+    legend.margin = margin(6, 6, 6, 6)
+  )
+
+
+  
+page_views_dist_chart
+
+editor_dist <- combined_data |> 
+  select(gender,editors) 
+
+editor_dist_chart <- ggplot(editor_dist, aes(editors, colour=gender))+
+  geom_density(aes(fill=gender), alpha=.2,show.legend = FALSE)+
+  scale_x_log10(labels = label_comma())+
+  scale_fill_manual(values = gender_colour)+
+  scale_colour_manual(values = gender_colour)+
+  theme_minimal()+
+  scale_y_continuous(labels = percent)+
+  labs(title= "Number of Editors (log scale)",
+       x=NULL, y=NULL)
+
+editor_dist_chart
+
+revisions_dist <- combined_data |> 
+  select(gender,revisions) 
+
+revisions_dist_chart <- ggplot(revisions_dist, aes(revisions, colour=gender))+
+  geom_density(aes(fill=gender), alpha=.2,show.legend = FALSE)+
+  scale_x_log10(labels = label_comma())+
+  scale_fill_manual(values = gender_colour)+
+  scale_colour_manual(values = gender_colour)+
+  theme_minimal()+
+  scale_y_continuous(labels = percent)+
+  labs(title= "Number of revisions (log scale)",
+       x=NULL, y=NULL)
+  
+revisions_dist_chart
+
+dist_charts2 <- page_views_dist_chart + editor_dist_chart + revisions_dist_chart 
+dist_charts2
+
+ggsave("dist_charts.png", dist_charts2, width= 20, height = 8, units=c("cm") )
+
+
 ##word analysis / token analysis on words OR clustering?
 
-page_creation_3month <- combined_data %>% 
-  select(created_at) %>% 
-  mutate(month_creation = floor_date(created_at, months(6))) %>% 
-  group_by(month_creation) %>% 
-  tally() %>% 
-  ungroup() %>% 
-  mutate(cumulative = cumsum(n))
-
-page_creation_3Month_chart <- ggplot(page_creation_3month, aes(month_creation, cumulative))+
-  geom_area(alpha=.5, fill="darkolivegreen")+
-  geom_line(colour="darkolivegreen")+
-  theme_minimal()
-
-page_creation_3Month_chart
-years <- combined_data %>%
-  mutate(year = year(dob)) %>%
-  mutate(decade = round(year / 10) *10) %>%
-  group_by(year) %>%
-  tally(name="year_tally") %>%
-  drop_na() %>%
-  ungroup() %>%
-  mutate(total=sum(year_tally))
+# page_creation_3month <- combined_data |> 
+#   select(created_at) |> 
+#   mutate(month_creation = floor_date(created_at, months(6))) |> 
+#   group_by(month_creation) |> 
+#   tally() |> 
+#   ungroup() |> 
+#   mutate(cumulative = cumsum(n))
+# 
+# page_creation_3Month_chart <- ggplot(page_creation_3month, aes(month_creation, cumulative))+
+#   geom_area(alpha=.5, fill="darkolivegreen")+
+#   geom_line(colour="darkolivegreen")+
+#   theme_minimal()
+# 
+# page_creation_3Month_chart
+# 
+# years <- combined_data |>
+#   mutate(year = year(dob)) |>
+#   mutate(decade = round(year / 10) *10) |>
+#   group_by(year) |>
+#   tally(name="year_tally") |>
+#   drop_na() |>
+#   ungroup() |>
+#   mutate(total=sum(year_tally))
