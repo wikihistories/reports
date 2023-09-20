@@ -121,13 +121,11 @@ places <- unique(biographies_personal_data$pob) %>%
   na.omit() %>%
   get_labels()
 
-biographies_personal_data %>%
+biographies_personal_data <- biographies_personal_data %>%
   left_join(genders, by = join_by(x$gender == y$wikibase_id)) %>%
   mutate(gender = label) %>%
   select(-label) %>%
   left_join(places, by = join_by(x$pob == y$wikibase_id)) %>%
   mutate(pob = label) %>%
-  select(-label)
-
-biographies_personal_data %>%
+  select(-label) %>%
   write_csv(file.path(DATA_DIR, "personal-data-for-biography-pages.csv"))
