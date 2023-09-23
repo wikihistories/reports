@@ -77,7 +77,7 @@ get_entities <- function(wikidata_id) {
     batches,
     "&props=claims&format=json"
   )
-  batched_entities <- map(url, get_batches, .progress = T)
+  batched_entities <- map(url, get_batches, .progress = "Getting personal data")
   entities <- reduce(
     batched_entities,
     \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
@@ -85,8 +85,47 @@ get_entities <- function(wikidata_id) {
   )
 }
 
+
 biographies_personal_data <- category_australia_biographies %>%
   mutate(personal_data = get_entities(wikibase_item) %>% extract_personal_data()) %>%
+  unnest(personal_data) %>%
+  pivot_wider(id_cols = pageid:biography, names_from = "label", values_from = "value")
+
+# Get labels for gender and places of birth
+get_labels <- function(wikidata_id) {
+  batches <- split_batches(wikidata_id, 50)
+  url <- paste0(
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
+    batches,
+    "&props=labels&format=json&languages=en"
+  )
+  batched_entities <- map(url, get_batches, .progress = "Getting labels")
+  entities <- reduce(
+    batched_entities,
+    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
+    .init = list()
+  )
+  labels <- map(entities, \(x) list(
+    wikibase_id = pluck(x, "id"),
+    label = pluck(x, "labels", "en", "value")
+  )) %>%
+    bind_rows()
+  labels
+}
+
+genders <- unique(biographies_personal_data$gender) %>%
+  na.omit() %>%
+  get_labels()
+
+places <- unique(biographies_personal_data$pob) %>%
+  na.omit() %>%
+  get_labels()
+
+biographies_personal_data <- biographies_personal_data %>%
+  left_join(genders, by = join_by(x$gender == y$wikibase_id)) %>%
+  mutate(gender = label) %>%
+  select(-label) %>%
+  left_join(places, by = join_by(x$pob == y$wikibase_id)) %>%
+  mutate(pob = label) %>%
+  select(-label) %>%
   write_csv(file.path(DATA_DIR, "personal-data-for-biography-pages.csv"))
-
-
