@@ -3,14 +3,14 @@ library(topicmodels)
 library(tidytext)
 library(janitor)
 
-View(wikidata)
+# View(wikidata)
 
 wikidata <- read_csv("aus_profiles_wikidata_prop.csv") |> 
   clean_names()
 
 
 
-View(wd_text)
+# View(wd_text)
 
 wd_text <- wikidata |> 
   # filter(!grepl("Australian rugby league footballer", person_description)) |> 
@@ -42,9 +42,21 @@ wd_words <- wd_text |>
 
 
 wd_words_count <- wd_words|> 
-  filter(gender_label != "Trans NB IS") |> 
+  # filter(gender_label != "Trans NB IS") |> 
   group_by(gender_label) |> 
-  count(word, sort=TRUE)  
+  count(word, sort=TRUE)  |>
+  mutate(word=reorder(word, n)) |> 
+  slice_max(n, n=20) |> 
+  arrange((desc(n))) |> 
+  ungroup()
+
+
+word_freq <- ggplot(wd_words_count, aes(n, fct_reorder(word, n), fill=gender_label))+
+  geom_col(show.legend = FALSE)+
+  facet_wrap(~gender_label, scales="free")+
+  labs(x="tf_idf", y=NULL)
+
+word_freq
 
 tf_idf_wd <- wd_words_count |> 
   bind_tf_idf(word, gender_label, n) |> 
@@ -63,6 +75,8 @@ tf_idf_chart <- ggplot(tf_idf_wd_top, aes(tf_idf, word, fill=gender_label))+
   labs(x="tf_idf", y=NULL)
   
 tf_idf_chart
+
+ggsave("tf_idf_chart.png", tf_idf_chart, width= 15, height = 15, units=c("cm") )
 
 exclude <- c("footballer", "rules", "rugby", "league")
 
@@ -96,3 +110,45 @@ sporting <- c("cricket", "soccer", "coach", "paralympics", "swimmer", "union")
 journalism <- c("broadcaster", "journalist")
 accademic <- c("accademic", "university", "researcher") 
 writer <- c("author", "writer")
+
+
+special_stop <- c("australian", "australia", "australia’s", "born")
+
+# bi_grams <- wd_text |> 
+#   group_by(gender_label) |> 
+#   unnest_tokens(bigram, person_description, token = "ngrams", n=2) |> 
+#   count(bigram, sort=TRUE)
+# 
+# bigrams_separated <- bi_grams %>%
+#   group_by(gender_label) |> 
+#   separate(bigram, c("word1", "word2"), sep = " ")
+# 
+# bigrams_filtered <- bigrams_separated %>%
+#   group_by(gender_label) |> 
+#   filter(!word1 %in% stop_words$word) %>%
+#   filter(!word2 %in% stop_words$word)
+# 
+# # new bigram counts:
+# bigram_counts <- bigrams_filtered %>% 
+#   count(word1, word2, sort=TRUE) |> 
+#   arrange(desc(n))
+# 
+# bigrams_united <- bigrams_filtered |> 
+#   group_by(gender_label) |> 
+#   unite(bigram, word1, word2, sep=" ")
+# 
+# 
+# bigram_tf_idf <- bigrams_united |> 
+#   count(gender_label, bigram) |> 
+#   bind_tf_idf(bigram, gender_label, n) |> 
+#   arrange(desc(tf_idf)) |> 
+#   group_by(gender_label) |> 
+#   slice_max(tf_idf, n=12) |> 
+#   filter(gender_label != "http://www.wikidata.org/.well-known/genid/0de4c5a80b57262088a20354b318e7f9") 
+# 
+# View(bigram_tf_idf)
+# 
+# ggplot(bigram_tf_idf, aes(tf_idf, bigram, fill=factor(gender_label)))+
+#   geom_col(show.legend = FALSE)+
+#   facet_wrap(~ gender_label, scales="free")+
+#   scale_y_reordered()
