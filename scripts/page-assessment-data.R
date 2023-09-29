@@ -11,6 +11,8 @@ BATCH_SIZE <- 10000L
 lower <- BATCH_SIZE * (BATCH_IDX - 1) + 1
 upper <- BATCH_SIZE * BATCH_IDX
 
+# This script is currently missing the additions ~11,000 records that didn't make
+# it into the original wikidata table - cf. scripts/get-all-wikidata-citizens.R
 wikidata_records <- readr::read_csv("kelly/australian_wikidata_records.csv") %>%
   mutate(
     title = stringr::str_remove(sitelink, "https://en.wikipedia.org/wiki/") %>% stringr::str_replace_all("_", " ") %>% URLdecode()

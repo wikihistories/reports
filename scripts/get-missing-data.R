@@ -85,7 +85,6 @@ get_entities <- function(wikidata_id) {
   )
 }
 
-
 biographies_personal_data <- category_australia_biographies %>%
   mutate(personal_data = get_entities(wikibase_item) %>% extract_personal_data()) %>%
   unnest(personal_data) %>%

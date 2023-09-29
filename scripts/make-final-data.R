@@ -30,13 +30,15 @@ complete_data <- assessed_data %>%
   # Filter out non-biographies from Wikipedia dataset
   left_join(
     select(which_biographies, -title),
-    by = "pageid"
+    by = "pageid",
+    keep = TRUE,
     ) %>%
-  mutate(biography = biography | !is.na(sitelink)) %>%
+  mutate(biography = biography | !is.na(person)) %>%
   # Add missing data for dob etc. for Wikipedia dataset
   left_join(
     select(missing_details, -title),
-    by = "pageid"
+    by = join_by("pageid", "wikibase_item", "biography"),
+    keep = TRUE,
   ) %>%
   mutate(
     genderLabel = coalesce(genderLabel, gender),
