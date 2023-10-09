@@ -130,16 +130,22 @@ When editors include articles in `Category:Australian people`, they do not neces
 ```{r warning=FALSE}
 #| label: fig-wozniak-distance-from-oz
 #| fig-cap: The category for UTS staff lies four steps away from Category:Australian people
+
+simple_tree_graph <- function(graph) {
+  graph %>% 
+    ggraph::ggraph(layout = "tree") + 
+    ggraph::geom_edge_link(
+      arrow = grid::arrow(30, unit(0.15, "inches")),
+      end_cap = ggraph::geometry()
+      ) +
+    ggraph::geom_node_label(aes(label = title)) +
+    ggraph::theme_graph()
+}
+
 shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264)) %>% 
   pluck("vpath", 1) %>% 
-  subgraph(category_graph, .) %>% 
-  ggraph::ggraph(layout = "tree") + 
-  ggraph::geom_edge_link(
-    arrow = grid::arrow(30, unit(0.15, "inches")),
-    end_cap = ggraph::geometry()
-    ) +
-  ggraph::geom_node_label(aes(label = title)) +
-  ggraph::theme_graph()
+  induced_subgraph(category_graph, .) %>% 
+  simple_tree_graph()
 ```
 
 
@@ -234,7 +240,7 @@ bio_overlap %>%
 
 ## Analysis
 
-### Markers of Australianness
+### 'Australianness'
 
 We have seen how difficult it is to judge whether someone is 'Australian'. This difficulty has two sides: **space** and **time**.
 
@@ -501,6 +507,66 @@ Biographies of `Trans, Non-Binary or Intersex` Australians, meanwhile, receive a
 In conclusion, it seems that the gender gap on Australian Wikipedia is wide, and is not currently narrowing. Despite the under-representation of women in the encyclopaedia, editors appear to devote equal attentions both to `Male` and `Female` biographies. The number of non-cisgender biographies appears to be very small—though it is possible that many non-cisgender Australians have fallen into the `Male` and `Female` groups in our analysis due to the crude categorisation method. This small group of non-cisgender biographies receieve a great deal of attention. The most likely reason would appear to be vandalism, though we have not investigated this hypothesis. Wikipedia appears to reflect aspects of Australian gender culture, though the gender gap is probably inflated by the encyclopaedia's strong focus on sport and entertainment, which are highly gendered even by comparison to other fields of social endeavour. This gender gap is reflected in the encyclopaedia's language as well as in the sheer number of articles and editors' activities upon them. It appears likely that Wikipedia is behind Australian society generally in its representation of women, given that biographies of `Female` Australians are so much more likely to be viewed than `Male` biographies. If more `Female` Australians were represented in the encylopaedia, would this ratio change? If the number of `Male` and `Female` articles were equal, would readers still prefer to read `Female` Australians' biographies, or would their average interest decline as the total increased? At this point, we can only speculate.
 
 ### Indigeneity
+
+The distinction between 'settler' and 'indigenous' Australian pervades Wikipedia. Like gender, racial or ethnic origin is marked in a lopsided manner by the encyclopaedia (see @mandiberg_wikipedias_2023). There is no explicit category for 'settler Australian' or 'white Australian'. Categories such as [Category:Immigrants to Australia](https://en.wikipedia.org/wiki/Category:Immigrants_to_Australia) and [Category:Australian people of European Descent](https://en.wikipedia.org/wiki/Category:Australian_people_of_European_descent) are applied in a haphazard way to indicate the 'settler' status of a minority of Australians. [Tony Abbott](https://en.wikipedia.org/w/index.php?title=Tony_Abbott&oldid=1178396384), for example, while born in London, is categorised neither as 'of European descent' nor as an 'immigrant' at the time of writing. By contrast, editors are instructed to categorise Aboriginal and Torres Strait Islander Australians as precisely as possible (@fig-template-catdiffuse-indig-aus).
+
+![Template:Category diffuse instructs editors to categorise Indigenous Australian People more precisely](assets/template-catdiffuse-indig-aus.png){#fig-template-catdiffuse-indig-aus}
+
+Wikipedia carefully categorises Indigenous and Torres Strait Islander people  Instead, Wikipedians consider indigeneity to be an aspect of 'ethnic or national origin' (@fig-ethnic-categorisation-graph)
+
+```{r}
+#| label: fig-ethnic-categorisation-graph
+#| fig-cap: Wikipedia has a complex, settler-oriented method for categorising Australians by ethnic or national origin
+
+# This slightly complicated function is for merging all the addition 'ethnicity'
+# nodes using igraph::contract. Given a boolean of which nodes you'd like to keep
+# in the contracted graph, it produces a numeric vector where all the nodes to
+# be contracted are labelled with a '1', and all others are given a unique
+# number to indicate they should be kept uncontracted. The +1s are for R's one-indexing!
+get_mapping <- function(keep) {
+  keep[keep] <- seq_along(keep[keep])
+  keep + 1
+}
+
+ethnic_categories <- australians$edges %>% 
+  filter(
+    source %in% c(
+      4689323, # australians by ethnic or national origin
+      55890173, # australians of indigenous peoples descent
+      40537624 # australians of indigenous Australian descent
+    ) |
+      target == 4689323
+  ) %>% 
+  left_join(australians$nodes, join_by(target == pageid)) %>% 
+  filter(type == "subcat") %>% 
+  mutate(
+    keep = source != 4689323 | target %in% source,
+    contract_mapping = get_mapping(keep),
+    title = if_else(keep, title, glue::glue("{sum(!keep)} other categories"))
+    )
+
+subgraph <- ethnic_categories %>% 
+  pull(target) %>% 
+  map_int(\(pageid) vertex_by_id(category_graph, pageid)) %>% 
+  induced_subgraph(category_graph, .) %>% 
+  set_vertex_attr("title", value = ethnic_categories$title) %>% 
+  contract(mapping = ethnic_categories$contract_mapping, "first") %>% 
+  simplify()
+
+subgraph %>% 
+  ggraph::ggraph(layout = "igraph", algorithm = "tree") + 
+  ggraph::geom_edge_link(
+    arrow = grid::arrow(30, unit(0.15, "inches")),
+    end_cap = ggraph::geometry(width = 3, height = 1.5)
+  ) +
+  ggraph::geom_node_label(
+    aes(label = stringr::str_wrap(title, width = 30)),
+    ) +
+  ggraph::theme_graph() +
+  # Increasing the scale on the x and y axis stops the labels from being cropped
+  scale_x_continuous(limits = c(-1, 1.5)) +
+  scale_y_continuous(limits = c(-0.5, 3.5))
+```
 
 
 ### Historical period
