@@ -31,8 +31,8 @@ old_theme <- theme_update(
   panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
   panel.grid.minor.y = element_blank(),
   panel.background = element_blank(),
-  axis.title = element_blank(),
-  legend.key = element_blank()
+  # axis.title = element_blank(),
+  # legend.key = element_blank()
 )
 
 gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
@@ -73,9 +73,11 @@ citizens <- read_csv(file.path(data_dir, "all-wikidata-australian-citizens.csv")
 wikidata_australians <- bind_rows(wikidata_australians, citizens)
 ```
 
+## Introduction
+
 Who counts as Australian in Wikipedia and its sister-projects? How does Wikipedia portray Australia's population? These questions are easy to ask but hard to answer, because of Wikipedia's *representational multiplicity*. Wikipedia represents Australia in many ways. Its sister projects—Wikidata and Wikimedia Commons preminent among them—represent Australia in myriad other ways.
 
-In this report we consider several ways that Australians are represented in Wikipedia and Wikidata. More specifically, we focus on how *individual* Australians are represented, in the form of biographical articles (Wikipedia) or 'items' (Wikidata). Our analysis unfolds in three main sections. In [Data], we explain how we built our datasets for analysis: by leveraging Wikipedia's category system, and Wikidata's query engine. In [#who-counts-1-properties], we consider the various ways that a person can be marked as 'Australian' in Wikidata. In [#who-counts-2-quality], we use article quality statistics from XTools to explore how Wikipedia and its users divide their attention between different kinds of Australians. In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
+In this report we consider several ways that Australians are represented in Wikipedia and Wikidata. More specifically, we focus on how *individual* Australians are represented, in the form of biographical articles (Wikipedia) or 'items' (Wikidata). Our analysis unfolds in three main sections. In [Data], we explain how we built our datasets for analysis: by leveraging Wikipedia's category system, and Wikidata's query engine. In [Analysis], we consider four ways that Australians are 'marked' in Wikipedia and Wikidata: by their [Australianness], their [Gender], their [Indigeneity] and their [Historical period]. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe considerable normativity in the encyclopaedia: generally, Wikipedia assumes that an 'Australian' is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g. the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g. the gender gap). In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors to the site can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
 
 ![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
 
@@ -590,12 +592,59 @@ Australia is not entirely alone. The subgraph for [`Category:Japanese people by 
 
 It is clear that quantifying indigenous representation in Wikipedia is a fraught exercise. Scholars are well advised to carefully consider how indigeneity is understood in different parts of the world, and then to pay close attention to the particular structure of ethnic and national classification in any particular part of Wikipedia.
 
+```{r}
+category_indigenous_pageids <- full_graph %>% 
+  igraph::neighborhood(
+    order = diameter(full_graph),
+    nodes = vertex_by_id(full_graph, 40537624), # Australians of indigenous descent,
+    mode = "out"
+  ) %>% 
+  pluck(1) %>% 
+  attr("names", exact = TRUE) %>%
+  as.integer()
+
+indigenous_prop <- combined_data %>% 
+  filter(in_wikipedia_set, biography) %>% 
+  mutate(indigenous = pageid %in% category_indigenous_pageids) %>% 
+  mutate(created_at = as_date(created_at)) %>% 
+  arrange(created_at) %>% 
+  group_by(created_at, indigenous) %>% 
+  count() %>% 
+  group_by(indigenous) %>% 
+  mutate(cumsum = cumsum(n)) %>% 
+  pivot_wider(names_from = indigenous, values_from = cumsum, id_cols = created_at) %>% 
+  fill(`FALSE`, `TRUE`) %>% 
+  replace_na(list(`FALSE` = 0)) %>% 
+  mutate(
+    total = `TRUE`+`FALSE`,
+    indig_prop = `TRUE`/total
+    )
+```
+
+Nonetheless, we can use the category graph to estimate the number of biographies of Indigenous Australians in Wikipedia. @fig-indigenous-growth-wikipedia suggests that in recent years, Wikipedians may have begun to address the representation gap between Indigenous and settler Australians. @fig-indigenous-growth-wikipedia shows the proportaion of biographies under `Category:Australian people of Indigenous Australian descent` as a proportion of all biographies in `Category:Australian people`. The representation gap for Indigenous Australians is not so stark as the representation gap for non-male Australians. According to the Australian Census, the number of Indigenous Australians [grew from 2.5% of Australia's population to 3.2% between 2011 and 2021.](https://www.abs.gov.au/statistics/people/people-and-communities/snapshot-australia/2021#aboriginal-and-torres-strait-islander-communities). In our estimate, the proportion of Indigenous biographies in `Category:Australian people`, went from `r indigenous_prop %>% filter(created_at == date("2011-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2011 to `r indigenous_prop %>% filter(created_at == date("2021-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2021. At the time of our data collection, the proportion had risen again to `r indigenous_prop %>% slice_tail(n = 1) %>% pull(indig_prop) %>% round(4) * 100`%. Although comparison with the census would suggest that Wikipedia under-represents Indigenous Australians, the representation gap is currently narrowing.
+
+```{r warning=FALSE}
+#| label: fig-indigenous-growth-wikipedia
+#| fig-cap: In recent years, the proportion of Indigenous biographies may have started to grow.
+indigenous_prop %>% 
+  ggplot(aes(x = created_at, y = indig_prop)) +
+  geom_line() +
+  geom_smooth() +
+  labs(
+    x = "Page creation date",
+    y = "Proportion of Indigenous biographies"
+  ) +
+  scale_y_continuous(labels = scales::percent)
+```
+
+
 The situation in Wikidata is made simple by the fact that it has no system for ethnic or national classification. There are two main markers of indigenity for Australians in Wikidata:
 
-1. A person's 'description' may mention their indigeneity. For example, [Bennelong](https://www.wikidata.org/w/index.php?title=Q817828&oldid=1617736683) is described as an 'Eora interlocutor with the British in Australia and the United Kingdom'.
-2. A person may be linked to a record in the [Indigenous Australia](https://ia.anu.edu.au/) database ([P9246](https://www.wikidata.org/wiki/Property:P9246)).
+1. A person's 'description' may mention their indigeneity. For example, [Bennelong](https://www.wikidata.org/w/index.php?title=Q817828&oldid=1617736683) is described as an 'Eora interlocutor with the British in Australia and the United Kingdom'. To obtain an estimate of Indigenous Australians in the Wikidata data, we have used the crude method of seraching for known keywords, including 'indigneous', 'aboriginal' and 'eora', then scanning the results by eye to exclude false positives (for example [Judith Wright](), who is described as an 'Indigenous rights activist' on Wikidata). **TODO: Kelly, I think we need to do this again using the additional 18000 records from Category:Australian People**
+2. A person may be linked to a record in the [Indigenous Australia](https://ia.anu.edu.au/) database ([P9246](https://www.wikidata.org/wiki/Property:P9246)). At the time of writing, the Indigenous Australia database contains [973 entries](https://ia.anu.edu.au/biographies/name/) for Indigenous Australians. Of these 973, `r wikidata_australians %>% filter(source == "indigenous_aus") %>% count() %>% pull(n)` have been linked to a Wikidata item.
 
-We eventually abandoned the first marker, because it presented two difficult problems. First, non-Indigenous Australians such as [Judith Wright](https://www.wikidata.org/w/index.php?title=Q469885&oldid=1989984400) may contain keywords such as 'Indigenous' in their descriptions, confusing the filter. Second, Australia is home to hundreds of Indigenous peoples, whose names have been spelled in numerous ways since colonisation. A careful search for indigenous 
+
+
 
 
 ### Historical period
