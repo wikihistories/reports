@@ -1,32 +1,53 @@
 library(tidyverse)
-
+library(wikkitidy)
+source(file.path("scripts", "utils.R"))
 
 # Download all the pages and subcategories under Category:Australian People
-get_aussies_category_tree <- function(use_cache = USE_CACHE, data_dir = DATA_DIR) {
-  data_files <- list.files(data_dir)
-  aussie_cat_files <- stringr::str_detect(data_files, "australian-people-categories")
-  if (!use_cache || sum(aussie_cat_files) == 0) {
-    # This takes approx 1 hour
-    australians <- wikkitidy::build_category_tree("Category:Australian people")
-    readr::write_rds(
-      australians,
-      file.path(
-        data_dir,
-        glue::glue("australian-people-categories-{as.integer(Sys.time())}.rds")
-      ),
-      compress = "gz"
-    )
+get_aussies_category_tree <- function(use_cache, data_dir) {
+  save_path <- file.path(data_dir, "wikipedia-category-australian-people.rds")
+  if (use_cache) {
+    message(glue::glue("Reading data from {save_path}"))
+    withr::with_options(list(readr.show_col_types = FALSE), {
+      australians <- readr::read_rds(save_path)
+    })
   } else {
-    latest_file <- sort(data_files[aussie_cat_files], decreasing = TRUE)[1]
-    australians <- readr::read_rds(file = file.path(data_dir, latest_file))
+    # This takes approx 1 hour
+    australians <- wikkitidy::build_category_tree("Category:Australian people") %>%
+      write_rds(save_path, compress = "bz2")
+    message(glue::glue("Data written to {save_path}"))
   }
   australians
+}
+
+get_one_wikibase_item <- function(pageid_batch) {
+  wiki_action_request() %>%
+    query_by_pageid(pageid_batch) %>%
+    query_page_properties(
+      "pageprops",
+      ppprop = "wikibase_item"
+    ) %>%
+    retrieve_all()
+}
+
+get_wikibase_items <- function(pageid, use_cache, data_dir) {
+  save_path <- file.path(data_dir, "wikipedia-to-wikidata.csv")
+  if (rlang::is_true(use_cache)) {
+    wikibase_items <- readr::read_csv(save_path)
+  } else {
+    batches <- split_batches(pageid, 50)
+    wikibase_items <- batches %>%
+      map(get_one_wikibase_item, .progress = "Getting Wikibase IDs") %>%
+      bind_rows() %>%
+      readr::write_csv(save_path)
+  }
+  wikibase_items
 }
 
 # Data frame of Wikidata properties to query the database
 FILTER_PROPERTIES <- tibble::tribble(
   ~source,             ~criteria,
-  "aus_citizens_wd",   "?person p:P27 wd:Q408.",
+  "aus_citizens_wd",   "?person p:P27 ?statement0.
+                        ?statement0 (ps:P27) wd:Q408.",
   "people_of_aus",     "?person p:P9159 ?statement0.",
   "obit_of_aus",       "?person p:P9232 ?statement0.",
   "labour_of_aus",     "?person p:P9245 ?statement0.",
@@ -37,7 +58,6 @@ FILTER_PROPERTIES <- tibble::tribble(
   "rugby_aus",         "?person p:P4799 ?statement0.",
   "athletics_aus",     "?person p:P3915 ?statement0.",
   "tennis_aus",        "?person p:P3698 ?statement0.",
-  "AGSA_creator_aus",  "?person p:P6804 ?statement0.",
   "sporting_hall_fame_aus", "?person p:P4415 ?statement0.",
   "parliament_num_aus", "?person p:P10020 ?statement0.",
   "swim_aus",          "?person p:P3669 ?statement0.",
@@ -47,20 +67,16 @@ FILTER_PROPERTIES <- tibble::tribble(
   "parliament_aus",    "?person wdt:P39 wd:Q18912794 .",
   "aus_football",      "?person p:P3546 ?statement0.",
   "para_oly_aus",      "?person p:P10976 ?statement0.",
-  "trove_aus",         "?person p:P1315 ?statement0.",
   "SA_parliament_aus", "?person p:P11128 ?statement0.",
   "aus_war_memorial",  "?person p:P6713 ?statement0.",
   "aus_womens_reg",    "?person p:P4186 ?statement0.",
   "aus_golf",          "?person p:P11191 ?statement0.",
   "convict_records",   "?person p:P9919 ?statement0.",
   "aus_dictionary_bio","?person p:P1907 ?statement0.",
-  "nat_gallery_vic_artist", "?person p:P2041 ?statement0.",
   "aus_olympics",      "?person p:P3682 ?statement0.",
-  "national_maritime_museum", "?person p:P7769 ?statement0.",
   "medical_pioneers",  "?person p:P9853 ?statement0.",
   "west_aus_football", "?person p:P4571 ?statement0.",
   "aus_poetry_library","?person p:P5465 ?statement0.",
-  "aus_printmakers",   "?person p:P10086 ?statement0.",
   "VIC_parliament",    "?person p:P8633 ?statement0.",
   "sa_footbal_hall_fame", "?person p:P4623 ?statement0.",
   "qld_footbal_hall_fame", "?person p:P4609 ?statement0.",
@@ -72,28 +88,32 @@ FILTER_PROPERTIES <- tibble::tribble(
   "QLD_governor",      "?person wdt:P39 wd:Q1467097",
   "SA_governor",       "?person wdt:P39 wd:Q1840570",
   "WA_governor",       "?person wdt:P39 wd:Q1372518",
-  "AusStage",          "?person p:P8292 ?statement0.",
   "NSW_legislative_coucil",   "?person wdt:P39 wd:Q1372518.",
-  "VIC_honour_women",  "?person ps:P166 wd:Q7927224.",
+  "VIC_honour_women",  "?person p:P166 ?statement0 .
+                        ?statement0 (ps:P166) wd:Q7927224.",
   "VIC_legislative_council",   "?person wdt:P39 wd:Q19185341.",
   "Lord_mayor_Melb",   "?person wdt:P39 wd:Q23782667.",
   "place_of_birth_aus", "?person wdt:P19 wd:Q408",
-  "place_of_death_aus", "?person wdt:P20 wd:Q408"
+  "place_of_death_aus", "?person wdt:P20 wd:Q408",
+  "AusStage",          "?person p:P8292 ?statement0.", # unreliable
+  "aus_printmakers",   "?person p:P10086 ?statement0.", # unreliable
+  "national_maritime_museum", "?person p:P7769 ?statement0.", # unreliable
+  "nat_gallery_vic_artist", "?person p:P2041 ?statement0.", # unreliable
+  "AGSA_creator_aus",  "?person p:P6804 ?statement0.", # unreliable
+  "trove_aus",         "?person p:P1315 ?statement0.", # unreliable
 )
 
-# Querying for each property seperately ensures that the query
-# doesn't breach the 300ms limit
-DATA_PROPERTIES <- tibble::tribble(
-  ~prop_label,   ~prop,
-  "genderLabel", "OPTIONAL{?person wdt:P21 ?gender.}",
-  "dob",         "OPTIONAL{?person wdt:P569 ?dob.}",
-  "dod",         "OPTIONAL{?person wdt:P570 ?dod.}",
-  "pobLabel",    "OPTIONAL{?person wdt:P19 ?pob.}"
+PERSONAL_DATA_PROPS <- tibble::tribble(
+  ~label,   ~claim_id, ~value_type,
+  "gender", "P21",     "id",
+  "dob",    "P569",    "time",
+  "dod",    "P570",    "time",
+  "pob",    "P19",     "id"
 )
 
 query_one <- function(source, criteria, prop_label, prop) {
   query <- glue::glue(
-  "SELECT DISTINCT    ?person ?personLabel ?personDescription ?{prop_label} ?sitelink
+  "SELECT DISTINCT    ?person
    WHERE {{
     SERVICE wikibase:label {{ bd:serviceParam wikibase:language 'en'. }}
     {{
@@ -102,41 +122,191 @@ query_one <- function(source, criteria, prop_label, prop) {
         {criteria}
       }}
     }}
-
-    {prop}
-
-    OPTIONAL {{ ?sitelink schema:about ?person ;
-     schema:inLanguage 'en' ;
-     schema:isPartOf [ wikibase:wikiGroup 'wikipedia' ]
-    }}.
-
    }}")
     result <- WikidataQueryServiceR::query_wikidata(query)
   return(result)
 }
 
-get_wikidata_australians <- function(use_cache = USE_CACHE, data_dir = DATA_DIR) {
+get_wikidata_australians <- function(use_cache, data_dir) {
+  save_path <- file.path(data_dir, "wikidata-australians.csv")
   if (rlang::is_true(use_cache)) {
-    readr::read_rds(file.path(data_dir, "wikidata-australians.rds"))
+    withr::with_options(list(readr.show_col_types = FALSE), {
+      message(glue::glue("Reading data from {save_path}"))
+      results <- read_csv(save_path)
+    })
   } else {
     withr::with_options(list(readr.show_col_types = FALSE), {
-      query_params <- cross_join(FILTER_PROPERTIES, DATA_PROPERTIES)
-      results <- purrr::pmap(query_params, query_one, .progress = "Query Wikidata for Australians")
+      results <- purrr::pmap(FILTER_PROPERTIES, query_one, .progress = "Query Wikidata for Australians")
     })
-    tibble::tibble(query_params, results)
+    names(results) <- FILTER_PROPERTIES$source
+    results <- bind_rows(results, .id = "source") %>%
+      mutate(person = str_remove(person, fixed("http://www.wikidata.org/entity/"))) %>%
+      write_csv(save_path)
+    message(glue::glue("Results written to {save_path}"))
+  }
+  nest(results, source = source, .by = person)
+}
+
+combine_datasets <- function(wikipedia_australians, wikidata_australians) {
+  if (!is.data.frame(wikipedia_australians)) {
+    rlang::abort("`wikipedia_australians` must be a data frame of Wikipedia pages. Did you pass the raw output of `get_aussies_category_tree()`?")
+  }
+  wikipedia_australians %>%
+    full_join(wikidata_australians, by = "person") %>%
+    mutate(
+      dataset = case_when(
+        person %in% wikipedia_australians$person & person %in% wikidata_australians$person ~ "both",
+        person %in% wikipedia_australians$person ~ "category_aus",
+        .default = "wikidata"
+      )
+    )
+}
+
+annotate_combined_data <- function(combined_data, use_cache, data_dir) {
+  save_path <- file.path(data_dir, "combined-annotated-data.csv")
+  if (rlang::is_true(use_cache)) {
+    message(glue::glue("Reading combined data from {save_path}"))
+    read_csv(save_path)
+  } else {
+    message(glue::glue("Getting additional data from Wikidata. Output will be written to {save_path}"))
+    combined_data %>%
+      mutate(
+        entity = get_entities(person),
+        is_human = is_human(entity),
+        extract_personal_data(entity),
+        extract_metadata(entity),
+      ) %>%
+      select(-entity) %>%
+      label_genders_and_places() %>%
+      write_csv(save_path)
   }
 }
 
-clean_wikidata_australians <- function(query_result) {
-  query_result %>%
-    filter(purrr::map_int(wikidata_australians$results, nrow) > 0) %>%
-    mutate(results = purrr::map(results, clean_dates)) %>%
-    tidyr::unnest()
+get_batches <- function(url) {
+  response <- httr2::request(url) %>%
+    httr2::req_error(is_error = function(x) FALSE) %>%
+    httr2::req_perform()
+  if (!httr2::resp_is_error(response)) {
+    response_body <- httr2::resp_body_json(response)
+  } else {
+    response_body <- NA
+  }
 }
 
-clean_dates <- function(result_tbl) {
-  mutate(
-    result_tbl,
-    across(where(ends_with("ob"))),
-    \(x) as_datetime(x))
+get_one_claim <- function(claims, claim_id, value_type) {
+  statements <- pluck(claims, claim_id, .default = NA)
+  if (rlang::is_na(statements)) {
+    NA
+  } else {
+    rank <- map_chr(statements, \(stmt) pluck(stmt, "rank", .default = NA))
+    rank <- case_when(
+      rank == "preferred" ~ 2,
+      rank == "normal" ~ 1,
+      .default = 0
+    )
+    preferred_idx <- if (length(rank) > 0) max(rank) else NULL
+    value <- pluck(claims, claim_id, preferred_idx, "mainsnak", "datavalue", "value", value_type, .default = NA)
+    as.character(value)
+  }
 }
+
+get_claims <- function(claims, claim_id, value_type) {
+  params <- vctrs::vec_recycle_common(list(claims), claim_id, value_type)
+  pmap_chr(params, \(claims, id, type) get_one_claim(claims, id, type))
+}
+
+PERSONAL_DATA_PROPS <- tibble::tribble(
+  ~label,   ~claim_id, ~value_type,
+  "gender", "P21",     "id",
+  "dob",    "P569",    "time",
+  "dod",    "P570",    "time",
+  "pob",    "P19",     "id"
+)
+
+extract_personal_data <- function(entity) {
+  map(entity, extract_one_personal_data)
+}
+
+extract_one_personal_data <- function(entity) {
+  claims <- pluck(entity, "claims")
+  mutate(
+    PERSONAL_DATA_PROPS,
+    value = get_claims(claims, claim_id, value_type)
+  )
+}
+
+extract_one_metadata <- function(entity) {
+  tibble::tibble_row(
+    label = pluck(entity, "labels", "en", "value", .default = NA),
+    description = pluck(entity, "descriptions", "en", "value", .default = NA),
+    on_english_wikipedia = pluck_exists(entity, "sitelinks", "enwiki")
+  )
+}
+
+extract_metadata <- function(entity) {
+  map(entity, extract_one_metadata) %>%
+    bind_rows()
+}
+
+is_human <- function(entity) {
+  instance_of <- purrr::pluck(entity, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = FALSE)
+  if (instance_of) "Q5" %in% instance_of else FALSE
+}
+
+# Get Wikidata item, extract gender, dob, dod and pob if available
+get_entities <- function(wikidata_id) {
+  batches <- split_batches(wikidata_id, 50)
+  url <- paste0(
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
+    batches,
+    "&props=claims|descriptions|sitelinks|labels&languages=en&sitefilter=enwiki&format=json"
+  )
+  batched_entities <- map(url, get_batches, .progress = "Getting personal data")
+  entities <- reduce(
+    batched_entities,
+    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
+    .init = list()
+  )
+}
+
+# Get labels of Wikidata entities (e.g. places, genders)
+get_labels <- function(wikidata_id) {
+  batches <- split_batches(wikidata_id, 50)
+  url <- paste0(
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
+    batches,
+    "&props=labels&format=json&languages=en"
+  )
+  batched_entities <- map(url, get_batches, .progress = "Getting labels")
+  entities <- reduce(
+    batched_entities,
+    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
+    .init = list()
+  )
+  labels <- map(entities, \(x) list(
+    wikibase_id = pluck(x, "id"),
+    label = pluck(x, "labels", "en", "value")
+  )) %>%
+    bind_rows()
+  labels
+}
+
+label_genders_and_places <- function(combined_data) {
+  genders <- unique(combined_data$gender) %>%
+    na.omit() %>%
+    get_labels()
+
+  places <- unique(combined_data$pob) %>%
+    na.omit() %>%
+    get_labels()
+
+  combined_data %>%
+    left_join(genders, by = join_by(x$gender == y$wikibase_id)) %>%
+    mutate(gender = label) %>%
+    select(-label) %>%
+    left_join(places, by = join_by(x$pob == y$wikibase_id)) %>%
+    mutate(pob = label) %>%
+    select(-label)
+}
+
+

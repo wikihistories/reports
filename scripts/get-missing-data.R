@@ -69,13 +69,25 @@ extract_personal_data <- function(entity) {
   map(entity, extract_one_personal_data)
 }
 
+extract_one_metadata <- function(entity) {
+  tibble::tibble(
+    label = pluck(entity, "labels", "en", "value", .default = NA),
+    description = pluck(entity, "descriptions", "en", "value", .default = NA),
+    on_english_wikipedia = pluck_exists(entity, "sitelinks", "enwiki")
+  )
+}
+
+extract_metadata <- function(entity) {
+  map(entity, extract_metadata)
+}
+
 # Get Wikidata item, extract gender, dob, dod and pob if available
 get_entities <- function(wikidata_id) {
   batches <- split_batches(wikidata_id, 50)
   url <- paste0(
     "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
     batches,
-    "&props=claims&format=json"
+    "&props=claims|descriptions|sitelinks|labels&languages=en&sitefilter=enwiki&format=json"
   )
   batched_entities <- map(url, get_batches, .progress = "Getting personal data")
   entities <- reduce(
