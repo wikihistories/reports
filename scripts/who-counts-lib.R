@@ -20,13 +20,13 @@ get_aussies_category_tree <- function(use_cache, data_dir) {
 }
 
 get_one_wikibase_item <- function(pageid_batch) {
-  wiki_action_request() %>%
+  request <- wiki_action_request() %>%
     query_by_pageid(pageid_batch) %>%
     query_page_properties(
       "pageprops",
       ppprop = "wikibase_item"
-    ) %>%
-    retrieve_all()
+    )
+  retrieve_all(request)
 }
 
 get_wikibase_items <- function(pageid, use_cache, data_dir) {
@@ -95,12 +95,12 @@ FILTER_PROPERTIES <- tibble::tribble(
   "Lord_mayor_Melb",   "?person wdt:P39 wd:Q23782667.",
   "place_of_birth_aus", "?person wdt:P19 wd:Q408",
   "place_of_death_aus", "?person wdt:P20 wd:Q408",
-  "AusStage",          "?person p:P8292 ?statement0.", # unreliable
-  "aus_printmakers",   "?person p:P10086 ?statement0.", # unreliable
-  "national_maritime_museum", "?person p:P7769 ?statement0.", # unreliable
-  "nat_gallery_vic_artist", "?person p:P2041 ?statement0.", # unreliable
-  "AGSA_creator_aus",  "?person p:P6804 ?statement0.", # unreliable
-  "trove_aus",         "?person p:P1315 ?statement0.", # unreliable
+  # "AusStage",          "?person p:P8292 ?statement0.", # unreliable
+  # "aus_printmakers",   "?person p:P10086 ?statement0.", # unreliable
+  # "national_maritime_museum", "?person p:P7769 ?statement0.", # unreliable
+  # "nat_gallery_vic_artist", "?person p:P2041 ?statement0.", # unreliable
+  # "AGSA_creator_aus",  "?person p:P6804 ?statement0.", # unreliable
+  # "trove_aus",         "?person p:P1315 ?statement0.", # unreliable
 )
 
 PERSONAL_DATA_PROPS <- tibble::tribble(
@@ -147,39 +147,57 @@ get_wikidata_australians <- function(use_cache, data_dir) {
   nest(results, source = source, .by = person)
 }
 
-combine_datasets <- function(wikipedia_australians, wikidata_australians) {
-  if (!is.data.frame(wikipedia_australians)) {
-    rlang::abort("`wikipedia_australians` must be a data frame of Wikipedia pages. Did you pass the raw output of `get_aussies_category_tree()`?")
-  }
-  wikipedia_australians %>%
-    full_join(wikidata_australians, by = "person") %>%
-    mutate(
-      dataset = case_when(
-        person %in% wikipedia_australians$person & person %in% wikidata_australians$person ~ "both",
-        person %in% wikipedia_australians$person ~ "category_aus",
-        .default = "wikidata"
-      )
-    )
-}
-
-annotate_combined_data <- function(combined_data, use_cache, data_dir) {
-  save_path <- file.path(data_dir, "combined-annotated-data.csv")
+get_personal_data <- function(combined_data, use_cache, data_dir) {
+  save_path <- file.path(data_dir, "personal-data.csv")
   if (rlang::is_true(use_cache)) {
     message(glue::glue("Reading combined data from {save_path}"))
-    read_csv(save_path)
+    personal_data <- read_csv(save_path)
   } else {
     message(glue::glue("Getting additional data from Wikidata. Output will be written to {save_path}"))
-    combined_data %>%
-      mutate(
-        entity = get_entities(person),
-        is_human = is_human(entity),
-        extract_personal_data(entity),
-        extract_metadata(entity),
-      ) %>%
-      select(-entity) %>%
+    entities <- get_entities(combined_data$person)
+    personal_data <- tibble(
+      person = map_chr(entities, "id"),
+      !!!extract_personal_data(entities),
+      !!!extract_metadata(entities),
+      is_human = is_human(entities)
+    ) %>%
       label_genders_and_places() %>%
       write_csv(save_path)
   }
+  personal_data
+}
+
+get_quality_indicators <- function(combined_data, use_cache, data_dir, save_freq = 1000) {
+  save_path <- file.path(data_dir, "quality-indicators.csv")
+  if (rlang::is_true(use_cache)) {
+    message(glue::glue("Reading combined data from {save_path}"))
+    quality_indicators <- read_rds(save_path)
+  } else {
+    # This is complicated because the download takes forever, and we want
+    # to save intermediate results in case the R sessions is interrupted
+    title <- split(combined_data$title, ceiling(seq_along(title)/save_freq))
+    message(glue::glue("Quality indicators will be saved to {save_path} every {save_freq} pages"))
+    quality_indicators <- imap(
+      title,
+      \(title, idx) get_quality_indicators_batch(title, idx, save_path),
+      .progress = "Downloading quality indicators") %>%
+      bind_rows()
+  }
+}
+
+get_quality_indicators_batch <- function(title, idx, save_path, resume = FALSE) {
+  if (!rlang::is_bare_logical(resume, n = 1)) {
+    rlang::abort("`resume` must be either TRUE or FALSE")
+  }
+  data <- get_xtools_page_info(title) %>%
+    hoist(assessment, class = "value") %>%
+    select(-assessement)
+  if (idx == "1") {
+    write_csv(data, save_path, append = resume)
+  } else {
+    write_csv(data, save_path, append = TRUE)
+  }
+  data
 }
 
 get_batches <- function(url) {
@@ -223,34 +241,47 @@ PERSONAL_DATA_PROPS <- tibble::tribble(
   "pob",    "P19",     "id"
 )
 
+
 extract_personal_data <- function(entity) {
-  map(entity, extract_one_personal_data)
+  personal_data <- map(entity, extract_one_personal_data) %>%
+    bind_rows(.id = "person") %>%
+    select(-claim_id, -value_type) %>%
+    pivot_wider(names_from = label, values_from = value) %>%
+    mutate(
+      dob = as_date(dob),
+      dod = as_date(dod)
+    ) %>%
+    select(-person)
 }
 
 extract_one_personal_data <- function(entity) {
   claims <- pluck(entity, "claims")
   mutate(
     PERSONAL_DATA_PROPS,
-    value = get_claims(claims, claim_id, value_type)
+    value = get_claims(claims, claim_id, value_type),
+    person = pluck(entity, "id")
   )
 }
 
 extract_one_metadata <- function(entity) {
   tibble::tibble_row(
-    label = pluck(entity, "labels", "en", "value", .default = NA),
+    title = pluck(entity, "sitelinks", "enwiki", "title", .default = NA),
     description = pluck(entity, "descriptions", "en", "value", .default = NA),
-    on_english_wikipedia = pluck_exists(entity, "sitelinks", "enwiki")
+    on_english_wikipedia = !is.na(title)
   )
 }
 
 extract_metadata <- function(entity) {
-  map(entity, extract_one_metadata) %>%
-    bind_rows()
+  map(entity, extract_one_metadata) %>% bind_rows()
 }
 
 is_human <- function(entity) {
-  instance_of <- purrr::pluck(entity, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = FALSE)
-  if (instance_of) "Q5" %in% instance_of else FALSE
+  instance_of <- purrr::pluck(entity, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = as.character())
+  if ("Q5" %in% instance_of) TRUE else FALSE
+}
+
+are_human <- function(entities) {
+  map_lgl(entities, is_human)
 }
 
 # Get Wikidata item, extract gender, dob, dod and pob if available
@@ -270,7 +301,7 @@ get_entities <- function(wikidata_id) {
 }
 
 # Get labels of Wikidata entities (e.g. places, genders)
-get_labels <- function(wikidata_id) {
+get_labels <- function(wikidata_id, label_name) {
   batches <- split_batches(wikidata_id, 50)
   url <- paste0(
     "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
@@ -283,30 +314,30 @@ get_labels <- function(wikidata_id) {
     \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
     .init = list()
   )
-  labels <- map(entities, \(x) list(
+  labels <- map(entities, \(x) rlang::list2(
     wikibase_id = pluck(x, "id"),
-    label = pluck(x, "labels", "en", "value")
+    !!label_name := pluck(x, "labels", "en", "value")
   )) %>%
     bind_rows()
   labels
 }
 
-label_genders_and_places <- function(combined_data) {
-  genders <- unique(combined_data$gender) %>%
+label_genders_and_places <- function(personal_data) {
+  genders <- unique(personal_data$gender) %>%
     na.omit() %>%
-    get_labels()
+    get_labels("gender_label")
 
-  places <- unique(combined_data$pob) %>%
+  places <- unique(personal_data$pob) %>%
     na.omit() %>%
-    get_labels()
+    get_labels("place_label")
 
-  combined_data %>%
+  personal_data %>%
     left_join(genders, by = join_by(x$gender == y$wikibase_id)) %>%
-    mutate(gender = label) %>%
-    select(-label) %>%
+    mutate(gender = gender_label) %>%
+    select(-gender_label) %>%
     left_join(places, by = join_by(x$pob == y$wikibase_id)) %>%
-    mutate(pob = label) %>%
-    select(-label)
+    mutate(pob = place_label) %>%
+    select(-place_label)
 }
 
 

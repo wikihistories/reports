@@ -18448,7 +18448,7 @@ pageid,ns,title,wikibase_item
 65085870,0,Paul Sorensen (landscape gardener),Q21537030
 65662758,0,James Hazel Adamson,Q100905873
 65686940,0,David B. Adamson,Q21536692
-73512510,0,William Sangster,NA
+73512510,0,William Sangster,Q123173280
 556583,0,David Malin,Q5237073
 1074299,0,Alfred Traeger,Q4723533
 1218749,0,Craig Johnston,Q290853
@@ -38648,7 +38648,7 @@ pageid,ns,title,wikibase_item
 63289630,0,Bev Harrell,Q58487200
 65523695,0,Roselee Jencke,Q100154153
 66701334,0,Tony Gresham,Q105423312
-75014466,0,Philip Green (diplomat),NA
+75014466,0,Philip Green (diplomat),Q123170969
 1193798,0,Amanda Keller,Q4739661
 1352062,0,William Kelly (artist),Q8013902
 1651314,0,Craig Lowndes,Q3002043
@@ -74639,7 +74639,7 @@ pageid,ns,title,wikibase_item
 51557183,0,Brendan Hall,Q26899255
 52808445,0,Toxicon (band),Q28220556
 55960315,0,Geelong Symphony Orchestra,Q48970380
-56690308,0,Automatic (band),Q55604533
+56690308,0,Automatic (Australian band),Q55604533
 61632589,0,Connor Pritchard,Q66817489
 62800334,0,Matthew Brain,Q81692198
 63073343,0,Shaun Valentine,Q84756873
@@ -79798,7 +79798,7 @@ pageid,ns,title,wikibase_item
 49019503,0,Jim Forbes (footballer),Q21996955
 59135197,0,Zac Foot,Q59180046
 60121505,0,Maighan Fogas,Q61949326
-74920651,0,Eddie Fox,NA
+74920651,0,Eddie Fox,Q123173278
 4170909,0,Josh Fraser,Q6288868
 12438210,0,James Frawley (footballer),Q6134217
 16129145,0,Peter Francis (footballer),Q7174065
@@ -82057,7 +82057,7 @@ pageid,ns,title,wikibase_item
 27372167,0,Neil Pearson (footballer),Q16090095
 30505330,0,Neil Peart (footballer),Q6989147
 31179745,0,Tom Pelly,Q7817202
-31426698,0,Peter Patterson (footballer),Q7176315
+31426698,0,"Peter Patterson (footballer, born 1945)",Q7176315
 32047152,0,Fred Payne (footballer),Q5496054
 41115844,0,Andy Pattison,Q16067200
 41137323,0,Horrie Pearce,Q16067274
@@ -88520,7 +88520,7 @@ pageid,ns,title,wikibase_item
 41733411,0,Vanessa DiBernardo,Q16234500
 42133320,0,Amanda Frisbie,Q16211526
 45151441,0,Caprice Dydasco,Q18921685
-45661810,0,Raquel Rodríguez,Q19662264
+45661810,0,Rocky Rodríguez,Q19662264
 46458651,0,Celia Jiménez (footballer),Q19958283
 46580359,0,Lynn Williams (soccer),Q19816533
 46581893,0,Arin Wright,Q19823285
@@ -89889,7 +89889,7 @@ pageid,ns,title,wikibase_item
 70295922,0,"Minister for Mental Health, Regional Youth and Women (New South Wales)",NA
 70296421,0,"Minister for Leisure, Sport and Tourism (New South Wales)",NA
 70315088,0,Minister for Mineral Resources and Energy (New South Wales),NA
-70319683,0,Minister for Industry and Small Business (New South Wales),NA
+70319683,0,Minister for Domestic Manufacturing and Government Procurement,NA
 70387048,0,Minister for the Hunter (New South Wales),NA
 70387056,0,Minister for the Illawarra (New South Wales),NA
 70402640,0,Minister for Lands and Forestry (New South Wales),NA
@@ -89985,7 +89985,7 @@ pageid,ns,title,wikibase_item
 69390890,0,Minister in Charge of Tourist Activities (New South Wales),NA
 69454093,0,Minister for Secondary Industries (New South Wales),NA
 69586964,0,"Minister for Sport, Multiculturalism, Seniors and Veterans",NA
-70221310,0,Minister for Youth,NA
+70221310,0,Minister for Youth,Q123164955
 70257075,0,Minister for Tourism and Major Events (New South Wales),NA
 70280752,0,Minister for Youth Affairs (New South Wales),NA
 70281131,0,Minister for Skills and Tertiary Education (New South Wales),NA
@@ -90398,7 +90398,7 @@ pageid,ns,title,wikibase_item
 71507554,0,Hopelessly Devoted: The Hits,Q116954562
 73061454,0,Just the Two of Us: The Duets Collection (Vol. 1),Q118905423
 73882799,0,The Feeling of Falling Upwards,Q119041822
-75020609,0,Just the Two of Us: The Duets Collection (Vol. 2),NA
+75020609,0,Just the Two of Us: The Duets Collection (Vol. 2),Q123171100
 150056,0,Axl Rose,Q11885
 196945,0,Back in Black,Q155715
 196946,0,Highway to Hell,Q285929
@@ -95177,7 +95177,7 @@ pageid,ns,title,wikibase_item
 73510139,0,Minister for Education (Victoria),Q6865799
 73521514,0,Minister for Veterans (Victoria),Q118901957
 73542081,0,Minister for Corrections (Victoria),Q117704028
-73542089,0,Minister for Youth Justice,Q123111700
+73542089,0,Minister for Youth Justice (Victoria),Q123111700
 73870666,0,Minister for Public Works (Victoria),Q119149530
 74813830,0,Minister for Planning (Victoria),Q122850501
 74817918,0,Minister for Finance (Victoria),Q122850475
@@ -95448,7 +95448,7 @@ pageid,ns,title,wikibase_item
 69163259,0,The letter (McCubbin),Q109339430
 69305957,0,NRW Holdings,Q109627066
 74315743,0,Dandenong rolling stock factory,Q120882404
-75006590,0,Georgiou Group,Q123001064
+75006590,0,Georgiou Group,Q116757031
 1301250,0,Flying Dutchman (dinghy),Q1361557
 1976849,0,BodyRockers,Q890054
 4607467,0,Western Australia Police Pipe Band,Q7987489
@@ -99098,7 +99098,7 @@ pageid,ns,title,wikibase_item
 62934130,0,Mouth to Mouth (Mental As Anything album),Q85786781
 68473845,0,Cyclone Raymond,Q108303816
 72865268,0,Greatest Hits (Rick Springfield album),NA
-75020729,0,Professional Misconduct (album),NA
+75020729,0,Professional Misconduct (album),Q123171043
 1085074,0,The Distillers (album),Q2731414
 1085130,0,Sing Sing Death House,Q2735238
 1085180,0,Coral Fang,Q2600502

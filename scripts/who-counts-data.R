@@ -8,19 +8,42 @@ source(file.path("scripts", "who-counts-lib.R"))
 DATA_DIR <- file.path("data", "who-counts")
 
 # Use cached versions of files?
-USE_CACHE <- FALSE
+USE_CACHE <- TRUE
 
-# Download two datasets
+# Download Wikipedia data
 wikipedia_category_aus_people <- get_aussies_category_tree(USE_CACHE, DATA_DIR)
+wikibase_items <- wikipedia_category_aus_people %>%
+  pluck("nodes") %>%
+  filter(ns == 0) %>%
+  pull(pageid) %>%
+  get_wikibase_items(USE_CACHE, DATA_DIR)
+
+# Query Wikidata
 wikidata_australians <- get_wikidata_australians(USE_CACHE, DATA_DIR)
 
 # Join two datasets
-combined_data <- wikipedia_category_aus_people$nodes %>%
-  filter(ns == 0) %>%
-  mutate(person = get_wikibase_items(pageid, USE_CACHE, DATA_DIR) %>% pull(wikibase_item)) %>%
-  combine_datasets(wikidata_australians)
+combined_data <- wikibase_items %>%
+  select(-c(ns:title)) %>%
+  full_join(wikipedia_category_aus_people$nodes, by = "pageid") %>%
+  rename(person = wikibase_item) %>%
+  full_join(wikidata_australians, by = "person") %>%
+  mutate(
+    dataset = case_when(
+      person %in% wikibase_items$wikibase_item & person %in% wikidata_australians$person ~ "both",
+      person %in% wikibase_items$wikibase_item ~ "category_aus",
+      .default = "wikidata"
+    )
+  )
 
-# Annotate data with gender, pob etc.
-annotated_combined_data <- annotate_combined_data(combined_data, USE_CACHE, DATA_DIR)
+# Get additional data
+personal_data <- combined_data %>%
+  filter(!is.na(person)) %>%
+  get_personal_data(FALSE, DATA_DIR)
+# quality_indicators <- get_quality_indicators(combined_data, USE_CACHE, DATA_DIR)
 
-# Download page quality indicators from XTools
+final_data <- combined_data %>%
+  left_join(personal_data, by = "person") %>%
+  mutate(title = coalesce(title.x, title.y)) %>%
+  select(-title.x, -title.y) %>%
+  relocate(pageid, person, title)
+  # left_join(quality_indicators, by = "person")
