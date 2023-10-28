@@ -181,7 +181,12 @@ get_quality_indicators <- function(combined_data, use_cache, data_dir, save_freq
       title,
       \(title, idx) get_quality_indicators_batch(title, idx, save_path),
       .progress = "Downloading quality indicators") %>%
-      bind_rows()
+      bind_rows() %>%
+      add_column(
+        pageid = combined_data$pageid,
+        person = combined_data$person,
+        .before = 1
+      )
   }
 }
 
@@ -189,9 +194,9 @@ get_quality_indicators_batch <- function(title, idx, save_path, resume = FALSE) 
   if (!rlang::is_bare_logical(resume, n = 1)) {
     rlang::abort("`resume` must be either TRUE or FALSE")
   }
-  data <- get_xtools_page_info(title) %>%
+  data <- get_xtools_page_info(title, failure_mode = "quiet") %>%
     hoist(assessment, class = "value") %>%
-    select(-assessement)
+    select(-assessment)
   if (idx == "1") {
     write_csv(data, save_path, append = resume)
   } else {

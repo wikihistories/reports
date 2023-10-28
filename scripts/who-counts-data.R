@@ -38,12 +38,16 @@ combined_data <- wikibase_items %>%
 # Get additional data
 personal_data <- combined_data %>%
   filter(!is.na(person)) %>%
-  get_personal_data(FALSE, DATA_DIR)
-# quality_indicators <- get_quality_indicators(combined_data, USE_CACHE, DATA_DIR)
+  get_personal_data(USE_CACHE, DATA_DIR)
 
-final_data <- combined_data %>%
+full_dataset <- combined_data %>%
   left_join(personal_data, by = "person") %>%
   mutate(title = coalesce(title.x, title.y)) %>%
   select(-title.x, -title.y) %>%
   relocate(pageid, person, title)
-  # left_join(quality_indicators, by = "person")
+
+# Get page history/assessment info for full dataset
+# This can take a long time. If you need to do it over multiple sessions,
+# be sure to set the 'resume' argument to TRUE after the first session,
+# so that the csv isn't overwritten
+quality_indicators <- get_quality_indicators(full_dataset, FALSE, DATA_DIR)
