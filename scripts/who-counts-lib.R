@@ -171,7 +171,7 @@ get_quality_indicators <- function(combined_data, use_cache, data_dir, save_freq
   save_path <- file.path(data_dir, "quality-indicators.csv")
   if (rlang::is_true(use_cache)) {
     message(glue::glue("Reading combined data from {save_path}"))
-    quality_indicators <- read_rds(save_path)
+    quality_indicators <- read_csv(save_path)
   } else {
     # This is complicated because the download takes forever, and we want
     # to save intermediate results in case the R sessions is interrupted

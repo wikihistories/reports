@@ -50,4 +50,8 @@ full_dataset <- combined_data %>%
 # This can take a long time. If you need to do it over multiple sessions,
 # be sure to set the 'resume' argument to TRUE after the first session,
 # so that the csv isn't overwritten
-quality_indicators <- get_quality_indicators(full_dataset, FALSE, DATA_DIR)
+quality_indicators <- get_quality_indicators(full_dataset, USE_CACHE, DATA_DIR)
+
+# The quality indicators table should correspond exactly to the full_dataset,
+# so the columns can simply be added.
+full_dataset <- add_column(full_dataset, !!!quality_indicators)
