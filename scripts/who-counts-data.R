@@ -55,3 +55,13 @@ quality_indicators <- get_quality_indicators(full_dataset, USE_CACHE, DATA_DIR)
 # The quality indicators table should correspond exactly to the full_dataset,
 # so the columns can simply be added.
 full_dataset <- add_column(full_dataset, !!!quality_indicators)
+
+# Finally get page intros for all Wikipedia articles that are biographies
+extracts <- get_all_extracts(full_dataset, USE_CACHE, DATA_DIR)
+
+if (USE_CACHE) {
+  rm(wikibase_items)
+  rm(combined_data)
+  rm(personal_data)
+  rm(quality_indicators)
+}

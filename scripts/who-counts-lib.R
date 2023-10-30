@@ -190,6 +190,38 @@ get_quality_indicators <- function(combined_data, use_cache, data_dir, save_freq
   }
 }
 
+get_all_extracts <- function(full_dataset, use_cache, data_dir) {
+  save_path <- file.path(data_dir, "page-intros.rds")
+  if (use_cache) {
+    extracts <- read_rds(save_path)
+  } else {
+    title <- full_dataset %>%
+      filter(is_human, on_english_wikipedia) %>%
+      pull(title)
+    batches <- split_batches(title, 20)
+    extracts <- map(batches, get_extract, .progress = "Getting intros")
+    extracts <- bind_rows(extracts)
+  }
+  extracts
+}
+
+# Component functions for building top-level routines above
+get_extract <- function(title) {
+  if (length(title) > 20) {
+    rlang::abort("Too many titles. You can only retrieve 20 extracts at a time")
+  }
+  response <- wiki_action_request() %>%
+    query_by_title(title) %>%
+    query_page_properties(
+      "extracts",
+      exintro = TRUE, # just get intro
+      explaintext = TRUE, # get plain text rather than html
+      exlimit = 20 # you can only get 20 at a time!
+    ) %>%
+    retrieve_all()
+  response
+}
+
 get_quality_indicators_batch <- function(title, idx, save_path, resume = FALSE) {
   if (!rlang::is_bare_logical(resume, n = 1)) {
     rlang::abort("`resume` must be either TRUE or FALSE")

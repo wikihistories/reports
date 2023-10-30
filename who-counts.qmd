@@ -18,10 +18,10 @@ library(tidyverse)
 library(igraph)
 library(wikkitidy)
 
-# Set to FALSE to re-download data
-USE_CACHE <- TRUE
-
-data_dir <- file.path("data", "who-counts")
+# Get data
+# To refresh data, run `scripts/who-counts-data.R` with USE_CACHE set to 'FALSE'
+DATA_DIR <- file.path("data", "who-counts")
+source(file.path("scripts", "who-counts-data.R"))
 
 # GGplot theme
 old_theme <- theme_update(
@@ -36,41 +36,6 @@ old_theme <- theme_update(
 )
 
 gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
-
-# Get all pages under Cateegory:Australian People
-get_aussies_category_tree <- function(use_cache = T) {
-  data_files <- list.files(data_dir)
-  aussie_cat_files <- stringr::str_detect(data_files, "australian-people-categories")
-  if (!use_cache || sum(aussie_cat_files) == 0) {
-    # This takes a long time (> 1 hour)
-    australians <- wikkitidy::build_category_tree("Category:Australian people")
-    readr::write_rds(
-      australians,
-      file.path(
-        data_dir,
-        glue::glue("australian-people-categories-{as.integer(Sys.time())}.rds")
-        ),
-      compress = "gz"
-    )
-  } else {
-    latest_file <- sort(data_files[aussie_cat_files], decreasing = TRUE)[1]
-    australians <- readr::read_rds(file = file.path(data_dir, latest_file))
-  }
-  australians
-}
-australians <- get_aussies_category_tree(use_cache = USE_CACHE)
-
-# Get all Wikidata items that are tagged with 'Australian' properties on Wikidata
-# Supplement with missing 'Australian citizens'
-wikidata_australians <- read_csv(file.path(data_dir, "aus_profiles_wikidata_prop.csv")) %>% 
-  mutate(
-    title = str_remove(sitelink, "https://en.wikipedia.org/wiki/"),
-    title = str_replace_all(title, "_", " "),
-    person = str_remove(person, "http://www.wikidata.org/entity/")
-  )
-citizens <- read_csv(file.path(data_dir, "all-wikidata-australian-citizens.csv")) %>% 
-  filter(!person %in% wikidata_australians$person)
-wikidata_australians <- bind_rows(wikidata_australians, citizens)
 ```
 
 ## Introduction
@@ -92,9 +57,9 @@ The second answer Wikipedia gives to the question, 'Who counts as Australian?' i
 ```{r}
 #| label: fig-included-in-ozpeople-over-time
 #| fig-cap: Category:Australian people has grown consistently since the early days of Wikipedia
-australians$nodes %>% 
+wikipedia_category_aus_people$nodes %>% 
   filter(ns == 0) %>%
-  left_join(australians$edges, by = join_by(pageid == target)) %>% 
+  left_join(wikipedia_category_aus_people$edges, by = join_by(pageid == target)) %>% 
   mutate(included = as_datetime(timestamp)) %>% 
   arrange(pageid, included) %>% 
   group_by(pageid) %>% 
@@ -108,12 +73,12 @@ australians$nodes %>%
 ```
 ```{r}
 category_graph <- graph_from_data_frame(
-  d = australians$edges %>% 
-    left_join(australians$nodes, join_by(target == pageid)) %>% 
+  d = wikipedia_category_aus_people$edges %>% 
+    left_join(wikipedia_category_aus_people$nodes, join_by(target == pageid)) %>% 
     filter(ns == 14) %>% 
     select(source:timestamp),
   directed = TRUE,
-  vertices = australians$nodes %>% filter(ns == 14)
+  vertices = wikipedia_category_aus_people$nodes %>% filter(ns == 14)
 )
 
 vertex_by_id <- function(graph, pageid) {
@@ -132,7 +97,6 @@ When editors include articles in `Category:Australian people`, they do not neces
 ```{r warning=FALSE}
 #| label: fig-wozniak-distance-from-oz
 #| fig-cap: The category for UTS staff lies four steps away from Category:Australian people
-
 simple_tree_graph <- function(graph) {
   graph %>% 
     ggraph::ggraph(layout = "tree") + 
@@ -153,9 +117,9 @@ shortest_paths(category_graph, root, vertex_by_id(category_graph, 32435264)) %>%
 
 ```{r}
 full_graph <- graph_from_data_frame(
-  d = australians$edges,
+  d = wikipedia_category_aus_people$edges,
   directed = T,
-  vertices = australians$nodes
+  vertices = wikipedia_category_aus_people$nodes
 )
 
 # These are the distances from the *article* to the root category. To get the
@@ -164,7 +128,7 @@ full_graph <- graph_from_data_frame(
 article_distances <- distances(
     full_graph,
     v = V(full_graph)[[1]], 
-    to = V(full_graph)[V(full_graph)$name %in% filter(australians$nodes, ns == 0)$pageid]
+    to = V(full_graph)[V(full_graph)$name %in% filter(wikipedia_category_aus_people$nodes, ns == 0)$pageid]
     )
 ```
 
@@ -176,7 +140,7 @@ If `Category:Australian people` can include articles about indie rock albums, th
 
 To build a picture of the Australian *people* in Wikipedia, we queried Wikidata in two different ways.
 
-1. We queried Wikidata for items representing Australian people
+1. We queried Wikidata for items representing Australian people, and then checked to see if those people had a biographical article in Wikipedia
 2. We fetched the Wikidata item for each article in `Category:Australian people`, and checked to see if the item was labelled 'human' in Wikidata
 
 It turns out that these two approaches return different sets of people, as we explain below. There are many people who have Wikipedia articles in `Category:Australian people` who are not clearly marked as 'Australian' in Wikidata. Likewise, there are many people who are marked as 'Australian' in Wikidata, but who lack a Wikipedia article in `Category:Australian people`. 
@@ -188,55 +152,28 @@ As a first step, we queried Wikidata to find all humans that were marked as 'Aus
 1. They can be explicitly linked to Australia ([Q408](https://www.wikidata.org/wiki/Q408)) through properties such as citizenship ([P27](https://www.wikidata.org/wiki/Property:P27)), place of birth ([P19](https://www.wikidata.org/wiki/Property:P19)) or place of death ([P570](https://www.wikidata.org/wiki/Property:P570)); or
 2. They can be implicitly linked to Australia by being linked to a known database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia ([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
 
-We queried Wikidata by `r wikidata_australians$source %>% unique() %>% length()` properties that denote Australianness. Together, these properties are linked to `r wikidata_australians$person %>% unique() %>% length()` unique humans in the database.
+We queried Wikidata by `r FILTER_PROPERTIES %>% nrow() %>% prettyNum(",")` properties that denote Australianness. Using these properties, we were able to identify `r full_dataset %>% filter(dataset != "category_aus") %>% nrow() %>% prettyNum(",")` Wikidata items representing Australian people. Of these Wikidata items, `r full_dataset %>% filter(dataset != "category_aus", on_english_wikipedia) %>% nrow() %>% prettyNum(",")` items had a corresponding Wikipedia article. 
 
-```{r}
-combined_data <- wikidata_australians %>% 
-  nest(source = source) %>% 
-  full_join(filter(australians$nodes, ns == 0), by = "title")
+We then used Wikidata to determine which of the `r full_dataset %>% filter(dataset != "wikidata") %>% nrow() %>% prettyNum(",")` articles in `Category:Australian people` were biographies (as opposed to articles about events, things, or groups of people). To do this, we fetched the Wikidata item for each Wikipedia article in the dataset, then checked to see if it had property P31(Q5), 'instance of: human'. When we did this, `r full_dataset %>% filter(dataset != "wikidata", is_human) %>% nrow() %>% prettyNum(",")` articles were left.
 
-overlap_data <- combined_data %>% 
-  transmute(
-    title = title,
-    in_wikidata_set = !is.na(person),
-    in_wikipedia_set = !is.na(pageid)
-  ) %>% 
-  count(in_wikidata_set, in_wikipedia_set)
-```
-
-The Wikidata dataset and the Wikipedia dataset do not perfectly overlap. There are `r overlap_data %>% filter(!in_wikipedia_set, in_wikidata_set) %>% pull(n) %>% prettyNum(",")` people we found in our queries to Wikidata who lack a Wikipedia article in `Category:Australian People`. Likewise, there are `r overlap_data %>% filter(in_wikipedia_set, !in_wikidata_set) %>% pull(n) %>% prettyNum(",")` articles in `Category:Australian people` which did not turn up when we queried Wikidata. Of course, many of these `r overlap_data %>% filter(in_wikipedia_set, !in_wikidata_set) %>% pull(n) %>% prettyNum(",")` articles do not represent individual people. We have already seen that one of the articles represents a compilation album by the Melbourne band Custard. There are also many lists, general articles about groups of people and other miscellaneous articles in `Category:Australian people`. How can the datasets be compared?
-
-```{r}
-combined_data <- file.path(data_dir, "complete-data.rds") %>%
-  read_rds() %>% 
-  mutate(
-    in_wikipedia_set = !is.na(pageid),
-    in_wikidata_set = !is.na(person)
-    )
-```
-
-To make the datasets comparable, we filtered out non-biographies from the Wikipedia dataset. To do this, we retrieved the Wikidata item for each Wikipedia article, and checked if it had property P31(Q5), 'instance of: human'. This left `r combined_data %>% filter(biography, in_wikipedia_set) %>% nrow() %>% prettyNum(",")` Wikipedia articles from `Category:Australian people` which we were confident are biographies. These biographies overlap substantially, but not perfectly, with the set of people we found on Wikidata by querying Australian properties (@fig-biography-overlap-table).
-
-**MF: The table is currently incorrect. There should be another 10,000 or so in the bottom-left cell. In my various efforts to combine and co-ordinate our different datasets, I have left out the ~11,000 Wikidata records that didn't make it into our original queries to Wikidata. I need to get the page assessment data for these and re-integrate them into our combined dataset.**
+The two datasets overlap substantially, but not completely (@fig-biography-overlap-table). There are thousands of biographical articles in `Category:Australian people` whose Wikidata items do not clearly identify them as 'Australian'. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do *not* appear in `Category:Australian people`, even though the Wikidata item has P31(Q5), 'instance of:human', and also contains one or more 'markers of Australianness'. 
 
 ```{r}
 #| label: fig-biography-overlap-table
 #| fig-cap: There is substantial, but incomplete overlap between the biographies in the two datasets
-bio_overlap <- combined_data %>% 
-  filter(biography) %>% 
-  count(in_wikidata_set, in_wikipedia_set)
-
-bio_overlap %>% 
-  pivot_wider(
-    names_from = in_wikidata_set:in_wikidata_set,
-    values_from = n
-  ) %>%
-  select(1,3,2) %>% 
-  rename(`In Wikipedia Set?` = in_wikipedia_set) %>%  
-  knitr::kable() %>% 
-  kableExtra::add_header_above(
-    c(" " = 1, "In Wikidata set?" = 2)
+full_dataset %>% 
+  filter(is_human, on_english_wikipedia) %>% 
+  count(dataset) %>% 
+  arrange(n) %>% 
+  transmute(
+    Dataset = case_when(
+      dataset == "both" ~ "Person found in both datasets",
+      dataset == "wikidata" ~ "Person only found by querying Wikidata",
+      dataset == "category_aus" ~ "Person only found in `Category:Australian people`"
+    ),
+    `Number of Articles` = n
   ) %>% 
+  knitr::kable() %>% 
   kableExtra::kable_styling("striped")
 ```
 
@@ -249,8 +186,14 @@ We have seen how difficult it is to judge whether someone is 'Australian'. This 
 In **space**, it is difficult to judge whether a person is close enough to Australia to count as Australian. At one end is someone who is born, lives and dies in Australia, such as [Oodgeroo Noonuccal](https://en.wikipedia.org/wiki/Oodgeroo_Noonuccal). At the other end of the spectrum is someone who has only a passing cultural or economic connection to Australia, such as [Steve Wozniak](https://en.wikipedia.org/wiki/Steve_Wozniak).
 
 In **time**, it is difficult to judge when in history it becomes reasonable to describe someone as 'Australian'. The term 'Terra Australis' ('Southern Land') was coined in the 16th century, before Europeans knew about either Australia or Antarctica. In the end, neither Australia nor Antarctica matched European expectations about the 'Southern Land', though Australia, being the first that Europeans visited, acquired the name. New South Wales was invaded by the British in 1788. The term 'Australia' was substituted for 'Terra Australis' in 1813. The colonies of Australia federated into a single Commonwealth in 1901. The resulting Commonwealth of Australia only achieved full independence from Britain in 1988. Of course, human occupation predates the British invasion by tens of thousands of years. In the course of that human occupation, the very shape of the Australian landmass has varied. 10,000 years ago, the Australian mainland, Papua New Guinea and Tasmania formed a single contiguous landmass that geologers call [Sahul](https://en.wikipedia.org/wiki/Sahul). Are all the people who occupied Sahul at any point in time 'Australians'? Or can only residents or citizens of the country 'Australia' be so named? Like space, time wreaks havoc on the category 'Australian'.
+```{r}
+item_by_source <- full_dataset %>% 
+  select(person, source) %>% 
+  unnest(cols = c(source)) %>% 
+  drop_na()
+```
 
-Wikidata's contributors are aware of these difficulties. The simplest way to mark someone as 'Australian' in Wikidata is to give 'Australia' as the person's 'country of citizenship' ([P27](https://www.wikidata.org/wiki/Property:P27)). Our dataset contains `r wikidata_australians %>% filter(source == "aus_citizens_wd") %>% nrow() %>% prettyNum(',')` 'Australian citizens' according to P27. A glance at [the Talk page for P27](https://www.wikidata.org/wiki/Property_talk:P27) reveals that Wikimedians are keenly aware of the difficulties of space and time.
+Wikidata's contributors are aware of these difficulties. The simplest way to mark someone as 'Australian' in Wikidata is to give 'Australia' as the person's 'country of citizenship' ([P27](https://www.wikidata.org/wiki/Property:P27)). Our dataset contains `r item_by_source %>% filter(source == "aus_citizens_wd") %>% nrow() %>% prettyNum(',')` 'Australian citizens' according to P27. A glance at [the Talk page for P27](https://www.wikidata.org/wiki/Property_talk:P27) reveals that Wikimedians are keenly aware of the difficulties of space and time.
 
 The user Ghouston clearly clearly articulated the problem of time in a post from 2018:
 
@@ -289,13 +232,12 @@ This raises the question: how do these different properties overlap in Wikidata?
 num_properties_for_cor <- 20
 ```
 
-To explore the connection between different markers of Australianness, we generated a correlation plot between the `r num_properties_for_cor` most common Wikidata properties of the `r unique(wikidata_australians$source) %>% length()` that we queried (@fig-wikidata-property-matrix). A red square indicates a positive correlation between two Wikidata properties: for example, a person with an [Australian Dictionary of Biography ID](https://www.wikidata.org/wiki/Property:P1907) (`aus_dictionary_bio`) is highly likely also to have a [People Australia ID](https://www.wikidata.org/wiki/Property:P9159) (`people_of_aus`). A blue square indicates a negative correlation between two properties: for example, a person marked as a citizen of Australia is highly unlikely to have been assigned an [AustralianFootball.com ID](https://www.wikidata.org/wiki/Property:P3546) (`aus_football`).
+To explore the connection between different markers of Australianness, we generated a correlation plot between the `r num_properties_for_cor` most common Wikidata properties of the `r FILTER_PROPERTIES %>% nrow()` that we queried (@fig-wikidata-property-matrix). A red square indicates a positive correlation between two Wikidata properties: for example, a person with an [Australian Dictionary of Biography ID](https://www.wikidata.org/wiki/Property:P1907) (`aus_dictionary_bio`) is highly likely also to have a [People Australia ID](https://www.wikidata.org/wiki/Property:P9159) (`people_of_aus`). A blue square indicates a negative correlation between two properties: for example, a person marked as a citizen of Australia is highly unlikely to have been assigned an [AustralianFootball.com ID](https://www.wikidata.org/wiki/Property:P3546) (`aus_football`).
 
 ```{r}
 #| label: fig-wikidata-property-matrix
 #| fig-cap: Few of the properties are strongly correlated
-source_matrix <- wikidata_australians %>% 
-  select(person, source) %>% 
+source_matrix <- item_by_source %>% 
   distinct(person, source) %>% 
   nest(data = person) %>% 
   mutate(group_total = map_int(data, nrow)) %>% 
@@ -320,7 +262,7 @@ Only a few of the properties are correlated, and there are only a couple of stro
 
 Many of the strong correlations reflect relationships between the databases on which Wikidata relies for information. For example, it is not surprising to see a strong correlation between Australian Dictionary of Biography ID (`aus_dictionary_bio`), Labour Australia ID (`labour_of_aus`), People Australia ID (`people_of_aus`) and Obituaries of Australia ID (`obit_of_aus`). These four databases are all run by the National Centre for Biography at the Australian National University, and are tightly interconnected. Every person in Obituaries Australia, Labour Australia or the ADB automatically receives a People Australia ID.
 
-Other strong correlations represent a similarity of subject-matter. For instance, three Wikidata properties link to databases of Australian artists (`nat_gallery_vic_artist`, `aus_printmakers`, `design_and_art_aus` [bug - wrongly appears here as `Vic_parliament_aus`]). A person who has an ID in one of these external databases is likely to have an ID available in the others. Similar explanations apply to sporting databases (`atheltics_aus` and `aus_olympics`) and newspaper databases (`trove_aus`, `obit_of_aus`).
+Other strong correlations represent a similarity of subject-matter. For instance, three Wikidata properties link to databases of Australian artists (`nat_gallery_vic_artist`, `aus_printmakers`, `design_and_art_aus`). A person who has an ID in one of these external databases is likely to have an ID available in the others. Similar explanations apply to sporting databases (`atheltics_aus` and `aus_olympics`) and newspaper databases (`obit_of_aus`).
 
 Overall, the lack of correlation between the properties reflects the heterogeneous nature of Wikidata. It is a vast and exceptionally flexible database, and it is possible for different communities of contributors to build up data in quite unrelated areas. This is illustrated nowhere better than in the negative correlation between AustralianFootball.com ID and the other Wikidata properties. Fans of Australian Rules Football have painstakingly entered data about hundreds of professional footballers into Wikidata, without troubling to mark these records with other properties such as Trove ID or citizenship of Australia. The shape of Wikidata could easily change if another committed group of editors decided to document their own subculture in the database. 'Australian' is an extremely uneven and inconsistent idea in Wikidata.
 
@@ -328,17 +270,17 @@ Overall, the lack of correlation between the properties reflects the heterogeneo
 
 Although it is impossible to provide a unitary definition for 'Australian' in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as 'Australian' in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of [Indigenous Australians and Torres Strait Islander peoples](#indigeneity) in the next section.
 
-To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r combined_data %>% filter(biography & is.na(genderLabel)) %>% nrow()` records lack a `P21` statement about their sex or gender, along with a single record (for the [Port Jackson Painter](`r combined_data %>% filter(str_starts(genderLabel, "http:")) %>% pull(person)`)), whose gender is unknown and whose sex or gender currently appears as the unsightly *`r combined_data %>% filter(str_starts(genderLabel, "http:")) %>% pull(genderLabel)`*.
+To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r full_dataset %>% filter(is_human, is.na(gender)) %>% nrow()` records lack a `P21` statement about their sex or gender, along with a single record (for the [Port Jackson Painter](`r full_dataset %>% filter(str_starts(gender, "http:")) %>% pull(person)`)), whose gender is unknown and whose sex or gender currently appears as the unsightly *`r full_dataset %>% filter(str_starts(gender, "http:")) %>% pull(gender)`*.
 
 ```{r}
 #| label: fig-genders-in-dataset
 #| fig-cap: There are many labels for Australians' sex or gender across Wikimedia databases
-combined_data %>%
-  filter(biography) %>%
-  group_by(genderLabel) %>%
+full_dataset %>%
+  filter(is_human) %>%
+  group_by(gender) %>%
   summarise(total = n()) %>% 
   rename(
-    `Sex or Gender Label` = genderLabel,
+    `Sex or Gender Label` = gender,
     Total = total
   ) %>% 
   knitr::kable() %>% 
@@ -347,24 +289,24 @@ combined_data %>%
 
 @weathington_queer_2023 have strongly critiqued Wikidata's representation of sex and gender, observing that "Queer identities are recorded in a database in clunky, inaccurate, or self-contradictory ways" [p. 2] and that the database ignores the individual's right to determine their own sexual presentation. Nonetheless, we are compelled to rely on Wikidata's representation of individuals' sex and/or gender if we wish to assess its representation of human diversity in Australia. To this end, we categorise our dataset into three broad groups: `Male`, `Female` and `Trans, Non-Binary or Intersex`. While we may assume that most of those marked as 'male' or 'female' are *cis*-male or -female, we cannot determine this from the available data, and so opt for the less specific 'male' and 'female'.
 
-`Female` biographies are clearly under-represented among Wikipedia's Australian articles (@fig-genders-in-dataset). The gap between `Male` and `Female` biographies appears to have remained constant over time (@fig-gender-by-page-creation). Viewing the data on a logarithmic scale emphasise the parallel track of `Male` and `Female` biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of `Trans, Non-Binary or Intersex` biographies (@fig-gender-by-page-creation-log).
+`Female` biographies are clearly under-represented among Wikipedia's Australian articles. (@fig-genders-in-dataset) shows all Wikipedia biographies that appear in `Category:Australian people`, or whose Wikidata item contains a marker of Australianness, categories by gender. The gap between `Male` and `Female` biographies appears to have remained constant over time (@fig-gender-by-page-creation). Viewing the data on a logarithmic scale emphasise the parallel track of `Male` and `Female` biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of `Trans, Non-Binary or Intersex` biographies (@fig-gender-by-page-creation-log).
 
 ```{r}
 #| label: fig-gender-by-page-creation
 #| fig-cap: Biographies of Australian males continue to grow at least as fast as biographies of other Australians.
-gender_data <- combined_data %>%
-  filter(biography) %>% 
+gender_data <- full_dataset %>%
+  filter(is_human, on_english_wikipedia) %>% 
   mutate(
     gender = case_when(
-      genderLabel == "non-binary" |
-        genderLabel == "trans woman" |
-        genderLabel == "trans man" |
-        genderLabel == "genderfluid" |
-        genderLabel == "intersex" |
-        genderLabel == "transgender"
+      gender == "non-binary" |
+        gender == "trans woman" |
+        gender == "trans man" |
+        gender == "genderfluid" |
+        gender == "intersex" |
+        gender == "transgender"
       ~ "Trans, Non-Binary or Intersex",
-      genderLabel == "female" ~ "Female",
-      genderLabel == "male" ~ "Male",
+      gender == "female" ~ "Female",
+      gender == "male" ~ "Male",
       TRUE ~ NA
     )
   )
@@ -428,13 +370,8 @@ Not only are male, female and LGBTQI+ Australians represented in different numbe
 ```{r}
 #| label: fig-intro-words-by-gender
 #| fig-cap: Australian men's gender is less explicitly marked in Wikipedia; non-Male Australians are more likely to be activists and entertainers.
-
-article_intros <- file.path(data_dir, "page-intros.rds") %>% 
-  read_rds() %>% 
-  select(title, extract) %>% 
-  left_join(gender_data, by = "title")
-
-intro_tf_idf <- article_intros %>% 
+intro_tf_idf <- extracts %>%
+  left_join(gender_data, by = "pageid") %>% 
   tidytext::unnest_tokens(token, extract) %>% 
   count(gender, token) %>% 
   drop_na() %>% 
@@ -492,13 +429,15 @@ assessment_by_gender <- gender_data %>%
     `Revisions (mean)` = mean(revisions, na.rm = TRUE),
     `Editors (mean)` = mean(editors, na.rm = TRUE),
     `Watchers (mean)` = mean(watchers, na.rm = TRUE),
-    `Weeks since last edit` = mean(secs_since_last_edit, na.rm = TRUE) / 60 / 60 / 24 / 7
+    `Weeks since last edit` = mean(secs_since_last_edit, na.rm = TRUE) / 60 / 60 / 24 / 7,
+    `Good/Featured` = sum(class == "GA" | class == "FA", na.rm = TRUE) / n * 100
   ) %>% 
   drop_na() %>% 
   arrange(n) 
 
 assessment_by_gender %>% 
   mutate(across(where(is.numeric), \(x) round(x, 1) %>% prettyNum())) %>% 
+  mutate(`Good/Featured` = paste0(`Good/Featured`, "%")) %>% 
   knitr::kable() %>% 
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
 ```
@@ -541,7 +480,7 @@ get_mapping <- function(keep) {
   keep + 1
 }
 
-ethnic_categories <- australians$edges %>% 
+ethnic_categories <- wikipedia_category_aus_people$edges %>% 
   filter(
     source %in% c(
       4689323, # australians by ethnic or national origin
@@ -550,7 +489,7 @@ ethnic_categories <- australians$edges %>%
     ) |
       target == 4689323
   ) %>% 
-  left_join(australians$nodes, join_by(target == pageid)) %>% 
+  left_join(wikipedia_category_aus_people$nodes, join_by(target == pageid)) %>% 
   filter(type == "subcat") %>% 
   mutate(
     keep = source != 4689323 | target %in% source,
@@ -603,8 +542,8 @@ category_indigenous_pageids <- full_graph %>%
   attr("names", exact = TRUE) %>%
   as.integer()
 
-indigenous_prop <- combined_data %>% 
-  filter(in_wikipedia_set, biography) %>% 
+indigenous_prop <- full_dataset %>% 
+  filter(is_human, dataset != "wikidata") %>% 
   mutate(indigenous = pageid %in% category_indigenous_pageids) %>% 
   mutate(created_at = as_date(created_at)) %>% 
   arrange(created_at) %>% 
@@ -641,11 +580,7 @@ indigenous_prop %>%
 The situation in Wikidata is made simple by the fact that it has no system for ethnic or national classification. There are two main markers of indigenity for Australians in Wikidata:
 
 1. A person's 'description' may mention their indigeneity. For example, [Bennelong](https://www.wikidata.org/w/index.php?title=Q817828&oldid=1617736683) is described as an 'Eora interlocutor with the British in Australia and the United Kingdom'. To obtain an estimate of Indigenous Australians in the Wikidata data, we have used the crude method of seraching for known keywords, including 'indigneous', 'aboriginal' and 'eora', then scanning the results by eye to exclude false positives (for example [Judith Wright](), who is described as an 'Indigenous rights activist' on Wikidata). **TODO: Kelly, I think we need to do this again using the additional 18000 records from Category:Australian People**
-2. A person may be linked to a record in the [Indigenous Australia](https://ia.anu.edu.au/) database ([P9246](https://www.wikidata.org/wiki/Property:P9246)). At the time of writing, the Indigenous Australia database contains [973 entries](https://ia.anu.edu.au/biographies/name/) for Indigenous Australians. Of these 973, `r wikidata_australians %>% filter(source == "indigenous_aus") %>% count() %>% pull(n)` have been linked to a Wikidata item.
-
-
-
-
+2. A person may be linked to a record in the [Indigenous Australia](https://ia.anu.edu.au/) database ([P9246](https://www.wikidata.org/wiki/Property:P9246)). At the time of writing, the Indigenous Australia database contains [973 entries](https://ia.anu.edu.au/biographies/name/) for Indigenous Australians. Of these 973, `r item_by_source %>% filter(source == "indigenous_aus") %>% nrow()` have been linked to a Wikidata item.
 
 ### Historical period
 
