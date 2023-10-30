@@ -281,12 +281,8 @@ extract_metadata <- function(entity) {
 }
 
 is_human <- function(entity) {
-  instance_of <- purrr::pluck(entity, "claims", "P31", 1, "mainsnak", "datavalue", "value", "id", .default = as.character())
-  if ("Q5" %in% instance_of) TRUE else FALSE
-}
-
-are_human <- function(entities) {
-  map_lgl(entities, is_human)
+  instance_of <- map(entity, list("claims", "P31", 1, "mainsnak", "datavalue", "value", "id"), .default = as.character())
+  map_lgl(instance_of, \(prop) "Q5" %in% prop)
 }
 
 # Get Wikidata item, extract gender, dob, dod and pob if available
