@@ -50,7 +50,7 @@ Our [Analysis] of the data unfolds in four main sections. In [Australianness], w
 
 In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors and editors can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
 
-![How do Wikipedians construct Australia online?](assets/wikipedia_australia.jpg)
+![How do Wikipedians construct Australia online?](assets/objective-2.jpg)
 
 ## Data
 

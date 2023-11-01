@@ -18,3 +18,4 @@ These reports primarily fulfil Objectives 2 and 3 of the `wikihistories` project
 
 Supported by [Australian Research Council Grant DP220100662](https://dataportal.arc.gov.au/NCGP/Web/Grant/Grant/DP220100662).
 
+![How are Wikipedia's representations constructed through practice?](assets/objective-3.png)

@@ -4,6 +4,8 @@ project:
 
 website:
   title: "Reports"
+  image: assets/objective-3.png
+  favicon: assets/wikihistories-logo.png
   navbar:
     pinned: true
     tools:
