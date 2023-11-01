@@ -402,7 +402,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <section id="gender" class="level3">
 <h3 class="anchored" data-anchor-id="gender">Gender</h3>
 <p>Although it is impossible to provide a unitary definition for ‘Australian’ in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as ‘Australian’ in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of <a href="#indigeneity">Indigenous Australians and Torres Strait Islander peoples</a> in the next section.</p>
-<p>To determine the gender of a person in our dataset, we rely on the Wikidata property <a href="https://www.wikidata.org/wiki/Property:P21">P21:Sex or gender</a>. In our dataset, nearly all records have a sex or gender recorded (<a href="#fig-genders-in-dataset">Figure&nbsp;6</a>). Only 2065 records lack a <code>P21</code> statement about their sex or gender, along with a single record (for the <a href="">Port Jackson Painter</a>), whose gender is unknown and whose sex or gender currently appears as the unsightly **.</p>
+<p>To determine the gender of a person in our dataset, we rely on the Wikidata property <a href="https://www.wikidata.org/wiki/Property:P21">P21:Sex or gender</a>. In our dataset, nearly all records have a sex or gender recorded (<a href="#fig-genders-in-dataset">Figure&nbsp;6</a>). Only 2,065 records lack a <code>P21</code> statement about their sex or gender.</p>
 <div class="cell">
 <div id="fig-genders-in-dataset" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -546,13 +546,6 @@ NA
 </div>
 <p>Not only are male, female and LGBTQI+ Australians represented in different numbers in the encyclopaedia, they are represented by different words. To show this, we downloaded the introductions of each article in the encyclopaedia, and used the tf-idf statistic to determine which words were most distinctive for each group of biographies. Which words tend to appear more often in the introductions of articles about <code>Male</code>, <code>Female</code> and <code>Trans, Non-Binary and Intersex</code> Australians?</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in left_join(., gender_data, by = "pageid"): Detected an unexpected many-to-many relationship between `x` and `y`.
-ℹ Row 681 of `x` matches multiple rows in `y`.
-ℹ Row 81494 of `y` matches multiple rows in `x`.
-ℹ If a many-to-many relationship is expected, set `relationship =
-  "many-to-many"` to silence this warning.</code></pre>
-</div>
 <div class="cell-output-display">
 <div id="fig-intro-words-by-gender" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
