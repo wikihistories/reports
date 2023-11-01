@@ -54,12 +54,12 @@ In [Conclusion: beyond bias], we make some suggestions about how Wikipedians mig
 
 ## Data
 
-The code to generate this report is contained in two files in the wikihistories reports repository:
+The code to generate this report is contained in two files in the [wikihistories reports Github repository](https://github.com/wikihistories/reports):
 
 - [who-counts-lib.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-lib.R) contains all the functions to import the data
 - [who-counts-data.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-data.R) combines the functions to import the full dataset. This script can be run with `USE_CACHE <- TRUE` to import the data from the saved files for this report, or `USE_CACHE <- FALSE` to regenerate the data afresh from Wikipedia and Wikidata
 
-All the source code for the analysis is included in this report, and can be viewed on Github at [who-counts.qmd]()
+All the source code for the analysis is included in this report, and can be viewed on Github at [who-counts.qmd](https://github.com/wikihistories/reports/tree/main/who-counts.qmd).
 
 ### Wikipedia's category system
 
