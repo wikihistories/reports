@@ -311,7 +311,7 @@ Overall, the lack of correlation between the properties reflects the heterogeneo
 
 Although it is impossible to provide a unitary definition for 'Australian' in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as 'Australian' in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of [Indigenous Australians and Torres Strait Islander peoples](#indigeneity) in the next section.
 
-To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r full_dataset %>% filter(is_human, is.na(gender)) %>% nrow()` records lack a `P21` statement about their sex or gender, along with a single record (for the [Port Jackson Painter](`r full_dataset %>% filter(str_starts(gender, "http:")) %>% pull(person)`)), whose gender is unknown and whose sex or gender currently appears as the unsightly *`r full_dataset %>% filter(str_starts(gender, "http:")) %>% pull(gender)`*.
+To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r full_dataset %>% filter(is_human, is.na(gender)) %>% nrow() %>% prettyNum(",")` records lack a `P21` statement about their sex or gender.
 
 ```{r}
 #| label: fig-genders-in-dataset

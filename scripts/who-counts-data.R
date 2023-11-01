@@ -57,7 +57,8 @@ quality_indicators <- get_quality_indicators(full_dataset, USE_CACHE, DATA_DIR)
 full_dataset <- add_column(full_dataset, !!!quality_indicators)
 
 # Finally get page intros for all Wikipedia articles that are biographies
-extracts <- get_all_extracts(full_dataset, USE_CACHE, DATA_DIR)
+extracts <- get_all_extracts(full_dataset, USE_CACHE, DATA_DIR) %>%
+  distinct(pageid, .keep_all = TRUE) # Hack - not sure why there are duplicates
 
 if (USE_CACHE) {
   rm(wikibase_items)
