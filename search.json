@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "CC BY-SA 3.0 License",
-    "section": "",
-    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Reports",
     "section": "",
-    "text": "Annual Reports of the wikihistories project."
+    "text": "This site hosts the annual Reports of the wikihistories project.\nEach year, we will publish a report on a different aspect of Australian history in Wikipedia.\nIn 2023, we consider people. Who Counts as Australian? uses a dataset of more than 80,000 Wikipedia biographies to reveal what kinds of people represent ‘Australia’ in the encyclopaedia.\nIn 2024, we consider places. Where Counts as Australia? will consider how the world’s only continent-sized country makes its way into the world’s only planet-sized encyclopaedia.\nIn 2025, we consider events. When Counts as Australia? will range over the 60,000-year human history of Australia, revealing which structures, conjunctures and events from emerge from deep time to take a place in the encyclopaedia.\nThese reports primarily fulfil Objectives 2 and 3 of the wikihistories project:\nObjective 2: Map the scope of entries relating to Australian historic events on Wikipedia in order to analyse who and what is systematically omitted.\nObjective 3: Investigate how Wikipedia’s representations are constructed through practice.\nSupported by Australian Research Council Grant DP220100662."
   },
   {
     "objectID": "who-counts.html",
@@ -54,5 +47,12 @@
     "title": "Who Counts as Australian?",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nIn other parts of English Wikipedia, Australia is included as part of Oceania. For instance, Category:British people of Australian descent is a subcategory of Category:British people of Oceanian descent. The same holds true for American, French, and Indian people of Australian descent.↩︎\nThis has the notable corollary that there are no categories in Wikipedia for Métis or Inuit Australians.↩︎\nIn other parts of English Wikipedia, Australia is included as part of Oceania. For instance, Category:British people of Australian descent is a subcategory of Category:British people of Oceanian descent. The same holds true for American, French, and Indian people of Australian descent.↩︎"
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "CC BY-SA 3.0 License",
+    "section": "",
+    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
   }
 ]
