@@ -38,6 +38,8 @@ old_theme <- theme_update(
 gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 ```
 
+**Work in progress. Not for public distribution.**
+
 ## Introduction
 
 Who counts as Australian in Wikipedia and its sister-projects? How are Wikipedia articles or Wikidata items marked as 'Australian' by the system? How does Wikipedia define or represent 'Australianness'? In this report, we try to address these questions using a dataset of biographical articles culled from English Wikipedia. We have two primary aims: (1) to reveal the definition of 'Australianess' implicit in Wikipedia's systems; (2) to assess how well Wikipedia represents the diversity of Australians. As we will see, Wikipedia works implicitly with numerous inconsistent definitions of 'Australianness', but it is nonetheless possible to make some reasonable observations about how well it represents the diversity of people who make up 'Australia'.
