@@ -1,1 +1,1 @@
-Sitemap: https://github.com/wikihistories/reports/sitemap.xml
+Sitemap: https://wikihistories.github.io/reports/sitemap.xml
