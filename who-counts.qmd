@@ -141,8 +141,7 @@ full_dataset %>%
     ),
     `Number of Articles` = n
   ) %>% 
-  knitr::kable() %>% 
-  kableExtra::kable_styling("striped")
+  knitr::kable()
 ```
 
 ### Metadata
@@ -326,8 +325,7 @@ full_dataset %>%
     `Sex or Gender Label` = gender,
     Total = total
   ) %>% 
-  knitr::kable() %>% 
-  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+  knitr::kable()
 ```
 
 @weathington_queer_2023 have strongly critiqued Wikidata's representation of sex and gender, observing that "Queer identities are recorded in a database in clunky, inaccurate, or self-contradictory ways" [p. 2] and that the database ignores the individual's right to determine their own sexual presentation. Nonetheless, we are compelled to rely on Wikidata's representation of individuals' sex and/or gender if we wish to assess its representation of human diversity in Australia. To this end, we categorise our dataset into three broad groups: `Male`, `Female` and `Trans, Non-Binary or Intersex`. While we may assume that most of those marked as 'male' or 'female' are *cis*-male or -female, we cannot determine this from the available data, and so opt for the less specific 'male' and 'female'.
@@ -481,8 +479,7 @@ assessment_by_gender <- gender_data %>%
 assessment_by_gender %>% 
   mutate(across(where(is.numeric), \(x) round(x, 1) %>% prettyNum())) %>% 
   mutate(`Good/Featured` = paste0(`Good/Featured`, "%")) %>% 
-  knitr::kable() %>% 
-  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+  knitr::kable()
 ```
 @fig-assessment-data-by-gender reveals a stark contrast between readers and editors of the encylopaedia. Editors spend roughly equal effort on the `Male` and `Female` biographies. The number of revisions for each biography, the number of editors, and the time elapsed since last edit are all similar. The result is that Wikipedia's editors expend a roughly `r assessment_by_gender[3 , 2] %/% assessment_by_gender[2,2]` times the effort maintaining `Male` biographies on Wikipedia than `Female` ones. Readers of the encyclopaedia, however, have different priorities. Although view biographies of `Male` Australians more often than `Female`, an individual `Female` biography can expect to be viewed roughly `r (assessment_by_gender[2,3] / assessment_by_gender[3,3]) %>% round(1)` times more often than any given biography of a `Male` Australian.
 
