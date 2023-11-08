@@ -6,6 +6,7 @@ website:
   title: "Reports"
   image: assets/objective-3.png
   favicon: assets/wikihistories-logo.png
+  site-url: https://wikihistories.github.io/reports
   navbar:
     pinned: true
     tools:

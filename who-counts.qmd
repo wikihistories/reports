@@ -1,10 +1,36 @@
 ---
 title: "Who Counts as Australian?"
+description: |
+  The first annual report of the wikihistories project, describing how Australian people are represented in Wikipedia.
+keywords:
+  - Wikipedia
+  - historiography
+  - Australia
+  - digital humanities
+  - systemic bias
+date: last-modified
 author:
-  - Kelly Tall
-  - Michael Falk
-  - Heather Ford
-  - Tamson Pietsch
+  - name: Kelly Tall
+    orcid: 0000-0002-7876-4460
+    affiliation: University of Technology, Sydney
+  - name: Michael Falk
+    orcid: 0000-0001-9261-8390
+    affiliation: University of Melbourne
+    url: https://findanexpert.unimelb.edu.au/profile/1043380-michael-falk
+  - name: Heather Ford
+    orcid: 0000-0002-3500-9772
+    affiliation: University of Technology, Sydney
+    url: https://hblog.org/
+  - name: Tamson Pietsch
+    orcid: 0000-0002-8304-7108
+    affiliation: University of Technology, Sydney
+    url: https://capandgown.wordpress.com/
+citation:
+  type: report
+  publisher: wikihistories project
+  number: 1
+  pdf-url: who-counts.pdf
+google-scholar: true
 bibliography: wikihistories.bib
 ---
 
