@@ -27,7 +27,8 @@ author:
     url: https://capandgown.wordpress.com/
 citation:
   type: report
-  publisher: wikihistories project
+  publisher: University of Technology, Sydney
+  container-title: Reports of the Wikihistories Project
   number: 1
   pdf-url: who-counts.pdf
 google-scholar: true

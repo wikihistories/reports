@@ -7,6 +7,10 @@ website:
   image: assets/objective-3.png
   favicon: assets/wikihistories-logo.png
   site-url: https://wikihistories.github.io/reports
+  twitter-card:
+    creator: "@wikihistories"
+    site: "@wikihistories"
+  open-graph: true
   navbar:
     pinned: true
     tools:
