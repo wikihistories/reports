@@ -3,8 +3,7 @@ library(lubridate)
 library(forcats)
 library(janitor)
 library(scales)
-# library(directlabels)
-library(geomtextpath)
+library(directlabels)
 
 who_counts_format <- theme(
   legend.background = element_blank(),
