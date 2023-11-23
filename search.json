@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "CC BY-SA 3.0 License",
+    "section": "",
+    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Reports",
@@ -47,12 +54,5 @@
     "title": "Who Counts as Australian?",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nThe growth was calculated using the timestamp data returned by API:Categorymembers. The timestamp records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.↩︎\nIn this case, the article falls under Category:Clothing brands of Australia, which is a distant subcategory of Category:Australian designers, which is then linked through a number of other categories to Category:Australian people.↩︎\nThis has the notable corollary that there are no categories in Wikipedia for Métis or Inuit Australians.↩︎\nIn other parts of English Wikipedia, Australia is included as part of Oceania. For instance, Category:British people of Australian descent is a subcategory of Category:British people of Oceanian descent. The same holds true for American, French, and Indian people of Australian descent.↩︎"
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "CC BY-SA 3.0 License",
-    "section": "",
-    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
   }
 ]
