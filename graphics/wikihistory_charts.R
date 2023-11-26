@@ -5,7 +5,8 @@ library(janitor)
 library(scales)
 library(directlabels)
 library(tidytext)
-library(janeaustenr)
+library(igraph)
+
 
 who_counts_format <- theme(
   legend.background = element_blank(),
@@ -23,6 +24,7 @@ bi_colour <- c( "gold2", "darkolivegreen4")
 
 View(full_dataset)
 
+View(data)
 data <- full_dataset %>%
   filter(is_human == "TRUE") %>%
   filter(on_english_wikipedia=="TRUE")
@@ -540,3 +542,88 @@ chart_12 <- ggplot(data_quality_no_footy, aes(prop, class_new))+
 chart_12
 
 ggsave("chart_12.png", chart_12, width= 18, height = 10, units=c("cm") )
+
+##indigenous section
+
+View(indigenous)
+
+indigenous_data_prep <- data %>%
+  right_join(extracts_2, by="pageid") %>%
+  select(extract, description, pageid, person, title.x) %>%
+  mutate(extract = tolower(extract),
+         description = tolower(description),
+         title.x = tolower(title.x)
+         )
+
+
+key_word <- c("aboriginal | indigenous |torres |ankamuti |anmatyerre|
+              antakirinja |araba |arabana |arakwal |arrernte |arnga |atjinuri |awabakal |awarai |awinmul |awngthim |ayabakan |ayapathu |
+              badjalang |badjiri |baiali |baiyungu |bailgu |bakanambia |balardong |banbai |bandjigali |bandjin |barada |baranbinja |
+              barababaraba |barbaram |badimaya |bardi |barindji |barkindji |barna |barunggam |barungguan |batjala |beriguruk |
+              bidawal |bidia |bidjigal |bigambul |bilingara |binbinga |bindal |bindjali |bingongina |binigura |
+              biria |birpai |bitjara |brabralung |braiakaulung |bratauolung |bugulmara |bukurnidja |buluwai |bunganditj |
+              bundjalung |bunurong |burarra |buruna |bwgcolman |dadi dadi |daii |dainggati |dalabon |dalla |dangbon |danggali |
+              dangu |darambal |darkinjang |darug |dharawal |diakui |dieri |djabugandji |djabugay |djagaraga |djakunda |
+              djalakuru |djamindjung |djangu |djankun |djargurd wurrung |djaru |dja dja wurrung |djerait |djerimanga |djilamatang |
+              djinang |djinba |djirbalngan |djiru |djirubal |djiwali |djowei |djugun |doolboong |duduroa |duulngari |
+              dunghutti |duwal |duwala |eora |erawirung |ewamin |gaari |gadjalivia |gambalang |gandangara |garrwa |geawegal |
+              gia |giabal |gkuthaarn |goeng |goenpul |goreng goreng |gudjal |gugu-badhun |gulidjan |gulngai |gunai |
+              gumbaynggirr |gunavidji |gunditjmara |gungorogone |gubi gubi |gurindji |guugu-yimidhirr |idindji |ilba |
+              ildawongga |inawongga |indindji |indjibandi |indjilandji |inggarda |ingura |iningai |irukandji |
+              ithu |iwaidja |jardwadjali |jaako |jaara |jabirr jabirr |jaburara |jadira |jadliaura |jagalingu |
+              jagara |jaitmathang |jalanga |jambina |jandruwanta |jangaa |jangga |janggal |jangkundjara |jangman |
+              janjula |jardwadjali |jarijari |jarildekald |jaroinga |jarowair |jathaikana |jaudjibaia |yauraworka |
+              jawi |jawoyn |jawuru |jeidji |jeithi |jeljendi |jeteneru |jetimarala |jiegara |jilngali |jiman |jinigudira |jinwum |jirandali |
+              jirjoront |jitajita |jokula |juat |juipera |jukambal |jukambe |jukul |julaolinja |jumu |junggor |jungkurara |
+              jupagalk |jupangati |juru |kaantju |kabalbara |kabikabi |kadjerong |kaiabara |kaiadilt |kairi |kaititja |kakadu |
+              kalaako |kalali |kalamaia |kalibal |kalibamu |kalkadunga |kambure |kambuwal |kamilaroi |kamor |kandju |kaneang |
+              kangulu |kanolu |karadjari |karaman |karangpurru |karanguru |karanja |kareldi |karendala |karenggapa |kariara |
+              karingbal |kartudjara |karuwali |katubanut |kaurareg |kaurna |kawadji |kawambarai |kayimai |kaytetye |keiadjara |
+              keinjan |keramai |kirrae |kitabal |kitja |koa |koamu |koara |koenpal |koinjmal |kokangol |kokatha |koknar |
+              kokodubious |kokobididji |kokobujundji |kokoimudji |kokojawa |kokojelandji |kokokulunggur |kokomini |kokonjekodi |
+              kokopatun |kokopera |kokowalandja |kokowara |kolakngat |konbudj |konejandi |kongabula |kongkandji |koreng |
+              korenggoreng |korindji |kotandji |krauatungalung |kujani |kukatj |kukatja |kuku yulanji |kula |kulumali |kumbainggiri |
+              kunapa people |kundjeyhmi |kungadutji |kungarakan |kunggara |kunggari |kungkalenja |kunindiri |kunja |kunwinjku |
+              kurrama |kureinji |kuringgai |kurnai |kurung |kutjal |kutjala |kuungkari |kuwema |kwantari |kwarandji |kwatkwat |
+              kwiambal |kwini |laia |lairmairrener |lama lama |lanima |larrakia |lardiil |latjilatji |lotiga |luritja |luthigh |madjandji |madngela |
+              madoitja |maduwongga |magatige |maya |maiawali |maijabi |maikudunu |maikulan |maithakari |malak malak |malantji |malgana |
+              malgaru |maljangapa | malngin |malpa |mamu |manbarra |mandandanji |mandara |manthi |mandjildjara |mandjindja |
+              mangarla |mangarai |marra |maranganji |maranunggu |maraura |marditjali |mardudunera |mariamo |maridan |maridjabin |marijedi |marimanindji
+              |maringar |marinunggo |marithiel |mariu |marrago |martu |marulta |matuntara |maung |maya |mbewum |mbukarla |
+              meintangk |menthajangal |meru |mian |milpulo |mimungkum |minang |mingin |minjambuta |minjungbal |miriwung |mirning |mitaka |
+              mitjamba |miwa |morowari |mpalitjanh |muluridji |muragan |murinbata |muringura |murngin |murunitja |
+              muthimuthi |mutjati |mutpura |mutumui |nakako |nakara |nana |nanda |nangatadjara |nangatara |nanggikorongo |
+              nanggumiri |nango |narangga |narinari |naualko |nauo |nawagi |ngadadjara |ngadjunmaia |ngadjuri |ngaiawang |
+              ngaiawongga |ngaku |ngalakan |ngalea |ngalia |ngaliwuru |ngaluma |ngamba |ngameni |ngandangara |ngandi |ngangikurunggurr |
+              nganguruku |ngarabal |ngaralta |ngardi |ngardok |ngarigo |ngarinjin |ngarinman |ngarkat |ngarla |ngarlawongga |
+              ngarrindjeri |ngaro |ngathokudi |ngatjan |ngaun |ngawait |ngewin |nggamadi |ngintait |ngiyambaa |ngoborindi |ngolibardu |ngolokwangga |
+              ngombal |ngormbur |ngugi |ngulungbara |ngunawal |ngundjan |ngurawola |ngurelban |nguri |ngurlu |ngurunta |
+              niabali |nimanburu |ninanu |njakinjaki |njamal |njangamarda |njikena |njulnjul |njunga |njuwathai |noala |nokaan |noongar |
+              norweilemil |nuenonne |nukunu |nunggubuju |nunukul |oitbi |ola |olkolo |ombila |ongkarango |ongkomi |otati |
+              pakadji |pandjima |pangerang |pangkala |paredarerme |parundji |paiyungudubious |peerapper |peramangk |perrakee |
+              pibelmen |pilatapa |pindiini |pindjarup |pini |pintupi |pitapita |pitjantjatjara |pitjara |pongaponga |pontunj |
+              portaulun |potaruwutj |potidjara |punaba |puneitja |punthamara |pyemmairre |rakkaia |ramindjeri |rembarunga |
+              ringaringa |rungarungawa |spinifex people |tagalag |tagoman |taior |talandiji |tanganekald |targari |taribelang |
+              tatungalung |taungurung |tedei |tenma |tepiti |teppathiggi |tharawal |thaua |thereila |thiin |tirari |tjalkadjara |
+              tjapukai |tjapwurong |tjeraridjal |tjial |tjingili |tjongkandji |tjupany |tjuroro |tommeginne |toogee |totj |tulua |
+              tunuvivi |tyerremotepanner |umbindhamu |umede |umpila |undanbi |unjadi |uutaalnganu |wadere |wadikali |wadja |
+              wadjabangai |wadjalang |wadjari |wagiman |wailpi |wakabunga |wakaja |wakaman |wakara |wakawaka |walangama |walbanga |walgalu |
+              waljen |walmadjari |walmbaria |walpiri |walu |waluwara |wambaia |wanamara |wandandian |wandarang |wandjira |wangaaybuwan |
+              wangan |wongi |wanji |wanjiwalku |wanjuru |wanman |warakamai |waramanga |wardal |wardaman |wardandi |wargamaygan |
+              wariangga |warkawarka |warki |warlmanpa |warray |warungu |warwa |wathaurung |watiwati |watta |waveroo |wawula |
+              weilwan |wembawemba |wenamba |wenambal |weraerai |whadjuk |widi |widjabal |wiilman |wik |wikampama |wikapatja |wikatinda |
+              wikepa |wikianji |wik-kalkan |wikmean |wikmunkan |wiknantjara |wiknatanja |wilawila |wilingura |wilyakali |winduwinda |
+              wiradjuri |wirangu |wirdinja |wiri |wirngir |wodiwodi |wogait |wooptang |wongaibon |wongkadjera |wongkamala |wongkanguru |
+              wongkumara |wonnarua |worimi |worora |wotjobaluk |wudjari |wulgurukaba |wulili |wulpura |wulwulam |wunambal |
+              wuningargk |wurango |wurundjeri |wuthathi |yamatji |yanda |yuguurtuu |yadhaykenu |yanyuwa |yarra yarra |yaygirr |
+              yiman |yiwara |yolngu |yorta yorta |yuggera |yuin |yulparitja |yuwaalaraay")
+
+
+
+indigenous_data <- indigenous_data_prep %>%
+  filter(str_detect(extract,key_word))
+
+View(indigenous_data)
+
+
+
