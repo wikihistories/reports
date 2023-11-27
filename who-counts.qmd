@@ -1,18 +1,14 @@
 ---
-title: "Who Counts as Australian?"
-description: |
-  The first annual report of the wikihistories project, describing how Australian people are represented in Wikipedia.
+title: "How Australians are represented in Wikipedia"
+description: "The Annual Report for the Wikihistories project"
 keywords:
   - Wikipedia
   - historiography
   - Australia
   - digital humanities
   - systemic bias
-date: last-modified
+date: December 2023
 author:
-  - name: Kelly Tall
-    orcid: 0000-0002-7876-4460
-    affiliation: University of Technology, Sydney
   - name: Michael Falk
     orcid: 0000-0001-9261-8390
     affiliation: University of Melbourne
@@ -25,6 +21,9 @@ author:
     orcid: 0000-0002-8304-7108
     affiliation: University of Technology, Sydney
     url: https://capandgown.wordpress.com/
+  - name: Kelly Tall
+    orcid: 0000-0002-7876-4460
+    affiliation: University of Technology, Sydney
 citation:
   type: report
   publisher: University of Technology, Sydney
@@ -39,7 +38,8 @@ bibliography: wikihistories.bib
 # devtools::install_github("wikihistories/wikkitidy")
 knitr::opts_chunk$set(
   echo = FALSE,
-  message = FALSE
+  message = FALSE,
+  warning = FALSE
 )
 library(tidyverse)
 library(igraph)
@@ -50,72 +50,7 @@ library(wikkitidy)
 DATA_DIR <- file.path("data", "who-counts")
 source(file.path("scripts", "who-counts-data.R"))
 
-# GGplot theme
-old_theme <- theme_update(
-  legend.background = element_blank(),
-  axis.ticks = element_line(colour = "white", linewidth = 0.2),
-  panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
-  panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
-  panel.grid.minor.y = element_blank(),
-  panel.background = element_blank(),
-  # axis.title = element_blank(),
-  # legend.key = element_blank()
-)
-
-gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
-```
-
-**Work in progress. Not for public distribution.**
-
-## Introduction
-
-Who counts as Australian in Wikipedia and its sister-projects? How are Wikipedia articles or Wikidata items marked as 'Australian' by the system? How does Wikipedia define or represent 'Australianness'? In this report, we try to address these questions using a dataset of biographical articles culled from English Wikipedia. We have two primary aims: (1) to reveal the definition of 'Australianess' implicit in Wikipedia's systems; (2) to assess how well Wikipedia represents the diversity of Australians. As we will see, Wikipedia works implicitly with numerous inconsistent definitions of 'Australianness', but it is nonetheless possible to make some reasonable observations about how well it represents the diversity of people who make up 'Australia'.
-
-People can be represented in Wikipedia in many ways. They may have an empty article that redirects to another article that concerns them (e.g. [Azaria Chamberlain](https://en.wikipedia.org/wiki/Azaria_Chamberlain)). They may be mentioned in the text of an article (e.g. Sasha Soldatow or the 'manual workers' in [Sydney Push](https://en.wikipedia.org/w/index.php?title=Sydney_Push&oldid=1151477281)). Or they might have a full-blown article devoted to their biography (e.g. [Ada Cambridge](https://en.wikipedia.org/wiki/Ada_Cambridge)). For the sake of our analysis, we focus on the third kind of representation: the biographical article. This allows us to quantify our analysis, because each article in the dataset equals one person.
-
-We explain how we construct the dataset in [Data]. Broadly, we use two methods to identify 'Australian' biographies in Wikipedia. First, we use [Wikipedia's category system] to find all biographies contained in [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people). Second, we use [Wikidata's query service] to find all biographies whose corresponding Wikidata item has a property suggestive of 'Australianness' (e.g. a [People Australia ID](https://www.wikidata.org/wiki/Property:P9159)). Using these two methods, we identify `r full_dataset %>% filter(is_human, on_english_wikipedia) %>% nrow() %>% prettyNum(",")` biographies on English Wikipedia that are marked as 'Australian' in some way. We enrich these biographies with additional [Metadata] for further analysis.
-
-Our [Analysis] of the data unfolds in four main sections. In [Australianness], we consider what it means for a person to be 'Australian' in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia's people, along the axes of [Gender], [Indigeneity] and [Historical period]. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe considerable normativity in the encyclopaedia: generally, Wikipedia assumes that an 'Australian' is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g. the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g. the gender gap).
-
-In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors and editors can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
-
-![How do Wikipedians construct Australia online?](assets/objective-2.jpg)
-
-## Data
-
-The code to generate this report is contained in two files in the [wikihistories reports Github repository](https://github.com/wikihistories/reports):
-
-- [who-counts-lib.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-lib.R) contains all the functions to import the data
-- [who-counts-data.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-data.R) combines the functions to import the full dataset. This script can be run with `USE_CACHE <- TRUE` to import the data from the saved files for this report, or `USE_CACHE <- FALSE` to regenerate the data afresh from Wikipedia and Wikidata
-
-All the source code for the analysis is included in this report, and can be viewed on Github at [who-counts.qmd](https://github.com/wikihistories/reports/tree/main/who-counts.qmd).
-
-### Wikipedia's category system
-
-From its inception, Wikipedia has provided a category system to '[group together pages on similar subjects](https://en.wikipedia.org/w/index.php?title=Help:Category&oldid=1174603713)', and provide useful '[navigational links to pages in Wikipedia](https://en.wikipedia.org/w/index.php?title=Wikipedia:Categorization&oldid=1181497476)'. Wikipedia's categories form a vast and complex tree. A category may contain infintely many subcategories, and those subcategories may themselves belong to infinitely many supercategories. Nearly all Wikipedia articles are categorised, partly due to the work of a [task group and patrol](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Categories/uncategorized) whose job is to hunt down any uncategorised articles.
-
-In this context, the first place we looked for biographies of Australian people on Wikipedia was [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people), which 'lists notable Australian-born people, or people who identify themselves as Australian'. This category contains `r full_dataset %>% filter(dataset != "wikidata", ns == 0) %>% nrow() %>% prettyNum(",")` articles on English Wikipedia, and the number has grown consistently (@fig-included-in-ozpeople-over-time).[^1]
-
-[^1]: The growth was calculated using the `timestamp` data returned by [API:Categorymembers](https://www.mediawiki.org/wiki/API:Categorymembers). The `timestamp` records when an article, file or subcategory was included in a given category. The documentation does not explain how the inclusion time is calculated for pages that are removed from and then re-included in a category. If an article was included in multiple subcategories of Category:Australian people, then the earliest timestamp was used to calculate its position in the figure.
-
-```{r}
-#| label: fig-included-in-ozpeople-over-time
-#| fig-cap: Category:Australian people has grown consistently since the early days of Wikipedia
-wikipedia_category_aus_people$nodes %>% 
-  filter(ns == 0) %>%
-  left_join(wikipedia_category_aus_people$edges, by = join_by(pageid == target)) %>% 
-  mutate(included = as_datetime(timestamp)) %>% 
-  arrange(pageid, included) %>% 
-  group_by(pageid) %>% 
-  slice(1) %>% 
-  ungroup() %>% 
-  mutate(included = round_date(included, "day")) %>% 
-  count(included) %>% 
-  ggplot(aes(included, cumsum(n))) +
-  geom_line() +
-  labs(x = "Time (days)", y = "Cumulative number of articles")
-```
-```{r}
+# Construct category graph from data
 category_graph <- graph_from_data_frame(
   d = wikipedia_category_aus_people$edges %>% 
     left_join(wikipedia_category_aus_people$nodes, join_by(target == pageid)) %>% 
@@ -125,6 +60,13 @@ category_graph <- graph_from_data_frame(
   vertices = wikipedia_category_aus_people$nodes %>% filter(ns == 14)
 )
 
+# The full dataset contains all the pages we found, including the non-biographies
+# from Wikipedia, and the Wikidata items that lack a corresponding page on English
+# Wikipedia. Filter these out to keep just the core dataset. All the data is 
+# still available in the variable full_dataset for validation of results etc.
+dataset <- full_dataset %>% filter(is_human, on_english_wikipedia)
+
+# Helper functions for working with category tree
 vertex_by_id <- function(graph, pageid) {
   V(graph)[V(graph)$name %in% pageid]
 }
@@ -134,56 +76,76 @@ root <- V(category_graph)[[1]]
 category_url <- function(category, collapse = " → ") {
   paste0("[", category, "](https://en.wikipedia.org/wiki/", category, ")", collapse = collapse)
 }
+
+# GGplot theme
+old_theme <- theme_update(
+  legend.background = element_rect(colour="grey70", fill=alpha("white", .8), linewidth = 0.3),
+  axis.ticks = element_line(colour = "white", linewidth = 0.2),
+  panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
+  panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
+  panel.grid.minor.y = element_blank(),
+  panel.background = element_blank(),
+  axis.title = element_text(size=10),
+  plot.caption = element_text(hjust = 0.5),
+  legend.key = element_blank()
+)
+
+gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
+bi_colour <- c( "gold2", "darkolivegreen4")
 ```
 
-Not all the articles in `Category:Australian people` are biographies. In the first case, there are many articles about groups of Australian people, e.g. [Aboriginal Victorians](https://en.wikipedia.org/wiki/Aboriginal_Victorians) or [Australian Chamber Orchestra](https://en.wikipedia.org/wiki/Australian_Chamber_Orchestra). In the second case, `Category:Australian people` is a vast category, with `r full_dataset %>% filter(type == "subcat") %>% nrow() %>% prettyNum(",")` subcategories. In the trackless expanse of these subcategories, some unexpected articles make their way into `Category:Australian people`, such as the classic glam rock album [*Living in the '70s*](https://en.wikipedia.org/wiki/Living_in_the_70%27s). We explain the 'eccentricity' of the category graph when we analyse Wikipedia's definition of [Australianness] below. For now, we simply describe our method for filtering all the non-biographies out of `Category:Australian people`.
+**Work in progress. Not for public distribution.**
 
-To filter out the non-biographies, we rely on Wikidata. We fetch the Wikidata item for each article in `Category:Australian people`, and check to see if it has property [P31](https://www.wikidata.org/wiki/Property:P31)([Q5](https://www.wikidata.org/wiki/Q5)), 'instance of:human'. While the possession of P31(Q5) is not a perfect signal that an article is a biography, we find that this criterion filters out nearly all the non-biographies. Applying this criterion, we identify `r full_dataset %>% filter(is_human, dataset != "wikidata") %>% nrow() %>% prettyNum(",")` biographical articles in `Category:Australian people`.
+## Introduction
 
-### Wikidata's query service
+The team at the wikihistories project is interested in how Wikipedia represents Australian people, places and events over time. National studies of Wikipedia are rare. The encyclopedia is usually treated as a representation of global trends. We now have excellent studies that have demonstrated how Wikipedia represents men at the expense of women [e.g. see @konieczny_gender_2018], and people and places in North America and Western Europe rather than the Majority World [e.g. see @beytia_positioning_2020]. But we have very few quantitative national studies of Wikipedia.
 
-Wikidata provides an alternative method for finding Australian biographies: its [query service](https://query.wikidata.org/). Using the query service, it is possible to search for Wikidata items that possess given properties. If these Wikidata items have a corresponding Wikipedia page, the link can be automatically retrieved.
+National studies of Wikipedia are critical to our understanding of representation. Wikipedia is a powerful producer of notability in Australia as it is in many nations, as we recently argued [@ford_gender_2023]. Who does and does not have a Wikipedia biography matters. *How* Wikipedia represents people also matters. Being well represented on Wikipedia makes a difference for one’s reputation and for the kinds of opportunities available to people in work and life.
 
-It is more complex to find the 'Australians' in Wikidata than in Wikipedia. Wikipedia provides a single master-category for 'Australian people'. Wikidata does not. Instead, Wikidata can mark a person as 'Australian' in two main ways:
+In this, our first year of the wikihistories project, our focus is on how Wikipedia represents *people*. We ask how English Wikipedia represents Australians. Do we see the same trends in terms of gender and ethnicity so that globally studies of Wikipedia have identified? How well has English Wikipedia done over time to represent people in Australia? These are important questions but they are by no means easy to answer. In order to map Wikipedia’s representation of Australians over time, we first need to understand which biographies on Wikipedia refer to Australians. The question of who is recognized as an Australian is a question beset with complexities and politics before we even get to Wikipedia. On Wikipedia, further complexities arise. 
 
-1. It can explicitly link a person to Australia ([Q408](https://www.wikidata.org/wiki/Q408)) through properties such as citizenship ([P27](https://www.wikidata.org/wiki/Property:P27)), place of birth ([P19](https://www.wikidata.org/wiki/Property:P19)) or place of death ([P570](https://www.wikidata.org/wiki/Property:P570)); or
-2. It can implicitly link a person to Australia by identifying them in a  database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia ([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
+Who counts as Australian in Wikipedia and its sister-projects? How are Wikipedia articles or Wikidata items marked as 'Australian' by the system? How does Wikipedia define or represent 'Australianness'? In this report, we try to address these questions using a dataset of biographical articles culled from English Wikipedia. We have two primary aims: (1) to reveal the definition of 'Australianess' implicit in Wikipedia's systems; (2) to assess how well Wikipedia represents the diversity of Australians. As we will see, Wikipedia works implicitly with numerous inconsistent definitions of 'Australianness', but it is nonetheless possible to make some reasonable observations about how well it represents the diversity of people who make up 'Australia'.
 
-We queried Wikidata by `r FILTER_PROPERTIES %>% nrow() %>% prettyNum(",")` such properties suggesting Australianness. Using these properties, we were able to identify `r full_dataset %>% filter(dataset != "category_aus") %>% nrow() %>% prettyNum(",")` Wikidata items representing Australian people. Of these Wikidata items, `r full_dataset %>% filter(dataset != "category_aus", on_english_wikipedia) %>% nrow() %>% prettyNum(",")` items had a corresponding Wikipedia article.
+People can be represented in Wikipedia in many ways. They may have an empty article that redirects to another article that concerns them (e.g. [Azaria Chamberlain](https://en.wikipedia.org/wiki/Azaria_Chamberlain)). They may be mentioned in the text of an article (e.g. Sasha Soldatow or the 'manual workers' in [Sydney Push](https://en.wikipedia.org/w/index.php?title=Sydney_Push&oldid=1151477281)). Or they might have a full-blown article devoted to their biography (e.g. [Ada Cambridge](https://en.wikipedia.org/wiki/Ada_Cambridge)). For the sake of our analysis, we focus on the third kind of representation: the biographical article. This allows us to quantify our analysis, because each article in the dataset equals one person.
 
-The two datasets overlap substantially, but not completely (@fig-biography-overlap-table). There are thousands of biographical articles in `Category:Australian people` whose Wikidata items do not clearly identify them as 'Australian'. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do *not* appear in `Category:Australian people`, even though the Wikidata item has P31(Q5), 'instance of:human', and also contains one or more 'markers of Australianness'. 
+We explain how we construct the dataset in [Appendix: Data]. Broadly, we use two methods to identify 'Australian' biographies in Wikipedia. First, we use [Wikipedia's category system] to find all biographies contained in [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people). Second, we use [Wikidata's query service] to find all biographies whose corresponding Wikidata item has a property suggestive of 'Australianness' (e.g. a [People Australia ID](https://www.wikidata.org/wiki/Property:P9159)). Using these two methods, we identify `r dataset %>% nrow() %>% prettyNum(",")` biographies on English Wikipedia that are marked as 'Australian' in some way. We enrich these biographies with additional [Metadata] for further analysis. As @fig-data-growth-over-time shows, the number of Australian biographies has consistently grown since the early days of Wikipedia.
 
 ```{r}
-#| label: fig-biography-overlap-table
-#| fig-cap: There is substantial, but incomplete overlap between the biographies in the two datasets
-full_dataset %>% 
-  filter(is_human, on_english_wikipedia) %>% 
-  count(dataset) %>% 
-  arrange(n) %>% 
-  transmute(
-    Dataset = case_when(
-      dataset == "both" ~ "Person found in both datasets",
-      dataset == "wikidata" ~ "Person only found by querying Wikidata",
-      dataset == "category_aus" ~ "Person only found in `Category:Australian people`"
-    ),
-    `Number of Articles` = n
-  ) %>% 
-  knitr::kable()
+#| label: fig-data-growth-over-time
+#| fig-cap: The number of Australian biographies has consistenly grown since the early days of Wikipedia
+cum_page <- dataset %>%
+  filter(!is.na(created_at)) %>%
+  group_by(created_at) %>%
+  tally() %>%
+  mutate(cum = cumsum(n))
+
+cum_page %>% 
+  ggplot(aes(created_at, cum)) +
+  geom_area(fill="darkolivegreen", alpha=.8) +
+  scale_y_continuous(
+    labels = scales::comma,
+    limits = c(0, 85000),
+    breaks = c(0, 20000, 40000, 60000, 80000)
+    ) +
+  labs(
+    x="Wikipedia page creation date",
+    y="Cumulative Wikipedia Page Count",
+    caption = glue::glue("Wikipedia Biographies with page creation date n = {filter(dataset, !is.na(created_at)) %>% nrow() %>% prettyNum(',')}")
+    )
 ```
 
-### Metadata
 
-We combine our two datasets into a single larger dataset of `r full_dataset %>% filter(is_human, on_english_wikipedia) %>% nrow() %>% prettyNum(",")` articles. To enable analysis of these articles, we then enrich them with three kinds of metadata:
+Our [Analysis] of the data unfolds in four main sections. In [Australianness], we consider what it means for a person to be 'Australian' in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia's people, along the axes of [Gender], [Indigeneity] and [Historical period]. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe considerable that the encyclopaedia is highly conservative: generally, Wikipedia assumes that an 'Australian' is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g. the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g. the gender gap).
 
-1. Using the Wikidata Action API, we find each person's dates, birthplace and gender.
-2. Using the Wikipedia Action API, we download the introduction of each article for text analysis.
-3. Using the XTools API, we download page usage data for each page, including the page creation date, assessment class (e.g. Good, Featured), pageviews and number of edits.
+In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors and editors can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
+
+![How do Wikipedians construct Australia online?](assets/objective-2.jpg)
 
 ## Analysis
 
 ### Australianness
 
-In this report, we do not seek to define what it means to be 'Australian'. Instead, we aim to identify the 'markers of Australianness' that define what it means to be 'Australian' in Wikipedia. We have already introduced these markers in the [Data] section. In Wikipedia, the primary marker of Australianness is membership of `Category:Australian people`. In Wikidata, no marker can be said to be primary, but the most frequent in our dataset is [P27](https://www.wikidata.org/wiki/Property:P27)([Q408](https://www.wikidata.org/wiki/Q408)), a property meaning that a person is a 'citizen' of Australia. In both cases, we will see that there is a sharp divide between the way Wikipedians have defined the marker, and they way they have used it.
+In this report, we do not seek to define what it means to be 'Australian'. Instead, we aim to identify the 'markers of Australianness' that define what it means to be 'Australian' in Wikipedia. In Wikipedia, the primary marker of Australianness is membership of `Category:Australian people`. In Wikidata, no marker can be said to be primary, but the most frequent in our dataset is [P27](https://www.wikidata.org/wiki/Property:P27)([Q408](https://www.wikidata.org/wiki/Q408)), a property meaning that a person is a 'citizen' of Australia. In both cases, we will see that there is a sharp divide between the way Wikipedians have defined the marker, and they way they have used it in practice.
 
 There are two reasons we refrain from defining 'Australian' for ourselves. In the first case, our opinion is not at all important—what matters is Wikipedia's opinion. In the second case, it is exceptionally difficult to define 'Australian' in a non-arbitrary way. In two dimensions, **space** and **time**, the concept of 'Australian' poses startling difficulties.
 
@@ -205,7 +167,7 @@ A user who clicks on the hyperlink 'Australian' will be taken to the Wikipedia p
 
 These definitions seem to offer a strong answer to the problems of space and time. 'Australia' is the 'Commonwealth of Australia', the sovereign state that has existed since 1901. In space, a person must be 'born' in Australia, or 'identify themselves' as a member of the country. In time, Australia is the Commonwealth of Australia, and so has only existed since 1901.
 
-The problem is, this explicit definition does not at all describe the contents of `Category:Australian people`. In the spatial dimension, the category includes living people such as [Steve Wozniak](https://en.wikipedia.org/w/index.php?title=Steve_Wozniak&oldid=1182335281) and [Darrell Duffie](https://en.wikipedia.org/w/index.php?title=Darrell_Duffie&oldid=1168175801) who were neither born in Australia nor identify themselves with it. In the time dimension, the category includes many historical figures who long predeceased the Commonwealth of Australia, such as [Bennelong](https://en.wikipedia.org/w/index.php?title=Bennelong&oldid=1182881508), [Mary Reiby](https://en.wikipedia.org/w/index.php?title=Mary_Reibey&oldid=1182294588), [Robert Lowe](https://en.wikipedia.org/w/index.php?title=Robert_Lowe&oldid=1176772405) and [Louisa Atkinson](https://en.wikipedia.org/w/index.php?title=Louisa_Atkinson&oldid=1178386165). Finally, it lists thousands of entities that aren't people, such as [First Ever](https://en.wikipedia.org/w/index.php?title=First_Ever&oldid=1177339020), the sportswear manufacturer, and '[Hand on Your Heart](https://en.wikipedia.org/w/index.php?title=Hand_on_Your_Heart&oldid=1181812572)', the 1989 single by Kylie Minogue. How has `Category:Australian people` expanded to include so many pages that contradict its own explicit definition?
+The problem is, this explicit definition does not at all describe the contents of `Category:Australian people`. In the spatial dimension, the category includes living people such as [Steve Wozniak](https://en.wikipedia.org/w/index.php?title=Steve_Wozniak&oldid=1182335281) and [Darrell Duffie](https://en.wikipedia.org/w/index.php?title=Darrell_Duffie&oldid=1168175801) who were neither born in Australia nor identify themselves with it. In the time dimension, the category includes many historical figures who long preceded the Commonwealth of Australia, such as [Bennelong](https://en.wikipedia.org/w/index.php?title=Bennelong&oldid=1182881508), [Mary Reiby](https://en.wikipedia.org/w/index.php?title=Mary_Reibey&oldid=1182294588), [Robert Lowe](https://en.wikipedia.org/w/index.php?title=Robert_Lowe&oldid=1176772405) and [Louisa Atkinson](https://en.wikipedia.org/w/index.php?title=Louisa_Atkinson&oldid=1178386165). Finally, it lists thousands of entities that aren't people, such as [First Ever](https://en.wikipedia.org/w/index.php?title=First_Ever&oldid=1177339020), the sportswear manufacturer, and '[Hand on Your Heart](https://en.wikipedia.org/w/index.php?title=Hand_on_Your_Heart&oldid=1181812572)', the 1989 single by Kylie Minogue. How has `Category:Australian people` expanded to include so many pages that contradict its own explicit definition?
 
 The answer lies in the category's size. When editors include articles in `Category:Australian people`, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast category [graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)). The editor who categorised [Steve Wozniak](https://en.wikipedia.org/wiki/Steve_Wozniak) as a [staff member of the University of Technology Sydney](https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney) was probably unaware that they were thereby categorising Wozniak as an 'Australian person'. The category for academic staff at UTS lies several layers deep in the category graph, `r distances(category_graph, root, vertex_by_id(category_graph, 32435264))` steps away from the root (@fig-wozniak-distance-from-oz). Perhaps an editor may quibble that a person who works at UTS is not necessarily 'from Sydney', but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.
 
@@ -256,7 +218,7 @@ There is thus a contradiction between the global and local logics of the categor
 #### In Wikidata
 
 ```{r}
-item_by_source <- full_dataset %>% 
+item_by_source <- dataset %>% 
   select(person, source) %>% 
   unnest(cols = c(source)) %>% 
   drop_na()
@@ -264,7 +226,7 @@ item_by_source <- full_dataset %>%
 
 Wikidata's contributors are well aware of the difficulties of space and time. The simplest way to mark someone as 'Australian' in Wikidata is to give 'Australia' as the person's 'country of citizenship' ([P27](https://www.wikidata.org/wiki/Property:P27)). Our dataset contains `r item_by_source %>% filter(source == "aus_citizens_wd") %>% nrow() %>% prettyNum(',')` 'Australian citizens' according to P27. A glance at [the Talk page for P27](https://www.wikidata.org/wiki/Property_talk:P27) reveals that Wikidata's editors are well aware of the problems with trying to categorised people as 'Australian' in any stable way.
 
-The user Ghouston clearly clearly articulates the problem of time in a post from 2018:
+The user Ghouston clearly articulates the problem of time in a post from 2018:
 
 > It's not easy. Australian citizenship didn't exist before 1949, yet Australia as a federation has existed since 1901 and the term "Australian" was in use in the 19th century. To say that the United Kingdom was created in 1927 or the Netherlands perhaps in 1815 or 1945 or China in 1949 is to ignore much of the history of these countries as states.
 
@@ -295,57 +257,16 @@ The ADB includes anyone who has made a significant contribution to the Australia
 
 The AusStage database, meanwhile, [records any person who 'contributed' in some way to a theatrical performance in Australia, or to an overseas performance of an Australian theatrical work](https://www.ausstage.edu.au/pages/learn/data-scope). AusStage and the Australian Dictionary of Biography provide very broad markers of Australianness. By contrast, the [Re-Member database of the Parliament of Victoria](https://www.parliament.vic.gov.au/about/people-in-parliament/re-member/form/27) provides a stricter marker of a person's Australianness. To appear in Re-Member, a person must be a former member of the Parliament of Victoria. We identified dozens of other databases that indicated 'Australianess' in Wikidata. When a Wikimedian links a person to the Australian Dictionary of Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), AusStage ([P8292](https://www.wikidata.org/wiki/Property:P8292)), Re-Member ([P8633](https://www.wikidata.org/wiki/Property:P8633)), or some other database of Australians, the linked database will encode a different answer to the question 'Who Counts as Australian?'
 
-This raises the question: how do these different properties overlap in Wikidata? Are there some markers of Australianness that tend to go together? Are there others that exclude each other? For example, we might assume that if a person is linked to the  Convict Records of Australia database ([P9919](https://www.wikidata.org/wiki/Property:P9919)), they should not usually have Australia as their place of birth, since the great majority of convicts were transported from Britain and Ireland, rather than between the colonies.
-
-```{r}
-num_properties_for_cor <- 20
-```
-
-To explore the connection between different markers of Australianness, we generated a correlation plot between the `r num_properties_for_cor` most common Wikidata properties of the `r FILTER_PROPERTIES %>% nrow()` that we queried (@fig-wikidata-property-matrix). A red square indicates a positive correlation between two Wikidata properties: for example, a person with an [Australian Dictionary of Biography ID](https://www.wikidata.org/wiki/Property:P1907) (`aus_dictionary_bio`) is highly likely also to have a [People Australia ID](https://www.wikidata.org/wiki/Property:P9159) (`people_of_aus`). A blue square indicates a negative correlation between two properties: for example, a person marked as a citizen of Australia is highly unlikely to have been assigned an [AustralianFootball.com ID](https://www.wikidata.org/wiki/Property:P3546) (`aus_football`).
-
-```{r}
-#| label: fig-wikidata-property-matrix
-#| fig-cap: Few of the properties are strongly correlated
-source_matrix <- item_by_source %>% 
-  distinct(person, source) %>% 
-  nest(data = person) %>% 
-  mutate(group_total = map_int(data, nrow)) %>% 
-  arrange(desc(group_total)) %>% 
-  head(num_properties_for_cor) %>% 
-  select(-group_total) %>% 
-  unnest(cols = c(data)) %>% 
-  mutate(n = 1) %>% 
-  pivot_wider(names_from = source, values_from = n, values_fill = 0) %>% 
-  select(-person) %>% 
-  cor()
-
-ggcorrplot::ggcorrplot(
-  source_matrix,
-  hc.order = TRUE,
-  insig = "blank",
-  colors = c(gender_colour[[1]], "white", gender_colour[[3]])
-  )
-```
-
-Only a few of the properties are correlated, and there are only a couple of strong correlations in the matrix.
-
-Many of the strong correlations reflect relationships between the databases on which Wikidata relies for information. For example, it is not surprising to see a strong correlation between Australian Dictionary of Biography ID (`aus_dictionary_bio`), Labour Australia ID (`labour_of_aus`), People Australia ID (`people_of_aus`) and Obituaries of Australia ID (`obit_of_aus`). These four databases are all run by the National Centre for Biography at the Australian National University, and are tightly interconnected. Every person in Obituaries Australia, Labour Australia or the ADB automatically receives a People Australia ID.
-
-Other strong correlations represent a similarity of subject-matter. For instance, three Wikidata properties link to databases of Australian artists (`nat_gallery_vic_artist`, `aus_printmakers`, `design_and_art_aus`). A person who has an ID in one of these external databases is likely to have an ID available in the others. Similar explanations apply to sporting databases (`atheltics_aus` and `aus_olympics`) and newspaper databases (`obit_of_aus`).
-
-Overall, the lack of correlation between the properties reflects the heterogeneous nature of Wikidata. It is a vast and exceptionally flexible database, and it is possible for different communities of contributors to build up data in quite unrelated areas. This is illustrated nowhere better than in the negative correlation between AustralianFootball.com ID and the other Wikidata properties. Fans of Australian Rules Football have painstakingly entered data about hundreds of professional footballers into Wikidata, without troubling to mark these records with other properties such as Trove ID or citizenship of Australia. The shape of Wikidata could easily change if another committed group of editors decided to document their own subculture in the database. 'Australian' is an extremely uneven and inconsistent idea in Wikidata.
-
 ### Gender
 
 Although it is impossible to provide a unitary definition for 'Australian' in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as 'Australian' in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of [Indigenous Australians and Torres Strait Islander peoples](#indigeneity) in the next section.
 
-To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r full_dataset %>% filter(is_human, is.na(gender)) %>% nrow() %>% prettyNum(",")` records lack a `P21` statement about their sex or gender.
+To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r dataset %>% filter(is.na(gender)) %>% nrow() %>% prettyNum(",")` records lack a `P21` statement about their sex or gender.
 
 ```{r}
 #| label: fig-genders-in-dataset
 #| fig-cap: There are many labels for Australians' sex or gender across Wikimedia databases
-full_dataset %>%
-  filter(is_human) %>%
+dataset %>%
   group_by(gender) %>%
   summarise(total = n()) %>% 
   rename(
@@ -355,85 +276,62 @@ full_dataset %>%
   knitr::kable()
 ```
 
-@weathington_queer_2023 have strongly critiqued Wikidata's representation of sex and gender, observing that "Queer identities are recorded in a database in clunky, inaccurate, or self-contradictory ways" [p. 2] and that the database ignores the individual's right to determine their own sexual presentation. Nonetheless, we are compelled to rely on Wikidata's representation of individuals' sex and/or gender if we wish to assess its representation of human diversity in Australia. To this end, we categorise our dataset into three broad groups: `Male`, `Female` and `Trans, Non-Binary or Intersex`. While we may assume that most of those marked as 'male' or 'female' are *cis*-male or -female, we cannot determine this from the available data, and so opt for the less specific 'male' and 'female'.
+@weathington_queer_2023 have strongly critiqued Wikidata's representation of sex and gender, observing that "Queer identities are recorded in a database in clunky, inaccurate, or self-contradictory ways" (p. 2) and that the database ignores the individual's right to determine their own sexual presentation. Nonetheless, we are compelled to rely on Wikidata's representation of individuals' sex and/or gender if we wish to assess its representation of human diversity in Australia. To this end, we categorise our dataset into three broad groups: `male`, `female` and `trans, non-binary or intersex`. While we may assume that most of those marked as 'male' or 'female' are *cis*-male or -female, we cannot determine this from the available data, and so opt for the less specific 'male' and 'female'.
 
-`Female` biographies are clearly under-represented among Wikipedia's Australian articles. (@fig-genders-in-dataset) shows all Wikipedia biographies that appear in `Category:Australian people`, or whose Wikidata item contains a marker of Australianness, categories by gender. The gap between `Male` and `Female` biographies appears to have remained constant over time (@fig-gender-by-page-creation). Viewing the data on a logarithmic scale emphasise the parallel track of `Male` and `Female` biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of `Trans, Non-Binary or Intersex` biographies (@fig-gender-by-page-creation-log).
+`Female` biographies are clearly under-represented among Wikipedia's Australian articles. (@fig-genders-in-dataset) shows all the articles in the dataset, categorised by their gender on Wikidata. The gap between `male` and `female` biographies appears to have remained constant over time (@fig-gender-by-page-creation). Viewing the data on a logarithmic scale emphasises the parallel track of `male` and `female` biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of `trans, non-binary or intersex` biographies (@fig-gender-by-page-creation-log).
 
 ```{r}
 #| label: fig-gender-by-page-creation
 #| fig-cap: Biographies of Australian males continue to grow at least as fast as biographies of other Australians.
-gender_data <- full_dataset %>%
-  filter(is_human, on_english_wikipedia) %>% 
-  mutate(
-    gender = case_when(
-      gender == "non-binary" |
-        gender == "trans woman" |
-        gender == "trans man" |
-        gender == "genderfluid" |
-        gender == "intersex" |
-        gender == "transgender"
-      ~ "Trans, Non-Binary or Intersex",
-      gender == "female" ~ "Female",
-      gender == "male" ~ "Male",
-      TRUE ~ NA
-    )
+gender_data <- dataset %>%
+  filter(!is.na(created_at)) %>%
+  filter(!is.na(gender)) %>%
+  mutate(gender = 
+           case_when(
+             gender == "male" ~ "Male",
+             gender == "female" ~ "Female",
+             TRUE~ "Trans, Non-Binary or Intersex"
+           )
   )
 
 gender_line_graph <- gender_data %>%
   group_by(gender, created_at) %>% 
   summarise(n = n()) %>% 
   drop_na() %>% 
-  mutate(cumulative = cumsum(n)) %>%
+  mutate(cumulative = cumsum(n), max = max(cumulative)) %>%
   ggplot(aes(x = created_at, y = cumulative, colour = gender)) +
   geom_line() +
-  labs(x = "Page Creation Date",
-       y = "Total Wikipedia Pages") +
-  scale_colour_manual(values = gender_colour)
+  scale_y_continuous(
+    labels = scales::comma,
+    limits = c(0, 80000), breaks = c(0, 20000, 40000, 60000, 80000 )
+    ) +
+  scale_colour_manual(values=gender_colour, name = "Gender") +
+  directlabels::geom_dl(
+    aes(label = max, colour=gender),
+    method = list(directlabels::dl.trans(y=y+0.2), cex=.8, "last.points", vjust=0, hjust=1)
+    ) +
+  labs(
+    x = "Wikipedia Page Creation Date",
+    caption = glue::glue("Wikipedia Biographies with gender label and page creation date n = {nrow(gender_data) %>% prettyNum(',')}")
+    ) +
+  theme(legend.position = c(0.23, 0.8),
+        legend.spacing.y = unit(.03, 'cm'),
+        legend.title=element_text(size=10))
 
 gender_line_graph +
-  annotate(
-    "text",
-    x = ymd("2001-03-15"),
-    y = 40000,
-    label = "First Australian biography was\nmade for Sherrié Austin on \n26 January 2001",
-    hjust = 0,
-    size = 4,
-    vjust = 1
-  ) +
-  geom_segment(aes(
-    x = ymd("2001-01-26"),
-    y = 0,
-    xend = ymd("2001-01-26"),
-    yend = 40000
-  )) +
-  geom_point(aes(x = ymd("2001-01-26"), y = 0), shape = 21, fill = "white") +
-  annotate(
-    "text",
-    x = ymd("2002-09-19"),
-    y = 20000,
-    label = "First Indigenous Australian\nbiography was made for \nBennelong on 19 July 2002",
-    hjust = 0,
-    size = 4,
-    vjust = 1
-  ) +
-  geom_segment(aes(
-    x = ymd("2002-07-19"),
-    y = 0,
-    xend = ymd("2002-07-19"),
-    yend = 20000
-  )) +
-  geom_point(aes(x = ymd("2002-07-19"), y = 0), shape = 21, fill = "white")
+  labs(y = "Cumulative Wikipedia Page Count")
 ```
 
 ```{r}
 #| label: fig-gender-by-page-creation-log
 #| fig-cap: It appears that Australian biographies are growing equally quickly in all three gender categories.
-gender_line_graph + scale_y_log10(
-  labels = scales::label_number()
-)
+gender_line_graph +
+  scale_y_log10(labels = scales::comma, limits = c(1, 120000)) +
+  labs(y = "Cumulative Wikipedia Page Count (log10 scale)") +
+  theme(legend.position = c(0.24, 0.8))
 ```
 
-Not only are male, female and LGBTQI+ Australians represented in different numbers in the encyclopaedia, they are represented by different words. To show this, we downloaded the introductions of each article in the encyclopaedia, and used the tf-idf statistic to determine which words were most distinctive for each group of biographies. Which words tend to appear more often in the introductions of articles about `Male`, `Female` and `Trans, Non-Binary and Intersex` Australians?
+Not only are male, female and LGBTQI+ Australians represented in different numbers in the encyclopaedia, they are represented by different words. To show this, we downloaded the introductions of each article in the encyclopaedia, and used the tf-idf statistic to determine which words were most distinctive for each group of biographies. Which words tend to appear more often in the introductions of articles about `male`, `female` and `trans, non-binary or intersex` Australians?
 
 ```{r}
 #| label: fig-intro-words-by-gender
@@ -477,42 +375,59 @@ ordered_tf_idf %>%
 ```
 @fig-intro-words-by-gender discloses two significant patterns:
 
-* *Explicit marking of non-Male genders*: First, Wikipedia articles are more likely to explicitly mention the sex or gender of a `Female` or `Trans, Non-Binary or Intersex` Australian. The high tf-idf score for "women's" in biographies of Females probably reflects the fact that female sporting teams are often have "women's" in their names. Thus Sam Kerr is said to represent Australian in the "[national women's team](https://en.wikipedia.org/w/index.php?title=Sam_Kerr&oldid=1174642959)", while Harry Kewell was simply a member of "[the Australian national team](https://en.wikipedia.org/w/index.php?title=Harry_Kewell&oldid=1177164031)". The situation for `Trans, Non-Binary and Intersex` Australians is even more marked. 'Transgender', 'sex' and 'woman' all appear as distinctive terms in the introductions of Wikipedia biographies in this group.
-* *Dominance of sport and entertainment*: Across all three gender categories, sport and entertainment are dominant themes. The `Male` biographies seem less likely to describe entertainers than those in the other categories. Unsuprisingly, the `Trans, Non-Binary and Intersex` biographies seem more likely to discuss social affairs, 'activist' and 'rights' being prominent terms in the introductions of these biographies.
+* *Explicit marking of non-Male genders*: First, Wikipedia articles are more likely to explicitly mention the sex or gender of a `female` or `trans, non-binary or intersex` Australian. The high tf-idf score for "women's" in biographies of Females probably reflects the fact that female sporting teams are often have "women's" in their names. Thus Sam Kerr is said to represent Australian in the "[national women's team](https://en.wikipedia.org/w/index.php?title=Sam_Kerr&oldid=1174642959)", while Harry Kewell was simply a member of "[the Australian national team](https://en.wikipedia.org/w/index.php?title=Harry_Kewell&oldid=1177164031)". The situation for `trans, non-binary or intersex` Australians is even more marked. 'Transgender', 'sex' and 'woman' all appear as distinctive terms in the introductions of Wikipedia biographies in this group.
+* *Dominance of sport and entertainment*: Across all three gender categories, sport and entertainment are dominant themes. The `male` biographies seem less likely to describe entertainers than those in the other categories. Unsuprisingly, the `trans, non-binary or intersex` biographies seem more likely to discuss social affairs, 'activist' and 'rights' being prominent terms in the introductions of these biographies.
 
-The data support the views of @weathington_queer_2023. In Australian Wikipedia, maleness is the unmarked default. `Female` and especially `Trans, Non-Binary and Intersex` Australians are described using terms such as 'women' or 'transgender'; there is no need to explicitly mention that a person is male or cisgender. In the case of `Trans, Non-Binary and Intersex` people, this explicit marking of gender goes a step further. Australians in this group are likely to be described as 'activists', presumbly on gender issues. Biographies of `Trans, Non-Binary and Intersex` Australians problematise gender in a manner that biographies of of `Male` Australians do not.
+The data support the views of @weathington_queer_2023. In Australian Wikipedia, maleness is the unmarked default. `Female` and especially `trans, non-binary or intersex` Australians are described using terms such as 'women' or 'transgender'; there is no need to explicitly mention that a person is male or cisgender. In the case of `trans, non-binary or intersex` people, this explicit marking of gender goes a step further. Australians in this group are likely to be described as 'activists', presumbly on gender issues. Biographies of `trans, non-binary or intersex` Australians problematise gender in a manner that biographies of of `male` Australians do not.
 
-Wikipedia's defaulting to malenes probably reflects the linguistic habits of broader Australian society, but it could also be exacerbated by the encylopaedia's obsession with sport and entertainment. Both sport and entertainment are highly gendered fields. Men and women compete in gendered competitions such as the soccer or cricket World Cups and receive gendered commendations such as Best Actress at the Academy Awards. While `Male` Australians may dominate non-`Male` Australians in fields such as politics, business and the arts, these fields are no so explicitly gendered. Sam Kerr may indeed be captain of the "women's national team," but it makes no sense to describe [Vanessa Hudson](https://en.wikipedia.org/wiki/Vanessa_Hudson_(executive)) as the CEO of a "women's corporation." Sport and entertainment are fields that reflect society's deepest-held and most immoveable convictions. Wikipedia's powerful focus on these fields may place the encyclopaedia behind other parts of Australia in the evolution of non-gendered language.
+Wikipedia's defaulting to maleness probably reflects the linguistic habits of broader Australian society, but it could also be exacerbated by the encylopaedia's obsession with sport and entertainment. Both sport and entertainment are highly gendered fields. Men and women compete in gendered competitions such as the soccer or cricket World Cups and receive gendered commendations such as Best Actress at the Academy Awards. While `male` Australians may dominate non-`male` Australians in fields such as politics, business and the arts, these fields are no so explicitly gendered. Sam Kerr may indeed be captain of the "women's national team," but it makes no sense to describe [Vanessa Hudson](https://en.wikipedia.org/wiki/Vanessa_Hudson_(executive)) as the CEO of a "women's corporation." Sport and entertainment are fields that reflect society's deepest-held and most immoveable convictions. Wikipedia's powerful focus on these fields may place the encyclopaedia behind other parts of Australia in the evolution of non-gendered language.
 
-Finally in this section, we consider the attention received by biographies in these three groups. Which Australians are the focus of editor activity, and which are of most interest to readers? We used the XTools API to download page usage statistics for articles in each group. @fig-assessment-data-by-gender gives a snapshot of this information. 
+Finally in this section, we consider the attention received by biographies in these three groups. Which Australians are the focus of editor activity, and which are of most interest to readers? We used the XTools API to download page usage statistics for articles in each group. @fig-gender-page-health compares a number of 'page health' statistics for each set of biographies. How often are the pages in each group visited, and how actively are they maintained?  
 
 ```{r}
-#| label: fig-assessment-data-by-gender
+#| label: fig-gender-page-health
 #| fig-cap: Editors and readers of Wikipedia appear to have different priorities when it comes to gender
-assessment_by_gender <- gender_data %>% 
-  group_by(gender) %>% 
-  summarise(
-    n = n(),
-    `Pageviews (mean)` = mean(pageviews, na.rm = TRUE),
-    `Revisions (mean)` = mean(revisions, na.rm = TRUE),
-    `Editors (mean)` = mean(editors, na.rm = TRUE),
-    `Watchers (mean)` = mean(watchers, na.rm = TRUE),
-    `Weeks since last edit` = mean(secs_since_last_edit, na.rm = TRUE) / 60 / 60 / 24 / 7,
-    `Good/Featured` = sum(class == "GA" | class == "FA", na.rm = TRUE) / n * 100
-  ) %>% 
-  drop_na() %>% 
-  arrange(n) 
+data_page_health <- dataset %>%
+  filter(!is.na(gender)) %>%
+  mutate(gender_group = case_when(gender == "male" ~ "Male \nn=66,370",
+                                  gender == "female" ~ "Female \nn=16,558",
+                                  TRUE~ "Trans, Non-Binary or Intersex \nn=72")) %>%
+  mutate(days_last_edit = ceiling(secs_since_last_edit/86400)) %>%
+  select(gender_group, pageviews, revisions, editors, watchers, days_last_edit) %>%
+  na.omit() %>%
+  pivot_longer(2:6) %>%
+  mutate(name = case_when(name == "days_last_edit" ~ "Days since \nlast edit",
+                          name == "pageviews" ~ "Pageviews",
+                          name == "editors" ~ "Editors",
+                          name == "revisions" ~ "Revisions",
+                          name == "watchers" ~ "Watchers"
+                          )) %>%
+  filter(!is.na(value)) %>%
+  group_by(gender_group, name) %>%
+  mutate(average=round(mean(value),2))
 
-assessment_by_gender %>% 
-  mutate(across(where(is.numeric), \(x) round(x, 1) %>% prettyNum())) %>% 
-  mutate(`Good/Featured` = paste0(`Good/Featured`, "%")) %>% 
-  knitr::kable()
+page_health_average <- data_page_health %>%
+  select(-value) %>%
+  group_by_all() %>%
+  summarise()
+
+ggplot(data_page_health, aes(value, fill = gender_group))+
+  geom_density(alpha=.3, aes(fill=gender_group, colour=gender_group), show.legend = FALSE)+
+  facet_grid(name~gender_group, switch = "y")+
+  scale_x_log10(labels = scales::comma)+
+  scale_y_continuous(n.breaks=3, position = "right")+
+  scale_fill_manual(values = gender_colour)+
+  scale_colour_manual(values = gender_colour)+
+  annotate("text",x=9000, y=1.8,label= "mean:", size=3)+
+  geom_text(data=page_health_average,aes(x=9000, y=1.3,label= page_health_average$average),size=4)+
+  labs(x="Page Metrics (log scale)",
+       caption = "Wikipedia Biographies with page statistics and gender label on Wikidata n=83,000")+
+  theme(axis.title.y = element_blank())
 ```
-@fig-assessment-data-by-gender reveals a stark contrast between readers and editors of the encylopaedia. Editors spend roughly equal effort on the `Male` and `Female` biographies. The number of revisions for each biography, the number of editors, and the time elapsed since last edit are all similar. The result is that Wikipedia's editors expend a roughly `r assessment_by_gender[3 , 2] %/% assessment_by_gender[2,2]` times the effort maintaining `Male` biographies on Wikipedia than `Female` ones. Readers of the encyclopaedia, however, have different priorities. Although view biographies of `Male` Australians more often than `Female`, an individual `Female` biography can expect to be viewed roughly `r (assessment_by_gender[2,3] / assessment_by_gender[3,3]) %>% round(1)` times more often than any given biography of a `Male` Australian.
 
-Biographies of `Trans, Non-Binary or Intersex` Australians, meanwhile, receive a great deal of attention from both editors and readers compared to biographies in the other groups. Given there are only `r assessment_by_gender[1,2]` biographies in this group, the numbers are difficult to compare. Editors probably pay extra attention to these pages because they are more prone to vandalism by internet trolls. There would likely be subsets of the `Male` and `Female` pages at risk of similar vandalism, which would have a similar pageview and edit profile. It is nonetheless sadly predictable that biographies of `Trans, Non-Binary or Intersex` Australians should have such high page activity on Wikipedia today.
+@fig-gender-page-health reveals a stark contrast between readers and editors of the encylopaedia. **TODO: Explain new chart.**
 
-In conclusion, it seems that the gender gap on Australian Wikipedia is wide, and is not currently narrowing. Despite the under-representation of women in the encyclopaedia, editors appear to devote equal attentions both to `Male` and `Female` biographies. The number of non-cisgender biographies appears to be very small—though it is possible that many non-cisgender Australians have fallen into the `Male` and `Female` groups in our analysis due to the crude categorisation method. This small group of non-cisgender biographies receieve a great deal of attention. The most likely reason would appear to be vandalism, though we have not investigated this hypothesis. Wikipedia appears to reflect aspects of Australian gender culture, though the gender gap is probably inflated by the encyclopaedia's strong focus on sport and entertainment, which are highly gendered even by comparison to other fields of social endeavour. This gender gap is reflected in the encyclopaedia's language as well as in the sheer number of articles and editors' activities upon them. It appears likely that Wikipedia is behind Australian society generally in its representation of women, given that biographies of `Female` Australians are so much more likely to be viewed than `Male` biographies. If more `Female` Australians were represented in the encylopaedia, would this ratio change? If the number of `Male` and `Female` articles were equal, would readers still prefer to read `Female` Australians' biographies, or would their average interest decline as the total increased? At this point, we can only speculate.
+In conclusion, it seems that the gender gap on Australian Wikipedia is wide, and is not currently narrowing. Despite the under-representation of women in the encyclopaedia, editors appear to devote equal attentions both to `male` and `female` biographies. The number of non-cisgender biographies appears to be very small—though it is possible that many non-cisgender Australians have fallen into the `male` and `female` groups in our analysis due to the crude categorisation method. This small group of non-cisgender biographies receieve a great deal of attention. The most likely reason would appear to be vandalism, though we have not investigated this hypothesis. Wikipedia appears to reflect aspects of Australian gender culture, though the gender gap is probably inflated by the encyclopaedia's strong focus on sport and entertainment, which are highly gendered even by comparison to other fields of social endeavour. This gender gap is reflected in the encyclopaedia's language as well as in the sheer number of articles and editors' activities upon them. It appears likely that Wikipedia is behind Australian society generally in its representation of women, given that biographies of `female` Australians are so much more likely to be viewed than `male` biographies. If more `female` Australians were represented in the encylopaedia, would this ratio change? If the number of `male` and `female` articles were equal, would readers still prefer to read `female` Australians' biographies, or would their average interest decline as the total increased? At this point, we can only speculate.
 
 ### Indigeneity
 
@@ -609,8 +524,7 @@ category_indigenous_pageids <- full_graph %>%
   attr("names", exact = TRUE) %>%
   as.integer()
 
-indigenous_prop <- full_dataset %>% 
-  filter(is_human, dataset != "wikidata") %>% 
+indigenous_prop <- dataset %>% 
   mutate(indigenous = pageid %in% category_indigenous_pageids) %>% 
   mutate(created_at = as_date(created_at)) %>% 
   arrange(created_at) %>% 
@@ -627,7 +541,7 @@ indigenous_prop <- full_dataset %>%
     )
 ```
 
-Nonetheless, we can use the category graph to estimate the number of biographies of Indigenous Australians in Wikipedia. @fig-indigenous-growth-wikipedia suggests that in recent years, Wikipedians may have begun to address the representation gap between Indigenous and settler Australians. @fig-indigenous-growth-wikipedia shows the proportaion of biographies under `Category:Australian people of Indigenous Australian descent` as a proportion of all biographies in `Category:Australian people`. The representation gap for Indigenous Australians is not so stark as the representation gap for non-male Australians. According to the Australian Census, the number of Indigenous Australians [grew from 2.5% of Australia's population to 3.2% between 2011 and 2021.](https://www.abs.gov.au/statistics/people/people-and-communities/snapshot-australia/2021#aboriginal-and-torres-strait-islander-communities). In our estimate, the proportion of Indigenous biographies in `Category:Australian people`, went from `r indigenous_prop %>% filter(created_at == date("2011-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2011 to `r indigenous_prop %>% filter(created_at == date("2021-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2021. At the time of our data collection, the proportion had risen again to `r indigenous_prop %>% slice_tail(n = 1) %>% pull(indig_prop) %>% round(4) * 100`%. Although comparison with the census would suggest that Wikipedia under-represents Indigenous Australians, the representation gap is currently narrowing.
+Nonetheless, we can use the category graph to estimate the number of biographies of Indigenous Australians in Wikipedia. @fig-indigenous-growth-wikipedia suggests that in recent years, Wikipedians may have begun to address the representation gap between Indigenous and settler Australians. @fig-indigenous-growth-wikipedia shows the proportion of biographies in our dataset that fall within `Category:Indigenous Australian people`. The representation gap for Indigenous Australians is not so stark as the representation gap for non-male Australians. According to the Australian Census, the number of Indigenous Australians [grew from 2.5% of Australia's population to 3.2% between 2011 and 2021](https://www.abs.gov.au/statistics/people/people-and-communities/snapshot-australia/2021#aboriginal-and-torres-strait-islander-communities). In our estimate, the proportion of Indigenous biographies in `Category:Australian people`, went from `r indigenous_prop %>% filter(created_at == date("2011-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2011 to `r indigenous_prop %>% filter(created_at == date("2021-01-01")) %>% pull(indig_prop) %>% round(4) * 100`% on January 1 2021. At the time of our data collection, the proportion had risen again to `r indigenous_prop %>% slice_tail(n = 1) %>% pull(indig_prop) %>% round(4) * 100`%. Although comparison with the census would suggest that Wikipedia under-represents Indigenous Australians, the representation gap is currently narrowing.
 
 ```{r warning=FALSE}
 #| label: fig-indigenous-growth-wikipedia
@@ -643,22 +557,134 @@ indigenous_prop %>%
   scale_y_continuous(labels = scales::percent)
 ```
 
-
-The situation in Wikidata is made simple by the fact that it has no system for ethnic or national classification. There are two main markers of indigenity for Australians in Wikidata:
-
-1. A person's 'description' may mention their indigeneity. For example, [Bennelong](https://www.wikidata.org/w/index.php?title=Q817828&oldid=1617736683) is described as an 'Eora interlocutor with the British in Australia and the United Kingdom'. To obtain an estimate of Indigenous Australians in the Wikidata data, we have used the crude method of seraching for known keywords, including 'indigneous', 'aboriginal' and 'eora', then scanning the results by eye to exclude false positives (for example [Judith Wright](), who is described as an 'Indigenous rights activist' on Wikidata). **TODO: Kelly, I think we need to do this again using the additional 18000 records from Category:Australian People**
-2. A person may be linked to a record in the [Indigenous Australia](https://ia.anu.edu.au/) database ([P9246](https://www.wikidata.org/wiki/Property:P9246)). At the time of writing, the Indigenous Australia database contains [973 entries](https://ia.anu.edu.au/biographies/name/) for Indigenous Australians. Of these 973, `r item_by_source %>% filter(source == "indigenous_aus") %>% nrow()` have been linked to a Wikidata item.
+We also attempted to estimate the number of Indigenous Australian biographies in Wikipedia using Wikidata, but Wikidata does not represent the indigeity of people in a structured way. Sometimes Wikidata may indicate that a person is indigenous in their description. For example, Bennelong's Wikidata record describes him as an "[Eora interlocutor with the British in Australia and the Unitied Kingdom](https://www.wikidata.org/wiki/Q817828)." Wikidata can also indicate that a person is an Australian Indigenous person by providing the person's ID in the [Indigenous Australia](https://ia.anu.edu.au/) database. At the time of writing, `r item_by_source %>% filter(source == "indigenous_aus") %>% nrow()` people have an Indigenous Australia ID in Wikidata. In the end, it seems that Wikipedia's category system provides the most reliable method for estimating the representation of Indigenous people in Wikipedia.
 
 ### Historical period
 
-- size in bytes
-- pageviews
-- article ratings
-- number of edits
+```{r}
+data_dob <- dataset %>%
+  mutate(yob = year(dob)) %>%
+  filter(!is.na(yob)) %>%
+  mutate(dec_ob = floor_date(dob, years(10))) %>%
+  group_by(dec_ob) %>%
+  tally()
 
-*TODO*: Dig into category graph to explore gender and indigeneity.
+n_with_dob <- dataset %>% filter(!is.na(dob)) %>% nrow() %>% prettyNum(",")
+```
+
+The final aspect of human diversity we consider is historical period. How are people from different periods in Australia's history represented in the encyclopaedia? To estimate this, we rely on date of birth data from Wikidata. Wikidata records a date of birth for `r n_with_dob` of the articles in our dataset. This data is displayed in @fig-page-creation-by-decade-of-birth, which shows the number of biographies in the dataset according to the decade in which the person was born.
+
+```{r}
+#| label: fig-page-creation-by-decade-of-birth
+#| fig-cap: The historical distribution of Australian biographies on Wikipedia reflects the historical growth of colonial society
+chart_3 <- ggplot(data_dob, aes(dec_ob, n)) +
+  geom_col(fill="darkolivegreen") +
+  scale_y_continuous(
+    labels = scales::comma,
+    limits = c(0, 8000), 
+    breaks = c(0, 2000, 4000, 6000, 8000)
+    ) +
+  labs(
+    x = "Decade of Birth",
+    y = "Wikipedia Biography Count",
+    caption = glue::glue("Wikipedia Biographies with recorded date of birth on Wikidata n = {n_with_dob}")
+    )
+
+chart_3
+```
+
+@fig-page-creation-by-decade-of-birth displays the obvious colonial bias in the dataset. There are very few biographies of any persons prior to British colonisation of Australia. This is partly a product of our focus on biography. There is very little biographical data available about individual persons living in Australia prior to 1788. But this colonial bias also represents a darker side of Australian history. In the first half of the Nineteenth Century, the majority of Australia's population was probably indigenous. @butlin_forming_1994 estimates that that colonial population only overtook the indigenous population in the 1840s. According to his estimates, the population of Australia hovered around 600,000 from around 1800 until the 1840s, because the number of new migrants into the colony was roughly equal to the decline of the indigenous population due British depradations [-@butlin_forming_1994, p. 212]. In @fig-page-creation-by-decade-of-birth, this history is obscured. A naive interpreter of the figure might assume that Australia's population grew continuously from the British invasion of 1788 until the present. In fact, there was a sharp decline in Australia's population in the first two decades of settlement, followed by a period of relative stagnation.
+
+```{r}
+abs_pop_data <- file.path(DATA_DIR, "3105065001ds0001_2019.xls") %>% 
+  readxl::read_xls(sheet = 6, range = "B37:HU37", col_names = as.character(1788:2015)) %>% 
+  pivot_longer(cols = everything(), names_to = "year", values_to = "pop") %>% 
+  mutate(
+    year = str_c(year, "01"),
+    year = ym(year),
+    decade = floor_date(year, years(10))
+  ) %>% 
+  group_by(decade) %>% 
+  summarise(pop = sum(pop))
+
+comp_data <- abs_pop_data %>% 
+  left_join(data_dob, by = join_by(decade == dec_ob)) %>% 
+  mutate(prop = n/pop)
+```
+
+We can conclude that Wikipedia's Australian biographies broadly reflect the growth of colonial society in Australia since 1788. How closely does Wikipedia reflect this growth? @fig-comp-wiki-abs compares our dataset to historical population growth figures from the @australian_bureau_of_statistics_historical_2016. This data records the growth of colonial society, because Indigenous Australians were excluded from the census until 1961. From this data, we calculate the colonial population growth for each decade from the 1780s to the 2010s. For example, in the 1810s, Australia's population grew by `r filter(abs_pop_data, decade == date("1810-01-01")) %>% pull(pop) %>% prettyNum(",")` people. We then find the number of Wikipedia biographies for people whose date of birth lies in this decade, as in @fig-page-creation-by-decade-of-birth, and calculate this as a percentage of the Australian population growth in that decade. For example, there are `r filter(data_dob, dec_ob == date("1810-01-01")) %>% pull(n) %>% prettyNum(",")` biographies for people born in the 1810s in our dataset, which is equal to `r filter(comp_data, decade == date("1810-01-01")) %>% pull(prop) %>% scales::percent()` of the colonial population growth for that decade. The two datasets are not perfectly comparable, because our data does not account for when a person migrated to Australia, but @fig-comp-wiki-abs nonetheless clearly shows the historical bias of Wikipedia's Australian biographies. There are many more articles per person in the early years of the colony compared to later on in Australia's colonial history. Since the 1850s, the historical coverage of Australian Wikipedia biographies has been more equal.
+
+```{r}
+#| label: fig-comp-wiki-abs
+#| fig-cap: Wikipedia's biographies are strongly biased towards Australia's early colonial history. 
+comp_data %>% 
+  ggplot(aes(x = decade, y = prop)) +
+  geom_col(fill="darkolivegreen") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    x = "Decade (of birth or migration)",
+    y = "Wikipedia biographies as percentage of historical population growth",
+    caption = "Wikipedia biographies as percentage of Australia's population growth"
+  )
+```
 
 ## Conclusion: beyond bias
 
-TODO
+This study reveals the importance of examining Wikipedia on a national level
+
+## Appendix: Data
+
+The code to generate this report is contained in two files in the [wikihistories reports Github repository](https://github.com/wikihistories/reports):
+
+- [who-counts-lib.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-lib.R) contains all the functions to import the data
+- [who-counts-data.R](https://github.com/wikihistories/reports/tree/main/scripts/who-counts-data.R) combines the functions to import the full dataset. This script can be run with `USE_CACHE <- TRUE` to import the data from the saved files for this report, or `USE_CACHE <- FALSE` to regenerate the data afresh from Wikipedia and Wikidata
+
+All the source code for the analysis is included in this report, and can be viewed on Github at [who-counts.qmd](https://github.com/wikihistories/reports/tree/main/who-counts.qmd).
+
+### Wikipedia's category system
+
+From its inception, Wikipedia has provided a category system to '[group together pages on similar subjects](https://en.wikipedia.org/w/index.php?title=Help:Category&oldid=1174603713)', and provide useful '[navigational links to pages in Wikipedia](https://en.wikipedia.org/w/index.php?title=Wikipedia:Categorization&oldid=1181497476)'. Wikipedia's categories form a vast and complex tree. A category may contain infintely many subcategories, and those subcategories may themselves belong to infinitely many supercategories. Nearly all Wikipedia articles are categorised, partly due to the work of a [task group and patrol](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Categories/uncategorized) whose job is to hunt down any uncategorised articles.
+
+In this context, the first place we looked for biographies of Australian people on Wikipedia was [Category:Australian people](https://en.wikipedia.org/wiki/Category:Australian_people), which 'lists notable Australian-born people, or people who identify themselves as Australian'. This category contains `r full_dataset %>% filter(dataset != "wikidata", ns == 0) %>% nrow() %>% prettyNum(",")` articles, but not all are biographies. In the first case, there are many articles about groups of Australian people, e.g. [Aboriginal Victorians](https://en.wikipedia.org/wiki/Aboriginal_Victorians) or [Australian Chamber Orchestra](https://en.wikipedia.org/wiki/Australian_Chamber_Orchestra). In the second case, `Category:Australian people` is a vast category, with `r full_dataset %>% filter(type == "subcat") %>% nrow() %>% prettyNum(",")` subcategories. In the trackless expanse of these subcategories, some unexpected articles make their way into `Category:Australian people`, such as the classic glam rock album [*Living in the '70s*](https://en.wikipedia.org/wiki/Living_in_the_70%27s). We explain the 'eccentricity' of the category graph when we analyse Wikipedia's definition of [Australianness] below. For now, we simply describe our method for filtering all the non-biographies out of `Category:Australian people`.
+
+To filter out the non-biographies, we rely on Wikidata. We fetch the Wikidata item for each article in `Category:Australian people`, and check to see if it has property [P31](https://www.wikidata.org/wiki/Property:P31)([Q5](https://www.wikidata.org/wiki/Q5)), 'instance of:human'. While the possession of P31(Q5) is not a perfect signal that an article is a biography, we find that this criterion filters out nearly all the non-biographies. Applying this criterion, we identify `r full_dataset %>% filter(is_human, dataset != "wikidata") %>% nrow() %>% prettyNum(",")` biographical articles in `Category:Australian people`.
+
+### Wikidata's query service
+
+Wikidata provides an alternative method for finding Australian biographies: its [query service](https://query.wikidata.org/). Using the query service, it is possible to search for Wikidata items that possess given properties. If these Wikidata items have a corresponding Wikipedia page, the link can be automatically retrieved.
+
+It is more complex to find the 'Australians' in Wikidata than in Wikipedia. Wikipedia provides a single master-category for 'Australian people'. Wikidata does not. Instead, Wikidata can mark a person as 'Australian' in two main ways:
+
+1. It can explicitly link a person to Australia ([Q408](https://www.wikidata.org/wiki/Q408)) through properties such as citizenship ([P27](https://www.wikidata.org/wiki/Property:P27)), place of birth ([P19](https://www.wikidata.org/wiki/Property:P19)) or place of death ([P570](https://www.wikidata.org/wiki/Property:P570)); or
+2. It can implicitly link a person to Australia by identifying them in a  database of Australians, such as the Dictionary of Australian Biography ([P1907](https://www.wikidata.org/wiki/Property:P1907)), Indigenous Australia ([P9246](https://www.wikidata.org/wiki/Property:P9246)), or Convict Records of Australia ([P9919](https://www.wikidata.org/wiki/Property:P9919))
+
+We queried Wikidata by `r FILTER_PROPERTIES %>% nrow() %>% prettyNum(",")` such properties suggesting Australianness. Using these properties, we were able to identify `r full_dataset %>% filter(dataset != "category_aus") %>% nrow() %>% prettyNum(",")` Wikidata items representing Australian people. Of these Wikidata items, `r full_dataset %>% filter(dataset != "category_aus", on_english_wikipedia) %>% nrow() %>% prettyNum(",")` items had a corresponding Wikipedia article.
+
+The two datasets overlap substantially, but not completely (@fig-biography-overlap-table). There are thousands of biographical articles in `Category:Australian people` whose Wikidata items do not clearly identify them as 'Australian'. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do *not* appear in `Category:Australian people`, even though the Wikidata item has P31(Q5), 'instance of:human', and also contains one or more 'markers of Australianness'. 
+
+```{r}
+#| label: fig-biography-overlap-table
+#| fig-cap: There is substantial, but incomplete overlap between the biographies in the two datasets
+full_dataset %>% 
+  filter(is_human, on_english_wikipedia) %>% 
+  count(dataset) %>% 
+  arrange(n) %>% 
+  transmute(
+    Dataset = case_when(
+      dataset == "both" ~ "Person found in both datasets",
+      dataset == "wikidata" ~ "Person only found by querying Wikidata",
+      dataset == "category_aus" ~ "Person only found in `Category:Australian people`"
+    ),
+    `Number of Articles` = n
+  ) %>% 
+  knitr::kable()
+```
+
+### Metadata
+
+We combine our two datasets into a single larger dataset of `r dataset %>% nrow() %>% prettyNum(",")` articles. To enable analysis of these articles, we then enrich them with three kinds of metadata:
+
+1. Using the Wikidata Action API, we find each person's dates, birthplace and gender.
+2. Using the Wikipedia Action API, we download the introduction of each article for text analysis.
+3. Using the XTools API, we download page usage data for each page, including the page creation date, assessment class (e.g. Good, Featured), pageviews and number of edits.
 
