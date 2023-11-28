@@ -78,17 +78,19 @@ category_url <- function(category, collapse = " → ") {
 }
 
 # GGplot theme
-old_theme <- theme_update(
-  legend.background = element_rect(colour="grey70", fill=alpha("white", .8), linewidth = 0.3),
-  axis.ticks = element_line(colour = "white", linewidth = 0.2),
-  panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
-  panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
-  panel.grid.minor.y = element_blank(),
-  panel.background = element_blank(),
-  axis.title = element_text(size=10),
-  plot.caption = element_text(hjust = 0.5),
-  legend.key = element_blank()
-)
+wikihistories_theme <- theme_minimal() +
+  theme(
+    legend.background = element_rect(colour="grey70", fill=alpha("white", .8), linewidth = 0.3),
+    axis.ticks = element_line(colour = "white", linewidth = 0.2),
+    panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
+    panel.grid.minor.x = element_line(colour = "grey70", linewidth = 0.1),
+    panel.grid.minor.y = element_blank(),
+    panel.background = element_blank(),
+    axis.title = element_text(size=10),
+    plot.caption = element_text(hjust = 0.5),
+    legend.key = element_blank()
+  )
+original_theme <- theme_set(wikihistories_theme)
 
 gender_colour <- c("mediumpurple", "darkturquoise", "coral2")
 bi_colour <- c( "gold2", "darkolivegreen4")
@@ -134,10 +136,9 @@ cum_page %>%
     )
 ```
 
+Our [Analysis] of the data unfolds in four main sections. In [Australianness], we consider what it means for a person to be 'Australian' in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia's people, along the axes of [Gender], [Indigeneity] and [Historical period]. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe that the encyclopaedia is highly conservative: generally, Wikipedia assumes that an 'Australian' is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g. the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g. the gender gap).
 
-Our [Analysis] of the data unfolds in four main sections. In [Australianness], we consider what it means for a person to be 'Australian' in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia's people, along the axes of [Gender], [Indigeneity] and [Historical period]. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe considerable that the encyclopaedia is highly conservative: generally, Wikipedia assumes that an 'Australian' is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g. the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g. the gender gap).
-
-In [Conclusion: beyond bias], we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of 'systemic bias', we suggest that Wikipedians draw attention to the *representational multiplicity* of Wikipedia, so that visitors and editors can become more aware of the multiple definitions of 'Australianness' across the Wikiverse.
+In [Conclusion], we propose some guidelines for future research into Wikipedia's systemic biases. It is essential to approach the question of bias on a local (national) level. Aspects of representation such as gender, indigeneity and historical period have very different meanings in different national contexts.
 
 ![How do Wikipedians construct Australia online?](assets/objective-2.jpg)
 
@@ -259,7 +260,7 @@ The AusStage database, meanwhile, [records any person who 'contributed' in some 
 
 ### Gender
 
-Although it is impossible to provide a unitary definition for 'Australian' in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as 'Australian' in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of [Indigenous Australians and Torres Strait Islander peoples](#indigeneity) in the next section.
+Although it is impossible to provide a unitary definition for 'Australian' in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as 'Australian' in some way across the encyclopaedia and database. What is the composition of this list? We begin with gender.
 
 To determine the gender of a person in our dataset, we rely on the Wikidata property [P21:Sex or gender](https://www.wikidata.org/wiki/Property:P21). In our dataset, nearly all records have a sex or gender recorded (@fig-genders-in-dataset). Only `r dataset %>% filter(is.na(gender)) %>% nrow() %>% prettyNum(",")` records lack a `P21` statement about their sex or gender.
 
@@ -336,41 +337,63 @@ Not only are male, female and LGBTQI+ Australians represented in different numbe
 ```{r}
 #| label: fig-intro-words-by-gender
 #| fig-cap: Australian men's gender is less explicitly marked in Wikipedia; non-Male Australians are more likely to be activists and entertainers.
-intro_tf_idf <- extracts %>%
-  left_join(gender_data, by = "pageid") %>% 
-  tidytext::unnest_tokens(token, extract) %>% 
-  count(gender, token) %>% 
-  drop_na() %>% 
+gender_extracts <- dataset %>%
+  select(pageid, gender) %>%
+  left_join(extracts, by="pageid") %>%
+  filter(!is.na(ns)) %>%
+  select(gender, extract) %>% 
+  mutate(gender_group = case_when(gender == "male" ~ "Male \nn=",
+                                  gender == "female" ~ "Female \nn=",
+                                  TRUE~ "Trans, Non-Binary or Intersex \nn=")) %>% 
+  group_by(gender_group) %>% 
+  mutate(gender_group = glue::glue("{gender_group}{prettyNum(n(), ',')}")) %>% 
+  ungroup()
+
+gender_words <- gender_extracts %>%
+  tidytext::unnest_tokens(word, extract) %>%
+  filter(!str_detect(word, "\\d"),
+          !word %in% c(tidytext::stop_words$word, "australia", "australian", "born")) %>%
+  count(gender_group, word, sort = TRUE)
+
+total_words <- gender_words %>%
+  group_by(gender_group) %>%
+  summarise(total =sum(n))
+
+gender_words <- left_join(gender_words, total_words)
+
+gender_words_tf_idf <- gender_words %>%
+  # Rather than using tidytext's tf_idf routines, we apply our own formula.
+  # We were thus able to add one to the denominator of the tf_idf calculation,
+  # to normalise it in this context were there are only three 'documents' in
+  # the collection (the tokens for each of the three gender_groups)
   mutate(
     total = sum(n),
     tf = n/total,
-    .by = gender
-    ) %>% 
-  filter(
-    !str_detect(token, "\\d"),
-    !token %in% c(tidytext::stop_words$word, "australia", "australian", "born")
-    ) %>% 
-  # Add one to the denominator for normalisation. This is a small corpus, when
-  # each gender is considered as a single document!
-  mutate(idf = -log(n() / 4), .by = token) %>%
-  mutate(tf_idf = tf / idf, .by = gender)
-  
-ordered_tf_idf <- intro_tf_idf %>% 
-  group_by(gender) %>% 
-  arrange(desc(tf_idf)) %>% 
-  slice_head(n = 20) %>% 
-  # Reorder tokens according to within-group tf_idf score
-  mutate(
-    ordered = paste0(gender, token) %>% forcats::fct_inorder() %>% forcats::fct_rev()
-  )
+    .by = gender_group
+  ) %>%
+  mutate(idf = -log(n() / 4), .by = word) %>%
+  mutate(tf_idf = tf / idf, .by = gender_group) %>%
+  select(-total) %>%
+  arrange(desc(tf_idf)) %>%
+  group_by(gender_group) %>%
+  slice_head(n=20)
 
-ordered_tf_idf %>% 
-  ggplot(aes(tf_idf, ordered, fill=gender)) +
-  geom_col(show.legend = FALSE)+
-  facet_wrap(~gender, scales="free_y") +
-  scale_y_discrete(labels = setNames(ordered_tf_idf$token, ordered_tf_idf$ordered)) +
-  scale_fill_discrete(gender_colour) +
-  labs(x="tf_idf", y=NULL)
+gender_words_tf_idf_reorder <- gender_words_tf_idf %>%
+  mutate(word = tidytext::reorder_within(word, n, gender_group))
+
+chart_7 <- ggplot(gender_words_tf_idf_reorder, aes(tf_idf, fct_reorder(word, tf_idf), fill=gender_group)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~gender_group, scales="free") +
+  tidytext::scale_y_reordered() +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_fill_manual(values=gender_colour, name = "Gender") +
+  labs(
+    y = NULL,
+    x = "Term Frequency - Inverse Document Frequency (TF-IDF)",
+    caption = glue::glue("Wikipedia Biographies with extracted introduction and gender label on Wikidata n={prettyNum(nrow(gender_extracts), ',')}")
+    )
+
+chart_7
   
 ```
 @fig-intro-words-by-gender discloses two significant patterns:
@@ -382,52 +405,48 @@ The data support the views of @weathington_queer_2023. In Australian Wikipedia, 
 
 Wikipedia's defaulting to maleness probably reflects the linguistic habits of broader Australian society, but it could also be exacerbated by the encylopaedia's obsession with sport and entertainment. Both sport and entertainment are highly gendered fields. Men and women compete in gendered competitions such as the soccer or cricket World Cups and receive gendered commendations such as Best Actress at the Academy Awards. While `male` Australians may dominate non-`male` Australians in fields such as politics, business and the arts, these fields are no so explicitly gendered. Sam Kerr may indeed be captain of the "women's national team," but it makes no sense to describe [Vanessa Hudson](https://en.wikipedia.org/wiki/Vanessa_Hudson_(executive)) as the CEO of a "women's corporation." Sport and entertainment are fields that reflect society's deepest-held and most immoveable convictions. Wikipedia's powerful focus on these fields may place the encyclopaedia behind other parts of Australia in the evolution of non-gendered language.
 
-Finally in this section, we consider the attention received by biographies in these three groups. Which Australians are the focus of editor activity, and which are of most interest to readers? We used the XTools API to download page usage statistics for articles in each group. @fig-gender-page-health compares a number of 'page health' statistics for each set of biographies. How often are the pages in each group visited, and how actively are they maintained?  
+@fig-assessment-by-gender suggests a silver lining to this story of the gender gap. Although `male` Australians continue to greatly outnumber `female` and `trans, non-binary or intersex` on Wikipedia, many of the `male` biographies are of low quality. In fact, if we consider only C-Class articles and above, the proportion of `female` biographies rises from `r dataset %>% count(gender) %>% mutate(prop = n/sum(n)) %>% filter(gender == "female") %>% pull(prop) %>% (scales::label_percent(0.1))()` to `r dataset %>% filter(class %in% c("FA", "A","GA", "B", "C")) %>% count(gender) %>% mutate(prop = n/sum(n)) %>% filter(gender == "female") %>% pull(prop) %>% (scales::label_percent(0.1))()`. It appears that editors have devoted considerably more effort to creating pages about men than about women or people of other genders, but that editors devote more effort on average to maintaining pages about non-`male` Australians.
 
 ```{r}
-#| label: fig-gender-page-health
-#| fig-cap: Editors and readers of Wikipedia appear to have different priorities when it comes to gender
-data_page_health <- dataset %>%
+#| label: fig-assessment-by-gender
+#| fig-cap: Page assessment glass by gender.
+data_quality <- dataset %>%
   filter(!is.na(gender)) %>%
-  mutate(gender_group = case_when(gender == "male" ~ "Male \nn=66,370",
-                                  gender == "female" ~ "Female \nn=16,558",
-                                  TRUE~ "Trans, Non-Binary or Intersex \nn=72")) %>%
-  mutate(days_last_edit = ceiling(secs_since_last_edit/86400)) %>%
-  select(gender_group, pageviews, revisions, editors, watchers, days_last_edit) %>%
-  na.omit() %>%
-  pivot_longer(2:6) %>%
-  mutate(name = case_when(name == "days_last_edit" ~ "Days since \nlast edit",
-                          name == "pageviews" ~ "Pageviews",
-                          name == "editors" ~ "Editors",
-                          name == "revisions" ~ "Revisions",
-                          name == "watchers" ~ "Watchers"
-                          )) %>%
-  filter(!is.na(value)) %>%
-  group_by(gender_group, name) %>%
-  mutate(average=round(mean(value),2))
+  filter(!is.na(class)) %>%
+  mutate(gender_group = case_when(gender == "male" ~ "Male\nn=",
+                                  gender == "female" ~ "Female\nn=",
+                                  TRUE~ "Trans, Non-Binary or Intersex\nn=")) %>%
+  group_by(gender_group) %>% 
+  mutate(gender_group = glue::glue("{gender_group}{prettyNum(n())}")) %>% 
+  group_by(gender_group, class) %>%
+  tally() %>%
+  mutate(prop=n/sum(n)) %>%
+  mutate(class_new = case_when(class == "FA" ~ "Featured Article",
+                               class == "A" ~ "A-Class",
+                               class == "GA" ~ "Good Article",
+                               class == "B" ~ "B-Class",
+                               class == "C" ~ "C-Class",
+                               class == "???" ~ "Not Classified",
+                               TRUE ~ as.character(class))) %>%
+  mutate(class_new = as_factor(class_new),
+         class_new = fct_relevel(class_new, c("Featured Article", "A-Class", "Good Article", "B-Class", "C-Class","Start",
+                                              "Stub","Not Classified", "Disambig",  "Redirect")),
+         class_new = fct_rev(class_new))
 
-page_health_average <- data_page_health %>%
-  select(-value) %>%
-  group_by_all() %>%
-  summarise()
 
-ggplot(data_page_health, aes(value, fill = gender_group))+
-  geom_density(alpha=.3, aes(fill=gender_group, colour=gender_group), show.legend = FALSE)+
-  facet_grid(name~gender_group, switch = "y")+
-  scale_x_log10(labels = scales::comma)+
-  scale_y_continuous(n.breaks=3, position = "right")+
-  scale_fill_manual(values = gender_colour)+
-  scale_colour_manual(values = gender_colour)+
-  annotate("text",x=9000, y=1.8,label= "mean:", size=3)+
-  geom_text(data=page_health_average,aes(x=9000, y=1.3,label= page_health_average$average),size=4)+
-  labs(x="Page Metrics (log scale)",
-       caption = "Wikipedia Biographies with page statistics and gender label on Wikidata n=83,000")+
-  theme(axis.title.y = element_blank())
+chart_10 <- ggplot(data_quality, aes(prop, class_new, fill=gender_group))+
+  geom_col(show.legend = FALSE)+
+  geom_text(aes(label=scales::percent(round(prop, digits = 3))), colour="black", size=3, hjust=-0.1)+
+  facet_wrap(~gender_group)+
+  labs(y=NULL,
+       x=NULL,
+       caption = "Wikipedia Biographies with content assessment category and gender label on Wikidata n=83,000")+
+  scale_fill_manual(values=gender_colour, name = "Gender")+
+  scale_x_continuous(limits = c(0, .75))+
+  theme(panel.grid.minor.x = element_blank())
+
+chart_10
 ```
-
-@fig-gender-page-health reveals a stark contrast between readers and editors of the encylopaedia. **TODO: Explain new chart.**
-
-In conclusion, it seems that the gender gap on Australian Wikipedia is wide, and is not currently narrowing. Despite the under-representation of women in the encyclopaedia, editors appear to devote equal attentions both to `male` and `female` biographies. The number of non-cisgender biographies appears to be very small—though it is possible that many non-cisgender Australians have fallen into the `male` and `female` groups in our analysis due to the crude categorisation method. This small group of non-cisgender biographies receieve a great deal of attention. The most likely reason would appear to be vandalism, though we have not investigated this hypothesis. Wikipedia appears to reflect aspects of Australian gender culture, though the gender gap is probably inflated by the encyclopaedia's strong focus on sport and entertainment, which are highly gendered even by comparison to other fields of social endeavour. This gender gap is reflected in the encyclopaedia's language as well as in the sheer number of articles and editors' activities upon them. It appears likely that Wikipedia is behind Australian society generally in its representation of women, given that biographies of `female` Australians are so much more likely to be viewed than `male` biographies. If more `female` Australians were represented in the encylopaedia, would this ratio change? If the number of `male` and `female` articles were equal, would readers still prefer to read `female` Australians' biographies, or would their average interest decline as the total increased? At this point, we can only speculate.
 
 ### Indigeneity
 
@@ -557,6 +576,8 @@ indigenous_prop %>%
   scale_y_continuous(labels = scales::percent)
 ```
 
+As for gender, 
+
 We also attempted to estimate the number of Indigenous Australian biographies in Wikipedia using Wikidata, but Wikidata does not represent the indigeity of people in a structured way. Sometimes Wikidata may indicate that a person is indigenous in their description. For example, Bennelong's Wikidata record describes him as an "[Eora interlocutor with the British in Australia and the Unitied Kingdom](https://www.wikidata.org/wiki/Q817828)." Wikidata can also indicate that a person is an Australian Indigenous person by providing the person's ID in the [Indigenous Australia](https://ia.anu.edu.au/) database. At the time of writing, `r item_by_source %>% filter(source == "indigenous_aus") %>% nrow()` people have an Indigenous Australia ID in Wikidata. In the end, it seems that Wikipedia's category system provides the most reliable method for estimating the representation of Indigenous people in Wikipedia.
 
 ### Historical period
@@ -628,9 +649,17 @@ comp_data %>%
   )
 ```
 
-## Conclusion: beyond bias
+## Conclusion
 
-This study reveals the importance of examining Wikipedia on a national level
+In the report above we’ve articulated how Wikipedia represents Australians according to multiple mechanisms for categorizing and defining Australianness in Wikipedia and Wikidata’s datasets and we’ve argued that Wikipedia’s datafied representations highlight the problems of taking any overly simplistic view of Wikipedia’s biases. The majority of quantitative studies of Wikipedia’s biases examine its trajectories in terms of global trends – for example, in the representation of women and men, Westerners and non-Westerners. And yet, what we’ve shown in this report is that in taking a national perspective we recognize the contingencies and contexts that significantly enhance such analyses. 
+ 
+We hope, then, that this study reveals the importance of examining Wikipedia at a local (national) level. Only by thinking about and with the container of the nation, can the specificities, paradoxes, and discontinuities of Wikipedia’s representation become evident. At a national level, we can start to understand how Wikipedia has represented women over time and how such representations compare to global trends. At a national level, we can ask new questions about people in ethnic categories that are particularly discriminated against and question whether the categorization norms are appropriate given alternative models that other nations have followed in relation to similar categories. At a national level, we can examine historical biases in the context of our knowledge about stories that the nation tells itself about who it is and where it comes from.
+ 
+In this the methods of the discipline of history are helpful. Contingency, embeddedness, and human agency are central to the methods of history. Characteristics like identity or notability are not eternal, static, or natural. Although institutions such as nation states are hugely powerful and condition the experiences and behaviour of people, humans crucially have the power to act on and in the world. But they do so embedded in contexts that are always specific, both temporally and geographically. Moreover, historians, approach people in the midst of things: living in changing times and acting as best they can with the tools they have available to them [@pietsch_here_2020].
+ 
+A set of universal recommendations or a method applicable to all national contexts would not only be inappropriate for this work, but would also serve to reproduce some of the effects that this report has identified. The alignment of power that produces the nation state and its reach in any one context may be similar to other contexts, but it will not be the same. The every-changing frontiers of legislation, history and identification will produce biographical datasets with trends that are specific and unreproducible.
+ 
+What this study can offer is a set of methodological principles for thinking about how Wikipedia represents the nation over time. Rather than simply counting people with the most popular or prominent categories, we argue that is critical to also examine the semantics of the category structure itself. How might the dataset shift and morph depending on different semantic terms? How does the way in which categories are structured suggest a particular perspective about national identity? How is what the nation values reflected in the characteristics of those who tend to have a Wikipedia page?
 
 ## Appendix: Data
 
