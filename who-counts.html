@@ -443,7 +443,7 @@ div.csl-indent {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-reports">    
         <li>
     <a class="dropdown-item" href="./who-counts.html" rel="" target="">
- <span class="dropdown-text">2023 | Who Counts as Australian?</span></a>
+ <span class="dropdown-text">2023 | How Australians are Represented in Wikipedia</span></a>
   </li>  
     </ul>
   </li>
@@ -488,13 +488,14 @@ div.csl-indent {
   <li><a href="#indigeneity" id="toc-indigeneity" class="nav-link" data-scroll-target="#indigeneity">Indigeneity</a></li>
   <li><a href="#historical-period" id="toc-historical-period" class="nav-link" data-scroll-target="#historical-period">Historical period</a></li>
   </ul></li>
-  <li><a href="#conclusion-beyond-bias" id="toc-conclusion-beyond-bias" class="nav-link" data-scroll-target="#conclusion-beyond-bias">Conclusion: beyond bias</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#appendix-data" id="toc-appendix-data" class="nav-link" data-scroll-target="#appendix-data">Appendix: Data</a>
   <ul class="collapse">
   <li><a href="#wikipedias-category-system" id="toc-wikipedias-category-system" class="nav-link" data-scroll-target="#wikipedias-category-system">Wikipedia’s category system</a></li>
   <li><a href="#wikidatas-query-service" id="toc-wikidatas-query-service" class="nav-link" data-scroll-target="#wikidatas-query-service">Wikidata’s query service</a></li>
   <li><a href="#metadata" id="toc-metadata" class="nav-link" data-scroll-target="#metadata">Metadata</a></li>
   </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="who-counts.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -580,13 +581,13 @@ div.csl-indent {
 <div id="fig-data-growth-over-time" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-data-growth-over-time-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: The number of Australian biographies has consistenly grown since the early days of Wikipedia</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: Number of articles in the Australian biographies dataset over time</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Our <a href="#analysis">Analysis</a> of the data unfolds in four main sections. In <a href="#australianness">Australianness</a>, we consider what it means for a person to be ‘Australian’ in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia’s people, along the axes of <a href="#gender">Gender</a>, <a href="#indigeneity">Indigeneity</a> and <a href="#historical-period">Historical period</a>. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe considerable that the encyclopaedia is highly conservative: generally, Wikipedia assumes that an ‘Australian’ is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g.&nbsp;the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g.&nbsp;the gender gap).</p>
-<p>In <a href="#conclusion-beyond-bias">Conclusion: beyond bias</a>, we make some suggestions about how Wikipedians might like to improve the representation of Australians in the encyclopaedia. As well as addressing the traditional problem of ‘systemic bias’, we suggest that Wikipedians draw attention to the <em>representational multiplicity</em> of Wikipedia, so that visitors and editors can become more aware of the multiple definitions of ‘Australianness’ across the Wikiverse.</p>
+<p>Our <a href="#analysis">Analysis</a> of the data unfolds in four main sections. In <a href="#australianness">Australianness</a>, we consider what it means for a person to be ‘Australian’ in Wikipedia. Where does the system draw the line(s) between Australians and non-Australians? We show that the system draws many different lines, which do not always conform with one another. In the subsequent sections of analysis, we consider how Wikipedia captures the diversity of Australia’s people, along the axes of <a href="#gender">Gender</a>, <a href="#indigeneity">Indigeneity</a> and <a href="#historical-period">Historical period</a>. We demonstrate that it is possible to make some generalisations about how Australians are represented in Wikipedia. In particular, we observe that the encyclopaedia is highly conservative: generally, Wikipedia assumes that an ‘Australian’ is a white cisgender male; only if a person departs from this norm are their racial or sexual characteristics explicitly described. While representation of some minority groups may be improving (e.g.&nbsp;the gap between Indigenous and settler Australians), other representation gaps remain tenacious (e.g.&nbsp;the gender gap).</p>
+<p>In <a href="#conclusion">Conclusion</a>, we propose some guidelines for future research into Wikipedia’s systemic biases. We show that it is possible to judge how well Wikipedia represents a certain group by counting pages, but that this method needs to be carefully planned and contextualised to account for local factors.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/objective-2.jpg" class="img-fluid figure-img"></p>
@@ -668,7 +669,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </section>
 <section id="gender" class="level3">
 <h3 class="anchored" data-anchor-id="gender">Gender</h3>
-<p>Although it is impossible to provide a unitary definition for ‘Australian’ in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as ‘Australian’ in some way across the encyclopaedia and database. What is the composition of this list? We first consider the gendered composition of the dataset, before turning to the representation of <a href="#indigeneity">Indigenous Australians and Torres Strait Islander peoples</a> in the next section.</p>
+<p>Although it is impossible to provide a unitary definition for ‘Australian’ in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as ‘Australian’ in some way across the encyclopaedia and database. What is the composition of this list? We begin with gender.</p>
 <p>To determine the gender of a person in our dataset, we rely on the Wikidata property <a href="https://www.wikidata.org/wiki/Property:P21">P21:Sex or gender</a>. In our dataset, nearly all records have a sex or gender recorded (<a href="#fig-genders-in-dataset">Figure&nbsp;4</a>). Only 6 records lack a <code>P21</code> statement about their sex or gender.</p>
 <div class="cell">
 <div id="fig-genders-in-dataset" class="quarto-figure quarto-figure-center anchored">
@@ -731,7 +732,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </tr>
 </tbody>
 </table>
-<figcaption class="figure-caption">Figure&nbsp;4: There are many labels for Australians’ sex or gender across Wikimedia databases</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;4: Gender breakdown of the Australian biographies dataset</figcaption>
 </figure>
 </div>
 </div>
@@ -742,7 +743,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <div id="fig-gender-by-page-creation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-gender-by-page-creation-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Biographies of Australian males continue to grow at least as fast as biographies of other Australians.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5: Growth of the Australian biographies dataset over time, broken down by gender</figcaption>
 </figure>
 </div>
 </div>
@@ -752,7 +753,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <div id="fig-gender-by-page-creation-log" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-gender-by-page-creation-log-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: It appears that Australian biographies are growing equally quickly in all three gender categories.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6: Growth of the Australian biographies dataset over time, broken down by gender, on a log scale to compare growth rates for each gender.</figcaption>
 </figure>
 </div>
 </div>
@@ -763,7 +764,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <div id="fig-intro-words-by-gender" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-intro-words-by-gender-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Australian men’s gender is less explicitly marked in Wikipedia; non-Male Australians are more likely to be activists and entertainers.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;7: Comapring the introductions of each article in the Australian biographies dataset, using the tf-idf metric to reveal the most distinctive words in the introductions for each gender grouping.</figcaption>
 </figure>
 </div>
 </div>
@@ -775,19 +776,17 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </ul>
 <p>The data support the views of <span class="citation" data-cites="weathington_queer_2023">Weathington and Brubaker (<a href="#ref-weathington_queer_2023" role="doc-biblioref">2023</a>)</span>. In Australian Wikipedia, maleness is the unmarked default. <code>Female</code> and especially <code>trans, non-binary or intersex</code> Australians are described using terms such as ‘women’ or ‘transgender’; there is no need to explicitly mention that a person is male or cisgender. In the case of <code>trans, non-binary or intersex</code> people, this explicit marking of gender goes a step further. Australians in this group are likely to be described as ‘activists’, presumbly on gender issues. Biographies of <code>trans, non-binary or intersex</code> Australians problematise gender in a manner that biographies of of <code>male</code> Australians do not.</p>
 <p>Wikipedia’s defaulting to maleness probably reflects the linguistic habits of broader Australian society, but it could also be exacerbated by the encylopaedia’s obsession with sport and entertainment. Both sport and entertainment are highly gendered fields. Men and women compete in gendered competitions such as the soccer or cricket World Cups and receive gendered commendations such as Best Actress at the Academy Awards. While <code>male</code> Australians may dominate non-<code>male</code> Australians in fields such as politics, business and the arts, these fields are no so explicitly gendered. Sam Kerr may indeed be captain of the “women’s national team,” but it makes no sense to describe <a href="https://en.wikipedia.org/wiki/Vanessa_Hudson_(executive)">Vanessa Hudson</a> as the CEO of a “women’s corporation.” Sport and entertainment are fields that reflect society’s deepest-held and most immoveable convictions. Wikipedia’s powerful focus on these fields may place the encyclopaedia behind other parts of Australia in the evolution of non-gendered language.</p>
-<p>Finally in this section, we consider the attention received by biographies in these three groups. Which Australians are the focus of editor activity, and which are of most interest to readers? We used the XTools API to download page usage statistics for articles in each group. <a href="#fig-gender-page-health">Figure&nbsp;8</a> compares a number of ‘page health’ statistics for each set of biographies. How often are the pages in each group visited, and how actively are they maintained?</p>
+<p><a href="#fig-assessment-by-gender">Figure&nbsp;8</a> suggests a silver lining to this story of the gender gap. Although <code>male</code> Australians continue to greatly outnumber <code>female</code> and <code>trans, non-binary or intersex</code> on Wikipedia, many of the <code>male</code> biographies are of low quality. In fact, if we consider only C-Class articles and above, the proportion of <code>female</code> biographies rises from 19.9% to 33.0%. It appears that editors have devoted considerably more effort to creating pages about men than about women or people of other genders, but that editors devote more effort on average to maintaining pages about non-<code>male</code> Australians.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gender-page-health" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-assessment-by-gender" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-gender-page-health-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Editors and readers of Wikipedia appear to have different priorities when it comes to gender</figcaption>
+<p><img src="who-counts_files/figure-html/fig-assessment-by-gender-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Page assessment class by gender in the Australian biographies dataset</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-gender-page-health">Figure&nbsp;8</a> reveals a stark contrast between readers and editors of the encylopaedia. <strong>TODO: Explain new chart.</strong></p>
-<p>In conclusion, it seems that the gender gap on Australian Wikipedia is wide, and is not currently narrowing. Despite the under-representation of women in the encyclopaedia, editors appear to devote equal attentions both to <code>male</code> and <code>female</code> biographies. The number of non-cisgender biographies appears to be very small—though it is possible that many non-cisgender Australians have fallen into the <code>male</code> and <code>female</code> groups in our analysis due to the crude categorisation method. This small group of non-cisgender biographies receieve a great deal of attention. The most likely reason would appear to be vandalism, though we have not investigated this hypothesis. Wikipedia appears to reflect aspects of Australian gender culture, though the gender gap is probably inflated by the encyclopaedia’s strong focus on sport and entertainment, which are highly gendered even by comparison to other fields of social endeavour. This gender gap is reflected in the encyclopaedia’s language as well as in the sheer number of articles and editors’ activities upon them. It appears likely that Wikipedia is behind Australian society generally in its representation of women, given that biographies of <code>female</code> Australians are so much more likely to be viewed than <code>male</code> biographies. If more <code>female</code> Australians were represented in the encylopaedia, would this ratio change? If the number of <code>male</code> and <code>female</code> articles were equal, would readers still prefer to read <code>female</code> Australians’ biographies, or would their average interest decline as the total increased? At this point, we can only speculate.</p>
 </section>
 <section id="indigeneity" class="level3">
 <h3 class="anchored" data-anchor-id="indigeneity">Indigeneity</h3>
@@ -811,7 +810,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <div id="fig-ethnic-categorisation-graph" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-ethnic-categorisation-graph-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;10: Wikipedia has a complex, settler-oriented method for categorising Australians by ethnic or national origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;10: Local portion of the category graph for <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people&amp;oldid=1148961840">Category:Australian people</a>, showing how <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a> fits into the system</figcaption>
 </figure>
 </div>
 </div>
@@ -827,43 +826,59 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <div id="fig-indigenous-growth-wikipedia" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-indigenous-growth-wikipedia-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11: In recent years, the proportion of Indigenous biographies may have started to grow.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;11: Proportion of Indigenous biographies in the Australian biographies dataset over time.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We also attempted to estimate the number of Indigenous Australian biographies in Wikipedia using Wikidata, but Wikidata does not represent the indigeity of people in a structured way. Sometimes Wikidata may indicate that a person is indigenous in their description. For example, Bennelong’s Wikidata record describes him as an “<a href="https://www.wikidata.org/wiki/Q817828">Eora interlocutor with the British in Australia and the Unitied Kingdom</a>.” Wikidata can also indicate that a person is an Australian Indigenous person by providing the person’s ID in the <a href="https://ia.anu.edu.au/">Indigenous Australia</a> database. At the time of writing, 149 people have an Indigenous Australia ID in Wikidata. In the end, it seems that Wikipedia’s category system provides the most reliable method for estimating the representation of Indigenous people in Wikipedia.</p>
+<p>As for gender <a href="#fig-assessment-by-gender">see&nbsp;8</a>, we can consider how indicators of page quality alter the picture. <a href="#fig-assessment-by-indigeneity">Figure&nbsp;12</a> does indeed suggest that the Aboriginal and Torres Strait Islander biographies repeat the same pattern as for gender. Although biographies of Aboriginal and Torres Strait Islander Australians are less numerous than biographies of other Australians, they are generally of higher quality according to Wikipedia’s own quality assessment standards. If we consider only articles of C-Class and above, then the proportion of Aboriginal and Torres Strait Islander biographies in the dataset climbs from 2.2% to 3.7%.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-assessment-by-indigeneity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="who-counts_files/figure-html/fig-assessment-by-indigeneity-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: Page assessment class broken down by membership of <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>These results do need to be taken with a grain of salt. As <span class="citation" data-cites="thorpe_wikimedia_2023">Thorpe, Sentance, and Booker (<a href="#ref-thorpe_wikimedia_2023" role="doc-biblioref">2023</a>)</span> show, Wikipedia’s articles on Aboriginal and Torres Strait Islander people are dominated by ‘settler narratives’, and typically rely on public-domain sources that reflect the values of Nineteenth-Century British colonists. Our analysis of Aboriginal and Torres Strait Islander representation in Wikipedia must therefore be supplemented with more detailed analysis of the sources and rhetoric of the articles themselves.</p>
 </section>
 <section id="historical-period" class="level3">
 <h3 class="anchored" data-anchor-id="historical-period">Historical period</h3>
-<p>The final aspect of human diversity we consider is historical period. How are people from different periods in Australia’s history represented in the encyclopaedia? To estimate this, we rely on date of birth data from Wikidata. Wikidata records a date of birth for 70,741 of the articles in our dataset. This data is displayed in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;12</a>, which shows the number of biographies in the dataset according to the decade in which the person was born.</p>
+<p>The final aspect of human diversity we consider is historical period. How are people from different periods in Australia’s history represented in the encyclopaedia? To estimate this, we rely on date of birth data from Wikidata. Wikidata records a date of birth for 70,741 of the articles in our dataset. This data is displayed in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, which shows the number of biographies in the dataset according to the decade in which the person was born.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-page-creation-by-decade-of-birth" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-page-creation-by-decade-of-birth-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12: The historical distribution of Australian biographies on Wikipedia reflects the historical growth of colonial society</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13: Articles in the Australian biographies dataset broken down by the decade in which the subject of the biography was born.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;12</a> displays the obvious colonial bias in the dataset. There are very few biographies of any persons prior to British colonisation of Australia. This is partly a product of our focus on biography. There is very little biographical data available about individual persons living in Australia prior to 1788. But this colonial bias also represents a darker side of Australian history. In the first half of the Nineteenth Century, the majority of Australia’s population was probably indigenous. <span class="citation" data-cites="butlin_forming_1994">Butlin (<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994</a>)</span> estimates that that colonial population only overtook the indigenous population in the 1840s. According to his estimates, the population of Australia hovered around 600,000 from around 1800 until the 1840s, because the number of new migrants into the colony was roughly equal to the decline of the indigenous population due British depradations <span class="citation" data-cites="butlin_forming_1994">(<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994, 212</a>)</span>. In <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;12</a>, this history is obscured. A naive interpreter of the figure might assume that Australia’s population grew continuously from the British invasion of 1788 until the present. In fact, there was a sharp decline in Australia’s population in the first two decades of settlement, followed by a period of relative stagnation.</p>
-<p>We can conclude that Wikipedia’s Australian biographies broadly reflect the growth of colonial society in Australia since 1788. How closely does Wikipedia reflect this growth? <a href="#fig-comp-wiki-abs">Figure&nbsp;13</a> compares our dataset to historical population growth figures from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>. This data records the growth of colonial society, because Indigenous Australians were excluded from the census until 1961. From this data, we calculate the colonial population growth for each decade from the 1780s to the 2010s. For example, in the 1810s, Australia’s population grew by 21,977 people. We then find the number of Wikipedia biographies for people whose date of birth lies in this decade, as in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;12</a>, and calculate this as a percentage of the Australian population growth in that decade. For example, there are 662 biographies for people born in the 1810s in our dataset, which is equal to 3% of the colonial population growth for that decade. The two datasets are not perfectly comparable, because our data does not account for when a person migrated to Australia, but <a href="#fig-comp-wiki-abs">Figure&nbsp;13</a> nonetheless clearly shows the historical bias of Wikipedia’s Australian biographies. There are many more articles per person in the early years of the colony compared to later on in Australia’s colonial history. Since the 1850s, the historical coverage of Australian Wikipedia biographies has been more equal.</p>
+<p><a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a> displays the obvious colonial bias in the dataset. There are very few biographies of any persons prior to British colonisation of Australia. This is partly a product of our focus on biography. There is very little biographical data available about individual persons living in Australia prior to 1788. But this colonial bias also represents a darker side of Australian history. In the first half of the Nineteenth Century, the majority of Australia’s population was probably indigenous. <span class="citation" data-cites="butlin_forming_1994">Butlin (<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994</a>)</span> estimates that that colonial population only overtook the indigenous population in the 1840s. According to his estimates, the population of Australia hovered around 600,000 from around 1800 until the 1840s, because the number of new migrants into the colony was roughly equal to the decline of the indigenous population due British depradations <span class="citation" data-cites="butlin_forming_1994">(<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994, 212</a>)</span>. In <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, this history is obscured. A naive interpreter of the figure might assume that Australia’s population grew continuously from the British invasion of 1788 until the present. In fact, there was a sharp decline in Australia’s population in the first two decades of settlement, followed by a period of relative stagnation.</p>
+<p>We can conclude that Wikipedia’s Australian biographies broadly reflect the growth of colonial society in Australia since 1788. How closely does Wikipedia reflect this growth? <a href="#fig-comp-wiki-abs">Figure&nbsp;14</a> compares our dataset to historical population growth figures from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>. This data records the growth of colonial society, because Indigenous Australians were excluded from the census until 1961. From this data, we calculate the colonial population growth for each decade from the 1780s to the 2010s. For example, in the 1810s, Australia’s population grew by 21,977 people. We then find the number of Wikipedia biographies for people whose date of birth lies in this decade, as in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, and calculate this as a percentage of the Australian population growth in that decade. For example, there are 662 biographies for people born in the 1810s in our dataset, which is equal to 3% of the colonial population growth for that decade. The two datasets are not perfectly comparable, because our data does not account for when a person migrated to Australia, but <a href="#fig-comp-wiki-abs">Figure&nbsp;14</a> nonetheless clearly shows the historical bias of Wikipedia’s Australian biographies. There are many more articles per person in the early years of the colony compared to later on in Australia’s colonial history. Since the 1850s, the historical coverage of Australian Wikipedia biographies has been more equal.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-comp-wiki-abs" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="who-counts_files/figure-html/fig-comp-wiki-abs-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;13: Wikipedia’s biographies are strongly biased towards Australia’s early colonial history.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14: Number of articles in Australian biographies dataset compared to historical population growth statistics from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>This analysis by Historical Period complements our earlier analysis of <a href="#gender">Gender</a> and <a href="#indigeneity">Indigeneity</a> in the dataset. Generally speaking, Wikipedia’s Australian biographies reflect the male-dominated settler narrative of Australia’s colonisation, though there are important caveats to this general finding.</p>
 </section>
 </section>
-<section id="conclusion-beyond-bias" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion-beyond-bias">Conclusion: beyond bias</h2>
-<p>This study reveals the importance of examining Wikipedia on a national level</p>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In the report above we’ve articulated how Wikipedia represents Australians according to multiple mechanisms for categorizing and defining Australianness in Wikipedia and Wikidata’s datasets and we’ve argued that Wikipedia’s datafied representations highlight the problems of taking any overly simplistic view of Wikipedia’s biases. The majority of quantitative studies of Wikipedia’s biases examine its trajectories in terms of global trends – for example, in the representation of women and men, Westerners and non-Westerners. And yet, what we’ve shown in this report is that in taking a national perspective we recognize the contingencies and contexts that significantly enhance such analyses.</p>
+<p>We hope, then, that this study reveals the importance of examining Wikipedia at a local (national) level. Only by thinking about and with the container of the nation, can the specificities, paradoxes, and discontinuities of Wikipedia’s representation become evident. At a national level, we can start to understand how Wikipedia has represented women over time and how such representations compare to global trends. At a national level, we can ask new questions about people in ethnic categories that are particularly discriminated against and question whether the categorization norms are appropriate given alternative models that other nations have followed in relation to similar categories. At a national level, we can examine historical biases in the context of our knowledge about stories that the nation tells itself about who it is and where it comes from.</p>
+<p>In this the methods of the discipline of history are helpful. Contingency, embeddedness, and human agency are central to the methods of history. Characteristics like identity or notability are not eternal, static, or natural. Although institutions such as nation states are hugely powerful and condition the experiences and behaviour of people, humans crucially have the power to act on and in the world. But they do so embedded in contexts that are always specific, both temporally and geographically. Moreover, historians, approach people in the midst of things: living in changing times and acting as best they can with the tools they have available to them <span class="citation" data-cites="pietsch_here_2020">(<a href="#ref-pietsch_here_2020" role="doc-biblioref">Pietsch and Flanagan 2020</a>)</span>.</p>
+<p>A set of universal recommendations or a method applicable to all national contexts would not only be inappropriate for this work, but would also serve to reproduce some of the effects that this report has identified. The alignment of power that produces the nation state and its reach in any one context may be similar to other contexts, but it will not be the same. The every-changing frontiers of legislation, history and identification will produce biographical datasets with trends that are specific and unreproducible.</p>
+<p>That said, we do show that it is possible to estimate how well Wikipedia represents the diversity of a given nation using page-level metadata. Counting pages is a good starting point, and can reveal representation gaps that Wikimedians can then attempt to redress. But counting pages is a difficult exercise, and must be performed sensitively. Rather than simply counting people with the most popular or prominent categories, we argue that is critical to also examine the semantics of the category structure itself. How might the dataset shift and morph depending on different semantic terms? How does the way in which categories are structured suggest a particular perspective about national identity? How is what the nation values reflected in the characteristics of those who tend to have a Wikipedia page?</p>
 </section>
 <section id="appendix-data" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-data">Appendix: Data</h2>
@@ -888,7 +903,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <li>It can implicitly link a person to Australia by identifying them in a database of Australians, such as the Dictionary of Australian Biography (<a href="https://www.wikidata.org/wiki/Property:P1907">P1907</a>), Indigenous Australia (<a href="https://www.wikidata.org/wiki/Property:P9246">P9246</a>), or Convict Records of Australia (<a href="https://www.wikidata.org/wiki/Property:P9919">P9919</a>)</li>
 </ol>
 <p>We queried Wikidata by 45 such properties suggesting Australianness. Using these properties, we were able to identify 85,773 Wikidata items representing Australian people. Of these Wikidata items, 63,692 items had a corresponding Wikipedia article.</p>
-<p>The two datasets overlap substantially, but not completely (<a href="#fig-biography-overlap-table">Figure&nbsp;14</a>). There are thousands of biographical articles in <code>Category:Australian people</code> whose Wikidata items do not clearly identify them as ‘Australian’. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do <em>not</em> appear in <code>Category:Australian people</code>, even though the Wikidata item has P31(Q5), ‘instance of:human’, and also contains one or more ‘markers of Australianness’.</p>
+<p>The two datasets overlap substantially, but not completely (<a href="#fig-biography-overlap-table">Figure&nbsp;15</a>). There are thousands of biographical articles in <code>Category:Australian people</code> whose Wikidata items do not clearly identify them as ‘Australian’. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do <em>not</em> appear in <code>Category:Australian people</code>, even though the Wikidata item has P31(Q5), ‘instance of:human’, and also contains one or more ‘markers of Australianness’.</p>
 <div class="cell">
 <div id="fig-biography-overlap-table" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -914,7 +929,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </tr>
 </tbody>
 </table>
-<figcaption class="figure-caption">Figure&nbsp;14: There is substantial, but incomplete overlap between the biographies in the two datasets</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;15: There is substantial, but incomplete overlap between the biographies in the two datasets</figcaption>
 </figure>
 </div>
 </div>
@@ -927,10 +942,13 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <li>Using the Wikipedia Action API, we download the introduction of each article for text analysis.</li>
 <li>Using the XTools API, we download page usage data for each page, including the page creation date, assessment class (e.g.&nbsp;Good, Featured), pageviews and number of edits.</li>
 </ol>
-
-
-
 </section>
+</section>
+<section id="references" class="level2">
+
+
+
+
 </section>
 
 
@@ -952,6 +970,12 @@ Konieczny, Piotr, and Maximilian Klein. 2018. <span>“Gender Gap Through Time a
 </div>
 <div id="ref-mandiberg_wikipedias_2023" class="csl-entry" role="listitem">
 Mandiberg, Michael. 2023. <span>“Wikipedia’s <span>Race</span> and <span>Ethnicity</span> <span>Gap</span> and the <span>Unverifiability</span> of <span>Whiteness</span>.”</span> <em>Social Text</em> 41 (1 (154)): 21–46. <a href="https://doi.org/10.1215/01642472-10174954">https://doi.org/10.1215/01642472-10174954</a>.
+</div>
+<div id="ref-pietsch_here_2020" class="csl-entry" role="listitem">
+Pietsch, Tamson, and Frances Flanagan. 2020. <span>“Here We Stand: Temporal Thinking in Urgent Times.”</span> <em>History Australia</em> 17 (2): 252–71. <a href="https://doi.org/10.1080/14490854.2020.1758577">https://doi.org/10.1080/14490854.2020.1758577</a>.
+</div>
+<div id="ref-thorpe_wikimedia_2023" class="csl-entry" role="listitem">
+Thorpe, Kirsten, Nathan Sentance, and Lauren Booker. 2023. <span>“Wikimedia <span>Australia</span> and <span>First</span> <span>Nations</span> <span>Metadata</span>: <span>ATSILIRN</span> <span>Protocols</span> for <span>Description</span> and <span>Access</span>.”</span> University of Technology Sydney. <a href="https://doi.org/10.57956/B05F-CF08">https://doi.org/10.57956/B05F-CF08</a>.
 </div>
 <div id="ref-weathington_queer_2023" class="csl-entry" role="listitem">
 Weathington, Katy, and Jed R. Brubaker. 2023. <span>“Queer <span>Identities</span>, <span>Normative</span> <span>Databases</span>: <span>Challenges</span> to <span>Capturing</span> <span>Queerness</span> <span>On</span> <span>Wikidata</span>.”</span> <em>Proceedings of the ACM on Human-Computer Interaction</em> 7 (CSCW1): 84:1–26. <a href="https://doi.org/10.1145/3579517">https://doi.org/10.1145/3579517</a>.
