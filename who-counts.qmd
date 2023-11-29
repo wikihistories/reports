@@ -48,6 +48,7 @@ library(wikkitidy)
 # Get data
 # To refresh data, run `scripts/who-counts-data.R` with USE_CACHE set to 'FALSE'
 DATA_DIR <- file.path("data", "who-counts")
+
 source(file.path("scripts", "who-counts-data.R"))
 
 # Construct category graph from data
