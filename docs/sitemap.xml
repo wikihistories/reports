@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wikihistories.github.io/reports/LICENSE.html</loc>
+    <lastmod>2023-11-29T05:15:13.382Z</lastmod>
+  </url>
+  <url>
     <loc>https://wikihistories.github.io/reports/who-counts.html</loc>
-    <lastmod>2023-11-28T22:15:00.370Z</lastmod>
+    <lastmod>2023-11-29T05:15:46.178Z</lastmod>
   </url>
   <url>
     <loc>https://wikihistories.github.io/reports/index.html</loc>
-    <lastmod>2023-11-28T21:56:59.963Z</lastmod>
+    <lastmod>2023-11-29T05:15:52.283Z</lastmod>
   </url>
 </urlset>
