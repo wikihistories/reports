@@ -28,7 +28,7 @@ website:
       - text: Reports
         menu:
         - href: who-counts.qmd
-          text: "2023 | Who Counts as Australian?"
+          text: "2023 | How Australians are Represented in Wikipedia"
 format:
   html:
     theme:
