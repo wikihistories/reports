@@ -338,7 +338,7 @@ Not only are male, female and LGBTQI+ Australians represented in different numbe
 
 ```{r}
 #| label: fig-intro-words-by-gender
-#| fig-cap: Comapring the introductions of each article in the Australian biographies dataset, using the tf-idf metric to reveal the most distinctive words in the introductions for each gender grouping.
+#| fig-cap: Comparing the introductions of each article in the Australian biographies dataset, using the tf-idf metric to reveal the most distinctive words in the introductions for each gender grouping.
 gender_extracts <- dataset %>%
   select(pageid, gender) %>%
   left_join(extracts, by="pageid") %>%
