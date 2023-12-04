@@ -1,6 +1,6 @@
 ---
 title: "How Australians are represented in Wikipedia"
-description: "The Annual Report for the Wikihistories project"
+subtitle: "The Annual Report of the Wikihistories Project"
 keywords:
   - Wikipedia
   - historiography
@@ -32,6 +32,12 @@ citation:
   pdf-url: who-counts.pdf
 google-scholar: true
 bibliography: wikihistories.bib
+format:
+  html:
+    description-meta: "How are Australians represented in Wikipedia? In this report, we use a corpus of 83k Wikipedia biographies to find out."
+  pdf:
+    header-includes: |
+      \fancyfoot[LO,LE]{Reports of the Wikihistories Project, No. 1 (2023)}
 ---
 
 ```{r message=FALSE, include=FALSE}

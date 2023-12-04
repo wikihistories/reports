@@ -42,6 +42,11 @@ format:
     colorlinks: true
     documentclass: scrreprt
     papersize: A4
+    header-includes: |
+      \usepackage{fancyhdr}
+      \pagestyle{fancy}
+      \fancyfoot[CO,CE]{}
+      \fancyfoot[RO,RE]{\thepage}
 
 execute:
   freeze: auto
