@@ -10,12 +10,14 @@ In 2024, we consider **places**. `How Australian Places are Represented in Wikip
 
 In 2025, we consider **events**. `How Australian Events are Represented in Wikipedia` will range over 60,000 years of human history in Australia, revealing which structures, conjunctures and events emerge from deep time to take their place in the encyclopaedia.
 
-These reports primarily fulfil Objectives 2 and 3 of the `wikihistories` project:
+These reports primarily fulfil [Objectives 2 and 3](https://wikihistories.net/about) of the `wikihistories` project:
 
-**Objective 2:** Map the scope of entries relating to Australian historic events on Wikipedia in order to analyse who and what is systematically omitted.
-
+> **Objective 2:** Map the scope of entries relating to Australian historic events on Wikipedia in order to analyse who and what is systematically omitted.\
+\
 **Objective 3:** Investigate how Wikipedia’s representations are constructed through practice.
 
 Supported by [Australian Research Council Grant DP220100662](https://dataportal.arc.gov.au/NCGP/Web/Grant/Grant/DP220100662).
+
+*The Wikihistories project would like to acknowledge the Gadigal people of the Eora Nation, and the Wurundjeri Woi-wurrung and Bunurong peoples, upon whose ancestral lands our University campuses stand. We would also like to pay respect to the Elders both past and present, acknowledging them as the traditional custodians of knowledge for this land.*
 
 ![How are Wikipedia's representations constructed through practice?](assets/objective-3.png)

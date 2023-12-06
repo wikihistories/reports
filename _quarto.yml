@@ -29,6 +29,9 @@ website:
         menu:
         - href: who-counts.qmd
           text: "2023 | How Australians are Represented in Wikipedia"
+      - href: LICENSE.md
+        text: Copyright
+
 format:
   html:
     theme:
