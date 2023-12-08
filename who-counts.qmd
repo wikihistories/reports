@@ -8,6 +8,7 @@ keywords:
   - digital humanities
   - systemic bias
 date: December 2023
+doi: 10.5281/zenodo.10296217
 author:
   - name: Michael Falk
     orcid: 0000-0001-9261-8390
@@ -37,7 +38,7 @@ format:
     description-meta: "How are Australians represented in Wikipedia? In this report, we use a corpus of 83k Wikipedia biographies to find out."
   pdf:
     header-includes: |
-      \fancyfoot[LO,LE]{Reports of the Wikihistories Project, No. 1 (2023)}
+      \fancyfoot[LO,LE]{Reports of the Wikihistories Project, No. 1 (2023) doi:10.5281/zenodo.10296217}
 ---
 
 ```{r message=FALSE, include=FALSE}
