@@ -1,0 +1,27 @@
+\usepackage{titling}
+\predate{%
+  \begin{center}
+
+  The Wikihistories project would like to acknowledge the Gadigal people of the Eora Nation, and the Wurundjeri Woi-wurrung and Bunurong peoples, upon whose ancestral lands our University campuses stand. We would also like to pay respect to the Elders both past and present, acknowledging them as the traditional custodians of knowledge for this land.
+
+  \includegraphics[width = 50mm]{assets/wikihistories-logo.png}
+
+}
+\postdate{\par\end{center}}
+
+\pretitle{%
+  \begin{sffamily}
+  \begin{center}
+  \huge
+}
+\posttitle{%
+  \par
+  {\LARGE $subtitle$}
+  \end{center}
+  \end{sffamily}
+}
+
+\title{\textbf{$title$}$if(thanks)$\thanks{$thanks$}$endif$}
+\author{$for(authors)$$it.name.literal$$sep$ \and $endfor$}
+\date{$date$}
+
