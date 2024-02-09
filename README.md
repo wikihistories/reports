@@ -1,6 +1,6 @@
 # wikihistories reports
 
-![doi:10.5281/zenodo.10637915.svg](https://zenodo.org/badge/DOI/10.5281/zenodo.10637915.svg)
+[![DOI](https://zenodo.org/badge/628786609.svg)](https://zenodo.org/doi/10.5281/zenodo.10637914)
 
 Annual reports to the Wikipedia community and Wikimedia Foundation of the [wikihistories](https://wikihistories.net) project.
 
