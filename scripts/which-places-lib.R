@@ -6,6 +6,11 @@ get_wikidata_places <- function() {
     }
   ") |>
     dplyr::mutate(
-      type = dplyr::if_else(stringr::str_detect(item, "entity/Q"), "entity", "property")
+      type = dplyr::if_else(stringr::str_detect(item, "entity/Q"), "entity", "property"),
+      wikidata_id = stringr::str_extract(item, "[PQ]\\d+")
     )
+}
+
+get_instance_of <- function() {
+
 }
