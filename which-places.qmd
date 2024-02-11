@@ -1,0 +1,48 @@
+---
+title: "How Australian places are represented in Wikipedia"
+subtitle: "The Annual Report of the Wikihistories Project"
+keywords:
+  - Wikipedia
+  - historiography
+  - Australia
+  - digital humanities
+  - systemic bias
+  - historical geography
+date: July 2024
+# doi: 
+author:
+  - name: Francesca Sidoti
+    orcid: 0009-0005-1321-9372
+    affiliation: University of Technology, Sydney
+  - name: Michael Falk
+    orcid: 0000-0001-9261-8390
+    affiliation: University of Melbourne
+    url: https://findanexpert.unimelb.edu.au/profile/1043380-michael-falk
+  - name: Heather Ford
+    orcid: 0000-0002-3500-9772
+    affiliation: University of Technology, Sydney
+    url: https://hblog.org/
+  - name: Kelly Tall
+    orcid: 0000-0002-7876-4460
+    affiliation: University of Technology, Sydney
+  - name: Tamson Pietsch
+    orcid: 0000-0002-8304-7108
+    affiliation: University of Technology, Sydney
+    url: https://capandgown.wordpress.com/
+citation:
+  type: report
+  publisher: University of Technology, Sydney
+  container-title: Reports of the Wikihistories Project
+  number: 2
+  pdf-url: which-places.pdf
+google-scholar: true
+bibliography: wikihistories.bib
+format:
+  html:
+    description-meta: "How are Australian places represented in Wikipedia? In the second report of the wikihistories project, we explore the complex historical geography of Australia in the world's largest encyclopedia."
+  pdf:
+    header-includes: |
+      \fancyfoot[LO,LE]{Reports of the Wikihistories Project, No. 2 (2024) doi:TBC}
+---
+
+Our second report...
