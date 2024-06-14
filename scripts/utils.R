@@ -1,3 +1,5 @@
+library(tidyverse)
+
 # Split variable into pipe-delimited string for urlParams
 split_batches <- function(variable, batch_size) {
   batches <- split(variable, ceiling(seq_along(variable)/batch_size)) %>%
@@ -79,4 +81,17 @@ get_labels <- function(wikidata_id, label_name) {
   )) %>%
     bind_rows()
   labels
+}
+
+# Extract basic metadata from wikidata entities
+extract_one_metadata <- function(entity) {
+  tibble::tibble_row(
+    title = pluck(entity, "sitelinks", "enwiki", "title", .default = NA),
+    description = pluck(entity, "descriptions", "en", "value", .default = NA),
+    on_english_wikipedia = !is.na(title)
+  )
+}
+
+extract_metadata <- function(entity) {
+  map(entity, extract_one_metadata) %>% bind_rows()
 }

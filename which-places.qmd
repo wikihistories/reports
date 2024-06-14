@@ -22,9 +22,6 @@ author:
     orcid: 0000-0002-3500-9772
     affiliation: University of Technology, Sydney
     url: https://hblog.org/
-  - name: Kelly Tall
-    orcid: 0000-0002-7876-4460
-    affiliation: University of Technology, Sydney
   - name: Tamson Pietsch
     orcid: 0000-0002-8304-7108
     affiliation: University of Technology, Sydney
