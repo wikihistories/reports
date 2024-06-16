@@ -20,14 +20,6 @@ get_place_subclasses <- function() {
 
 # Get every wikidata item with country:Australia
 # Include 'instance of' property
-load_places <- function(out_path, use_cache = TRUE) {
-  if (use_cache) {
-    readr::read_csv(out_path)
-  } else {
-    get_wikidata_paces(out_path)
-  }
-}
-
 get_wikidata_places <- function(out_path) {
   message("Getting all subclasses of 'physical location' for filtering ...\n")
   place_types <- get_place_subclasses()
@@ -75,6 +67,14 @@ get_wikidata_places <- function(out_path) {
     readr::write_csv(out_path)
   message(glue::glue("Data saved to {out_path}"))
   return(places)
+}
+
+load_places <- function(out_path, use_cache = TRUE) {
+  if (use_cache) {
+    readr::read_csv(out_path)
+  } else {
+    get_wikidata_places(out_path)
+  }
 }
 
 # Get information about the types of places in the data set

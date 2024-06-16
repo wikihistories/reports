@@ -7,4 +7,4 @@ PLACE_FILE <- file.path(DATA_DIR, "places.csv")
 TYPE_FILE <- file.path(DATA_DIR, "place_types.csv")
 
 places <- load_places(out_path = PLACE_FILE, use_cache = USE_CACHE)
-types <- load_types(TYPE_FILE, places, use_cache = FALSE)
+types <- load_types(TYPE_FILE, places, use_cache = USE_CACHE)
