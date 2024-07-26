@@ -11,7 +11,7 @@ library(randomcoloR)
 ```
 #First attempt - data visualistation ruined by NA type.
 ```{r}
-data_file_path <- file.path("~/GitHub/reports", ".RData")
+source(file.path("scripts", "which-places-data.R"))
 
 # Top 10 most common types of places (without cleaning)
 top_place_counts <- places %>%
