@@ -6,13 +6,12 @@ DATA_DIR <- file.path("data", "which-places")
 PLACE_FILE <- file.path(DATA_DIR, "places.csv")
 TYPE_FILE <- file.path(DATA_DIR, "place_types.csv")
 
+# Main dataset
 places <- load_places(out_path = PLACE_FILE, use_cache = USE_CACHE)
-types <- load_types(TYPE_FILE, places, use_cache = USE_CACHE)
 
-library(tidyverse)
-library(gridExtra)
-places <- read_csv("data/which-places/places.csv")
-types <- read_csv("data/which-places/place_types.csv")
+# Auxiliary tables
+types <- load_types(TYPE_FILE, places, use_cache = USE_CACHE)
+lang_codes <- get_language_codes()
 
 
 

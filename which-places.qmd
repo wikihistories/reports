@@ -26,6 +26,10 @@ author:
     orcid: 0000-0002-8304-7108
     affiliation: University of Technology, Sydney
     url: https://capandgown.wordpress.com/
+  - name: Tom Byers
+    orcid: 0009-0005-9927-7679
+    affiliation: University of Melbourne
+    url: https://tom-byers.com
 citation:
   type: report
   publisher: University of Technology, Sydney
@@ -42,4 +46,14 @@ format:
       \fancyfoot[LO,LE]{Reports of the Wikihistories Project, No. 2 (2024) doi:TBC}
 ---
 
-Our second report...
+## Frequently Asked Questions
+
+### Which Australian places are most contentious?
+
+### Which language edition has the most Australian places?
+
+### Which are the ignored places?
+
+### Who reads the articles about Australian places?
+
+### Which Australian places exist?

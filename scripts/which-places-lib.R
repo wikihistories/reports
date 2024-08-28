@@ -47,7 +47,7 @@ get_wikidata_places <- function(out_path) {
   distinct_places <- dplyr::distinct(places, wikidata_id)
 
   message(
-    glue::glue("Retrieving metadata for {length(distinct_places)} unique places in the dataset ...\n")
+    glue::glue("Retrieving metadata for {nrow(distinct_places)} unique places in the dataset ...\n")
     )
 
   place_entities <- get_entities(
@@ -85,13 +85,101 @@ load_types <- function(out_path, places = NULL, use_cache = TRUE) {
     get_all_types(places, out_path)
   }
 }
+
 get_all_types <- function(places, out_path) {
   types <- dplyr::distinct(places, instance_of)
   entities <- get_entities(types$instance_of, "Getting wkd entities for all place types")
   types <- tibble::tibble(
     type = map_chr(entities, "id"),
-    !!!extract_metadata(entities)
+    !!!extract_metadata(entities),
+    sitelinks = extract_sitelinks(entities)$sitelinks,
   ) |>
     readr::write_csv(out_path)
   return(types)
+}
+
+# Additional columns
+
+# All sitelinks
+
+extract_sitelinks <- function(entities) {
+
+  extract_one_sitelink <- function(entity) {
+    row_data <- list(
+      sitelinks = purrr::pluck(entity, "sitelinks") |> names() |> list(),
+      wikidata_id = purrr::pluck(entity, "title")
+    )
+    tibble::as_tibble_row(row_data)
+  }
+
+  purrr::map(entities, extract_one_sitelink) |>
+    dplyr::bind_rows() |>
+    tidyr::unnest(sitelinks) |>
+    dplyr::mutate(
+      code = stringr::str_remove(sitelinks, "wiki")
+    ) |>
+    tidyr::nest(sitelinks = c(sitelinks, code))
+
+}
+
+get_language_codes <- function() {
+  # TODO: Add support for meta queries to wikkitidy and/or default behaviour
+  resp <- httr2::request("https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&meta=siteinfo&siprop=languages") |>
+    httr2::req_perform()
+  data <- httr2::resp_body_json(resp) |>
+    purrr::pluck("query", "languages") |>
+    dplyr::bind_rows()
+  return(data)
+}
+
+filter_english_wikipedia <- function(places) {
+  places |>
+    dplyr::filter(on_english_wikipedia) |>
+    dplyr::distinct(title, .keep_all = TRUE)
+}
+
+# Edit data: (1) number of edits; (2) proportion of reverts
+get_edits <- function(places) {
+  edit_data <- places |>
+    filter_english_wikipedia() |>
+    dplyr::mutate(
+      total_edits = wikkitidy::get_history_count(title, type = "editors"),
+      total_reverts = wikkitidy::get_history_count(title, type = "reverted")
+      ) |>
+    tidyr::unnest(
+      cols = c(total_edits, total_reverts),
+      names_sep = "_"
+    ) |>
+    dplyr::select(
+      wikidata_id, dplyr::starts_with("total")
+    )
+
+  dplyr::left_join(
+    places, edit_data,
+    by = "wikidata_id"
+  )
+}
+
+# Readership data
+
+# Native names
+# This is causing a bit of a problem. If you list the templates on the page,
+# the 'native name' embedded in the info box is not included.
+# It may be necessary to retrive the text for *each page* and then use a regular
+# expression to find either "native_name" or "Native name".
+# An alternative would simply be to use the native name data on
+# Wikidata, but this doesn't match Wikipedia (e.g. Brisbane's native name
+# isn't there on Wikidata...)
+get_native_names <- function(places) {
+  titles <- places |>
+    filter_english_wikipedia() |>
+    dplyr::pull(title)
+
+  wikkitidy::wiki_action_request() |>
+    wikkitidy::query_by_title(titles) |>
+    wikkitidy::query_page_properties(
+      "templates",
+      # tltemplates = "Template:Native name"
+    ) |>
+    wikkitidy::retrieve_all()
 }
