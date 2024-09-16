@@ -61,6 +61,25 @@ get_entities <- function(wikidata_id, .progress = TRUE) {
   )
 }
 
+# This version of the function removes sitefilter=enwiki
+# from the urlparams. This is to ensure backwards compatibility
+# with the 2023 report, which used the above get_entities
+get_entities1 <- function(wikidata_id, .progress = TRUE) {
+  batches <- split_batches(wikidata_id, 50)
+  url <- paste0(
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
+    batches,
+    "&props=claims|descriptions|sitelinks|labels&languages=en&format=json"
+  )
+  batched_entities <- map(url, get_batches, .progress = .progress)
+  entities <- reduce(
+    batched_entities,
+    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
+    .init = list()
+  )
+}
+
+
 # Get labels of Wikidata entities (e.g. places, genders)
 get_labels <- function(wikidata_id, label_name) {
   batches <- split_batches(wikidata_id, 50)
@@ -94,4 +113,22 @@ extract_one_metadata <- function(entity) {
 
 extract_metadata <- function(entity) {
   map(entity, extract_one_metadata) %>% bind_rows()
+}
+
+# Read file and tag with date created
+read_file_with_date <- function(path) {
+  if (stringr::str_ends(path, "csv")) {
+    read_func <- readr::read_csv
+  } else if (stringr::str_ends(path, "rds")) {
+    read_func <- readr::read_rds
+  } else {
+    rlang::abort("`read_file_with_date` can only read csv or rds files")
+  }
+
+  date_created <- file.info(path)$ctime
+
+  data <- read_func(path)
+  attr(data, "date_created") <- date_created
+
+  return(data)
 }

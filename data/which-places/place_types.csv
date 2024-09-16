@@ -1,1240 +1,650 @@
-type,title,description,on_english_wikipedia
-Q14192199,NA,Australian administrative territorial subdivision,FALSE
-Q14192234,NA,subdivision of Australia,FALSE
-Q6256,Country,distinct territorial body or political entity,TRUE
-Q43702,Federation,"state consisting of a union of partially self-governing states or territories, united by a central (federal) government that exercizes directly on them its sovereign power",TRUE
-Q3624078,Sovereign state,state that has the highest authority over a territory,TRUE
-Q39594,Bay,"body of water connected to an ocean or lake, formed by an indentation of the shoreline",TRUE
-Q515,City,large human settlement,TRUE
-Q1549591,NA,"city with a population of at least 100,000",FALSE
-Q114496982,NA,NA,FALSE
-Q200250,Metropolis,large and significant city or urban area usually with millions of inhabitants,TRUE
-Q208511,Global city,city which is an important node in the global economy,TRUE
-Q1066984,Financial centre,"city that is home to a large number of internationally significant banks, businesses, and stock exchanges",TRUE
-Q11271835,NA,capital city of a subnational entity,FALSE
-Q51929311,NA,city which has the greatest population in a country,FALSE
-Q1907114,Metropolitan area,administrative unit of a dense urban core and its satellite cities,TRUE
-Q7309306,Regions of Victoria,"economic regions of Victoria, Australia",TRUE
-Q5852411,NA,administrative subdivision in Australia,FALSE
-Q171441,Enclave,territory entirely surrounded by another territory,TRUE
-Q18618819,NA,an area of land designated as a national park by legislation of the Commonwealth of Australia (federal government) or one of the states or territories of Australia,FALSE
-Q46169,National park,park used for conservation purposes of animal life and plants,TRUE
-Q2232001,Show cave,"cave managed by an organization and made accessible to the general public, usually for an entrance fee",TRUE
-Q5107,Continent,large landmass identified by convention,TRUE
-Q8514,Desert,barren area of land where little precipitation occurs,TRUE
-Q3257686,NA,place of human settlement,FALSE
-Q17272482,NA,NA,FALSE
-Q11292,Coral reef,ridge of rock in the sea formed by the growth and deposit of coral,TRUE
-Q82794,Region,"2D or 3D defined space on something, mainly in terrestrial and astrophysics sciences",TRUE
-Q188509,Suburb,human settlement that is part of/or near to a larger city or town,TRUE
-Q3957,Town,settlement that is smaller than a city but bigger than a large village (or a large borough in some areas),TRUE
-Q695850,Air base,aerodrome used by a military force for the operation of military aircraft,TRUE
-Q1074523,Planned community,detailed developed land,TRUE
-Q28942344,NA,settlement populated primarily by Indigenous Australian people,FALSE
-Q350895,Abandoned village,village that has been deserted,TRUE
-Q55558027,NA,third-tier administrative area in South Australia,FALSE
-Q738570,Central business district,"commercial and business area of a city; not necessarily synonymous with ""city center""/""downtown""",TRUE
-Q30129411,NA,"defunct councils, shires, cities, etc in Australia",FALSE
-Q55558200,NA,"third-tier of government in New South Wales, Australia",FALSE
-Q37901,Strait,"naturally formed, narrow waterway that connects two larger bodies of water",TRUE
-Q23442,Island,piece of sub-continental land completely surrounded by water,TRUE
-Q852190,Shipwreck,remains of a ship that has wrecked,TRUE
-Q2713747,Electorates of the Australian House of Representatives,federal electorates in Australia,TRUE
-Q4022,River,larger natural watercourse,TRUE
-Q7632426,Suburbs and localities (Australia),gazetted geographic subdivision of Australia,TRUE
-Q46831,Mountain range,geographic area containing several geologically related mountains,TRUE
-Q34442,Road,"wide way leading from one place to another, especially one with a specially prepared surface which vehicles can use",TRUE
-Q4839591,Backcountry,isolated area,TRUE
-Q1402592,Island group,"collection of islands, excluding neighbouring water; use archipelago (Q33837) for a group of islands including the water between them",TRUE
-Q2338524,Car track,race track for motor vehicles,TRUE
-Q2389789,Steel roller coaster,type of roller coaster that is defined by having a track made of steel,TRUE
-Q55557858,NA,third-tier of government in Western Australia,FALSE
-Q98433835,NA,gazetted geographic subdivision of Tasmania,FALSE
-Q43501,Zoo,"collection of assorted wild animal species kept for purposes like: study, conservation and, or, commercial exhibition",TRUE
-Q165,Sea,large body of saline water,TRUE
-Q1139493,Inselberg,"isolated rock hill, knob, ridge, or small mountain in the tropics, rises abruptly from a gently sloping or virtually level surrounding plain",TRUE
-Q11687019,NA,subdivision of Australia,FALSE
-Q34038,Waterfall,place where water flows over a steep or vertical drop,TRUE
-Q483453,Fountain,piece of architecture that ejects water,TRUE
-Q358,NA,general term for a site of cultural heritage for a specific country (please avoid as a P31 value except for large sites containing multiple entities),FALSE
-Q1049757,Multi-purpose stadium,venue designed to be used for multiple types of sports events,TRUE
-Q74539696,NA,former sports venue,FALSE
-Q15643757,NA,NA,FALSE
-Q188443,Micronation,"small, unrecognized country",TRUE
-Q5478580,Protected areas of Queensland,Wikimedia list article,TRUE
-Q486972,Human settlement,"place of any size, in which people permanently live",TRUE
-Q1867183,Local government area of Australia,areas governed by the third and lowest tier of government in Australia,TRUE
-Q820477,Mine (mining),place for the extraction of minerals,TRUE
-Q45242174,NA,"bounded locality in Victoria, Australia registered under section 11 of the Geographic Place Names Act 1998 (Vic)",FALSE
-Q55593624,NA,"third-tier of government in Queensland, Australia",FALSE
-Q23397,Lake,"body of relatively still water, localized in a basin",TRUE
-Q29981662,NA,road used only by buses,FALSE
-Q748198,Gay village,geographical area within a city that is inhabited or frequented by LGBT people,TRUE
-Q1322134,Gulf,large inlet that is an arm of an ocean or sea,TRUE
-Q785020,Sedimentary basin,regions of long-term subsidence creating space for infilling by sediments,TRUE
-Q1426035,Local government in Victoria,"third-tier of government in Victoria, Australia",TRUE
-Q104880945,Climate emergency declarations in Australia,"to be used in ""instance of"" (P31) to indicate an Australian area has declared a climate emergency",TRUE
-Q8502,Mountain,large natural elevation of the Earth's surface,TRUE
-Q34763,Peninsula,landform surrounded more than half but not entirely by water,TRUE
-Q150784,Canyon,geomorphological formation as narrow and deep ravine between cliffs,TRUE
-Q1185274,Marine park,protected marine area for conservation purposes,TRUE
-Q153562,Opera house,theatre building used for opera performances,TRUE
-Q570116,Tourist attraction,place of interest where tourists visit,TRUE
-Q38048707,NA,class of cultural heritage site of Australia,FALSE
-Q33837,Archipelago,collection of islands including the water around them,TRUE
-Q2772772,NA,museum of military and war,FALSE
-Q283202,Harbor,"sheltered body of water where ships, boats, and barges can be docked",TRUE
-Q167346,Botanical garden,well-tended area displaying a wide range of plants labelled with their botanical names,TRUE
-Q1378975,Convention center,building designed to hold a convention,TRUE
-Q7814330,Toll bridge,bridge for which road usage tolls are charged,TRUE
-Q60297,Regions of Western Australia,Administrative regions of Western Australia,TRUE
-Q166620,Drainage basin,"area of land where precipitation collects and drains off into a common outlet, such as into a river, bay, or other body of water",TRUE
-Q39715,Lighthouse,structure designed to emit light to aid navigation,TRUE
-Q55687066,NA,"third-tier of government in Tasmania, Australia",FALSE
-Q2264924,NA,city or town which has a port,FALSE
-Q2977,Cathedral,"Christian church, which is seat of a bishop",TRUE
-Q1048525,Golf course,grounds on which the sport of golf is played,TRUE
-Q2022036,NA,club organized to play golf,FALSE
-Q23010647,NA,"geographically localised and defined community within metropolitan Perth, Western Australia",FALSE
-Q125941113,NA,river from which gold nuggets are extracted,FALSE
-Q185113,Cape (geography),"headland of large size extending into a body of water, usually the sea",TRUE
-Q191992,Headland,"landform extending into a body of water, often with significant height and drop",TRUE
-Q131681,Reservoir,artificial lake impounded using a dam or lock to store water,TRUE
-Q813672,Basin (geomorphology),geologic depression,TRUE
-Q749565,Structural basin,geological depression,TRUE
-Q40357,Prison,place in which people legally are physically confined and usually deprived of a range of personal freedoms,TRUE
-Q1406331,Scenic route,specially designated road or waterway of interest,TRUE
-Q174782,Town square,"open public spaces in cities or towns, usually rectilinear, surrounded by buildings, and often located at the junction of two or more thoroughfares",TRUE
-Q55833,Supercontinent,"landmass comprising more than one continental core, or craton",TRUE
-Q2284298,Paleocontinent,distinct area of continental crust that existed as a major landmass in the geological past,TRUE
-Q204894,Marginal sea,"sea partially enclosed by islands, archipelagos, or peninsulas",TRUE
-Q926439,Street circuit,motorsport track composed of public roads of a city,TRUE
-Q269528,Unincorporated area,region of land not governed by own local government,TRUE
-Q269949,Highway,a public road intended for rapid movement of motor vehicles between major towns,TRUE
-Q38048753,NA,class of cultural heritage site of Australia,FALSE
-Q55818,Impact crater,circular depression in a solid astronomical body formed by the impact of a smaller object,TRUE
-Q2324919,State forest,government owned forest,TRUE
-Q179049,Nature reserve,"protected area for flora, fauna or features of geological interest",TRUE
-Q6745599,Mamelon (volcanology),"hill formed by eruption of ""stiff"" lava",TRUE
-Q503269,Seamount,mountain rising from the ocean floor that does not reach the water's surface,TRUE
-Q2281788,Public aquarium,facility with large tanks for water-dwelling species,TRUE
-Q3284499,NA,building in a capital city used for administrative or legislative purposes,FALSE
-Q28599311,NA,mine which primarily produces ores containing uranium,FALSE
-Q4835091,NA,geographic region belonging to or controlled by a person or entity,FALSE
-Q123705,Neighbourhood,"geographically localized community within a larger city, town or suburb",TRUE
-Q4828724,Aviation museum,museum exhibiting history and artifacts of aviation,TRUE
-Q124714,Spring (hydrology),water source,TRUE
-Q27670147,NA,areas with canceled protection,FALSE
-Q204324,Volcanic crater lake,lake formed within a volcanic crater,TRUE
-Q39816,Valley,"low area between hills, often with a river running through it",TRUE
-Q491713,Sound (geography),"long, relatively wide body of water, connecting two larger parts of the sea",TRUE
-Q1788582,State highway,"highway which is part of a subnational highway network; often described as a state highway network, provincial highway network, or similar",TRUE
-Q1346540,Regions of Queensland,"geographic areas of Queensland, Australia",TRUE
-Q1076486,Sports venue,"facility (building, structure, or place) dedicated to sports",TRUE
-Q2904233,Bioregion,"ecologically and geographically defined area that is smaller than a biogeographical realm, but larger than an ecoregion or an ecosystem",TRUE
-Q44782,Port,maritime facility where ships may dock to load and discharge passengers and cargo,TRUE
-Q207694,Art museum,"building or space for the exhibition of art (for institution, use Q3196771)",TRUE
-Q16735822,NA,museum covering the knowledge of human history,FALSE
-Q54050,Hill,"landform that extends above the surrounding terrain in lower mountain ranges, smaller than a mountain",TRUE
-Q875157,Resort,self-contained commercial establishment which attempts to provide for most of a vacationer's wants,TRUE
-Q19610511,Township,designation for an administrative territorial entity,TRUE
-Q702492,Urban area,large area with high population density and infrastructure of built environment,TRUE
-Q22746,Urban park,park in a city or other incorporated place,TRUE
-Q55177716,NA,garden open to the public,FALSE
-Q74047,Ghost town,city depopulated of inhabitants and that often stays practically intact,TRUE
-Q4306024,NA,type of museum and research center,FALSE
-Q1863818,Maritime museum,museum specializing in the display of objects relating to ships and travel on large bodies of water,TRUE
-Q17431399,NA,museum maintained by a national authority,FALSE
-Q22698,Park,"permanently dedicated recreation area, often open to the public and generally characterized by natural, historic, or landscape features",TRUE
-Q682943,Cricket field,grassy ground on which the game of cricket is played,TRUE
-Q575759,War memorial,memorial for the victims of a war,TRUE
-Q161243,Dependent territory,territory that does not possess full political independence as a sovereign state,TRUE
-Q473972,Protected area,"area which receives protection because of its recognized natural, ecological, or cultural values",TRUE
-Q5135744,Religious institute,Roman Catholic community of members bound by religious vows,TRUE
-Q6617741,List of ecoregions (WWF),ecoregion as defined by the World Wildlife Fund,TRUE
-Q111907301,NA,bioregion as defined by the Interim Biogeographical Regionalisation for Australia,FALSE
-Q212057,Shield volcano,type of volcano usually built almost entirely of fluid lava flows,TRUE
-Q7138926,Parliament buildings,"subclass of a legislative building, used by countries/entities which have a parliamentary form of government",TRUE
-Q188025,Salt lake,landlocked body of water which has a high concentration of salts,TRUE
-Q3240715,Crater,"depression on the Earth or celestial body caused by some form of explosion, including bolide impact, volcanic eruption or chemical/nuclear explosion",TRUE
-Q184358,Reef,feature lying beneath the surface of the water,TRUE
-Q2665272,NA,NA,FALSE
-Q105389481,NA,administrative territorial entity of Greek-Catholic Churches,FALSE
-Q33506,Museum,"institution that holds artifacts and other objects of scientific, artistic, cultural, historical, or other importance",TRUE
-Q182886,Artificial whitewater,sports venue,TRUE
-Q1349255,Natural gas field,deposits rich in natural gas,TRUE
-Q47692,Chinese garden,style of garden,TRUE
-Q202509,Chinatown,ethnic enclave of expatriate Chinese people,TRUE
-Q56061,Administrative division,"territorial entity for administration purposes, with or without its own local government",TRUE
-Q149621,District,"type of administrative division, in some countries",TRUE
-Q26907711,NA,administrative division of the Australian Capital Territory in Australia,FALSE
-Q2904935,Regions of Sydney,"geographic region of Sydney, Australia",TRUE
-Q9096832,Paleontological site,natural deposit containing fossils,TRUE
-Q2140699,NA,type of region,FALSE
-Q9444,Rainforest,type of forest with high rainfall,TRUE
-Q16970,Church (building),building used for Christian worship,TRUE
-Q483110,Stadium,"place or venue for (mostly) outdoor sports, concerts, or other events",TRUE
-Q169358,Stratovolcano,"tall, conical volcano built up by many layers (strata) of hardened lava",TRUE
-Q132510,NA,"location where people regularly gather for the purchase and sale of provisions, livestock, and other goods",FALSE
-Q1759852,Sculpture garden,outdoor garden dedicated to the presentation of sculptures,TRUE
-Q213441,Retail shop,place where items or services are sold,TRUE
-Q28942368,NA,type of protected area in New South Wales,FALSE
-Q55671590,NA,"third-tier of government in the Northern Territory, Australia",FALSE
-Q3146899,NA,see under the supervision of a bishop of the Catholic church,FALSE
-Q18674739,NA,"location suitable for hosting events, indoors or outdoors",FALSE
-Q24529780,NA,"tapering landform, projecting into a body of water",FALSE
-Q149273,Tropical circle,circle of latitude,TRUE
-Q783953,Territorial claims in Antarctica,land claims of the continent,TRUE
-Q9019918,Endorheic lake,"lake with no outflow to other external bodies of water, such as rivers or oceans",TRUE
-Q105390172,NA,archdiocese of the Roman Catholic Church that has a suffragan diocese under its jurisdiction,FALSE
-Q105419665,NA,NA,FALSE
-Q481289,Official residence,"residence of heads of state, head of government, governor, religious leader, leaders of international organizations, or other equivalent figure",TRUE
-Q188040,Quarry,"place from which dimension stone, rock, construction aggregate etc. has been excavated from the ground",TRUE
-Q820254,Mining community,community that houses miners,TRUE
-Q10354598,Rural settlement,settlement in the areas defined as rural by a governmental office,TRUE
-Q944816,Biogeographic realm,broadest biogeographic division of the Earth's land surface,TRUE
-Q56242250,NA,churches that are the seat of bishops of the Anglican communion,FALSE
-Q46622,Controlled-access highway,"highway designed exclusively for high-speed vehicular traffic, with all traffic flow and ingress/egress regulated",TRUE
-Q134851,Continental shelf,portion of a continent that is submerged under an area of relatively shallow water known as a shelf sea,TRUE
-Q1081138,Historic site,"official location where pieces of political, military or social history have been preserved",TRUE
-Q2385513,Stream pool,stretch of a river or stream in which the water depth is above average and the water velocity is quite below average; quiet slow-moving portion of a stream,TRUE
-Q1030048,NA,mine that contains diamonds,FALSE
-Q2087181,Historic house museum,house that has been transformed into a museum,TRUE
-Q1531518,Military ordinariate,Catholic ecclesiastical jurisdiction providing religious services for armed forces,TRUE
-Q1640361,Climbing area,small geographical region with a concentration of opportunities for climbing,TRUE
-Q130003,Ski resort,"mountainside developed for skiing, snowboarding, and other winter sports",TRUE
-Q35254629,NA,NA,FALSE
-Q133056,Mountain pass,pass through a saddle or col to cross a mountain range,TRUE
-Q61457040,NA,NA,FALSE
-Q420962,Heritage railway,railway used for heritage/historical/tourism purposes,TRUE
-Q532,Village,small clustered human settlement smaller than a town,TRUE
-Q44301618,NA,NA,FALSE
-Q146591,Circle of latitude,all locations on the surface of the Earth that are equidistant from the Equator or either pole,TRUE
-Q1021711,Seaside resort,"resort town or resort hotel, located on the coast",TRUE
-Q1614140,NA,museum specialising in tram transport,FALSE
-Q1304276,Arterial road,high-capacity urban road,TRUE
-Q57659484,NA,building built or used exclusively or primarily for exhibitions; may be a permanent facility or a temporary structure,FALSE
-Q641226,Arena,"enclosed area designed to host sporting events, theater, and musical performances",TRUE
-Q20725872,NA,NA,FALSE
-Q160091,Plain,flat geographic region,TRUE
-Q38048771,NA,class of cultural heritage site of Australia,FALSE
-Q6063204,Regional park,"area of land preserved on account of its natural beauty, historic interest, recreational use or other reason, and under the administration of a form of local government",TRUE
-Q194195,Amusement park,park with rides and attractions,TRUE
-Q156362,Winery,facility that makes wine,TRUE
-Q417175,NA,state over which a king or queen rules,FALSE
-Q64364539,NA,NA,FALSE
-Q1785071,Fort,military construction designed for defensive warfare,TRUE
-Q5162993,Conservation park (Australia),protected area in Australia,TRUE
-Q30674761,Australian marine parks,marine protected area managed by the Australian government,TRUE
-Q55365010,NA,group of marine parks in Australia,FALSE
-Q28653,Mendicant orders,Type of religious lifestyle,TRUE
-Q15835,Japanese garden,type of traditional garden,TRUE
-Q5926864,NA,several lakes generally described together,FALSE
-Q211748,Oil field,region with an abundance of oil wells extracting petroleum (crude oil) from below ground,TRUE
-Q1154710,Soccer-specific stadium,sports venue purposed mainly for association football (or soccer),TRUE
-Q79007,Street,public thoroughfare in a built environment,TRUE
-Q148319,Planetarium,theatre built primarily for presenting educational and entertaining shows about astronomy and the night sky,TRUE
-Q40080,Beach,area of sand or small stones near the sea or another area of water such as a lake,TRUE
-Q1286517,Natural landscape,original landscape formed by nature,TRUE
-Q120560,Minor basilica,title given to some Roman Catholic churches,TRUE
-Q7814340,Toll tunnel,is a road tunnel where a monetary charge (or toll) is required to pass through,TRUE
-Q1140316,Penal colony,remote settlement used to house convicts from the general population,TRUE
-Q272231,Arboretum,botanical garden containing living collections of woody plants intended at least partly for scientific study,TRUE
-Q17350442,NA,place used for some activity,FALSE
-Q17018380,Bight (geography),"bend or curve in a coastline, river, or other geographical feature",TRUE
-Q5003624,Memorial,"area or object, smaller than a monument, which serves as a focus for memory of something",TRUE
-Q1200957,NA,place attracting many tourists,FALSE
-Q17054562,Regions of the Northern Territory,"administrative subdivision of the Northern Territory, Australia",TRUE
-Q4825213,Australian rules football playing field,location where Australian rules football games take place,TRUE
-Q9381142,Hill chain,elongated line of hills,TRUE
-Q28924735,NA,area of the Australian state of Victoria not belonging to any local government area,FALSE
-Q5162999,Conservation reserve,protected area set aside for conservation purposes,TRUE
-Q10313934,NA,lake that disappears seasonally,FALSE
-Q781549,Megachurch,Protestant house of worship with an average weekend attendance of 2000 or more people,TRUE
-Q47053,Estuary,type of marine and riverine ecosystem,TRUE
-Q202570,Ferris wheel,amusement ride,TRUE
-Q177734,Artesian well,artificially drilled well in a depression below the groundwater table,TRUE
-Q75520,Plateau,high flat terrain,TRUE
-Q369730,Pedestrian zone,area of a city or town reserved for pedestrian-only use,TRUE
-Q28941950,NA,NA,FALSE
-Q162602,River island,landmass or fluvial landform within a river,TRUE
-Q1088552,NA,church building in the Catholic Church,FALSE
-Q917182,Military academy,higher education institution operated by or for the military,TRUE
-Q1522839,Staff college,"college with the purpose of training military officers in the administrative, staff and policy aspects of their profession",TRUE
-Q1007870,Art gallery,place where art is exhibited and sometimes also sold,TRUE
-Q259037,Traveling carnival,moveable amusement park,TRUE
-Q1174791,Escarpment,type of slope landform,TRUE
-Q158454,Biosphere reserve,UNESCO protected area,TRUE
-Q2143825,Hiking trail,path for hiking in a natural environment,TRUE
-Q295469,Ecoregion,ecologically and geographically defined area that is smaller than a bioregion,TRUE
-Q124221947,NA,Designated region of ecological significance by One Earth,FALSE
-Q41253,Movie theater,"venue, usually a building, for viewing films",TRUE
-Q45791,Geoglyph,motif produced on the ground; observed only remotely or from space,TRUE
-Q10514237,Indigenous Protected Area,area of land or sea in Australia managed by the traditional owners,TRUE
-Q1060829,Concert hall,building designed for music performances,TRUE
-Q25550691,Town hall,chief administrative seat of a municipality,TRUE
-Q123924129,NA,"district within a city, town, or other community marked out for specific governmental or administrative purposes",FALSE
-Q148571,Fence,freestanding structure preventing movement across a boundary,TRUE
-Q803749,Billabong,oxbow lake in Australia,TRUE
-Q588140,Science museum,museum devoted primarily to science,TRUE
-Q39614,Cemetery,place of burial,TRUE
-Q34483580,NA,mining operation involved in the extraction of metals from ore,FALSE
-Q1149061,Sprachraum,"geographical region where a common first language, with dialect varieties, or group of languages is spoken",TRUE
-Q1438105,Research reactor,nuclear reactors that serve primarily as a neutron source,TRUE
-Q2373919,Intentional community,"planned, socially-cohesive, residential community",TRUE
-Q16659538,NA,mine that contains gold,FALSE
-Q2416723,NA,amusement park focused on a particular theme,FALSE
-Q15060435,Marine mammal park,commercial theme park where marine mammals are kept,TRUE
-Q31615,Cove,type of small bay or coastal inlet,TRUE
-Q2008856,Command (military formation),military organizational unit under the responsibility of a military commander,TRUE
-Q5588918,Government Houses of the British Empire and Commonwealth,type of British official residence,TRUE
-Q1367500,Marine protected area,"protected areas of seas, oceans, estuaries or large lakes",TRUE
-Q661702,Anabranch,section of a river or stream that diverts from the main channel and rejoins it downstream,TRUE
-Q1205140,Barrier island,coastal landform and a type of dune system,TRUE
-Q358738,Shuttle roller coaster,"type of roller coaster that does a back-and-forth circuit, instead of a complete circuit.",TRUE
-Q627421,Launched roller coaster,modern form of roller coaster,TRUE
-Q42178109,Giga coaster,Rollercoaster with a height or drop of at least 300 feet,TRUE
-Q3252908,List of national parks of Western Australia,national parks in Western Australia,TRUE
-Q27590,Heath,shrubland habitat,TRUE
-Q35509,Cave,natural underground space large enough for a human to enter,TRUE
-Q830528,Velodrome,track intended for track cycling,TRUE
-Q1161185,Volcanic island,island of volcanic origin,TRUE
-Q1245089,Promontory,prominent mass of land that overlooks lower-lying land or a body of water,TRUE
-Q1068842,Footbridge,"bridge designed for pedestrians and in some cases cyclists, animal traffic and horse riders, rather than vehicular traffic",TRUE
-Q2502622,NA,"bridge for cyclists, mostly also for pedestrians",FALSE
-Q828909,Wharf,structure on the shore of a harbor or on the bank of a river or canal where ships dock,TRUE
-Q204832,Roller coaster,type of amusement ride found at amusement parks and carnivals,TRUE
-Q12284,Canal,man-made channel for water,TRUE
-Q7315273,NA,area of forest set aside and preserved by a government as a national park or preserve,FALSE
-Q188734,Sinkhole,geologically-formed topological depression,TRUE
-Q131263,Barracks,buildings or sets of buildings erected as common living quarters for groups of soldiers or workers,TRUE
-Q1437459,NA,"geographic area containing numerous mountains, not necessarily geologically related to each other",FALSE
-Q49956097,NA,palaeolithic archaeological site,FALSE
-Q192611,Electoral district,territorial division made or used for elections,TRUE
-Q5357209,Electorates of the Australian Capital Territory,multi-member electorate for the ACT Legislative Assembly,TRUE
-Q1061151,Massif,section of a planet's crust that is demarcated by faults or flexures,TRUE
-Q108276216,NA,mine from which rare earth ore is mined,FALSE
-Q1233637,River mouth,end of a river,TRUE
-Q839954,Archaeological site,place (or group of physical sites) in which evidence of past activity is preserved,TRUE
-Q173387,Grave,location where one dead person or a limited amount of people are buried,TRUE
-Q2532223,NA,type of cemetery honoring people who sacrificed themselves for their country,FALSE
-Q271669,Landform,a natural or anthropogenic land feature on the solid surface of the Earth or other planetary body; geomorphological unit in the Earth sciences,TRUE
-Q4823517,Big things (Australia),novelty structure in Australia,TRUE
-Q1197120,Extinct volcano,a volcano considered unlikely to erupt again,TRUE
-Q6017969,Scenic viewpoint,high place where people can gather to view scenery,TRUE
-Q295472,Ecovillage,sustainable intentional community,TRUE
-Q3215290,NA,lake formed by people,FALSE
-Q10564300,NA,mine which primarily produces copper ore,FALSE
-Q519105,Volcanic field,area of the Earth's crust prone to localized volcanic activity,TRUE
-Q133156,Colony,"territory under the political control of an overseas state, generally with its own subordinate colonial government",TRUE
-Q187223,Lagoon,shallow body of water separated from larger body of water by a barrier,TRUE
-Q64578911,NA,"building or architectural structure no longer used as a hospital, currently existing or not",FALSE
-Q16817,Karst,topography formed from the dissolution of soluble rocks,TRUE
-Q1307560,NA,type of museum that documents the history and culture of the Jewish people,FALSE
-Q4668360,Aboriginal communities in Western Australia,communities of indigenous Western Australians,TRUE
-Q1898357,Naval academy,training institution for naval officers,TRUE
-Q7619063,Stone frigate,naval establishment on land,TRUE
-Q4946461,Spa town,specialized resort town situated around a mineral spa,TRUE
-Q3032154,Electoral districts of New South Wales,electorates of the New South Wales Legislative Assembly,TRUE
-Q2145262,NA,forest in the subtropics with heavy rainfall,FALSE
-Q18704634,NA,museum specializing in rail transport,FALSE
-Q483242,Laboratory,"facility that provides controlled conditions in which scientific or technological research, experiments, and measurement may be performed",TRUE
-Q1352795,Cinematheque,organization that preserves and presents film,TRUE
-Q166735,Swamp,a type of wetland,TRUE
-Q16659620,NA,mine from which iron ore or ferriferous minerals are mined,FALSE
-Q3699460,Defile (geography),geomorphological structure,TRUE
-Q24354,Theater (structure),building designed for presentation of dramatic performances,TRUE
-Q747957,Stack (geology),geological landform consisting of a steep and often vertical column or columns of rock,TRUE
-Q627236,Company town,place where practically all stores and housing are owned by the one company that is also the main employer,TRUE
-Q7167858,Perennial stream,watercourse that has water continuously,TRUE
-Q190429,Depression (geology),landform sunken or depressed below the surrounding area,TRUE
-Q116372166,NA,NA,FALSE
-Q10952797,Anchorage (maritime),location at sea where ships can lower anchors,TRUE
-Q773847,Anti-submarine net,barrier placed across the mouth of a harbour or a strait for protection against submarines,TRUE
-Q193110,Floodplain,"area of land adjacent to a stream or river which stretches from the banks of its channel to the base of the enclosing valley walls, and which experiences flooding during periods of high discharge",TRUE
-Q133346,Border,legal boundary between two geographic regions,TRUE
-Q3089219,Maritime boundary,"boundary between marine zones over which countries have rights, or between such zones and international waters",TRUE
-Q12413618,NA,border between two sovereign states,FALSE
-Q885499,Blowhole (geology),geological phenomenon,TRUE
-Q35666,Glacier,large persistent body of ice,TRUE
-Q107390,Federated state,territorial and constitutional community forming part of a federal union,TRUE
-Q106071744,NA,"town that no longer exists, e.g. because it was deserted, destroyed or it became part of another settlement",FALSE
-Q29469577,NA,LGBT places or monuments known for LGBT events and history,FALSE
-Q728904,Nature park,"type of protected area in some countries, common in Europe",TRUE
-Q1172599,Inlet,"in coastal geography, an indentation of a shoreline that often leads to an enclosed body of salt water, such as a sound, bay, lagoon, or marsh",TRUE
-Q6981985,Naval air station,military airbase under naval command,TRUE
-Q1324633,Naval base,port and military base for naval ships and other assets,TRUE
-Q819435,Mining district (Europe),type of region,TRUE
-Q13691,Artificial island,island-like structure constructed by people,TRUE
-Q6646468,Listening station,facility to monitor radio and microwave signals to gather information and intelligence,TRUE
-Q93267,Isthmus,narrow strip of land connecting two larger land areas,TRUE
-Q782198,NA,territorial subdivision of Australia,FALSE
-Q321053,Cenotaph,empty tomb or monument erected in honor of a person whose remains are lost or interred elsewhere,TRUE
-Q962734,Migration museum,"type of museum, and list of museums",TRUE
-Q34198935,NA,small rock on a seafloor or riverbed that can pose a hazard to maritime navigation,FALSE
-Q113150763,NA,former prison which is no longer in use for that purpose,FALSE
-Q13405588,Long-distance trail,"long trail used for walking, backpacking, cycling, horse riding or cross-country skiing",TRUE
-Q5084,Hamlet (place),small settlement in a rural area,TRUE
-Q57821,Fortification,military constructions and buildings designed for defense in warfare and military bases,TRUE
-Q17054552,Regions of Tasmania,"geographical breakdown of Tasmania, Australia",TRUE
-Q503481,Cay,small island formed on the surface of a coral reef,TRUE
-Q973560,Wooden roller coaster,type of roller coaster,TRUE
-Q1761072,State park,protected area managed at the federated state level in some countries,TRUE
-Q28931760,NA,"land administration division of New South Wales, Australia",FALSE
-Q240854,Hall,"large room used for meetings, social affairs or events",TRUE
-Q1107656,Garden,"planned space set aside for the display, cultivation, and enjoyment of plants",TRUE
-Q1329623,Cultural center,facility where culture and arts are promoted (wide definition),TRUE
-Q2293148,Sculpture trail,type of trail,TRUE
-Q985073,United Nations trust territories,"Territories under League of Nations Mandate, excluding Palestine and SW Africa, were transferred into UN trusteeships. Validity of existing rights of populations acquired by mandates, including the rights of Jews to settle in Palestine, is preserved",TRUE
-Q1210950,Channel (geography),type of landform; confined river; strait,TRUE
-Q41982239,Navigation channel,marked water for ships,TRUE
-Q105131,Hotspot (geology),volcanic region,TRUE
-Q3917681,Embassy,"permanent diplomatic mission of higher level, representing its operator in the country the embassy is in",TRUE
-Q1140140,Mainland,continental part of any polity or the main island of an island nation or territory,TRUE
-Q7565304,NA,marine park network in Australia,FALSE
-Q653208,Monolith,stone  block made of one single piece; object made of one single rock piece.,TRUE
-Q91285,Martello tower,small defensive fort,TRUE
-Q20097897,NA,fortification at sea,FALSE
-Q2945301,Detention center,location used for detention,TRUE
-Q7654661,Temple (LDS Church),place of worship of The Church of Jesus Christ of Latter-day Saints (LDS Church),TRUE
-Q1165822,Meromictic lake,lake with layers of water that do not intermix,TRUE
-Q2142152,Temple (Latter Day Saints),place of worship of the Latter Day Saint movement,TRUE
-Q3469910,Performing arts center,facility primarily intended for the performing arts and that may consist of several performance spaces along with other multi-purpose event spaces,TRUE
-Q15303456,NA,venue for rugby union matches,FALSE
-Q194502,Endorheic basin,closed drainage basin that retains water and allows no outflow to other external bodies of water,TRUE
-Q15150553,Personal ordinariate,"a pre- or pseudo-diocesean ecclesiastical structure, of personal nature, headed by an ordinary who is not necessarily a bishop",TRUE
-Q18691599,NA,place developed for and utilized by military forces,FALSE
-Q115978566,NA,road class in Latvia,FALSE
-Q107425,Landscape,visible features of an area of land,TRUE
-Q317557,Parish church,church which acts as the religious centre of a parish,TRUE
-Q107679,Cliff,"significant vertical, or near vertical, rock exposure",TRUE
-Q1137210,Country club,private club typically offering recreational sports and entertainment facilities,TRUE
-Q1970725,Natural region,"region distinguished by its common natural features of geography, geology, and climate",TRUE
-Q1414991,Area (country subdivision),country subdivision,TRUE
-Q16831714,NA,"building built for and by the government, such as a town hall",FALSE
-Q26208843,NA,NA,FALSE
-Q30785519,University campus,ensemble of university buildings and adjacent open spaces,TRUE
-Q4825026,Australian immigration detention facilities,NA,TRUE
-Q2368508,NA,place for surfing,FALSE
-Q2137251,NA,sports venue for rowing and canoeing events,FALSE
-Q642682,Safari park,zoo-like commercial drive-in tourist attraction,TRUE
-Q35054,Post office,customer service facility of a postal system,TRUE
-Q207524,Islet,very small island,TRUE
-Q212198,Pub,drinking establishment,TRUE
-Q926196,Food cooperative,food distribution outlet organized as a cooperative,TRUE
-Q165044,Greenhouse,building in which plants are grown,TRUE
-Q1976594,Science park,area designed to promote science or technology business development,TRUE
-Q44613,Monastery,complex of buildings comprising the domestic quarters and workplace(s) of monks or nuns,TRUE
-Q27106886,NA,a swimming pool designated for public use and typically maintained by some government authority,FALSE
-Q18917976,NA,subdivision of the Anglican Communion,FALSE
-Q28942311,NA,NA,FALSE
-Q17272692,NA,zone in the IANA time zone database,FALSE
-Q216107,Department store,retail establishment; building which offers a wide range of consumer goods,TRUE
-Q11822917,Horse racing venue,venue used in horse racing,TRUE
-Q637017,Episcopal conference,assembly of bishops of some nation or certain territory of the Latin Church,TRUE
-Q1377575,Wildlife refuge,geographic territory within which wildlife is protected,TRUE
-Q2243978,Record shop,"vendor of music recordings on audio storage like CD, LP record, tape",TRUE
-Q427961,Metropolis (religious jurisdiction),diocese headed by an archbishop and having suffragan dioceses under its jurisdiction,TRUE
-Q17000324,NA,museum for one or more sports,FALSE
-Q56242215,NA,church that is the seat of the bishop of a diocese of the Catholic Church,FALSE
-Q15643578,NA,cadastral subdivision of the Australian state of New South Wales,FALSE
-Q7900123,Urban growth boundary,regional boundary to control urban sprawl,TRUE
-Q2310214,Pitch (sports field),flat area of grass that can be used for sports usually being played on grass,TRUE
-Q28932079,NA,"land administration division of Tasmania, Australia",FALSE
-Q11875349,Playground,place with a specific design for children and other age groups to be able to play there,TRUE
-Q28942294,NA,land administration division of the Australian state of Western Australia,FALSE
-Q1377943,Ocean bank,part of the sea which is shallow compared to its surrounding area,TRUE
-Q60176300,NA,diocese of an Eastern Orthodox church,FALSE
-Q13380226,NA,outdoor stadium or indoor venue mainly used for tennis,FALSE
-Q2387974,Military hospital,"hospital that is reserved for the use of military personnel, their dependents and other authorized users",TRUE
-Q1137809,Courthouse,building which is home to a court,TRUE
-Q628179,Trail,path with a rough beaten or dirt/stone surface used for travel,TRUE
-Q1886911,Butterfly house,facility for the breeding and display of butterflies,TRUE
-Q1144661,Amusement ride,mechanical device or structure that moves people to create enjoyment,TRUE
-Q15310171,NA,port accessible for seagoing vessels,FALSE
-Q1128397,Convent,"religious establishment, where clerics lead a religious life in community",TRUE
-Q1415133,NA,museum specialising in film and cinema history,FALSE
-Q1093436,Computer museum,museum devoted to the study of historic computer hardware and software,TRUE
-Q6138323,Railway workshop,facility for construction and repair of rolling stock owned by a railway,TRUE
-Q53882863,NA,former electorate of the Victorian Legislative Council,FALSE
-Q2116321,Rail trail,railroad bed converted to a recreational trail,TRUE
-Q355304,Watercourse,any flowing body of water,TRUE
-Q209465,Campus,cluster of buildings and land used by a college,TRUE
-Q113383503,NA,venue designed to host agricultural shows,FALSE
-Q543654,Rathaus,municipal administration building in the German language; for a town hall use Q25550691,TRUE
-Q4421,Forest,dense collection of trees covering a relatively large area,TRUE
-Q1361400,Gully,landform created by running water,TRUE
-Q18050,Youth detention center,type of prison for people under the age of majority,TRUE
-Q91122,Bunker,defensive military building,TRUE
-Q47272186,NA,military unit type designation,FALSE
-Q170321,Wetland,land area that is permanently or seasonally saturated with water,TRUE
-Q1418712,Plant community,collection or association of plant species within a designated geographical unit,TRUE
-Q427287,Wat,"Buddhist temple or monastery in Thailand, Cambodia or Laos",TRUE
-Q1501,Swimming pool,excavation or containment structure filled with water and used for swimming,TRUE
-Q28737012,NA,institution that exhibits cultural artifacts,FALSE
-Q1202618,NA,outdoor sports facility,FALSE
-Q1714375,Game reserve,entity reserved for game,TRUE
-Q28942401,NA,NA,FALSE
-Q47521,Stream,body of water with current within bed and stream banks,TRUE
-Q175185,Rural area,geographic area that is located outside towns and cities,TRUE
-Q285783,Intersection (road),road junction where two or more roads either meet or cross at grade,TRUE
-Q27028153,NA,storage and maintenance facility for trams,FALSE
-Q1198413,Military camp,semi-permanent facility for the lodging of an army,TRUE
-Q18414273,NA,diplomatic representation of a Commonwealth country to another one or between States members of the Union Française (then Communauté),FALSE
-Q56670402,NA,type of prison,FALSE
-Q2221906,Location,location of a point or an area on something's surface or elsewhere,TRUE
-Q102496,Parish,type of ecclesiastical subdivision of a diocese,TRUE
-Q909906,Skatepark,place built for skating,TRUE
-Q1595639,Local museum,museum that covers local history,TRUE
-Q1179791,NA,manufactory that produces glass and glass products,FALSE
-Q913035,Roadstead,open anchorage affording less protection than a harbor,TRUE
-Q390365,Space Shot (ride),type of drop tower amusement ride manufactured by S&S - Sansei Technologies,TRUE
-Q245016,Military base,facility directly owned and operated by or for the military,TRUE
-Q10283556,Motive power depot,"building (having any form) where locomotives are housed, washed, serviced",TRUE
-Q12719343,Water tunnel (physical infrastructure),tunnel (below-ground channels) used to transport water,TRUE
-Q819426,NA,museum specialising in the history of mines and mining,FALSE
-Q1408475,Fortified house,type of building which developed in Europe during the Middle Ages,TRUE
-Q200023,Natatorium,building containing a swimming pool,TRUE
-Q15643559,NA,redundant unused historic land administrative unit in the colony of Western Australia,FALSE
-Q2650083,Farm museum,"farm, operated as a museum for demonstration and educational purposes",TRUE
-Q52177058,NA,central landmark building in the geographical or business centre of a town or city,FALSE
-Q17106091,Streetcorner,location adjacent to an intersection of two roads,TRUE
-Q7830048,Town centre,commercial or geographical centre or core area of a town,TRUE
-Q6027980,NA,geographical region with extremely dense industry,FALSE
-Q111594564,NA,type of protected area in Australia,FALSE
-Q28942392,NA,protected area in South Australia established by Wilderness Protection Act 1992,FALSE
-Q221722,Bike path,bikeway separated from motorized traffic and dedicated to cycling,TRUE
-Q3352369,Footpath,way for pedestrians,TRUE
-Q65054925,Shared-use path,"trail that supports multiple recreation and transportation types, such as walking, bicycling, inline skating and people in wheelchairs",TRUE
-Q2324067,Grand union,track arrangement at a railway junction,TRUE
-Q1525,Roundabout,traffic intersection,TRUE
-Q656720,Workshop,"room or building, with tools, used to repair or make goods",TRUE
-Q56344492,NA,fortification,FALSE
-Q7884983,Unified school district,school body with both grade school and high school education,TRUE
-Q756102,Open-air museum,museum that exhibits collections of buildings and artifacts out-of-doors,TRUE
-Q974968,Miniature park,model village; miniature building models,TRUE
-Q5177126,Cadastral divisions of Victoria,cadastral subdivision of the Australian state of Victoria,TRUE
-Q15643599,NA,lands administrative division of Queensland,FALSE
-Q3482498,Surf break,permanent obstruction on the seabed which causes waves to break,TRUE
-Q1684522,Jazz club,"type of club, music venue, dedicated to jazz music",TRUE
-Q5473425,NA,type of museum,FALSE
-Q176637,Pawnbroker,"individual or business that offers loans to people, with items of personal property used as collateral",TRUE
-Q207326,Summit,"point on a surface that is higher in elevation than all points immediately adjacent to it, in topography",TRUE
-Q2141554,Recreational dive sites,place that recreational scuba divers go to enjoy the underwater environment,TRUE
-Q56242063,NA,church building affiliated with a protestant denomination,FALSE
-Q111522266,NA,export type of LNG terminal,FALSE
-Q1195942,Fire station,structure or other area where firefighters and their vehicles and equipment is housed,TRUE
-Q1778846,Military training area,"military installation or reservation where weapons, military technology, or tactics are experimented with or are tested",TRUE
-Q1481677,Pleasure garden,garden open for recreation and entertainment,TRUE
-Q25391,Dune,"landform, hill of sand",TRUE
-Q124282,Dock,human-made structure involved in the handling of boats or ships,TRUE
-Q117531692,NA,cultural venue promoting residency programmes,FALSE
-Q357121,Dragstrip,Car racing facility,TRUE
-Q2190251,Arts centre,functional community centre with a specific remit to encourage arts,TRUE
-Q1404150,Rock formation,mass of stone projecting out of the ground or water,TRUE
-Q7251288,Protected areas of Victoria,"protected area of the state of Victoria, Australia",TRUE
-Q30114493,NA,type of locality recognised in Australia,FALSE
-Q14915208,Roadside attraction,roadside attraction area for visitors,TRUE
-Q740326,Water park,amusement park that features pools with water play areas,TRUE
-Q15324,Body of water,"any significant accumulation of water, generally on a planet's surface",TRUE
-Q28969936,NA,major division of New South Wales used for land administration,FALSE
-Q29918961,NA,facility where military training is carried out,FALSE
-Q183366,Territory,area of land under a certain jurisdiction,TRUE
-Q590232,Geographical centre,centroid of a region of the earth's surface,TRUE
-Q474,Aqueduct (water supply),structure constructed to convey water,TRUE
-Q28942331,NA,land administration division of South Australia,FALSE
-Q1558054,Art colony,place where artists live and interact with each other,TRUE
-Q218653,Custom house,government office building for import and export of goods,TRUE
-Q1995305,NA,animal park which houses mainly birds,FALSE
-Q2516357,Transport museum,museum that holds collections of transport items,TRUE
-Q3559019,Urban village,decentralized urban development,TRUE
-Q7300165,Reach (geography),a comparatively straight part of a river or channel between two bends,TRUE
-Q5356184,Electoral districts of Queensland,constituency of the Legislative Assembly of Queensland,TRUE
-Q5356185,Electoral districts of South Australia,electorate for the South Australian House of Assembly,TRUE
-Q5356189,Electoral districts of Western Australia,electorates for the Western Australian Legislative Assembly,TRUE
-Q1080224,Electorates of the Australian states and territories,electoral district of the Australian states and territories,TRUE
-Q5356187,Electoral districts of Victoria,constituency of the Victorian Legislative Assembly,TRUE
-Q49540686,NA,former electorate of the Tasmanian House of Assembly,FALSE
-Q66360526,NA,former state electorate of South Australia,FALSE
-Q30155836,NA,former electoral district of the Australian states and territories,FALSE
-Q187456,Bar (establishment),establishment serving alcoholic beverages for consumption on the premises,TRUE
-Q8719053,Music venue,any location used for a concert or musical performance,TRUE
-Q230752,Auditorium,"room with a space for presenter(s) and an audience space, often used for speeches, lectures, or performances",TRUE
-Q15643615,NA,land administration division of South Australia,FALSE
-Q5356265,Electoral divisions of the Northern Territory,constituency of the Northern Territory Legislative Assembly,TRUE
-Q7687464,Tasmanian Legislative Council electoral divisions,electoral division of the upper house in Tasmania,TRUE
-Q5356436,Electoral regions of Western Australia,multi-member electoral region of the Western Australian Legislative Council,TRUE
-Q6485018,Lands administrative divisions of Western Australia,NA,TRUE
-Q509037,Terrane,"fragment of crustal material formed on, or broken off from, one tectonic plate and accreted or ""sutured"" to crust lying on another plate",TRUE
-Q12292478,Estate (land),comprises the buildings and supporting farmland and woods of a very large property,TRUE
-Q665487,Diocese,Christian district or see under the supervision of a bishop,TRUE
-Q55282777,NA,constituency of the Western Australian Legislative Council,FALSE
-Q11786880,Fire museum,type of museum covering firefighting services,TRUE
-Q5356435,Electoral regions of Victoria,electoral divisions of the Victorian Legislative Council,TRUE
-Q125982173,NA,administrative groupings of local government areas in Western Australia,FALSE
-Q477544,New religious movement,religious community or spiritual group of modern origins,TRUE
-Q30681685,Tasmanian House of Assembly electoral divisions,current state electorates of Tasmania,TRUE
-Q274393,Bakery,establishment that produces and sells flour-based food baked in an oven,TRUE
-Q12516,Pyramid,structure whose shape is roughly that of a pyramid in the geometric sense,TRUE
-Q33112019,NA,statistical territorial entity defined by the Australian Bureau of Statistics for the Census that approximates localities gazetted by the Geographical Place Name authority in each State and Territory,FALSE
-Q19877569,Regions of South Australia,Regions of South Australia based on various characteristics,TRUE
-Q2578218,Inland sea,geologic formation with water,TRUE
-Q190928,Shipyard,place where ships are repaired and built,TRUE
-Q331367,Submarine base,military base that shelters submarines and their personnel,TRUE
-Q2376564,Interchange (road),"road junction, typically using grade separation",TRUE
-Q1763828,NA,"building usable for various events (sports, culture, etc.)",FALSE
-Q53585538,NA,type of horse racing venue,FALSE
-Q30716167,High flux reactor,NA,TRUE
-Q6451172,Morgue,place for the storage of human corpses awaiting identification or burial,TRUE
-Q3305339,NA,part of a building,FALSE
-Q2532557,Beach ridge,wave-swept or wave-deposited ridge running parallel to a shoreline,TRUE
-Q1070290,Prisoner-of-war camp,site for the containment of combatants captured by their enemy in time of war,TRUE
-Q1788454,Road junction,location where multiple roads intersect that allows vehicular traffic to change from one road to another,TRUE
-Q180846,Supermarket,large form of the traditional grocery store,TRUE
-Q1266922,Water gap,Landform of an entrenched transverse valley,TRUE
-Q10624527,Biographical museum,museum dedicated to the life and works of a specific person,TRUE
-Q17455058,NA,museum specialising in the history of music and musical instruments,FALSE
-Q7557352,Soldier settlement (Australia),type of settlement in Australia,TRUE
-Q622425,Nightclub,entertainment venue which usually operates late into the night,TRUE
-Q19683138,Ramsar site,wetland site as designated by the Ramsar Convention,TRUE
-Q3610510,Ethnic enclave,physical space with high ethnic concentration; thus these spaces are culturally distinct from the larger receiving society,TRUE
-Q22674925,NA,"settlement that no longer exists, e.g. because it was abandoned, destroyed, abolished or it became part of another settlement",FALSE
-Q177380,Hot spring,spring produced by the emergence of geothermally heated groundwater,TRUE
-Q56856618,NA,place where art is sold,FALSE
-Q5504247,Friends meeting house,meeting house of the Religious Society of Friends (Quakers),TRUE
-Q7371226,Roundabout interchange,road interchange that uses one or more roundabouts to manage traffic movement,TRUE
-Q901497,NA,NA,FALSE
-Q28110152,NA,structure used for ventilation of a sewer,FALSE
-Q1756711,Video rental shop,"physical retail business that rents home videos such as movies, TV shows, video game discs and other content.",TRUE
-Q313354,Hundred (county division),geographic division formerly used in certain countries,TRUE
-Q30198,Marsh,wetland that is dominated by herbaceous rather than woody plant species,TRUE
-Q43197,River delta,landform that is formed at the mouth of a river,TRUE
-Q1282870,Ice rink,frozen body of water and/or hardened chemicals where people can ice skate or play winter sports,TRUE
-Q1751323,Indoor skiing,climate controlled environment in which snow is manufactured using a snow cannon,TRUE
-Q336764,Junction (rail),place at which two or more rail routes converge or diverge,TRUE
-Q30313989,Leisure centre,"building or site, containing different facilities for leisure activities",TRUE
-Q211302,Glacial lake,lake formed by a melted glacier,TRUE
-Q620045,Apostolic nunciature,official diplomatic representation of the Holy See,TRUE
-Q8072,Volcano,"natural, surface vent or fissure usually in a mountainous form",TRUE
-Q985488,Residential community,administrative territorial entity of the People's Republic of China,TRUE
-Q1549731,Interpretation centre,Type of museum,TRUE
-Q6028003,Industrial suburb,Type of suburb,TRUE
-Q20268591,NA,tract of public land reserved for the preservation of wildlife,FALSE
-Q181916,Herbarium,scientific collection of dried plants,TRUE
-Q573344,Main stem,final large channel of a riverine system,TRUE
-Q28969883,NA,"lands administrative division of New South Wales, Australia",FALSE
-Q27108230,NA,outdoor accommodation area that provides multiple individual campsites,FALSE
-Q1468524,City centre,"commercial, cultural and often the historical, political and geographic heart of a city",TRUE
-Q2663692,NA,building used by post services,FALSE
-Q61729985,Little Italy,ethnic enclave populated by Italians or people of Italian descent,TRUE
-Q54927709,NA,shopping mall with outlet stores (majority),FALSE
-Q30022,Coffeehouse,establishment that serves coffee and tea,TRUE
-Q291177,Rose garden,garden or park which comprises mainly of roses,TRUE
-Q1271224,Oceanic plateau,relatively flat submarine region that rises well above the level of the ambient seabed,TRUE
-Q2128165,NA,market where vendors sell commodities to commercial traders or consumers,FALSE
-Q357380,NA,swimming pool enclosed by a building or other structure and covered by a roof,FALSE
-Q41453,Diatreme,volcanic pipe formed by a gaseous explosion,TRUE
-Q12622609,Officer candidate school,type of military school,TRUE
-Q4698330,Air force academy,"Military academy for training of air force officers, pilots, and other personnel",TRUE
-Q748998,Fire lookout tower,building to house a person who watches for wildfires,TRUE
-Q10500763,NA,type of museum focused on and/or located in a prison,FALSE
-Q294422,Public building,"buildings or groups of buildings owned and operated by a governing body, carrying out official duties, and often occupied by a governmental agency",TRUE
-Q152081,Concentration camp,"camp in which people are imprisoned or confined, commonly in large groups, without trial",TRUE
-Q16941482,Regional Reserve (Australia),type of protected area of some Australian jurisdictions,TRUE
-Q62059246,NA,area proclaimed to be a public reserve by government legislation,FALSE
-Q866133,University museum,museum run within a university,TRUE
-Q3329412,Archaeology museum,museum specializing in archaeological artefacts,TRUE
-Q7361709,Convenience store,small store that stocks a range of everyday items,TRUE
-Q662806,Dike (geology),sheet of rock formed in a fracture in a pre-existing rock body,TRUE
-Q3278565,Integral lighthouse,lighthouse in which the tower and keeper's dwelling are united in one structure,TRUE
-Q22908079,RAAF area commands,Royal Australian Air Force command system,TRUE
-Q740445,Ridge,geological feature consisting of a chain of mountains or hills that form a continuous elevated crest for some distance,TRUE
-Q15643694,NA,Australia,FALSE
-Q317548,Resort town,town where tourism or vacationing is a primary component of the local culture and economy,TRUE
-Q9822982,Regional Command,military command responsible for a specific geographic region,TRUE
-Q1779930,Bypass (road),road taking a new route which avoids a previously passed location,TRUE
-Q7245779,Prison farm,large correctional facility where penal labor convicts are forced to work on a farm,TRUE
-Q28931789,NA,"land administration division of Queensland, Australia",FALSE
-Q721207,Marina,yacht harbor,TRUE
-Q54831,Amphitheatre,open-air venue used for entertainment and performances,TRUE
-Q2887554,Coal-mining region,basin with coal deposits,TRUE
-Q63101990,NA,military unit type classification,FALSE
-Q847935,Nude beach,beach that allows nudity,TRUE
-Q75848,Gated community,residental community with controlled entrances and often a closed perimeter of walls/fences,TRUE
-Q1282871,NA,tower drop ride series,FALSE
-Q963729,Submarine canyon,steep-sided valley cut into the seabed of the continental slope,TRUE
-Q24699794,NA,building housing a museum,FALSE
-Q2261391,NA,government facility,FALSE
-Q2997369,Plaza,public square in the center of a town or city,TRUE
-Q6667200,Medical corps,military service branch responsible for health and medical care for military personnel,TRUE
-Q847400,Disk'O,type of flat ride manufactured by Zamperla,TRUE
-Q840482,NA,typically Catholic shrines,FALSE
-Q50418254,NA,NA,FALSE
-Q7028289,Nickel mine,mine that produces nickel,TRUE
-Q107037505,NA,mine producing cobalt ore,FALSE
-Q861951,Police station,"headquarters for the police of a particular district, from which police officers are dispatched and to which persons under arrest are brought",TRUE
-Q58937084,NA,former type of local government area of New South Wales,FALSE
-Q1188480,Fish market,marketplace for fish products,TRUE
-Q17143723,Parish (Catholic Church),lowest ecclesiastical subdivision in the Catholic episcopal polity; primary constituent unit of a diocese,TRUE
-Q2945640,LGBT community centre,regional community center that provides services for gender and sexual minorities,TRUE
-Q2447721,Trades hall,"building where trade unions meet together, or work from cooperatively, as a local representative organisation",TRUE
-Q11338578,NA,sports venue,FALSE
-Q936257,NA,territory which is protected to conserve its character,FALSE
-Q1292279,NA,"boundary line between two territories, for example countries, states, provinces, cities",FALSE
-Q7193855,Pile lighthouse,tall skeletal lighthouse,TRUE
-Q844619,Vihāra,"Sanskrit and Pāli term for a residence, monastery usually Buddhist",TRUE
-Q512504,River rapids ride,amusement ride that simulates whitewater rafting,TRUE
-Q2870166,Water ride,amusement rides that are set over water,TRUE
-Q1437299,NA,intermittently dry stream,FALSE
-Q63565252,Brook (small stream),small stream,TRUE
-Q117599782,NA,type of cultural institution,FALSE
-Q6807904,Meeting house,building where religious and sometimes public meetings take place,TRUE
-Q119253,Oceanic trench,depressions of the sea floor,TRUE
-Q5307555,Drill hall,building or a hangar where soldiers practice and perform military drill,TRUE
-Q43483,Well,excavation or structure created in the ground to access groundwater,TRUE
-Q2398990,Technology museum,museum devoted to applied science and technological developments,TRUE
-Q1412219,Log flume (ride),type of amusement ride,TRUE
-Q1454553,Outdoor cinema,movies shown outdoors,TRUE
-Q7579839,Sports complex,collection of sporting venues within a single area,TRUE
-Q14750991,NA,a cemetery maintained by the Commonwealth War Graves Commission,FALSE
-Q42523,Atoll,"ring-shaped coral reef, generally formed over a former oceanic volcano, frequently with small emerging islands (motus) over the rim, often enclosing a central lagoon possibly still containing one or a few emerging elevated islands",TRUE
-Q3196771,NA,institution (for buildings or spaces use Q207694),FALSE
-Q1004435,Running track,running tracks found in track and field stadia,TRUE
-Q5916199,Housing development,group of residences,TRUE
-Q28337,Shoal,natural submerged sandbank that rises from a body of water to near the surface,TRUE
-Q63352727,NA,type of protected area,FALSE
-Q191110,Craton,part of the continental lithosphere,TRUE
-Q1443808,Oceanarium,marine mammal park,TRUE
-Q15648179,NA,amusement park and funfair attraction,FALSE
-Q2367818,Argonaut class reactor,"Design of small nuclear research reactor built throughout the world, over a wide range of power levels.",TRUE
-Q4976993,Parish (administrative division),"administrative, non-ecclesiastical, division",TRUE
-Q1454206,Drop tower,type of amusement ride,TRUE
-Q575727,Museum ship,ship preserved and converted into a museum open to the public,TRUE
-Q64827141,NA,NA,FALSE
-Q28060923,NA,beach consisting primarily of white sand,FALSE
-Q2031836,Eastern Orthodox church architecture,type of church building,TRUE
-Q64732764,NA,type of church carved into rock within a cave or mine,FALSE
-Q1711334,NA,NA,FALSE
-Q2983893,Quarter (urban subdivision),"division or section, region or part of a town, city or municipality, which may be an administrative unit",TRUE
-Q31566,Coastal plain,"area of flat, low-lying land adjacent to a seacoast",TRUE
-Q1454583,Masonic Temple,room or structure where a Masonic Lodge meets,TRUE
-Q1970365,Natural history museum,institution that displays exhibits of natural historical significance,TRUE
-Q26205080,NA,place where diving activity takes place,FALSE
-Q245260,Conurbation,group of settlements linked by continuous urban area,TRUE
-Q131862,Triangulation station,fixed surveying station used in geodetic surveying,TRUE
-Q16465938,Intermittent river,watercourse which is totally dependent on rainfall,TRUE
-Q674950,Residential area,"land use in which housing predominates, as opposed to industrial and commercial areas",TRUE
-Q1225034,Virtual museum,generic virtual museum,TRUE
-Q428044,Infoshop,"a storefront or social center that serves as a node for the distribution of political, subcultural and arts information, typically in the form of books, zines, stickers and posters",TRUE
-Q385337,Deanery,"ecclesiastical entity in various Christian churches, e.g. the Roman Catholic Church, the Eastern Orthodox Church, the Church of England and the Church of Norway",TRUE
-Q24185502,Regional reserves of South Australia,"type of protected area of South Australia, Australia",TRUE
-Q56396127,NA,former electorates of the New South Wales Legislative Council,FALSE
-Q157570,Crematorium,facility in which cremation takes place,TRUE
-Q1109069,Ski jumping hill,venue used for ski jumping,TRUE
-Q63868478,NA,former constituency of the Colony of Victoria,FALSE
-Q787934,NA,museum that explores the history of automotive related transportation,FALSE
-Q1149405,Rock shelter,shallow cave-like opening at the base of a bluff or cliff,TRUE
-Q372690,Consulate general,diplomatic mission,TRUE
-Q113594123,Surface mine,mine with surface exploitation of mineral raw materials,TRUE
-Q4232315,NA,underground facility for the extraction of minerals,FALSE
-Q959309,Coal mine,place for extraction of coal,TRUE
-Q4824242,Australian High Commission,High Commission of Australia to a Commonwealth country,TRUE
-Q19884415,NA,NA,FALSE
-Q2303340,Hong Kong Economic and Trade Office,office for oversea affairs,TRUE
-Q60168923,NA,building designed to store grains,FALSE
-Q16934465,Military exclusion zone,area in the immediate vicinity of a military action,TRUE
-Q11784935,NA,NA,FALSE
-Q13090337,Riyasat (Islam),Muslim administration in the post-Yugoslavia states,TRUE
-Q20897929,NA,NA,FALSE
-Q1365704,Railway roundhouse,"building with bow shape built around (or rarely including) a railway turntable where locomotives are housed, washed, serviced",TRUE
-Q28969904,NA,former lands administrative division of New South Wales (19th century),FALSE
-Q208791,Aquifer,permeable rock containing groundwater,TRUE
-Q55364400,NA,NA,FALSE
-Q1521187,Tide pool,"rocky pool on seashore, separated as pool at low tide, filled with seawater",TRUE
-Q5739064,Heritage trail,transport route to highlight cultural heritage places,TRUE
-Q12019965,NA,covered ice rink,FALSE
-Q108325,Chapel,"small place, building or room of Christian fellowship or worship, may be attached or not to a larger institution or part of a building",TRUE
-Q2551525,NA,artifical or natural body of water used to collect and store water,FALSE
-Q15642541,NA,territorial entity of which the borders are determined by physiographic and human features,FALSE
-Q7189710,Physiographic province,mid-level region in the Fenneman model of physiographic regionalization,TRUE
-Q517760,Commune (intentional community),"community of people living together, sharing common interests",TRUE
-Q214252,Stable,building for horses and other livestock,TRUE
-Q28942323,NA,NA,FALSE
-Q672070,Photographic studio,place or organisation that undertakes professional-quality photography,TRUE
-Q13381944,Quadrangle (architecture),space or courtyard,TRUE
-Q21073937,Branch (banking),"retail location of a bank, credit union, or other financial institution",TRUE
-Q15924535,NA,local chapter of the Wikimedia movement,FALSE
-Q19600600,British High Commission,British diplomatic mission to a Commonwealth country,TRUE
-Q389959,Air raid shelter,structure which protects against enemy attacks from the air,TRUE
-Q746628,Studio,"working places set aside for artists to work, the term is generally applied to workspaces used by artists creating fine art, particularly art dating from the 16th century to the present",TRUE
-Q52103661,Former island,island that once existed,TRUE
-Q3253281,Artificial pond,"body of man-made standing water, that is usually smaller than a lake",TRUE
-Q832778,Campsite,place used for overnight stay in the outdoors,TRUE
-Q28109822,NA,an aqueduct which carries sewerage,FALSE
-Q12743,Ford (crossing),crossing in a river,TRUE
-Q55463449,NA,NA,FALSE
-Q7251291,Protected areas of the Northern Territory,protected areas of the Northern Territory in Australia,TRUE
-Q13052937,NA,NA,FALSE
-Q16887036,Gap (landform),"landform that is a low point or opening between hills or mountains or in a ridge; generic term for col, saddle, mountain pass, etc...",TRUE
-Q125123020,NA,NA,FALSE
-Q3177968,NA,small body of water,FALSE
-Q124434470,NA,NA,FALSE
-Q55075651,NA,non-mountainous region of land which is higher in elevation than adjacent low-lying areas,FALSE
-Q580889,Table (landform),raised landform with a flat top,TRUE
-Q7321258,Beacon,"marker to attract attention (used for navigation, or in war as a signalling device, or as a signally device for natural disaster like fire)",TRUE
-Q34379419,NA,area of land covered with sand,FALSE
-Q217101,Spit (landform),coastal bar or beach landform deposited by longshore drift,TRUE
-Q55182635,Knoll (oceanography),"rounded underwater hill, not exceeding 1000 meters in height",TRUE
-Q216851,Skerry,rocky islet too small for habitation,TRUE
-Q2042028,Ravine,"very tight valley, which is often the product of streamcutting erosion",TRUE
-Q57208193,NA,geographic feature,FALSE
-Q202199,Inland island,island in a river or lake,TRUE
-Q3622115,Protected areas of New South Wales,area protected for conservation in New South Wales,TRUE
-Q653139,Volcanic plug,volcanic object created when magma hardens within a vent on an active volcano,TRUE
-Q1711697,NA,biological park,FALSE
-Q4792460,Arm (geography),narrow extension flowing out from a larger body of water,TRUE
-Q878223,Highland,mountainous region or elevated mountainous plateau,TRUE
-Q38516,Dog park,park for dogs,TRUE
-Q1426493,Trailer park,area for semi-permanent and mobile homes,TRUE
-Q16363669,NA,area with one or more sports facilities,FALSE
-Q338112,Recreation area,land and water spaces and associated structures set aside for recreation,TRUE
-Q13424466,NA,harbor landform created by natural processes,FALSE
-Q42412840,Abandoned mine,mine or quarry that is no longer producing or operational,TRUE
-Q16659597,NA,mine extracting silver ore,FALSE
-Q3294251,Hillock,small hill,TRUE
-Q29925,Salt marsh,"type of coastal ecosystem, land outside the dikes that is not flooded with seawater with average high tide",TRUE
-Q28109814,NA,major sewer which leads to an outfall,FALSE
-Q637600,Sabkha,"a salt lake above the tide line, formed along arid coastlines and characterized by evaporite-carbonate deposits with some siliciclastics",TRUE
-Q10862618,Saddle (landform),region surrounding the highest point of the lowest point on the line tracing the drainage divide (the col) connecting the peaks,TRUE
-Q4940739,Bombing range,military facility for testing ordinance and explosives,TRUE
-Q3238324,World War I memorials,memorial to commemorate the events and the casualties of World War I,TRUE
-Q25043590,Plunge dip,bath designed to immerse livestock in liquid pesticide or other treatment,TRUE
-Q17000624,Protected areas of Australia,protected areas in Australia,TRUE
-Q57675852,NA,former electorate of the Western Australian Legislative Council,FALSE
-Q274153,Water tower,elevated structure supporting a water tank,TRUE
-Q667018,Wax museum,museum displaying a collection of wax representations of famous people,TRUE
-Q1103285,NA,building of a club,FALSE
-Q57831,Fortress,large fort,TRUE
-Q18822087,NA,type of building complex that is used for quarantine,FALSE
-Q25047682,Folk museum,museum that deals with folk culture and heritage,TRUE
-Q992194,NA,settlement affiliated with the Hutterites,FALSE
-Q3241565,Woodland,low-density forest forming open habitats with plenty of sunlight and limited shade,TRUE
-Q1188223,Dance hall,hall for dancing,TRUE
-Q16939396,Toll road,roadway for which a fee (or toll) is assessed for passage,TRUE
-Q579581,Taipei Economic and Cultural Representative Office,''De facto'' embassies or consulates operated by Taiwan,TRUE
-Q5244910,De facto embassy,organization that serves as an unofficial embassy,TRUE
-Q752003,Pole of inaccessibility,"point on land or at sea that is the most distant from any coastline, either for an entire planet, or for a given landmass or body of water",TRUE
-Q91325574,NA,NA,FALSE
-Q202008,Exclusive economic zone,UN maritime boundary,TRUE
-Q2387499,Honor board,visible and physical memorial and recognition of people,TRUE
-Q26959023,NA,museum specialising in the history of pharmacology,FALSE
-Q3126170,Bandstand,structure designed to accommodate bands during concerts,TRUE
-Q545599,Haunted house,house or other building often perceived as being inhabited by disembodied spirits of the deceased,TRUE
-Q1251403,Alley,narrow street,TRUE
-Q309250,Courtyard,"enclosed area, often by a building, that is open to the sky",TRUE
-Q63313760,NA,"facility for storage and distribution of ammunition, weapons,and other military equipment",FALSE
-Q77115,Community centre,"public location where members of a community tend to gather for group activities, social support, public information, and other purposes",TRUE
-Q2737008,Legation,diplomatic mission headed by a minister,TRUE
-Q56477663,NA,NA,FALSE
-Q7416522,Sandplain,geographic feature,TRUE
-Q52572620,NA,"church body, similar to diocese",FALSE
-Q28930084,NA,"land administration division of Victoria, Australia",FALSE
-Q28428479,Conservation reserves of South Australia,class of protected area,TRUE
-Q4862338,Monomictic lake,NA,TRUE
-Q9332842,Śālā,large room within a domestic building,TRUE
-Q55463907,NA,NA,FALSE
-Q1707610,NA,cemetery for both civil and military victims of war or tyranny,FALSE
-Q28152826,NA,"heritage status in New South Wales, Australia",FALSE
-Q811177,Dry dock,waterside basin that can be sealed and pumped dry to allow work on a vessel,TRUE
-Q206809,NA,"outdoor, usually paved area on a school grounds where students spend breaks between classes",FALSE
-Q56242225,NA,church building that is the seat of a bishop of the Eastern Orthodox denominations,FALSE
-Q6659501,Living museum,"type of museum, in which historical events showing the life in past time periods are performed",TRUE
-Q256020,Inn,"establishment providing lodging, food and drink",TRUE
-Q19899465,Redundant church,building of a former church,TRUE
-Q2519340,NA,building for administrative usage,FALSE
-Q21562164,Historical markers of the Philippines,commemorative plaque or set of commemorative plaques created by the National Historical Commission of the Philippines or any of its predecessors,TRUE
-Q2616170,Marine reserve,type of protected area,TRUE
-Q2153495,Ammunition dump,military storage facility for ammunition or explosives,TRUE
-Q7113057,NA,"small, rural settlement of Aboriginal Australians",FALSE
-Q33128580,NA,statistical territorial entity defined by the Australian Bureau of Statistics for the Census,FALSE
-Q3329663,Medical museum,"institutions that store and exhibit objects of historical, scientific, artistic, or cultural interest that have a link to medicine or health",TRUE
-Q33183185,NA,designated community evacuation point in case of bushfire,FALSE
-Q443767,NA,social and dining area provided for military officiersl,FALSE
-Q462040,NA,territorial division defined for the purpose of administering a census,FALSE
-Q790585,Avenue of honour,"memorial avenue of trees, with each tree symbolising a person, most commonly as a memorial to the war dead",TRUE
-Q47174074,NA,NA,FALSE
-Q25377652,NA,collection of public transport stops and stations for the purpose of calculating fares,FALSE
-Q329683,Industrial estate,area for development of industry,TRUE
-Q47309998,NA,military headquarters type and size,FALSE
-Q64779402,NA,type of de-facto embassy,FALSE
-Q11183017,Outdoor drama,outdoor theatre in summer,TRUE
-Q12093880,NA,NA,FALSE
-Q7209480,NA,type of museum; museum of police memorabilia and history,FALSE
-Q3455524,NA,term for certain administrative divisions in some countries,FALSE
-Q154250,Tavern,place of business where people gather to drink alcoholic beverages and be served food,TRUE
-Q778020,NA,racing circuit for dogs,FALSE
-Q786922,Drive-in theater,form of open-air cinema structure whose screen can be viewed from an automobile,TRUE
-Q4819632,Satellite campus,campus of a college or university physically at a distance from the main campus,TRUE
-Q15284,Municipality,administrative division having corporate status and usually powers of self-government or jurisdiction,TRUE
-Q30026,Buoy,floating device,TRUE
-Q52815,Adult movie theater,type of movie theater,TRUE
-Q42034610,IMAX theater,movie theatre using the IMAX film format,TRUE
-Q1200524,Complex volcano,volcano with more than one feature,TRUE
-Q14916829,Internment camp,"places where civilians, prisoners-of-war or soldiers are held outside the rule of law",TRUE
-Q7834814,NA,"public transport fare zone in Perth, Western Australia",FALSE
-Q6485015,Lands administrative divisions of South Australia,Administrative divisions of South Australia,TRUE
-Q47457179,NA,NA,FALSE
-Q2814066,Comedy club,"a venue, typically a nightclub, bar, or restaurant where people watch or listen to performances, including stand-up comedians, improvisational comedians, impersonators, magicians, ventriloquists and other comedy acts",TRUE
-Q16038801,Contemporary art gallery,place where is shown or sold contemporary art,TRUE
-Q19953632,NA,administrative division which is no longer in use,FALSE
-Q373315,Arroyo (watercourse),dry creek or stream bed which temporarily or seasonally fills and flows after sufficient rain,TRUE
-Q52048109,NA,NA,FALSE
-Q19890860,Agricultural museum,museum focused on matters related to crop growing,TRUE
-Q26944985,NA,NA,FALSE
-Q55546569,NA,type of Australian marine park,FALSE
-Q10145,Milestone,numbered marker along a road or boundary,TRUE
-Q67639546,NA,"museums administered by a historical society, which is a group formed to study and disseminate information about the history of a place, usually a town, city, county, or state",FALSE
-Q143970,Market garden,"relatively small-scale production of fruits, vegetables and flowers as cash crops",TRUE
-Q188869,Field (agriculture),area of land used for agricultural purposes,TRUE
-Q3497366,NA,port and settlement associated with the whaling industry,FALSE
-Q846659,Jewish cemetery,cemetery for Jewish people,TRUE
-Q489357,Farmhouse,chief dwelling-house attached to a farm,TRUE
-Q7492200,Shearing shed,building where sheep are shorn,TRUE
-Q7196844,Pioneer cemetery,burial place for pioneers in any area subject to territorial expansion,TRUE
-Q5281655,Discontinued post office,post office that no longer operates; interesting to philately and postal history,TRUE
-Q2632011,Liquor store,shop that sells prepackaged alcoholic beverages,TRUE
-Q162875,Mausoleum,monument enclosing the interment space or burial chamber of a deceased person or people,TRUE
-Q5116768,Church hall,"room or building associated with a church building, general for community and charitable use",TRUE
-Q56242045,NA,church building in the Anglican Communion,FALSE
-Q1244860,General store,rural or small-town store,TRUE
-Q55353249,NA,NA,FALSE
-Q39364723,NA,building used as a hospital or health care facility,FALSE
-Q59240972,NA,electorate of the former Australian Capital Territory legislature,FALSE
-Q123991,Steppe,ecoregion of plains grasslands without trees,TRUE
-Q2080521,Market hall,covered space traditionally used as a marketplace,TRUE
-Q56477855,NA,NA,FALSE
-Q56477851,NA,NA,FALSE
-Q56477859,NA,NA,FALSE
-Q56477863,NA,NA,FALSE
-Q56477879,NA,NA,FALSE
-Q73218016,NA,graveyard where it is mostly members of the same family who are buried,FALSE
-Q1497483,Memorial cross,"cross erected to commemorate a person or event, sometimes as a grave marker",TRUE
-Q28147634,NA,"heritage place registered under the Heritage Act 1995 of Victoria, Australia",FALSE
-Q3154693,City council,"legislative body that governs a city, municipality or local government area",TRUE
-Q64819963,NA,third-tier of government in South Australia,FALSE
-Q56477704,NA,NA,FALSE
-Q56477742,NA,NA,FALSE
-Q56477712,NA,NA,FALSE
-Q56477746,NA,NA,FALSE
-Q56477754,NA,NA,FALSE
-Q56477738,NA,NA,FALSE
-Q56477688,NA,NA,FALSE
-Q56477680,NA,NA,FALSE
-Q56477750,NA,NA,FALSE
-Q56477684,NA,NA,FALSE
-Q56477726,NA,NA,FALSE
-Q56477720,NA,NA,FALSE
-Q56477692,NA,NA,FALSE
-Q56477730,NA,NA,FALSE
-Q56477708,NA,NA,FALSE
-Q56477700,NA,NA,FALSE
-Q56477716,NA,ward for the City of Port Adelaide Enfield,FALSE
-Q56477794,NA,NA,FALSE
-Q56477806,NA,NA,FALSE
-Q56477770,NA,NA,FALSE
-Q56477802,NA,NA,FALSE
-Q56477790,NA,NA,FALSE
-Q56477798,NA,NA,FALSE
-Q56477823,NA,NA,FALSE
-Q56477814,NA,NA,FALSE
-Q56477758,NA,NA,FALSE
-Q56477762,NA,NA,FALSE
-Q56477766,NA,NA,FALSE
-Q56477778,NA,NA,FALSE
-Q56477782,NA,NA,FALSE
-Q56477819,NA,NA,FALSE
-Q56477786,NA,NA,FALSE
-Q56477827,NA,NA,FALSE
-Q56477810,NA,NA,FALSE
-Q56477774,NA,NA,FALSE
-Q56477950,NA,NA,FALSE
-Q56477937,NA,NA,FALSE
-Q56477929,NA,NA,FALSE
-Q56477831,NA,NA,FALSE
-Q56477915,NA,NA,FALSE
-Q56477875,NA,NA,FALSE
-Q56477835,NA,NA,FALSE
-Q56477911,NA,NA,FALSE
-Q56477895,NA,NA,FALSE
-Q56477887,NA,NA,FALSE
-Q56477867,NA,NA,FALSE
-Q56477871,NA,NA,FALSE
-Q56477843,NA,NA,FALSE
-Q56477891,NA,NA,FALSE
-Q56477903,NA,NA,FALSE
-Q56477899,NA,NA,FALSE
-Q56477847,NA,NA,FALSE
-Q56477907,NA,NA,FALSE
-Q56477839,NA,NA,FALSE
-Q56477924,NA,NA,FALSE
-Q4912036,Bills horse troughs,"memorial watering troughs installed in the early 20th-century, mainly in Australia",TRUE
-Q244326,Salt evaporation pond,shallow artificial pond designed to extract salts from sea water or other brines,TRUE
-Q207934,Allée,straight route with a line of trees or large shrubs running along each side,TRUE
-Q40558,Forge,"workshops of a blacksmith, who is an ironsmith who makes iron into tools or other objects",TRUE
-Q56648990,NA,NA,FALSE
-Q1630622,Drinking fountain,fountain designed to provide drinking water,TRUE
-Q56477651,NA,NA,FALSE
-Q56477655,NA,NA,FALSE
-Q56477933,NA,NA,FALSE
-Q56477520,NA,NA,FALSE
-Q56477659,NA,NA,FALSE
-Q56477643,NA,NA,FALSE
-Q56477511,NA,NA,FALSE
-Q56477591,NA,NA,FALSE
-Q56477616,NA,NA,FALSE
-Q56477595,NA,NA,FALSE
-Q56477603,NA,NA,FALSE
-Q56477515,NA,NA,FALSE
-Q56477525,NA,NA,FALSE
-Q56477559,NA,NA,FALSE
-Q56477587,NA,NA,FALSE
-Q56477535,NA,NA,FALSE
-Q56477583,NA,NA,FALSE
-Q56477647,NA,NA,FALSE
-Q56477635,NA,NA,FALSE
-Q56477540,NA,NA,FALSE
-Q56477563,NA,NA,FALSE
-Q56477734,NA,NA,FALSE
-Q56477883,NA,NA,FALSE
-Q56477639,NA,NA,FALSE
-Q56477549,NA,NA,FALSE
-Q56477946,NA,NA,FALSE
-Q56477611,NA,NA,FALSE
-Q56477573,NA,NA,FALSE
-Q56477675,NA,NA,FALSE
-Q56477671,NA,NA,FALSE
-Q56477667,NA,NA,FALSE
-Q200764,Bookstore,commercial trader of books,TRUE
-Q56477568,NA,NA,FALSE
-Q56477599,NA,NA,FALSE
-Q56477919,NA,NA,FALSE
-Q56477941,NA,NA,FALSE
-Q56477625,NA,NA,FALSE
-Q56477530,NA,NA,FALSE
-Q56477555,NA,NA,FALSE
-Q56477696,NA,NA,FALSE
-Q56477545,NA,NA,FALSE
-Q56477607,NA,NA,FALSE
-Q56477630,NA,NA,FALSE
-Q56477578,NA,NA,FALSE
-Q56477621,NA,NA,FALSE
-Q1163166,Water slide,type of slide designed for recreational use in water parks,TRUE
-Q56876592,NA,NA,FALSE
-Q64827143,NA,NA,FALSE
-Q57405092,NA,ward for the Corporation of the City of Enfield,FALSE
-Q56876523,NA,NA,FALSE
-Q61994431,NA,NA,FALSE
-Q61994552,NA,NA,FALSE
-Q62066296,NA,NA,FALSE
-Q12143,Time zone,"region on Earth that has a uniform standard time for legal, commercial, and social purposes",TRUE
-Q7843791,Consulate,small official office of one country in another country,TRUE
-Q208322,Carousel,amusement ride consisting of a rotating circular platform with seats for riders,TRUE
-Q3095365,Guard rail,fence or barrier consisting of one or more horizontal rails and vertical supports,TRUE
-Q1308978,Cut (earthworks),"where soil or rock material from a hill or mountain is cut out to make way for a canal, road or railway line",TRUE
-Q59872735,NA,building,FALSE
-Q88372,NA,"long, open, level area, usually next to a river or a (former) military building where people may walk",FALSE
-Q3303463,Food truck,truck used for carrying and selling food,TRUE
-Q2512740,Lava flow,subclass of volcanic phenomenon,TRUE
-Q1939700,Adventure park,recreational visitor attraction,TRUE
-Q182060,Office,room where people perform office work,TRUE
-Q61881613,NA,NA,FALSE
-Q61961075,NA,NA,FALSE
-Q11498185,NA,canal used to drain water,FALSE
-Q1440300,Observation tower,civilian structure used to view the surrounding landscape,TRUE
-Q26958726,NA,museum specialising in mineralogy or geology,FALSE
-Q124098638,NA,territorial jurisdiction of the Roman Catholic Church that groups a metropolitan archdiocese with its suffragan dioceses,FALSE
-Q1065656,Health club,place which houses exercise equipment for the purpose of physical exercise,TRUE
-Q2099281,Debate chamber,room for people to discuss and debate,TRUE
-Q15921563,NA,location where an aircraft impacts the ground,FALSE
-Q25958098,NA,NA,FALSE
-Q7543083,Avenue (landscape),"wide, straight, usually tree-lined road or approach",TRUE
-Q255595,Ossuary,"place like a building, well, or site made to serve as the final resting place of human skeletal remains",TRUE
-Q96744603,NA,NA,FALSE
-Q805353,Ballroom,large room for formal dancing,TRUE
-Q113686470,NA,place of worship associated with the Methodist Church,FALSE
-Q24868622,NA,NA,FALSE
-Q356936,Exclusion zone,geographic area in which sanctioning authority prohibits specific activities,TRUE
-Q198632,Brickworks,factory for the manufacture of building materials made ​​of baked clay or loam,TRUE
-Q34545040,NA,NA,FALSE
-Q2963918,Chiringuito,"small enterprise, usually a bar selling drinks and food, typically established on a beach",TRUE
-Q68403978,NA,ward for the City of Kensington and Norwood,FALSE
-Q68447939,NA,ward for the Coorong,FALSE
-Q385557,Slaughterhouse,facility where animals are killed for consumption as food products,TRUE
-Q56190453,NA,"site, complex or area for commemorating a historic event or person",FALSE
-Q335778,Polling station,site of ballot casting in elections,TRUE
-Q3088348,NA,establishment in which cheese is produced,FALSE
-Q12489179,NA,Indonesian regional departmental office located in a provincial capital,FALSE
-Q15982170,NA,recreation area,FALSE
-Q3299260,Local government area,administrative division of a country that a local government is responsible for,TRUE
-Q15496340,Ironmongery,type of shop,TRUE
-Q78758464,NA,geographical area for which a broadcasting licence has been issued,FALSE
-Q1817883,NA,type of manufacturing company occupied with making furniture,FALSE
-Q23891529,NA,small honorary office of one country in another country,FALSE
-Q7837534,Tree avenue,straight path or road with a line of trees,TRUE
-Q1935728,Stone circle,monument of standing stones arranged in a circle,TRUE
-Q1402739,Field hospital,"small mobile medical unit, or mini hospital, that temporarily takes care of casualties on-site",TRUE
-Q60456301,RV park,"place where people with recreational vehicles can stay overnight, or longer, in allotted spaces known as ""sites"" or ""campsites"".",TRUE
-Q334383,Abbey church,"church of an abbey (monastery), seat of an abbot",TRUE
-Q1649060,Pro-cathedral,church serving temporarily as cathedral,TRUE
-Q1318959,Toy store,business that specializes in selling toys typically for youth,TRUE
-Q2973184,Simulator ride,amusement park,TRUE
-Q7658373,Swimming hole,place in a natural body of water large enough and deep enough for a person to swim in,TRUE
-Q2445527,Wilderness area,region where the land is in a natural state,TRUE
-Q61881945,NA,NA,FALSE
-Q236371,Orchard,intentional planting of trees or shrubs that is maintained for food production,TRUE
-Q1662089,NA,museum focused on the production activities of goods and services,FALSE
-Q721747,Commemorative plaque,"plate or tablet, fixed to a surface or freestanding, commemorating an event, person, place, etc.",TRUE
-Q1188673,Subway (underpass),underpass for pedestrians and cycles,TRUE
-Q7540126,Headquarters,"location where key leadership and coordination functions take place, often recognized as the central home for a disparate organization",TRUE
-Q13164546,NA,store where meat is sold,FALSE
-Q361945,Slipway,ramp on the shore by which ships or boats can be moved to and from the water,TRUE
-Q1777138,Race track,"facility built for racing of animals, vehicles, or athletes",TRUE
-Q831515,Lightship,ship or boat that acts as a lighthouse in waters that are too deep or otherwise unsuitable for lighthouse construction,TRUE
-Q1045481,Filming location,place where film or TV series is produced,TRUE
-Q5446873,Field Ambulance,wartime mobile medical unit,TRUE
-Q56695738,NA,national institution gathering the local OpenStreetMap community and chartered with the OpenStreetMap Foundation,FALSE
-Q6633995,NA,geological structure,FALSE
-Q10594991,NA,"general name for all kinds of areas with striking features when it comes to flora, fauna, geological or landscape conditions, protected and not protected",FALSE
-Q367914,Bed and breakfast,small lodging establishment,TRUE
-Q1365924,Mineral spring,natural springs that produce water containing minerals,TRUE
-Q107539355,NA,"class of bio-geographic provinces, defined in MEOW scheme",FALSE
-Q107539356,NA,"class of bio-geographic regions, defined in MEOW scheme",FALSE
-Q421069,Intertidal zone,area between tide marks,TRUE
-Q3639892,NA,sports facility for mountain biking,FALSE
-Q617839,Apartment hotel,hotel with apartment-like rooms,TRUE
-Q569500,Community health center,"clinic staffed by a group of general practitioners and nurses, providing healthcare services to people in a certain area",TRUE
-Q47520603,NA,area in a park or other municipally maintained space designated for open-air food preparation and dining,FALSE
-Q110160416,NA,geographic location where cloud services are operated from,FALSE
-Q367885,Village hall,"building within a village which contains at least one large room, usually owned by and run for the benefit of the local community",TRUE
-Q1934961,Dark ride,type of amusement ride,TRUE
-Q1996635,Optician,dispenser of eyeglasses and contact lenses,TRUE
-Q1473454,NA,playground located indoors,FALSE
-Q4825087,Australian pub,"an Australian venue specifically licensed to serve alcoholic drinks, that does offer take away services and has or previously had associated accommodation",TRUE
-Q159313,Urban agglomeration,extended city or town area comprising the built-up area of a central place and its suburbs,TRUE
-Q5307737,Drinking establishment,business whose primary function is the serving of alcoholic beverages for consumption on the premises,TRUE
-Q56242275,NA,religious building of the Lutheran church,FALSE
-Q47516839,NA,shop selling tires,FALSE
-Q27951514,NA,arena covered by roof and walls,FALSE
-Q188507,Apartment,self-contained housing unit occupying part of a building,TRUE
-Q927519,Ambulance station,a structure or other area set aside for storage of ambulance vehicles,TRUE
-Q35101126,NA,public beach where pet dogs are allowed,FALSE
-Q2061186,Religious order,group of people set apart from society and other groups based on their religious devotion,TRUE
-Q4065176,Anglican religious order,NA,TRUE
-Q6554910,Butte,"isolated hill with steep, often vertical sides and a small, relatively flat top",TRUE
-Q66436502,NA,specific arrangement of the racing circuit at a motorsports venue,FALSE
-Q23073760,Nature reserve (Australia),protected area designation in some Australian states,TRUE
-Q106492632,Space command,type military organization,TRUE
-Q28843552,NA,group of related buildings in close proximity operating together as a single factory,FALSE
-Q55622767,Memorial hall,hall built to commemorate an individual or group,TRUE
-Q42679632,NA,room for performances by actors,FALSE
-Q2145163,Trunk road,"type of major road, usually connecting major settlements",TRUE
-Q37402,Global Boundary Stratotype Section and Point,boundary of a stage on the geologic time scale,TRUE
-Q213283,Diplomatic mission,group of people from one state present in another state to represent the sending state,TRUE
-Q1538669,NA,museum specialising in the history of education,FALSE
-Q692630,Outdoor gym,"fitness playground, gym equipment in a public outdoor location",TRUE
-Q836412,Schoenstatt Shrine,type of chapel associated with the Schoenstatt movement in Catholicism,TRUE
-Q786803,Car dealership,"business which sells, buys, and trades new and/or used cars, trucks, SUVs, and vans",TRUE
-Q15042037,NA,"areas designated as significant due to high population density, economic activity, or other reasons",FALSE
-Q57413580,NA,NA,FALSE
-Q1351018,NA,building having facilities for various recreational activities,FALSE
-Q2090555,Clothes shop,shop or store where clothes are sold,TRUE
-Q94569884,NA,type of (outdoor) art exhibition,FALSE
-Q693922,Veranda,"roofed, open-air gallery or porch",TRUE
-Q115228557,NA,"electoral division of the Moreton Bay City Council in Queensland, Australia",FALSE
-Q111594582,NA,type of protected area in Australia,FALSE
-Q19756,Mangrove,tropical coastal vegetation consisting of a shrub or tree that grows in coastal saline or brackish water,TRUE
-Q120970071,NA,mining operation involved in the extraction of lithuim,FALSE
-Q104817981,Furniture retailer,company selling furniture,TRUE
-Q2400020,Function hall,multi-purpose hall type,TRUE
-Q741118,Tennis court,venue where the sport of tennis is played,TRUE
-Q8524,Football pitch,rectangular area where association football is played,TRUE
-Q116452632,NA,"wall that commemorates an event, a person...",FALSE
-Q62059375,NA,"A very steep spur projecting from a hill, mountain, plateau, range etc., having the appearance of supporting it.",FALSE
-Q24576816,NA,group of islets consisting of exposed rock,FALSE
-Q1361100,Skyway,type of pedway,TRUE
-Q17087190,Walkway,engineered surface or structure supporting pedestrian traffic,TRUE
-Q62059481,NA,"place where a street, railway, stream, etc., may be crossed",FALSE
-Q1210687,Cricket pitch,central strip of the cricket field between the wickets,TRUE
-Q109391,Volcanic crater,circular depression in the ground caused by volcanic activity,TRUE
-Q145658,Greengrocer,selling point of fruits and vegetables,TRUE
-Q2235104,Ship chandler,a retail dealer who specialises in supplies or equipment for ships,TRUE
-Q1410110,NA,"local establishment of a company, not independent legal entity",FALSE
-Q109321319,NA,track for BMX racing,FALSE
-Q933851,Obstacle course,series of challenging physical obstacles an individual or team must navigate for sport,TRUE
-Q27896063,NA,trail intended for use by mountain bikers,FALSE
-Q112860910,NA,Playground for children,FALSE
-Q840850,Freight forwarder,service company that handles the shipment of goods,TRUE
-Q809889,Baseball field,"field on which baseball is played (for the whole stadium, see baseball park)",TRUE
-Q64654999,NA,"building or architectural structure no longer used as theatre, currently existing or not",FALSE
-Q116672311,NA,place of worship associated with the Greek Orthodox Church,FALSE
-Q12327290,NA,area dedicated to the memorial of a person or event etc,FALSE
-Q5164914,Contaminated land,land that contains substances in or under the surface that are actually or potentially hazardous to health or the environment,TRUE
-Q112688641,NA,room for live performances with an audience space and a stage,FALSE
-Q932689,Watering trough,trough for watering animals,TRUE
-Q2673934,Median strip,reserved area that separates opposing lanes of traffic on divided roadways,TRUE
-Q7339573,Road verge,vegetative strip beside the carriageway of a road or between two roads,TRUE
-Q6554328,Link road,type of roads,TRUE
-Q7275,State (polity),"organised community living under a system of government; either a sovereign state, constituent state, or federated state",TRUE
-Q177305,Observation deck,elevated sightseeing platform,TRUE
-Q656586,Alluvial plain,region on which rivers have deposited sediment,TRUE
-Q12719646,Pond,natural or artificially created body of water in which there is no or little flow velocity,TRUE
-Q251958,Community gardening,single piece of land gardened collectively by a group of people,TRUE
-Q113682063,NA,place of worship associated with the Baptist Church,FALSE
-Q2903091,Stabling point,railway facility,TRUE
-Q117356167,State Forests of New South Wales,forests managed by the New South Wales government in Australia,TRUE
-Q96251935,NA,flat area under the sea,FALSE
-Q97459036,NA,public building associated with some metropolises,FALSE
-Q2341939,Basketball court,"rectangular playing surface, with baskets at each end",TRUE
-Q510662,Ring road,type of road encircling a settlement,TRUE
-Q11638045,Agricultural road,service road that serves predominantly agricultural or forestry purposes and has only local significance,TRUE
-Q1295201,Grocery store,retail store that primarily sells food and other household supplies,TRUE
-Q6804271,Meat market,marketplace,TRUE
-Q33097655,NA,"commercial establishment providing fun activities such as bowling, darts, karaoke, sports, spa, game arcade",FALSE
-Q12053053,Artificial waterfall,architecture resembling a drop in a river's course,TRUE
-Q723748,Confluence,meeting of two or more bodies of flowing water,TRUE
-Q866623,Olympic Village,accommodation for Olympic participants,TRUE
-Q2699076,NA,type of house,FALSE
-Q2043393,NA,small stream,FALSE
-Q203443,Gravestone,"stele or marker, usually stone, that is placed over a grave",TRUE
-Q21200006,NA,surface for the practise of cycling,FALSE
-Q4929169,Blue Gum High Forest,"forest in Sydney, Australia",TRUE
-Q26721034,Bike shop,"Business specializing in bicycle sale, maintenance and parts",TRUE
-Q20708021,Jewellery store,shop which sells jewelry,TRUE
-Q55720514,NA,park to which one or more historically significant buildings have been moved for display,FALSE
-Q3499307,Science center,"interactive, hands-on science museum",TRUE
-Q811593,Canopy walkway,elevated walkway,TRUE
-Q1852785,Trench,excavated channel in ground,TRUE
-Q1195098,Ward (electoral subdivision),"subdivision of a local government unit, used for electoral purposes",TRUE
-Q1376606,Natural pool,NA,TRUE
-Q16668826,Stationery store,shop that sells stationery,TRUE
-Q113686343,NA,place of worship associated with the Uniting Church in Australia,FALSE
-Q899514,Backwater (river),part of a river in which there is little or seasonal-only current,TRUE
-Q2710737,Stockpile,pile or storage location for bulk materials,TRUE
-Q2961103,Tree tunnel,foliage corridor,TRUE
-Q18587891,NA,place where pots and other ceramics are made,FALSE
-Q817056,NA,monastic community of monks of the Benedictine order,FALSE
-Q1400565,Spur (topography),geographical term for a lateral ridge or tongue of land,TRUE
-Q2231510,Col,lowest point on a mountain ridge between two peaks,TRUE
-Q13107184,Pharmacy (shop),health facility where medicines are sold and medical advice is given,TRUE
-Q40357935,NA,historical territorial entity,FALSE
-Q1200676,Design studio,workplace for designers and artisans,TRUE
-Q111594570,NA,type of protected area in Australia,FALSE
-Q61710650,NA,museum dedicated to LGBT related subjects,FALSE
-Q7667945,Rapid bus routes in Sydney,NA,TRUE
-Q4992061,Police district,"police subdivision, responsible for a certain geographic area",TRUE
-Q13406558,Hedge maze,outdoor garden maze or labyrinth in which the walls are made of vertical hedges,TRUE
-Q58217808,NA,printing house that make prints,FALSE
-Q2244608,Bird hide,shelter to observe birds,TRUE
-Q11111030,Boardwalk,"an elevated footpath, walkway, or causeway built with wooden planks that enables pedestrians to cross wet, fragile, or marshy land",TRUE
-Q1162282,Post office box,uniquely addressable lockable box located on the premises of a post office station,TRUE
-Q1406569,Leper colony,place to quarantine people with leprosy,TRUE
+type,title,description,on_english_wikipedia,label,sitelinks
+Q39594,Bay,"body of water connected to an ocean or lake, formed by an indentation of the shoreline",TRUE,bay,
+Q515,City,large human settlement,TRUE,city,
+Q257391,Federal capital,national capital city in a federal state,TRUE,federal capital,
+Q1549591,NA,"city with a population of at least 100,000",FALSE,big city,
+Q15840617,NA,type of city which is planned to built as national capital,FALSE,planned national capital,
+Q114496982,NA,NA,FALSE,political city,
+Q208511,Global city,city which is an important node in the global economy,TRUE,global city,
+Q1066984,Financial centre,"city that is home to a large number of internationally significant banks, businesses, and stock exchanges",TRUE,financial centre,
+Q11271835,NA,capital city of a subnational entity,FALSE,state capital,
+Q51929311,NA,city which has the greatest population in a country,FALSE,largest city,
+Q18618819,NA,an area of land designated as a national park by legislation of the Commonwealth of Australia (federal government) or one of the states or territories of Australia,FALSE,national park of Australia,
+Q46169,National park,park used for conservation purposes of animal life and plants,TRUE,national park,
+Q2232001,Show cave,"cave managed by an organization and made accessible to the general public, usually for an entrance fee",TRUE,show cave,
+Q3257686,NA,place of human settlement,FALSE,locality,
+Q11292,Coral reef,ridge of rock in the sea formed by the growth and deposit of coral,TRUE,coral reef,
+Q3957,Town,settlement that is smaller than a city but bigger than a large village (or a large borough in some areas),TRUE,town,
+Q350895,Abandoned village,village that has been deserted,TRUE,abandoned village,
+Q738570,Central business district,"commercial and business area of a city; not necessarily synonymous with ""city center""/""downtown""",TRUE,central business district,
+Q37901,Strait,"naturally formed, narrow waterway that connects two larger bodies of water",TRUE,strait,
+Q23442,Island,piece of sub-continental land completely surrounded by water,TRUE,island,
+Q852190,Shipwreck,remains of a ship that has wrecked,TRUE,shipwreck,
+Q1139493,Inselberg,"isolated rock hill, knob, ridge, or small mountain in the tropics, rises abruptly from a gently sloping or virtually level surrounding plain",TRUE,inselberg,
+Q1402592,Island group,"collection of islands, excluding neighbouring water; use archipelago (Q33837) for a group of islands including the water between them",TRUE,island group,
+Q34038,Waterfall,place where water flows over a steep or vertical drop,TRUE,waterfall,
+Q23397,Lake,"body of relatively still water, localized in a basin",TRUE,lake,
+Q8502,Mountain,large natural elevation of the Earth's surface,TRUE,mountain,
+Q54050,Hill,"landform that extends above the surrounding terrain in lower mountain ranges, smaller than a mountain",TRUE,hill,
+Q820477,Mine (mining),place for the extraction of minerals,TRUE,mine,
+Q34442,Road,"wide way leading from one place to another, especially one with a specially prepared surface which vehicles can use",TRUE,road,
+Q9096832,Paleontological site,natural deposit containing fossils,TRUE,paleontological site,
+Q33837,Archipelago,collection of islands including the water around them,TRUE,archipelago,
+Q43501,Zoo,"collection of assorted wild animal species kept for purposes like: study, conservation and, or, commercial exhibition",TRUE,zoo,
+Q537127,Road bridge,bridge that carries road traffic,TRUE,road bridge,
+Q1055465,Girder bridge,bridge built of girders placed on bridge abutments and foundation piers,TRUE,girder bridge,
+Q1429218,Cantilever bridge,bridge built using cantilevers,TRUE,cantilever bridge,
+Q3397519,NA,bridge made with prestressed concrete structural elements,FALSE,prestressed concrete bridge,
+Q7858339,Twin bridges,two parallel bridges that act as a single crossing,TRUE,twin bridges,
+Q188025,Salt lake,landlocked body of water which has a high concentration of salts,TRUE,salt lake,
+Q483453,Fountain,piece of architecture that ejects water,TRUE,fountain,
+Q46831,Mountain range,geographic area containing several geologically related mountains,TRUE,mountain range,
+Q2389789,Steel roller coaster,type of roller coaster that is defined by having a track made of steel,TRUE,steel roller coaster,
+Q1030048,NA,mine that contains diamonds,FALSE,diamond mine,
+Q131681,Reservoir,artificial lake impounded using a dam or lock to store water,TRUE,reservoir,
+Q2087181,Historic house museum,house that has been transformed into a museum,TRUE,historic house museum,
+Q749565,Structural basin,geological depression,TRUE,structural basin,
+Q9019918,Endorheic lake,"lake with no outflow to other external bodies of water, such as rivers or oceans",TRUE,endorheic lake,
+Q166620,Drainage basin,"area of land where precipitation collects and drains off into a common outlet, such as into a river, bay, or other body of water",TRUE,drainage basin,
+Q39715,Lighthouse,structure designed to emit light to aid navigation,TRUE,lighthouse,
+Q153562,Opera house,theatre building used for opera performances,TRUE,opera house,
+Q570116,Tourist attraction,place of interest where tourists visit,TRUE,tourist attraction,
+Q283202,Harbor,"sheltered body of water where ships, boats, and barges can be docked",TRUE,harbor,
+Q167346,Botanical garden,well-tended area displaying a wide range of plants labelled with their botanical names,TRUE,botanical garden,
+Q5592057,Through arch bridge,type of bridge,TRUE,through arch bridge,
+Q6636777,Road–rail bridge,bridge carrying both a roadway and a railway,TRUE,road-rail bridge,
+Q7814330,Toll bridge,bridge for which road usage tolls are charged,TRUE,toll bridge,
+Q12042110,NA,bridge made of steel,FALSE,steel bridge,
+Q18615527,NA,bridge carrying tram line,FALSE,tram bridge,
+Q748198,Gay village,geographical area within a city that is inhabited or frequented by LGBT people,TRUE,LGBT village,
+Q269949,Highway,a public road intended for rapid movement of motor vehicles between major towns,TRUE,highway,
+Q207694,Art museum,"building or space for the exhibition of art (for institution, use Q3196771)",TRUE,art museum,
+Q1304276,Arterial road,high-capacity urban road,TRUE,arterial road,
+Q39816,Valley,"low area between hills, often with a river running through it",TRUE,valley,
+Q1349255,Natural gas field,deposits rich in natural gas,TRUE,natural gas field,
+Q55818,Impact crater,circular depression in a solid astronomical body formed by the impact of a smaller object,TRUE,impact crater,
+Q162602,River island,landmass or fluvial landform within a river,TRUE,river island,
+Q1406331,Scenic route,specially designated road or waterway of interest,TRUE,scenic route,
+Q174782,Town square,"open public spaces in cities or towns, usually rectilinear, surrounded by buildings, and often located at the junction of two or more thoroughfares",TRUE,square,
+Q29981662,NA,road used only by buses,FALSE,busway,
+Q31615,Cove,type of small bay or coastal inlet,TRUE,cove,
+Q185113,Cape (geography),"headland of large size extending into a body of water, usually the sea",TRUE,cape,
+Q191992,Headland,"landform extending into a body of water, often with significant height and drop",TRUE,headland,
+Q1210334,Railway bridge,bridge that can be crossed by a train,TRUE,railway bridge,
+Q1898246,Vertical-lift bridge,movable bridge in which a span rises vertically while remaining parallel with the deck,TRUE,vertical-lift bridge,
+Q15835,Japanese garden,type of traditional garden,TRUE,Japanese garden,
+Q22746,Urban park,park in a city or other incorporated place,TRUE,urban park,
+Q641226,Arena,"enclosed area designed to host sporting events, theater, and musical performances",TRUE,arena,
+Q532,Village,small clustered human settlement smaller than a town,TRUE,village,
+Q272231,Arboretum,botanical garden containing living collections of woody plants intended at least partly for scientific study,TRUE,arboretum,
+Q1759852,Sculpture garden,outdoor garden dedicated to the presentation of sculptures,TRUE,sculpture garden,
+Q34763,Peninsula,landform surrounded more than half but not entirely by water,TRUE,peninsula,
+Q259037,Traveling carnival,moveable amusement park,TRUE,traveling carnival,
+Q1174791,Escarpment,type of slope landform,TRUE,escarpment,
+Q17018380,Bight (geography),"bend or curve in a coastline, river, or other geographical feature",TRUE,bight,
+Q5003624,Memorial,"area or object, smaller than a monument, which serves as a focus for memory of something",TRUE,memorial,
+Q212057,Shield volcano,type of volcano usually built almost entirely of fluid lava flows,TRUE,shield volcano,
+Q7138926,Parliament buildings,"subclass of a legislative building, used by countries/entities which have a parliamentary form of government",TRUE,parliament building,
+Q24529780,NA,"tapering landform, projecting into a body of water",FALSE,point,
+Q35254629,NA,NA,FALSE,bauxite mine,
+Q202570,Ferris wheel,amusement ride,TRUE,Ferris wheel,
+Q1060829,Concert hall,building designed for music performances,TRUE,concert hall,
+Q25550691,Town hall,chief administrative seat of a municipality,TRUE,town hall,
+Q123924129,NA,"district within a city, town, or other community marked out for specific governmental or administrative purposes",FALSE,precinct,
+Q10313934,NA,lake that disappears seasonally,FALSE,intermittent lake,
+Q3284499,NA,building in a capital city used for administrative or legislative purposes,FALSE,capitol building,
+Q130003,Ski resort,"mountainside developed for skiing, snowboarding, and other winter sports",TRUE,ski resort,
+Q75520,Plateau,high flat terrain,TRUE,plateau,
+Q369730,Pedestrian zone,area of a city or town reserved for pedestrian-only use,TRUE,Pedestrian zone,
+Q1348073,Underground city,series of linked subterranean spaces,TRUE,underground city,
+Q1322134,Gulf,large inlet that is an arm of an ocean or sea,TRUE,gulf,
+Q1438105,Research reactor,nuclear reactors that serve primarily as a neutron source,TRUE,research reactor,
+Q2373919,Intentional community,"planned, socially-cohesive, residential community",TRUE,intentional community,
+Q74047,Ghost town,city depopulated of inhabitants and that often stays practically intact,TRUE,ghost town,
+Q148571,Fence,freestanding structure preventing movement across a boundary,TRUE,fence,
+Q184358,Reef,feature lying beneath the surface of the water,TRUE,reef,
+Q2354973,NA,tunnel built for vehicular road traffic,FALSE,road tunnel,
+Q7814340,Toll tunnel,is a road tunnel where a monetary charge (or toll) is required to pass through,TRUE,toll tunnel,
+Q28599311,NA,mine which primarily produces ores containing uranium,FALSE,uranium mine,
+Q16659538,NA,mine that contains gold,FALSE,gold mine,
+Q2143825,Hiking trail,path for hiking in a natural environment,TRUE,hiking trail,
+Q785020,Sedimentary basin,regions of long-term subsidence creating space for infilling by sediments,TRUE,sedimentary basin,
+Q45791,Geoglyph,motif produced on the ground; observed only remotely or from space,TRUE,geoglyph,
+Q420962,Heritage railway,railway used for heritage/historical/tourism purposes,TRUE,heritage railway,
+Q46622,Controlled-access highway,"highway designed exclusively for high-speed vehicular traffic, with all traffic flow and ingress/egress regulated",TRUE,controlled-access highway,
+Q79007,Street,public thoroughfare in a built environment,TRUE,street,
+Q132510,NA,"location where people regularly gather for the purchase and sale of provisions, livestock, and other goods",FALSE,market,
+Q194195,Amusement park,park with rides and attractions,TRUE,amusement park,
+Q35509,Cave,natural void under the Earth's surface,TRUE,cave,
+Q813672,Basin (geomorphology),geologic depression,TRUE,basin,
+Q14276458,NA,bridge with deck on top of arch structure,FALSE,deck arch bridge,
+Q160091,Plain,flat geographic region,TRUE,plain,
+Q39614,Cemetery,place of burial,TRUE,cemetery,
+Q24354,Theater (structure),building designed for presentation of dramatic performances,TRUE,theatre building,
+Q1068842,Footbridge,"bridge designed for pedestrians and in some cases cyclists, animal traffic and horse riders, rather than vehicular traffic",TRUE,footbridge,
+Q2502622,NA,"bridge for cyclists, mostly also for pedestrians",FALSE,bicycle bridge,
+Q828909,Wharf,structure on the shore of a harbor or on the bank of a river or canal where ships dock,TRUE,wharf,
+Q204832,Roller coaster,type of amusement ride found at amusement parks and carnivals,TRUE,roller coaster,
+Q34483580,NA,mining operation involved in the extraction of metals from ore,FALSE,ore mine,
+Q6745599,Mamelon (volcanology),"hill formed by eruption of ""stiff"" lava",TRUE,Mamelon,
+Q503269,Seamount,mountain rising from the ocean floor that does not reach the water's surface,TRUE,seamount,
+Q158438,Arch bridge,bridge type characterized by its supporting arches,TRUE,arch bridge,
+Q123705,Neighbourhood,"geographically localized community within a larger city, town or suburb",TRUE,neighborhood,
+Q481289,Official residence,"residence of heads of state, head of government, governor, religious leader, leaders of international organizations, or other equivalent figure",TRUE,official residence,
+Q5588918,Government Houses of the British Empire and Commonwealth,type of British official residence,TRUE,Government House of the British Empire and Commonwealth,
+Q1205140,Barrier island,coastal landform and a type of dune system,TRUE,barrier island,
+Q358738,Shuttle roller coaster,"type of roller coaster that does a back-and-forth circuit, instead of a complete circuit.",TRUE,shuttle roller coaster,
+Q627421,Launched roller coaster,modern form of roller coaster,TRUE,launched roller coaster,
+Q42178109,Giga coaster,Rollercoaster with a height or drop of at least 300 feet,TRUE,gigacoaster,
+Q3252908,List of national parks of Western Australia,national parks in Western Australia,TRUE,national park of Western Australia,
+Q150784,Canyon,geomorphological formation as narrow and deep ravine between cliffs,TRUE,canyon,
+Q158555,Cable-stayed bridge,type of bridge,TRUE,cable-stayed bridge,
+Q1200957,NA,place attracting many tourists,FALSE,tourist destination,
+Q9381142,Hill chain,elongated line of hills,TRUE,hill chain,
+Q1788582,State highway,"highway which is part of a subnational highway network; often described as a state highway network, provincial highway network, or similar",TRUE,state highway,
+Q55177716,NA,garden open to the public,FALSE,public garden,
+Q204324,Volcanic crater lake,lake formed within a volcanic crater,TRUE,volcanic crater lake,
+Q491713,Sound (geography),"long, relatively wide body of water, connecting two larger parts of the sea",TRUE,sound,
+Q3240715,Crater,"depression on the Earth or celestial body caused by some form of explosion, including bolide impact, volcanic eruption or chemical/nuclear explosion",TRUE,crater,
+Q2416723,NA,amusement park focused on a particular theme,FALSE,theme park,
+Q44782,Port,maritime facility where ships may dock to load and discharge passengers and cargo,TRUE,port,
+Q47692,Chinese garden,style of garden,TRUE,Chinese garden,
+Q202509,Chinatown,ethnic enclave of expatriate Chinese people,TRUE,Chinatown,
+Q575759,War memorial,memorial for the victims of a war,TRUE,war memorial,
+Q169358,Stratovolcano,"tall, conical volcano built up by many layers (strata) of hardened lava",TRUE,stratovolcano,
+Q213441,Retail shop,place where items or services are sold,TRUE,shop,
+Q188040,Quarry,"place from which dimension stone, rock, construction aggregate etc. has been excavated from the ground",TRUE,quarry,
+Q131263,Barracks,buildings or sets of buildings erected as common living quarters for groups of soldiers or workers,TRUE,barracks,
+Q1161185,Volcanic island,island of volcanic origin,TRUE,volcanic island,
+Q3397526,NA,type of bridge design with stone or brick material,FALSE,stone bridge,
+Q47928,Circus,commonly a travelling company of performers,TRUE,circus,
+Q134851,Continental shelf,portion of a continent that is submerged under an area of relatively shallow water known as a shelf sea,TRUE,continental shelf,
+Q803749,Billabong,oxbow lake in Australia,TRUE,billabong,
+Q133056,Mountain pass,pass through a saddle or col to cross a mountain range,TRUE,mountain pass,
+Q15060435,Marine mammal park,commercial theme park where marine mammals are kept,TRUE,marine mammal park,
+Q64364539,NA,NA,FALSE,LGBT place,
+Q49956097,NA,palaeolithic archaeological site,FALSE,paleolithic site,
+Q3215290,NA,lake formed by people,FALSE,artificial lake,
+Q1140316,Penal colony,remote settlement used to house convicts from the general population,TRUE,penal colony,
+Q148319,Planetarium,theatre built primarily for presenting educational and entertaining shows about astronomy and the night sky,TRUE,planetarium,
+Q10564300,NA,mine which primarily produces copper ore,FALSE,copper mine,
+Q93267,Isthmus,narrow strip of land connecting two larger land areas,TRUE,isthmus,
+Q321053,Cenotaph,empty tomb or monument erected in honor of a person whose remains are lost or interred elsewhere,TRUE,cenotaph,
+Q40080,Beach,area of sand or small stones near the sea or another area of water such as a lake,TRUE,beach,
+Q1340555,Deep geological repository,nuclear waste repository excavated deep within a stable geologic environment,TRUE,deep geological repository,
+Q1262712,Gas pipeline,pipe designed for long-distance natural-gas transportation,TRUE,gas pipeline,
+Q1197120,Extinct volcano,a volcano considered unlikely to erupt again,TRUE,extinct volcano,
+Q13405588,Long-distance trail,"long trail used for walking, backpacking, cycling, horse riding or cross-country skiing",TRUE,long-distance trail,
+Q4946461,Spa town,specialized resort town situated around a mineral spa,TRUE,spa town,
+Q158218,Truss bridge,bridge whose load-bearing superstructure is composed of a truss,TRUE,truss bridge,
+Q3699460,Defile (geography),geomorphological structure,TRUE,defile,
+Q55491,NA,railway station located below ground,FALSE,underground railway station,
+Q22808403,NA,type of station,FALSE,underground station,
+Q973560,Wooden roller coaster,type of roller coaster,TRUE,wooden roller coaster,
+Q4823517,Big things (Australia),novelty structure in Australia,TRUE,big thing in Australia,
+Q10952797,Anchorage (maritime),location at sea where ships can lower anchors,TRUE,anchorage,
+Q34198935,NA,small rock on a seafloor or riverbed that can pose a hazard to maritime navigation,FALSE,submerged rock,
+Q193110,Floodplain,"area of land adjacent to a stream or river which stretches from the banks of its channel to the base of the enclosing valley walls, and which experiences flooding during periods of high discharge",TRUE,floodplain,
+Q133346,Border,legal boundary between two geographic regions,TRUE,border,
+Q3089219,Maritime boundary,"boundary between marine zones over which countries have rights, or between such zones and international waters",TRUE,maritime boundary,
+Q12413618,NA,border between two sovereign states,FALSE,international border,
+Q885499,Blowhole (geology),geological phenomenon,TRUE,blowhole,
+Q35666,Glacier,large persistent body of ice,TRUE,glacier,
+Q3917681,Embassy,"permanent diplomatic mission of higher level, representing its operator in the country the embassy is in",TRUE,embassy,
+Q503481,Cay,small island formed on the surface of a coral reef,TRUE,cay,
+Q13691,Artificial island,island-like structure constructed by people,TRUE,artificial island,
+Q2293148,Sculpture trail,type of trail,TRUE,sculpture trail,
+Q1324633,Naval base,port and military base for naval ships and other assets,TRUE,naval base,
+Q115978566,NA,road class in Latvia,FALSE,regional road,
+Q2532223,NA,type of cemetery honoring people who sacrificed themselves for their country,FALSE,memorial cemetery,
+Q240854,Hall,"large room used for meetings, social affairs or events",TRUE,hall,
+Q1107656,Garden,"planned space set aside for the display, cultivation, and enjoyment of plants",TRUE,garden,
+Q1245089,Promontory,prominent mass of land that overlooks lower-lying land or a body of water,TRUE,promontory,
+Q107679,Cliff,"significant vertical, or near vertical, rock exposure",TRUE,cliff,
+Q5084,Hamlet (place),small settlement in a rural area,TRUE,hamlet,
+Q3469910,Performing arts center,facility primarily intended for the performing arts and that may consist of several performance spaces along with other multi-purpose event spaces,TRUE,performing arts center,
+Q1061151,Massif,section of a planet's crust that is demarcated by faults or flexures,TRUE,massif,
+Q108276216,NA,mine from which rare earth ore is mined,FALSE,rare earth mine,
+Q839954,Archaeological site,place (or group of physical sites) in which evidence of past activity is preserved,TRUE,archaeological site,
+Q173387,Grave,location where one dead person or a limited amount of people are buried,TRUE,grave,
+Q194502,Endorheic basin,closed drainage basin that retains water and allows no outflow to other external bodies of water,TRUE,endorheic basin,
+Q271669,Landform,a natural or anthropogenic land feature on the solid surface of the Earth or other planetary body; geomorphological unit in the Earth sciences,TRUE,landform,
+Q188734,Sinkhole,geologically-formed topological depression,TRUE,sinkhole,
+Q97495053,NA,linear shopping centre,FALSE,shopping arcade,
+Q28194802,Tunnel network,network of tunnels used for storing or transporting people or material items,TRUE,tunnel network,
+Q1210950,Channel (geography),type of landform; confined river; strait,TRUE,channel,
+Q519105,Volcanic field,area of the Earth's crust prone to localized volcanic activity,TRUE,volcanic field,
+Q653208,Monolith,stone  block made of one single piece; object made of one single rock piece.,TRUE,monolith,
+Q6017969,Scenic viewpoint,high place where people can gather to view scenery,TRUE,scenic viewpoint,
+Q66480844,NA,border within a country,FALSE,infranational border,
+Q105131,Hotspot (geology),volcanic region,TRUE,hotspot,
+Q1172599,Inlet,"in coastal geography, an indentation of a shoreline that often leads to an enclosed body of salt water, such as a sound, bay, lagoon, or marsh",TRUE,inlet,
+Q295472,Ecovillage,sustainable intentional community,TRUE,ecovillage,
+Q64578911,NA,"building or architectural structure no longer used as a hospital, currently existing or not",FALSE,former hospital,
+Q190429,Depression (geology),landform sunken or depressed below the surrounding area,TRUE,depression,
+Q1165822,Meromictic lake,lake with layers of water that do not intermix,TRUE,meromictic lake,
+Q187223,Lagoon,shallow body of water separated from larger body of water by a barrier,TRUE,lagoon,
+Q1352795,Cinematheque,organization that preserves and presents film,TRUE,cinematheque,
+Q483242,Laboratory,"facility that provides controlled conditions in which scientific or technological research, experiments, and measurement may be performed",TRUE,laboratory,
+Q29469577,NA,LGBT places or monuments known for LGBT events and history,FALSE,LGBT historic place,
+Q16659620,NA,mine from which iron ore or ferriferous minerals are mined,FALSE,iron mine,
+Q647704,Tower mill,type of vertical windmill,TRUE,tower mill,
+Q747957,Stack (geology),geological landform consisting of a steep and often vertical column or columns of rock,TRUE,stack,
+Q12570,Suspension bridge,type of bridge,TRUE,suspension bridge,
+Q16831714,NA,"building built for and by the government, such as a town hall",FALSE,government building,
+Q1377943,Ocean bank,part of the sea which is shallow compared to its surrounding area,TRUE,ocean bank,
+Q543654,Rathaus,municipal administration building in the German language; for a town hall use Q25550691,TRUE,Rathaus,
+Q642682,Safari park,zoo-like commercial drive-in tourist attraction,TRUE,safari park,
+Q35054,Post office,customer service facility of a postal system,TRUE,post office,
+Q207524,Islet,very small island,TRUE,islet,
+Q212198,Pub,drinking establishment,TRUE,pub,
+Q926196,Food cooperative,food distribution outlet organized as a cooperative,TRUE,food cooperative,
+Q165044,Greenhouse,building in which plants are grown,TRUE,greenhouse,
+Q56242215,NA,church that is the seat of the bishop of a diocese of the Catholic Church,FALSE,Catholic cathedral,
+Q158626,Beam bridge,type of bridge,TRUE,beam bridge,
+Q216107,Department store,retail establishment; building which offers a wide range of consumer goods,TRUE,department store,
+Q1311958,NA,tunnel built for rail traffic,FALSE,railway tunnel,
+Q7900123,Urban growth boundary,regional boundary to control urban sprawl,TRUE,urban growth boundary,
+Q11875349,Playground,place with a specific design for children and other age groups to be able to play there,TRUE,playground,
+Q2243978,Record shop,"vendor of music recordings on audio storage like CD, LP record, tape",TRUE,record shop,
+Q1137809,Courthouse,building which is home to a court,TRUE,courthouse,
+Q628179,Trail,path with a rough beaten or dirt/stone surface used for travel,TRUE,trail,
+Q2324067,Grand union,track arrangement at a railway junction,TRUE,grand union,
+Q274393,Bakery,establishment that produces and sells flour-based food baked in an oven,TRUE,bakery,
+Q12516,Pyramid,structure whose shape is roughly that of a pyramid in the geometric sense,TRUE,pyramid,
+Q6138323,Railway workshop,facility for construction and repair of rolling stock owned by a railway,TRUE,railway workshop,
+Q2116321,Rail trail,railroad bed converted to a recreational trail,TRUE,rail trail,
+Q1886911,Butterfly house,facility for the breeding and display of butterflies,TRUE,butterfly house,
+Q1415133,NA,museum specialising in film and cinema history,FALSE,film museum,
+Q44377,Tunnel,underground passageway,TRUE,tunnel,
+Q1361400,Gully,landform created by running water,TRUE,gully,
+Q38720,Windmill,machine that converts the energy of wind into rotational energy,TRUE,windmill,
+Q285783,Intersection (road),road junction where two or more roads either meet or cross at grade,TRUE,intersection,
+Q27028153,NA,storage and maintenance facility for trams,FALSE,tram depot,
+Q1198413,Military camp,semi-permanent facility for the lodging of an army,TRUE,military camp,
+Q1144661,Amusement ride,mechanical device or structure that moves people to create enjoyment,TRUE,amusement ride,
+Q15310171,NA,port accessible for seagoing vessels,FALSE,seaport,
+Q2221906,Location,"location of a point, line or area on or near Earth",TRUE,geographic location,
+Q18414273,NA,diplomatic representation of a Commonwealth country to another one or between States members of the Union Française (then Communauté),FALSE,high commission,
+Q1179791,NA,manufactory that produces glass and glass products,FALSE,glassworks,
+Q187456,Bar (establishment),establishment serving alcoholic beverages for consumption on the premises,TRUE,bar,
+Q175185,Rural area,geographic area that is located outside towns and cities,TRUE,rural area,
+Q12719343,Water tunnel (physical infrastructure),tunnel (below-ground channels) used to transport water,TRUE,water tunnel,
+Q913035,Roadstead,open anchorage affording less protection than a harbor,TRUE,roadstead,
+Q390365,Space Shot (ride),type of drop tower amusement ride manufactured by S&S - Sansei Technologies,TRUE,Space Shot,
+Q221722,Bike path,bikeway separated from motorized traffic and dedicated to cycling,TRUE,bike path,
+Q3352369,Footpath,way for pedestrians,TRUE,footpath,
+Q65054925,Shared-use path,"trail that supports multiple recreation and transportation types, such as walking, bicycling, inline skating and people in wheelchairs",TRUE,shared-use path,
+Q17106091,Streetcorner,location adjacent to an intersection of two roads,TRUE,streetcorner,
+Q656720,Workshop,"room or building, with tools, used to repair or make goods",TRUE,workshop,
+Q7830048,Town centre,commercial or geographical centre or core area of a town,TRUE,town centre,
+Q10283556,Motive power depot,"building (having any form) where locomotives are housed, washed, serviced",TRUE,motive power depot,
+Q1525,Roundabout,traffic intersection,TRUE,roundabout,
+Q373609,Water pipelines,system of pipes and devices for water supply and transport,TRUE,water pipeline,
+Q1684522,Jazz club,"type of club, music venue, dedicated to jazz music",TRUE,jazz club,
+Q2650083,Farm museum,"farm, operated as a museum for demonstration and educational purposes",TRUE,museum farm,
+Q176637,Pawnbroker,"individual or business that offers loans to people, with items of personal property used as collateral",TRUE,pawnbroker,
+Q207326,Summit,"point on a surface that is higher in elevation than all points immediately adjacent to it, in topography",TRUE,summit,
+Q111522266,NA,export type of LNG terminal,FALSE,liquefaction terminal,
+Q1195942,Fire station,structure or other area where firefighters and their vehicles and equipment is housed,TRUE,fire station,
+Q71875404,NA,climate change for a country or territory,FALSE,climate change by country or territory,
+Q52177058,NA,central landmark building in the geographical or business centre of a town or city,FALSE,civic building,
+Q756102,Open-air museum,museum that exhibits collections of buildings and artifacts out-of-doors,TRUE,open-air museum,
+Q30114493,NA,type of locality recognised in Australia,FALSE,bounded rural locality,
+Q14915208,Roadside attraction,roadside attraction area for visitors,TRUE,roadside attraction,
+Q740326,Water park,amusement park that features pools with water play areas,TRUE,water park,
+Q3482498,Surf break,permanent obstruction on the seabed which causes waves to break,TRUE,surf break,
+Q2141554,Recreational dive sites,place that recreational scuba divers go to enjoy the underwater environment,TRUE,recreational dive site,
+Q1995305,NA,animal park which houses mainly birds,FALSE,bird park,
+Q590232,Geographical centre,centroid of a region of the earth's surface,TRUE,geographical center,
+Q1481677,Pleasure garden,garden open for recreation and entertainment,TRUE,pleasure garden,
+Q474,Aqueduct (water supply),structure constructed to convey water,TRUE,aqueduct,
+Q1404150,NA,mass of stone projecting out of the ground or water,FALSE,rock,
+Q25391,Dune,"landform, hill of sand",TRUE,dune,
+Q54927709,NA,shopping mall with outlet stores (majority),FALSE,outlet mall,
+Q30022,Coffeehouse,establishment that serves coffee and tea,TRUE,coffeehouse,
+Q230752,Auditorium,"room with a space for presenter(s) and an audience space, often used for speeches, lectures, or performances",TRUE,auditorium,
+Q218653,Custom house,government office building for import and export of goods,TRUE,custom house,
+Q1763828,NA,"building usable for various events (sports, culture, etc.)",FALSE,multi-purpose hall,
+Q190928,Shipyard,place where ships are repaired and built,TRUE,shipyard,
+Q331367,Submarine base,military base that shelters submarines and their personnel,TRUE,submarine base,
+Q30716167,High flux reactor,NA,TRUE,high flux reactor,
+Q7371226,Roundabout interchange,road interchange that uses one or more roundabouts to manage traffic movement,TRUE,roundabout interchange,
+Q33188071,NA,truss bridge having a particular design named for Australian engineer Percy Allan,FALSE,Allan truss bridge,
+Q28110152,NA,structure used for ventilation of a sewer,FALSE,sewer vent,
+Q1751323,Indoor skiing,climate controlled environment in which snow is manufactured using a snow cannon,TRUE,indoor ski slope,
+Q336764,Junction (rail),place at which two or more rail routes converge or diverge,TRUE,railway junction,
+Q1788454,Road junction,location where multiple roads intersect that allows vehicular traffic to change from one road to another,TRUE,road junction,
+Q180846,Supermarket,large form of the traditional grocery store,TRUE,supermarket,
+Q39486269,Railway viaduct,"bridge, usually resting on a number of raised arches, carrying a railway across low-lying land, water, gorge or valley",TRUE,railway viaduct,
+Q622425,Nightclub,entertainment venue which usually operates late into the night,TRUE,nightclub,
+Q2376564,Interchange (road),"road junction, typically using grade separation",TRUE,interchange,
+Q1266922,Water gap,Landform of an entrenched transverse valley,TRUE,water gap,
+Q3305339,NA,part of a building,FALSE,building part,
+Q8072,Volcano,"natural, surface vent or fissure usually in a mountainous form",TRUE,volcano,
+Q211302,Glacial lake,lake formed by a melted glacier,TRUE,glacial lake,
+Q2532557,Beach ridge,wave-swept or wave-deposited ridge running parallel to a shoreline,TRUE,beach ridge,
+Q911663,Bascule bridge,moveable bridge using a counterweight to balance a span through its upward swing to let boats move underneath,TRUE,bascule bridge,
+Q1243306,NA,bridge with multiple decks,FALSE,multi-level bridge,
+Q12280,Bridge,"structure that spans and provides a passage over a road, railway, river, or some other obstacle",TRUE,bridge,
+Q6451172,Morgue,place for the storage of human corpses awaiting identification or burial,TRUE,morgue,
+Q3610510,Ethnic enclave,physical space with high ethnic concentration; thus these spaces are culturally distinct from the larger receiving society,TRUE,ethnic enclave,
+Q27108230,NA,outdoor accommodation area that provides multiple individual campsites,FALSE,campground,
+Q61729985,Little Italy,ethnic enclave populated by Italians or people of Italian descent,TRUE,Little Italy,
+Q1756711,Video rental shop,"physical retail business that rents home videos such as movies, TV shows, video game discs and other content.",TRUE,video rental shop,
+Q985488,Residential community,administrative territorial entity of the People's Republic of China,TRUE,residential community,
+Q1468524,City centre,"commercial, cultural and often the historical, political and geographic heart of a city",TRUE,city center,
+Q2663692,NA,building used by post services,FALSE,post office building,
+Q2128165,Wholesale market,market where vendors sell commodities to commercial traders or consumers,TRUE,wholesale market,
+Q41453,Diatreme,volcanic pipe formed by a gaseous explosion,TRUE,diatreme,
+Q3329412,Archaeology museum,museum specializing in archaeological artefacts,TRUE,archaeological museum,
+Q7361709,Convenience store,small store that stocks a range of everyday items,TRUE,convenience store,
+Q662806,Dike (geology),sheet of rock formed in a fracture in a pre-existing rock body,TRUE,dike,
+Q56856618,NA,place where art is sold,FALSE,commercial art gallery,
+Q901497,NA,NA,FALSE,open-pit lignite mine,
+Q748998,Fire lookout tower,building to house a person who watches for wildfires,TRUE,fire lookout tower,
+Q42523,Atoll,"ring-shaped coral reef, generally formed over a former oceanic volcano, frequently with small emerging islands (motus) over the rim, often enclosing a central lagoon possibly still containing one or a few emerging elevated islands",TRUE,atoll,
+Q62059246,NA,area proclaimed to be a public reserve by government legislation,FALSE,public reserve,
+Q740445,Ridge,geological feature consisting of a chain of mountains or hills that form a continuous elevated crest for some distance,TRUE,ridge,
+Q721207,Marina,yacht harbor,TRUE,marina,
+Q54831,Amphitheatre,open-air venue used for entertainment and performances,TRUE,amphitheatre,
+Q620045,Apostolic nunciature,official diplomatic representation of the Holy See,TRUE,apostolic nunciature,
+Q963729,Submarine canyon,steep-sided valley cut into the seabed of the continental slope,TRUE,submarine canyon,
+Q24699794,NA,building housing a museum,FALSE,museum building,
+Q181916,Herbarium,scientific collection of dried plants,TRUE,herbarium,
+Q2997369,Plaza,public square in the center of a town or city,TRUE,plaza,
+Q291177,Rose garden,garden or park which comprises mainly of roses,TRUE,rose garden,
+Q1271224,Oceanic plateau,relatively flat submarine region that rises well above the level of the ambient seabed,TRUE,oceanic plateau,
+Q861951,Police station,"headquarters for the police of a particular district, from which police officers are dispatched and to which persons under arrest are brought",TRUE,police station,
+Q294422,Public building,"buildings or groups of buildings owned and operated by a governing body, carrying out official duties, and often occupied by a governmental agency",TRUE,public building,
+Q7028289,Nickel mine,mine that produces nickel,TRUE,nickel mine,
+Q107037505,NA,mine producing cobalt ore,FALSE,cobalt mine,
+Q3278565,Integral lighthouse,lighthouse in which the tower and keeper's dwelling are united in one structure,TRUE,Integral Lighthouse,
+Q847400,Disk'O,type of flat ride manufactured by Zamperla,TRUE,Disk'O,
+Q840482,NA,typically Catholic shrines,FALSE,shrine to the Virgin Mary,
+Q950431,Swing bridge,movable bridge that has a vertical locating pin and support ring about which the turning span can pivot horizontally,TRUE,swing bridge,
+Q317548,Resort town,town where tourism or vacationing is a primary component of the local culture and economy,TRUE,resort town,
+Q1779930,Bypass (road),road taking a new route which avoids a previously passed location,TRUE,bypass,
+Q1292279,NA,"boundary line between two territories, for example countries, states, provinces, cities",FALSE,political border,
+Q119253,Oceanic trench,depressions of the sea floorbykg kn,TRUE,oceanic trench,
+Q7193855,Pile lighthouse,tall skeletal lighthouse,TRUE,pile lighthouse,
+Q2887554,Coal-mining region,basin with coal deposits,TRUE,coal basin,
+Q847935,Nude beach,beach that allows nudity,TRUE,nude beach,
+Q75848,Gated community,residental community with controlled entrances and often a closed perimeter of walls/fences,TRUE,gated community,
+Q1282871,NA,tower drop ride series,FALSE,Giant Drop,
+Q5916199,Housing development,group of residences,TRUE,housing development,
+Q1188480,Fish market,marketplace for fish products,TRUE,fish market,
+Q2945640,LGBT community centre,regional community center that provides services for gender and sexual minorities,TRUE,LGBT community center,
+Q11338578,NA,sports venue,FALSE,boxing club,
+Q15648179,NA,amusement park and funfair attraction,FALSE,walkthrough,
+Q28337,Shoal,natural submerged sandbank that rises from a body of water to near the surface,TRUE,shoal,
+Q1443808,Oceanarium,marine mammal park,TRUE,oceanarium,
+Q512504,River rapids ride,amusement ride that simulates whitewater rafting,TRUE,river rafting ride,
+Q2870166,Water ride,amusement rides that are set over water,TRUE,water ride,
+Q1412219,Log flume (ride),type of amusement ride,TRUE,log flume ride,
+Q428044,Infoshop,"a storefront or social center that serves as a node for the distribution of political, subcultural and arts information, typically in the form of books, zines, stickers and posters",TRUE,infoshop,
+Q1109069,Ski jumping hill,venue used for ski jumping,TRUE,ski jumping hill,
+Q14750991,NA,a cemetery maintained by the Commonwealth War Graves Commission,FALSE,Commonwealth War Graves Commission maintained cemetery,
+Q1149405,Rock shelter,shallow cave-like opening at the base of a bluff or cliff,TRUE,rock shelter,
+Q131862,Triangulation station,fixed surveying station used in geodetic surveying,TRUE,triangulation station,
+Q1454206,Drop tower,type of amusement ride,TRUE,drop tower,
+Q372690,Consulate general,diplomatic mission,TRUE,consulate general,
+Q113594123,Surface mine,mine with surface exploitation of mineral raw materials,TRUE,surface mine,
+Q4232315,NA,underground facility for the extraction of minerals,FALSE,underground mine,
+Q959309,Coal mine,place for extraction of coal,TRUE,coal mine,
+Q2367818,Argonaut class reactor,"Design of small nuclear research reactor built throughout the world, over a wide range of power levels.",TRUE,Argonaut class reactor,
+Q20897929,NA,NA,FALSE,zinc mine,
+Q26205080,NA,place where diving activity takes place,FALSE,underwater diving site,
+Q31566,Coastal plain,"area of flat, low-lying land adjacent to a seacoast",TRUE,coastal plain,
+Q428759,Timber bridge,bridge that uses timber or wood as its principal structural material,TRUE,wooden bridge,
+Q653401,Trestle bridge,bridge of short spans supported by rigid frames,TRUE,trestle bridge,
+Q60168923,NA,building designed to store grains,FALSE,grain storage building,
+Q1454583,Masonic Temple,room or structure where a Masonic Lodge meets,TRUE,masonic temple,
+Q674950,Residential area,"land use in which housing predominates, as opposed to industrial and commercial areas",TRUE,residential area,
+Q157570,Crematorium,facility in which cremation takes place,TRUE,crematorium,
+Q1365704,Railway roundhouse,"building with bow shape built around (or rarely including) a railway turntable where locomotives are housed, washed, serviced",TRUE,railway roundhouse,
+Q7328304,Zebra crossing,type of pedestrian crossing,TRUE,zebra crossing,
+Q28060923,NA,beach consisting primarily of white sand,FALSE,white sand beach,
+Q5739064,Heritage trail,transport route to highlight cultural heritage places,TRUE,heritage trail,
+Q214252,Stable,building for horses and other livestock,TRUE,stable,
+Q517760,Commune (intentional community),"community of people living together, sharing common interests",TRUE,commune,
+Q13381944,Quadrangle (architecture),space or courtyard,TRUE,quadrangle,
+Q21073937,Branch (banking),"retail location of a bank, credit union, or other financial institution",TRUE,bank branch,
+Q3679502,Piping,"system of pipes used to transport fluids (gases, liquids or pourable or pumpable solids) from one location to another",TRUE,piping,
+Q746628,Studio,"working places set aside for artists to work, the term is generally applied to workspaces used by artists creating fine art, particularly art dating from the 16th century to the present",TRUE,studio,
+Q52103661,Former island,island that once existed,TRUE,former island,
+Q301449,NA,type of windmill,FALSE,grondzeiler,
+Q15924535,NA,local chapter of the Wikimedia movement,FALSE,Wikimedia chapter,
+Q19600600,British High Commission,British diplomatic mission to a Commonwealth country,TRUE,British High Commission,
+Q28109822,NA,an aqueduct which carries sewerage,FALSE,sewerage aqueduct,
+Q12743,Ford (crossing),crossing in a river,TRUE,ford,
+Q832778,Campsite,"place used for overnight stay in tents, caravans or mobile homes",TRUE,campsite,
+Q4168092,Culvert,structure that allows water to flow under an obstruction,TRUE,culvert,
+Q672070,Photographic studio,place or organisation that undertakes professional-quality photography,TRUE,photographic studio,
+Q16887036,Gap (landform),"landform that is a low point or opening between hills or mountains or in a ridge; generic term for col, saddle, mountain pass, etc...",TRUE,gap,
+Q55075651,NA,non-mountainous region of land which is higher in elevation than adjacent low-lying areas,FALSE,upland,
+Q580889,Tableland,raised landform with a flat top,TRUE,table,
+Q7321258,Beacon,"marker to attract attention (used for navigation, or in war as a signalling device, or as a signally device for natural disaster like fire)",TRUE,beacon,
+Q34379419,NA,area of land covered with sand,FALSE,sand area,
+Q217101,Spit (landform),coastal bar or beach landform deposited by longshore drift,TRUE,spit,
+Q55182635,Knoll (oceanography),"rounded underwater hill, not exceeding 1000 meters in height",TRUE,knoll,
+Q2042028,Ravine,"very tight valley, which is often the product of streamcutting erosion",TRUE,ravine,
+Q57208193,NA,geographic feature,FALSE,section of an island,
+Q216851,Skerry,rocky islet too small for habitation,TRUE,skerry,
+Q202199,Inland island,island in a river or lake,TRUE,inland island,
+Q653139,Volcanic plug,volcanic object created when magma hardens within a vent on an active volcano,TRUE,volcanic plug,
+Q1711697,NA,biological park,FALSE,wildlife park,
+Q878223,Highland,mountainous region or elevated mountainous plateau,TRUE,highland,
+Q16363669,NA,area with one or more sports facilities,FALSE,sports park,
+Q13424466,NA,harbor landform created by natural processes,FALSE,natural harbor,
+Q16659597,NA,mine extracting silver ore,FALSE,silver mine,
+Q42412840,Abandoned mine,mine or quarry that is no longer producing or operational,TRUE,abandoned mine,
+Q3294251,Hillock,small hill,TRUE,hillock,
+Q28109814,NA,major sewer which leads to an outfall,FALSE,outfall sewer,
+Q637600,Sabkha,"a salt lake above the tide line, formed along arid coastlines and characterized by evaporite-carbonate deposits with some siliciclastics",TRUE,sabkha,
+Q10862618,Saddle (landform),region surrounding the highest point of the lowest point on the line tracing the drainage divide (the col) connecting the peaks,TRUE,saddle,
+Q579581,Taipei Economic and Cultural Representative Office,''De facto'' embassies or consulates operated by Taiwan,TRUE,Taipei Representative Office,
+Q5244910,De facto embassy,organization that serves as an unofficial embassy,TRUE,de facto embassy,
+Q2737008,Legation,diplomatic mission headed by a minister,TRUE,legation,
+Q667018,Wax museum,museum displaying a collection of wax representations of famous people,TRUE,wax museum,
+Q752003,Pole of inaccessibility,"point on land or at sea that is the most distant from any coastline, either for an entire planet, or for a given landmass or body of water",TRUE,pole of inaccessibility,
+Q3238324,World War I memorials,memorial to commemorate the events and the casualties of World War I,TRUE,World War I memorial,
+Q25043590,Plunge dip,bath designed to immerse livestock in liquid pesticide or other treatment,TRUE,plunge dip,
+Q545599,Haunted house,house or other building often perceived as being inhabited by disembodied spirits of the deceased,TRUE,haunted house,
+Q9332842,Śālā,large room within a domestic building,TRUE,hall,
+Q7416522,Sandplain,geographic feature,TRUE,sandplain,
+Q992194,NA,settlement affiliated with the Hutterites,FALSE,Hutterite colony,
+Q1188223,Dance hall,hall for dancing,TRUE,dance hall,
+Q28109950,NA,structure which carries a gravity sewer underneath a body of water or other obstacle,FALSE,sewer syphon,
+Q4862338,Monomictic lake,NA,TRUE,monomictic lake,
+Q1707610,NA,cemetery for both civil and military victims of war or tyranny,FALSE,war cemetery,
+Q16939396,Toll road,roadway for which a fee (or toll) is assessed for passage,TRUE,toll road,
+Q3126170,Bandstand,structure designed to accommodate bands during concerts,TRUE,bandstand,
+Q2387499,Honor board,visible and physical memorial and recognition of people,TRUE,honour board,
+Q202008,Exclusive economic zone,UN maritime boundary,TRUE,exclusive economic zone,
+Q18822087,NA,type of building complex that is used for quarantine,FALSE,quarantine facility,
+Q1251403,Alley,narrow street,TRUE,alley,
+Q55463907,NA,NA,FALSE,nordic ski area,
+Q309250,Courtyard,"enclosed area, often by a building, that is open to the sky",TRUE,courtyard,
+Q811177,Dry dock,waterside basin that can be sealed and pumped dry to allow work on a vessel,TRUE,dry dock,
+Q206809,NA,"outdoor, usually paved area on a school grounds where students spend breaks between classes",FALSE,school playground,
+Q181348,Viaduct,type of bridge crossing a valley or a gorge,TRUE,viaduct,
+Q256020,Inn,"establishment providing lodging, food and drink",TRUE,inn,
+Q2519340,NA,building for administrative usage,FALSE,administrative building,
+Q21562164,Historical markers of the Philippines,commemorative plaque or set of commemorative plaques created by the National Historical Commission of the Philippines or any of its predecessors,TRUE,National Historical Commission of the Philippines historical marker,
+Q33183185,NA,designated community evacuation point in case of bushfire,FALSE,neighbourhood safer place,
+Q33189721,NA,particular design of truss bridge,FALSE,Howe truss bridge,
+Q1425560,Overpass,structure that is over another road or railway,TRUE,overpass,
+Q790585,Avenue of honour,"memorial avenue of trees, with each tree symbolising a person, most commonly as a memorial to the war dead",TRUE,avenue of honour,
+Q12093880,NA,NA,FALSE,gas condensate field,
+Q64779402,NA,type of de-facto embassy,FALSE,liaison office,
+Q154250,Tavern,place of business where people gather to drink alcoholic beverages and be served food,TRUE,tavern,
+Q4819632,Satellite campus,campus of a college or university physically at a distance from the main campus,TRUE,satellite campus,
+Q443767,NA,social and dining area provided for military officiersl,FALSE,mess,
+Q2814066,Comedy club,"a venue, typically a nightclub, bar, or restaurant where people watch or listen to performances, including stand-up comedians, improvisational comedians, impersonators, magicians, ventriloquists and other comedy acts",TRUE,comedy club,
+Q918324,Control tower,air traffic control tower,TRUE,control tower,
+Q11183017,Outdoor drama,outdoor theatre in summer,TRUE,open-air theatre,
+Q1200524,Complex volcano,volcano with more than one feature,TRUE,complex volcano,
+Q5159064,Concrete bridge,type of bridge with concrete as the main material used,TRUE,concrete bridge,
+Q524524,Field kitchen,mobile kitchen used to prepare food for military troops away from base,TRUE,field kitchen,
+Q373315,Arroyo (watercourse),dry creek or stream bed which temporarily or seasonally fills and flows after sufficient rain,TRUE,arroyo,
+Q39364723,NA,building used as a hospital or health care facility,FALSE,hospital building,
+Q7492200,Shearing shed,building where sheep are shorn,TRUE,shearing shed,
+Q73218016,NA,graveyard where it is mostly members of the same family who are buried,FALSE,family cemetery,
+Q2632011,Liquor store,shop that sells prepackaged alcoholic beverages,TRUE,liquor store,
+Q5116768,Church hall,"room or building associated with a church building, general for community and charitable use",TRUE,church hall,
+Q18449828,NA,arch bridge built of stones,FALSE,stone arch bridge,
+Q1244860,General store,rural or small-town store,TRUE,general store,
+Q3497366,NA,port and settlement associated with the whaling industry,FALSE,whaling station,
+Q4912036,Bills horse troughs,"memorial watering troughs installed in the early 20th-century, mainly in Australia",TRUE,Bills horse troughs,
+Q143970,Market garden,"relatively small-scale production of fruits, vegetables and flowers as cash crops",TRUE,market garden,
+Q1497483,Memorial cross,"cross erected to commemorate a person or event, sometimes as a grave marker",TRUE,memorial cross,
+Q43514341,NA,bridge carrying or crossing a highway,FALSE,highway bridge,
+Q1630622,Drinking fountain,fountain designed to provide drinking water,TRUE,drinking fountain,
+Q5281655,Discontinued post office,post office that no longer operates; interesting to philately and postal history,TRUE,discontinued post office,
+Q846659,Jewish cemetery,cemetery for Jewish people,TRUE,Jewish cemetery,
+Q489357,Farmhouse,chief dwelling-house attached to a farm,TRUE,farmhouse,
+Q162875,Mausoleum,monument enclosing the interment space or burial chamber of a deceased person or people,TRUE,mausoleum,
+Q2094773,Showroom,room where products are displayed,TRUE,showroom,
+Q7196844,Pioneer cemetery,burial place for pioneers in any area subject to territorial expansion,TRUE,pioneer cemetery,
+Q2080521,Market hall,covered space traditionally used as a marketplace,TRUE,market hall,
+Q200764,Bookstore,commercial trader of books,TRUE,bookstore,
+Q244326,Salt evaporation pond,shallow artificial pond designed to extract salts from sea water or other brines,TRUE,salt evaporation pond,
+Q207934,Allée,straight route with a line of trees or large shrubs running along each side,TRUE,avenue,
+Q40558,Forge,"workshops of a blacksmith, who is an ironsmith who makes iron into tools or other objects",TRUE,smithy,
+Q1163166,Water slide,type of slide designed for recreational use in water parks,TRUE,water slide,
+Q21170235,NA,bridge made of iron,FALSE,iron bridge,
+Q1735471,Box girder bridge,type of bridge,TRUE,box girder bridge,
+Q7843791,Consulate,small official office of one country in another country,TRUE,consulate,
+Q208322,Carousel,amusement ride consisting of a rotating circular platform with seats for riders,TRUE,carousel,
+Q3095365,Guard rail,fence or barrier consisting of one or more horizontal rails and vertical supports,TRUE,guard rail,
+Q1308978,Cut (earthworks),"where soil or rock material from a hill or mountain is cut out to make way for a canal, road or railway line",TRUE,cut,
+Q59872735,NA,building,FALSE,row of shops,
+Q88372,NA,"long, open, level area, usually next to a river or a (former) military building where people may walk",FALSE,esplanade,
+Q3303463,Food truck,truck used for carrying and selling food,TRUE,food truck,
+Q2512740,Lava flow,subclass of volcanic phenomenon,TRUE,lava flow,
+Q182060,Office,room where people perform office work,TRUE,office,
+Q1440300,Observation tower,civilian structure used to view the surrounding landscape,TRUE,observation tower,
+Q1065656,Health club,place which houses exercise equipment for the purpose of physical exercise,TRUE,health club,
+Q2099281,Debate chamber,room for people to discuss and debate,TRUE,plenary hall,
+Q15921563,NA,location where an aircraft impacts the ground,FALSE,crash site,
+Q25958098,NA,NA,FALSE,graving dock,
+Q255595,Ossuary,"place like a building, well, or site made to serve as the final resting place of human skeletal remains",TRUE,ossuary,
+Q7543083,Avenue (landscape),"wide, straight, usually tree-lined road or approach",TRUE,avenue,
+Q805353,Ballroom,large room for formal dancing,TRUE,ballroom,
+Q24868622,NA,NA,FALSE,consular office,
+Q198632,Brickworks,factory for the manufacture of building materials made ​​of baked clay or loam,TRUE,brickworks,
+Q23891529,NA,small honorary office of one country in another country,FALSE,honorary consulate,
+Q1935728,Stone circle,monument of standing stones arranged in a circle,TRUE,stone circle,
+Q1318959,Toy store,business that specializes in selling toys typically for youth,TRUE,toy store,
+Q385557,Slaughterhouse,facility where animals are killed for consumption as food products,TRUE,slaughterhouse,
+Q56190453,NA,"site, complex or area for commemorating a historic event or person",FALSE,memorial complex,
+Q335778,Polling station,site of ballot casting in elections,TRUE,polling place,
+Q2973184,Simulator ride,amusement park,TRUE,simulator ride,
+Q4034417,Artist-run space,organization initiated and run by artists,TRUE,artist-run space,
+Q3088348,NA,establishment in which cheese is produced,FALSE,cheesery,
+Q12489179,NA,Indonesian regional departmental office located in a provincial capital,FALSE,regional office,
+Q15496340,Ironmongery,type of shop,TRUE,ironmongery,
+Q1817883,NA,type of manufacturing company occupied with making furniture,FALSE,furniture manufacturer,
+Q7837534,Tree avenue,straight path or road with a line of trees,TRUE,tree avenue,
+Q60456301,RV park,"place where people with recreational vehicles can stay overnight, or longer, in allotted spaces known as ""sites"" or ""campsites"".",TRUE,recreational vehicle park,
+Q33188368,NA,particular type of truss bridge,FALSE,Pratt truss bridge,
+Q236371,Orchard,intentional planting of trees or shrubs that is maintained for food production,TRUE,orchard,
+Q361945,Slipway,ramp on the shore by which ships or boats can be moved to and from the water,TRUE,slipway,
+Q367914,Bed and breakfast,small lodging establishment,TRUE,bed and breakfast,
+Q13164546,NA,store where meat is sold,FALSE,butcher shop,
+Q61881945,NA,NA,FALSE,de facto consulate,
+Q721747,Commemorative plaque,"plate or tablet, fixed to a surface or freestanding, commemorating an event, person, place, etc.",TRUE,commemorative plaque,
+Q1188673,Subway (crossing),underpass for pedestrians and cycles,TRUE,subway,
+Q7540126,Headquarters,"location where key leadership and coordination functions take place, often recognized as the central home for a disparate organization",TRUE,headquarters,
+Q56695738,NA,national institution gathering the local OpenStreetMap community and chartered with the OpenStreetMap Foundation,FALSE,OpenStreetMap local chapter,
+Q43164,Kitchen,space primarily used for preparation and storage of food,TRUE,kitchen,
+Q692630,Outdoor gym,"fitness playground, gym equipment in a public outdoor location",TRUE,outdoor gym,
+Q2244608,Bird hide,shelter to observe birds,TRUE,bird hide,
+Q11111030,Boardwalk,"an elevated footpath, walkway, or causeway built with wooden planks that enables pedestrians to cross wet, fragile, or marshy land",TRUE,boardwalk,
+Q831515,Lightship,ship or boat that acts as a lighthouse in waters that are too deep or otherwise unsuitable for lighthouse construction,TRUE,lightvessel,
+Q6633995,NA,geological structure,FALSE,columnar basalt,
+Q569500,Community health center,"clinic staffed by a group of general practitioners and nurses, providing healthcare services to people in a certain area",TRUE,community health center,
+Q47520603,NA,area in a park or other municipally maintained space designated for open-air food preparation and dining,FALSE,picnic site,
+Q367885,Village hall,"building within a village which contains at least one large room, usually owned by and run for the benefit of the local community",TRUE,village hall,
+Q1934961,Dark ride,type of amusement ride,TRUE,dark ride,
+Q1996635,Optician,dispenser of eyeglasses and contact lenses,TRUE,optician,
+Q110160416,NA,geographic location where cloud services are operated from,FALSE,cloud region,
+Q1473454,NA,playground located indoors,FALSE,indoor playground,
+Q556186,NA,underground vertical or inclined passageway in mining engineering.,FALSE,mine shaft,
+Q47516839,NA,shop selling tires,FALSE,tire shop,
+Q27951514,NA,arena covered by roof and walls,FALSE,indoor arena,
+Q66436502,NA,specific arrangement of the racing circuit at a motorsports venue,FALSE,race track layout,
+Q188507,Apartment,self-contained housing unit occupying part of a building,TRUE,apartment,
+Q617839,Apartment hotel,hotel with apartment-like rooms,TRUE,apartment hotel,
+Q213283,Diplomatic mission,group of people from one state present in another state to represent the sending state,TRUE,diplomatic mission,
+Q927519,Ambulance station,a structure or other area set aside for storage of ambulance vehicles,TRUE,ambulance station,
+Q786803,Car dealership,"business which sells, buys, and trades new and/or used cars, trucks, SUVs, and vans",TRUE,car dealership,
+Q42679632,NA,hall used for theatre,FALSE,theatre hall,
+Q35101126,NA,public beach where pet dogs are allowed,FALSE,dog beach,
+Q6554910,Butte,"isolated hill with steep, often vertical sides and a small, relatively flat top",TRUE,butte,
+Q2145163,Trunk road,"type of major road, usually connecting major settlements",TRUE,trunk road,
+Q4825087,Australian pub,"an Australian venue specifically licensed to serve alcoholic drinks, that does offer take away services and has or previously had associated accommodation",TRUE,Australian Hotel,
+Q55622767,Memorial hall,hall built to commemorate an individual or group,TRUE,memorial hall,
+Q1045481,Filming location,place where film or TV series is produced,TRUE,filming location,
+Q5307737,Drinking establishment,business whose primary function is the serving of alcoholic beverages for consumption on the premises,TRUE,alcohol drinking establishment,
+Q37402,Global Boundary Stratotype Section and Point,boundary of a stage on the geologic time scale,TRUE,Global Boundary Stratotype Section and Point,
+Q94569884,NA,type of (outdoor) art exhibition,FALSE,art walk,
+Q693922,Veranda,"roofed, open-air gallery or porch",TRUE,veranda,
+Q177305,Observation deck,elevated sightseeing platform,TRUE,observation deck,
+Q2903091,Stabling point,railway facility,TRUE,stabling point,
+Q2090555,Clothes shop,shop or store where clothes are sold,TRUE,clothing store,
+Q1546788,NA,structure for open-air cooking,FALSE,barbecue area,
+Q120970071,NA,mining operation involved in the extraction of lithuim,FALSE,lithium mine,
+Q510662,Ring road,type of road encircling a settlement,TRUE,ring road,
+Q723748,Confluence,meeting of two or more bodies of flowing water,TRUE,confluence,
+Q97459036,NA,public building associated with some metropolises,FALSE,civic center,
+Q112688641,NA,room for live performances with an audience space and a stage,FALSE,performance hall,
+Q203443,Gravestone,"stele or marker, usually stone, that is placed over a grave",TRUE,tombstone,
+Q1317590,Underwater tunnel,tunnel which passes under a sea for some portion of its extent,TRUE,undersea tunnel,
+Q2400020,Function hall,multi-purpose hall type,TRUE,function hall,
+Q12053053,Artificial waterfall,architecture resembling a drop in a river's course,TRUE,artificial waterfall,
+Q64654999,NA,"building or architectural structure no longer used as theatre, currently existing or not",FALSE,former theater,
+Q116452632,NA,"wall that commemorates an event, a person...",FALSE,memorial wall,
+Q62059375,NA,"A very steep spur projecting from a hill, mountain, plateau, range etc., having the appearance of supporting it.",FALSE,buttress,
+Q24576816,NA,group of islets consisting of exposed rock,FALSE,group of rocks,
+Q1361100,Skyway,type of pedway,TRUE,skyway,
+Q104817981,Furniture retailer,company selling furniture,TRUE,furniture retailer,
+Q17087190,Walkway,engineered surface or structure supporting pedestrian traffic,TRUE,walkway,
+Q33097655,NA,"commercial establishment providing fun activities such as bowling, darts, karaoke, sports, spa, game arcade",FALSE,amusement center,
+Q2699076,NA,type of house,FALSE,studio house,
+Q1410110,NA,"local establishment of a company, not independent legal entity",FALSE,branch,
+Q811593,Canopy walkway,elevated walkway,TRUE,canopy walkway,
+Q2235104,Ship chandler,a retail dealer who specialises in supplies or equipment for ships,TRUE,ship chandler,
+Q27896063,NA,trail intended for use by mountain bikers,FALSE,mountain bike trail,
+Q20708021,Jewellery store,shop which sells jewelry,TRUE,jewelry shop,
+Q112860910,NA,Playground for children,FALSE,children's playground,
+Q840850,Freight forwarder,service company that handles the shipment of goods,TRUE,freight forwarder,
+Q62059481,NA,"place where a street, railway, stream, etc., may be crossed",FALSE,crossing,
+Q109391,Volcanic crater,circular depression in the ground caused by volcanic activity,TRUE,volcanic crater,
+Q145658,Greengrocer,selling point of fruits and vegetables,TRUE,greengrocer,
+Q6554328,Link road,type of roads,TRUE,link road,
+Q656586,Alluvial plain,region on which rivers have deposited sediment,TRUE,alluvial plain,
+Q251958,Community gardening,single piece of land gardened collectively by a group of people,TRUE,community garden,
+Q12731,Dead end street,dead-end street with only one inlet/outlet,TRUE,dead end street,
+Q26721034,Bike shop,"Business specializing in bicycle sale, maintenance and parts",TRUE,bike shop,
+Q96251935,NA,flat area under the sea,FALSE,submarine terrace,
+Q11638045,Agricultural road,service road that serves predominantly agricultural or forestry purposes and has only local significance,TRUE,farm road,
+Q1295201,Grocery store,retail store that primarily sells food and other household supplies,TRUE,grocery store,
+Q6804271,Meat market,marketplace,TRUE,meat market,
+Q1852785,Trench,excavated channel in ground,TRUE,trench,
+Q16668826,Stationery store,shop that sells stationery,TRUE,stationery shop,
+Q2710737,Stockpile,pile or storage location for bulk materials,TRUE,waste dump,
+Q2961103,Tree tunnel,foliage corridor,TRUE,tree tunnel,
+Q1400565,Spur (topography),geographical term for a lateral ridge or tongue of land,TRUE,spur,
+Q18587891,NA,place where pots and other ceramics are made,FALSE,pottery studio,
+Q2231510,Col,lowest point on a mountain ridge between two peaks,TRUE,col,
+Q61710650,NA,museum dedicated to LGBT related subjects,FALSE,LGBT museum,
+Q13107184,Pharmacy (shop),health facility where medicines are sold and medical advice is given,TRUE,pharmacy,
+Q13406558,Hedge maze,outdoor garden maze or labyrinth in which the walls are made of vertical hedges,TRUE,hedge maze,
+Q58217808,NA,printing house that make prints,FALSE,print workshop,
+Q1200676,Design studio,workplace for designers and artisans,TRUE,design agency,
+Q1406569,Leper colony,place to quarantine people with leprosy,TRUE,leper colony,
+Q1162282,Post office box,uniquely addressable lockable box located on the premises of a post office station,TRUE,post office box,
+Q1420179,Music rehearsal space,Room used for rehearsal purposes and recording of musical pieces,TRUE,rehearsal studio,
+Q7667945,Rapid bus routes in Sydney,NA,TRUE,T-way,
