@@ -5,3 +5,8 @@
 .Ruserdata
 /.quarto/
 .DS_Store
+
+# Huge wikipedia dumps
+# These will always be kept in subfolders labelled
+# `xml` in the data directory for each year's report
+data/**/xml

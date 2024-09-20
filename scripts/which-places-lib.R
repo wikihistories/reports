@@ -119,7 +119,15 @@ extract_sitelinks <- function(entities) {
 
 get_language_codes <- function() {
   # TODO: Add support for meta queries to wikkitidy and/or default behaviour
-  resp <- httr2::request("https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&meta=siteinfo&siprop=languages") |>
+  resp <- httr2::request("https://en.wikipedia.org/w/api.php") |>
+    httr2::req_url_query(
+      action="query",
+      format="json",
+      formatversion=2,
+      meta="siteinfo", # https://www.mediawiki.org/wiki/API:Siteinfo
+      siprop="languages", # Returns a list of languages MediaWiki supports
+      siinlanguagecode="en-US" # Localise language names in returned table
+    ) |>
     httr2::req_perform()
   data <- httr2::resp_body_json(resp) |>
     purrr::pluck("query", "languages") |>
@@ -269,4 +277,6 @@ load_places <- make_loader(get_wikidata_places)
 load_edits <- make_loader(get_edits)
 load_types <- make_loader(get_all_types)
 load_pageviews <- make_loader(get_granular_pageviews)
+
+# Parse language codes
 

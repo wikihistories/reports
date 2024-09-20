@@ -25,14 +25,18 @@ lang_codes <- get_language_codes()
 edit_data <- load_edits(EDIT_FILE, use_cache = USE_CACHE, places = places)
 
 # Pageview data
+PGV_FROM <- "2023-02-06"
+PGV_TO <- "2024-02-05"
 pageview_data <- load_pageviews(
   PAGEVIEWS_FILE,
-  use_cache = FALSE,
-  from = "2023-02-06",
-  to = "2024-02-05",
+  use_cache = TRUE,
+  from = PGV_FROM,
+  to = PGV_TO,
   places = places
 )
+if (USE_CACHE) {
+  attr(pageview_data, "from") <- lubridate::as_date(PGV_FROM)
+  attr(pageview_data, "to") <- lubridate::as_date(PGV_TO)
+}
 
-
-
-
+# TODO: Get XML dumps for textual analysis
