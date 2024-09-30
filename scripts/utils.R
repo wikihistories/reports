@@ -117,7 +117,10 @@ extract_metadata <- function(entity) {
 
 # Read file and tag with date created
 read_file_with_date <- function(path) {
-  if (stringr::str_ends(path, "csv")) {
+  # Allow extra characters after 'csv', to enable compression of larger
+  # files. The check is not very clever, it just looks for "csv" followed by
+  # *anything*
+  if (stringr::str_ends(path, "csv.*")) {
     read_func <- readr::read_csv
   } else if (stringr::str_ends(path, "rds")) {
     read_func <- readr::read_rds

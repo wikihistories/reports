@@ -1,0 +1,568 @@
+---
+title: "How Australian places are represented in Wikipedia"
+subtitle: "The Annual Report of the Wikihistories Project"
+keywords:
+  - Wikipedia
+  - historiography
+  - Australia
+  - digital humanities
+  - systemic bias
+  - historical geography
+date: now
+# doi: 
+author:
+  - name: Heather Ford
+    orcid: 0000-0002-3500-9772
+    affiliation: University of Technology, Sydney
+    url: https://hblog.org/
+  - name: Francesca Sidoti
+    orcid: 0009-0005-1321-9372
+    affiliation: University of Technology, Sydney
+  - name: Michael Falk
+    orcid: 0000-0001-9261-8390
+    affiliation: University of Melbourne
+    url: https://findanexpert.unimelb.edu.au/profile/1043380-michael-falk
+  - name: Tamson Pietsch
+    orcid: 0000-0002-8304-7108
+    affiliation: University of Technology, Sydney
+    url: https://capandgown.wordpress.com/
+  - name: Tom Byers
+    orcid: 0009-0005-9927-7679
+    affiliation: University of Melbourne
+    url: https://tom-byers.com
+citation:
+  type: report
+  publisher: University of Technology, Sydney
+  container-title: Reports of the Wikihistories Project
+  number: 2
+  pdf-url: which-places.pdf
+google-scholar: true
+bibliography: wikihistories.bib
+format:
+  html:
+    description-meta: "How are Australian places represented in Wikipedia? In the second report of the wikihistories project, we explore the complex historical geography of Australia in the world's largest encyclopedia."
+    fig-dpi: 600
+---
+
+```{r message=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+file.path("scripts", "which-places-data.R") |> source()
+
+art_url <- function(title, lang = "en") {
+  purrr::map_chr(
+    title,
+    \(t) paste0(
+      "[", sanitise_title(t), "]",
+      "(https://", lang, ".wikipedia.org/wiki/", stringr::str_replace_all(t, " ", "_"), ")"
+    )
+  )
+}
+
+sanitise_title <- function(title) {
+  title <- stringr::str_replace_all(title, "Nigger", "N****r")
+}
+
+date_data <- function(x) {
+  attr(x, "date_created") |> format('%e %B %Y') |> stringr::str_trim()
+}
+```
+
+
+## Frequently Asked Questions
+
+### Which Australian places are most contentious?
+
+```{r}
+#| label: fig-contention
+#| fig-cap: These 10 articles have the highest ratio of 'reverts' to 'human edits' in the dataset, of all articles with more than 50 edits. Are they the *most* contentious articles in the dataset? That question is impossible to answer by such a simple measure.
+
+edit_threshold <- 50
+num_articles <- 10
+
+figure_1_data <- edit_data |>
+  dplyr::mutate(
+    reverts = reverts$count,
+    edits = edits$count,
+    revert_ratio = reverts / edits
+  ) |> 
+  dplyr::filter(
+    reverts + edits > edit_threshold
+  ) |>
+  dplyr::arrange(desc(revert_ratio)) |> 
+  dplyr::slice_head(n=num_articles) |> 
+  dplyr::mutate(
+    display_title = art_url(title),
+    revert_ratio = round(revert_ratio, digits = 2))
+
+figure_1_data |> 
+  dplyr::select(
+    Article = display_title,
+    Edits = edits,
+    Reverts = reverts,
+    `Reverts per Edit` = revert_ratio
+  ) |>
+  knitr::kable(
+    caption = glue::glue("{num_articles} articles (> {edit_threshold} edits) with most reverts per edit. Data collected {date_data(edit_data)}.")
+  )
+```
+
+Some Wikipedia pages are more controversial than others. Wikipedia contributors have argued for years over whether [Pavolva](https://en.wikipedia.org/wiki/Talk:Pavlova_(dessert)) was invented in Australia or New Zealand. Other pages inspire little debate. It is not easy to locate or rank contentious articles using computerised methods. Contention can take many forms: editors might 'revert' (i.e. undo) one another's edits; they might debate topics in-depth on Wikipedia Talk pages; they might abuse one another 'off-wiki'; they might accuse one another of misconduct, and be subject to administrative redress. For simplicity's sake, we focus just on the first manifestation of contention, when Wikipedians 'revert' or undo each others' edits.
+
+In @fig-contention, we have attempted to find 10 highly contentious Places using a simple metric. The figure shows the 10 Australian places that have been edited at least `r edit_threshold` times, with the highest ratio of 'reverted' edits to human edits. For example, the little article on [Barmah National Park](https://en.wikipedia.org/wiki/Barmah_National_Park) has only had text added to it `r figure_1_data |> dplyr::filter(title == "Barmah National Park") |> dplyr::pull(edits)` times, but more than half (`r figure_1_data |> dplyr::filter(title == "Barmah National Park") |> dplyr::pull(reverts)`) of those edits have been reverted! The reason is a long-running dispute over whether horses in the national park should be considered as 'wild' or 'feral'. This debate reflects a deep anxiety in Australia about the moral value of European settlement. Some White Australians see the horses (or '[brumbies](https://en.wikipedia.org/wiki/Brumby)') as part of Australia's [European heritage](https://www.abc.net.au/news/2020-05-08/brumby-culling-to-go-ahead-following-federal-court-decision/12228896). Others view them as an invasive species that represent the destructive history of European colonisation. Other examples in @fig-contention reflect similarly emotional conflicts in Australian society. The page for [Howard Springs](https://en.wikipedia.org/wiki/Howard_Springs,_Northern_Territory) was subject to an 'edit war' during the pandemic, when one editor wished to redefine the local COVID-19 Quarantine Facility as a "Concentration Camp." The page for [Airport Drive](https://en.wikipedia.org/wiki/Airport_Drive_(Melbourne)), meanwhile, was subject to an altogether less emotional dispute: the editors could not agree which other roads intersect with this Melbourne motorway.
+
+As these few examples demonstrate, Australian places can inspire many kinds of dispute: disputes about Australia's colonisation, disputes about civil liberties, disputes about arid matters of geographical fact. Sometimes apparent disputes are actually simple vandalism, as in the page for `r art_url("Giru, Queensland")` whose Infobox has been vandalised numerous times to place the city "1,283 km (797 mi) NNW of `r art_url("Miley Cyrus")`."
+
+### Which language edition has the most Australian places?
+
+```{r}
+#| label: fig-lang-edition
+#| fig-cap: The Cebuano and Swedish Wikipedias have many articles written by a software program, lsjbot. Swedish Wikipedians have in recent years deleted most of lsjbot's articles, but the small community of Cebuano editors in the Philippines have not done so in their encyclopaedia.
+
+language_data <- places |> 
+  dplyr::select(sitelinks) |> 
+  tidyr::unnest(sitelinks) |> 
+  dplyr::group_by(sitelinks) |> 
+  dplyr::summarise(n = n()) |> 
+  dplyr::rename(wiki_code = sitelinks) |> 
+  dplyr::arrange(desc(n)) |> 
+  dplyr::mutate(
+    lang_code = stringr::str_remove(wiki_code, "wiki")
+  ) |> 
+  dplyr::left_join(
+    lang_codes,
+    by = dplyr::join_by(lang_code == code)
+  ) |> 
+  dplyr::rename(language_edition = name) |> 
+  dplyr::mutate(
+    language_edition = forcats::fct_inorder(language_edition)
+  ) |> 
+  tidyr::drop_na()
+language_data |> 
+  dplyr::slice_head(n=15) |> 
+  ggplot2::ggplot(
+    ggplot2::aes(x = language_edition, y = n)
+  ) +
+  ggplot2::geom_col() +
+  ggplot2::labs(
+    title = glue::glue("The 10 Wikipedias with the most Australian places, as at {date_data(places)}"),
+    x = "Language Edition",
+    y = "Number of Articles for Australian places"
+  ) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 90, vjust=0.4, hjust=1)
+  )
+```
+
+Wikipedia is available in more than 300 languages. You might expect that English Wikipedia would have the most articles about Australian places—but you'd be wrong. @fig-lang-edition shows that [Cebuano Wikipedia](https://ceb.wikipedia.org) has by far the largest number of articles about Australian places. Tens of thousands of Australian places, such as [Molecap Hill](https://ceb.wikipedia.org/wiki/Molecap_Hill), [Dindum Island](https://ceb.wikipedia.org/wiki/Dindum_Island) and [Mount Finlayson Range](https://ceb.wikipedia.org/wiki/Mount_Finlayson_Range), have articles *only* in Cebuano Wikipedia. Why is this?
+
+It is *not* because the speakers of the [Cebuano language](https://en.wikipedia.org/wiki/Cebuano_language) in Philippines are obsessed with Australian geography. It is because virtually the whole Cebuano Wikipedia has been written by a bot, [lsjbot](https://en.wikipedia.org/wiki/Lsjbot), programmed by [Sverker Johansson](https://en.wikipedia.org/wiki/Sverker_Johansson), a Swedish computational linguist. `lsjbot` was historically responsible for a large portion of Swedish Wikipedia too, and despite efforts by Swedish Wikipedians to delete its formulaic articles, `lsjbot` is still responsible for many Swedish articles about obscure Australian places, including [Dawes National Park](https://sv.wikipedia.org/wiki/Dawes_nationalpark) and [Lake Baker](https://sv.wikipedia.org/wiki/Lake_Baker). The story is similar on [Egyptian Arabic Wikipedia](https://arz.wikipedia.org/wiki/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D9%87_%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D9%87). Egyptian Arabic Wikipedia contains thousands of articles about Australian places because of one editor, [Mahar Asaad Baker](https://arz.wikipedia.org/wiki/%D9%85%D8%B3%D8%AA%D8%AE%D8%AF%D9%85:HitomiAkane), who describes [in a published booklet](https://search.worldcat.org/title/1341182226) how they wrote 1.6 million articles by downloading data from Wikidata and converting it into [Masri](https://en.wikipedia.org/wiki/Masri) text for the site.
+
+How is it possible for simple software to generate so many factually accurate articles about Australian places? Read any article by `lsjbot`, and you will see how thoroughly geography has been 'datified' in the 21st century. A global database, [geonames.org](https://geonames.org) records basic data about millions of place names. `lsjbot` browses geonames.org to find places without Wikipedia articles. When it finds a missing article, `lsjbot` extracts basic information from geonames.org, such as the type, name, and co-ordinates of the place. The bot then combines the basic information with publicly-available climate data from [NASA Earth Observations datasets](https://neo.gsfc.nasa.gov/dataset_index.php), and uses [this climatic map](https://hess.copernicus.org/articles/11/1633/2007/) to determine the place's [Köppen climate classification](https://en.wikipedia.org/wiki/K%C3%B6ppen_climate_classification).[^1] `lsjbot` takes advantage of geospatial data to create articles about the earth's physical geography. We will see that the human editors of English Wikipedia describe places more humanistically.
+
+[^1]: If you know the C# programming language, you can see how `lsjbot` does all this [here](https://github.com/Lsjbot/make-geonames/blob/master/Program.cs).
+
+### What kinds of places get the most attention from editors?
+
+```{r}
+#| label: fig-attention
+#| fig-cap: This shows all the types of places that have at least 50 articles about them in English and Cebuano Wikipedia. The types are positioned on the graph according to the percentage of articles of that type in the dataset. Types below the line have a higher proportion in English Wikipedia than in Cebuano Wikipedia, and vice-versa. The brighter blue the label, the more often places of that type have been edited in English Wikipedia.
+
+n_articles <- places |> 
+  dplyr::distinct(wikidata_id, .keep_all = T) |> 
+  tidyr::unnest(sitelinks) |> 
+  dplyr::filter(sitelinks == "enwiki" | sitelinks == "cebwiki") |> 
+  dplyr::group_by(sitelinks) |> 
+  dplyr::summarise(n = dplyr::n()) |> 
+  tidyr::pivot_wider(names_from = "sitelinks", values_from = "n")
+
+n_edits <- edit_data |> 
+  dplyr::summarise(n = sum(edits$count, na.rm = TRUE) + sum(reverts$count, na.rm = TRUE)) |> 
+  dplyr::pull(n)
+
+type_threshold <- 50 # only keep place types with more than n articles
+
+edits_by_type <- edit_data |> 
+  # The edit table just has one place type for each article. Thus some place
+  # types are recording no edits in English Wikipedia, even if they have been
+  # edited. Get all the place type data back in
+  dplyr::select(-instance_of) |> # The column will be re-added from the join
+  # There was some error, which may have been because dplyr::join doesn't really
+  # like data.frame columns. So lift out the two columns we want
+  dplyr::mutate(
+    edits = edits$count,
+    reverts = reverts$count
+  ) |> 
+  dplyr::full_join(
+    dplyr::select(places, wikidata_id, instance_of),
+    by = "wikidata_id"
+  ) |> 
+  dplyr::group_by(instance_of) |> 
+  # na.rm = TRUE seems to help with the aforementioned error
+  # where some edit data was being dropped
+  dplyr::summarise(total_edits = sum(edits, na.rm = TRUE) + sum(reverts, na.rm = TRUE))
+
+attention_data <- places |> 
+  tidyr::unnest(sitelinks) |>
+  dplyr::filter(sitelinks %in% c("cebwiki", "enwiki")) |> 
+  dplyr::group_by(instance_of, sitelinks) |> 
+  dplyr::summarise(total_pages = dplyr::n()) |> 
+  dplyr::ungroup() |> 
+  tidyr::pivot_wider(
+    names_from = "sitelinks",
+    values_from = "total_pages",
+    values_fill = 0
+  ) |> 
+  dplyr::left_join(edits_by_type, by = "instance_of") |> 
+  dplyr::left_join(
+    dplyr::select(types, type, label),
+    by = dplyr::join_by(instance_of == type)
+  ) |> 
+  tidyr::replace_na(list(total_edits=0)) |> 
+  dplyr::filter(
+    enwiki > type_threshold,
+    cebwiki > type_threshold
+  ) |> 
+  dplyr::mutate(
+    enwiki = enwiki / n_articles$enwiki,
+    cebwiki = cebwiki / n_articles$cebwiki
+  )
+
+attention_data |> 
+  ggplot2::ggplot(
+    ggplot2::aes(x = enwiki, y = cebwiki, colour = total_edits, label = label)
+  ) +
+  ggplot2::geom_abline(slope = 1, intercept = c(0,0), colour = "lightgrey") + 
+  ggplot2::annotate(
+    "text",
+    x = 0.0075,
+    y = 1,
+    label = "Higher % in Cebuano",
+    hjust = "right",
+    vjust = "bottom",
+    angle = 45
+  ) +
+  ggplot2::annotate(
+    "text",
+    x = 0.1,
+    y = 0.0005,
+    label = "Higher % in English",
+    hjust = "left",
+    angle = 45
+  ) +
+  ggplot2::geom_point() +
+  ggrepel::geom_label_repel(min.segment.length=0) +
+  # Force label for city: otherwise geom_label_repel excludes it due to too many overlaps
+  ggrepel::geom_label_repel(data = attention_data |> dplyr::filter(instance_of == "Q515"), min.segment.length=0) +
+  ggplot2::scale_x_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) + 
+  ggplot2::scale_y_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) +
+  ggplot2::scale_colour_continuous(trans = "log10", labels = scales::label_comma(big.mark = " ")) +
+  ggplot2::theme_minimal() +
+  ggplot2::labs(
+    x = "Places with this type in English Wikipedia",
+    y = "Places with this type in Cebuano Wikipedia",
+    color = "Edits (English)",
+    title = "Place types in English and Cebuano Wikipedia",
+    subtitle = glue::glue("Type data {date_data(places)}; edit data {date_data(edit_data)}.\nPlace types with {type_threshold} or fewer articles excluded.")
+  ) +
+  ggplot2::coord_fixed(ratio = 1) # Force square plot area
+```
+
+If we compare Cebuano and English Wikipedias, we see that human and bot editors have different priorities. Broadly speaking, Cebuano Wikipedia is bot-authored, while English Wikipedia is human-authored.[^3] In English Wikipedia, places of human occupation make up a bigger proportion of the total. Towns, localities, cities, urban parks and villages all make up a larger proportion of the place articles in English Wikipedia than in Cebuano Wikipedia. By contrast, in bot-authored Cebuano Wikipedia, geographical features such as mountains, lakes, bights and hills make up a much larger share of the Australian place articles. This difference is even more pronounced when we consider edit statistics on English Wikipedia. Consider articles about cities. Cities account for only `r attention_data |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("enwiki") |> scales::label_percent(accuracy = 0.01)()` of the Australian places on English Wikipedia (`r attention_data |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("cebwiki") |> scales::label_percent(accuracy = 0.01)()` in Cebuano), but they have received `r attention_data |> dplyr::mutate(edit_prop = total_edits / n_edits) |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("edit_prop") |> scales::label_percent()()` of the human edits.[^4] Not only are human editors more likely to create articles about places with a strong human connection. They are also more likely to spend their time editing them.
+
+English Wikipedia is strongly anthropocentric, at least compared to the geographical databases that form the basis of bot-authored Cebuano Wikipedia. English Wikipedia prioritises human over physical geography.
+
+[^3]: Bots do play numerous important roles on English Wikipedia, but their role in article-creation is far more limited than on Cebuano Wikipedia.
+
+[^4]: "Human edits" means "edits by autoconfirmed users" plus "reverts." 
+
+### Who reads the articles about Australian places?
+
+```{r}
+#| label: fig-pageviews
+#| fig-cap: Most people who read about Australian places seem to come from Australia, or a handful of large English-speaking countries.
+country_summary <- pageview_data |> 
+  dplyr::mutate(
+    country_name = dplyr::case_when(
+      country_name == "United States" ~ "USA",
+      country_name == "United Kingdom" ~ "UK",
+      .default = as.character(country_name)
+    )
+  ) |> 
+  dplyr::group_by(country_name) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::mutate(prop = pageviews / sum(pageviews))
+
+# Make the map
+country_summary |> 
+  dplyr::full_join(
+    ggplot2::map_data("world"),
+    by = dplyr::join_by(country_name == region)) |> 
+  ggplot2::ggplot(
+    ggplot2::aes(fill = pageviews, group = group, x = long, y = lat)
+    ) +
+  ggplot2::geom_polygon() +
+  ggplot2::labs(
+    x = "Latitude",
+    y = "Longitude",
+    fill = "Pageviews",
+    title = "Pageviews of Australian place articles by country",
+    subtitle = glue::glue("From {attr(pageview_data, 'from') |> format('%eth %B %Y')  |> stringr::str_trim()} to {attr(pageview_data, 'to') |> format('%eth %B %Y') |> stringr::str_trim()}")
+    ) +
+  ggplot2::scale_fill_continuous(
+    labels = scales::label_comma(big.mark = " "),
+    trans = "log10", breaks = c(1000, 10000, 100000, 1000000)
+    ) +
+  ggplot2::theme_minimal()
+
+country_percent <- function(country, accuracy = 1) {
+  dplyr::filter(country_summary, country_name == country) |> 
+    dplyr::pull(prop) |> 
+    scales::label_percent(accuracy)()
+}
+```
+
+Until recently, it was difficult to know who reads Wikipedia. But in June 2023, the Wikimedia foundation released [a new dataset of 'pageview' statistics](https://diff.wikimedia.org/2023/06/21/new-dataset-uncovers-wikipedia-browsing-habits-while-protecting-users/), which breaks down Wikipedia's readers by country.[^5] Unsurprisingly, Australian readers are most interested by far in Australian places. `r country_percent("Australia")` of the pageviews in this dataset originate in Australia. Other significant sources of traffic include the USA (`r country_percent("USA")`), UK (`r country_percent("UK")`), India (`r country_percent("India")`) and Germany (`r country_percent("Germany")`).
+
+[^5]: There are [three main caveats to the data](https://analytics.wikimedia.org/published/datasets/country_project_page/00_README.html). First, statistical noise is added to the data about readers in 'medium'- and 'high'-risk countries, as judged by the Wikimedia Foundation. This is to protect readers in places where political expression is dangerous. Second, the data collection methodology has changed over time. Thus to keep our data consistent, we consider only the period from `r attr(pageview_data, 'from') |> format('%eth %B %Y')  |> stringr::str_trim()` to `r attr(pageview_data, 'to') |> format('%eth %B %Y')  |> stringr::str_trim()`. Third, this country-level dataset does not show *all* pageviews. It collects pageviews daily, only counting the first 10 visits to each page per user, and only counting pages that get more than 150 views that day.
+
+```{r}
+total_pageviews <- pageview_data |> 
+  dplyr::pull(pageviews) |> 
+  sum()
+
+type_pageviews <- pageview_data |> 
+  dplyr::left_join(
+    dplyr::select(places, wikidata_id, instance_of),
+    by = "wikidata_id",
+    relationship = "many-to-many"
+    ) |> 
+  dplyr::group_by(instance_of) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::left_join(
+    dplyr::select(types, type, label),
+    by = dplyr::join_by(instance_of == type)
+  ) |> 
+  dplyr::mutate(
+    # NB: Because articles may have many types, `prop` adds
+    # up to more than 100%.
+    prop = pageviews / total_pageviews
+  ) |> 
+  dplyr::arrange(desc(pageviews))
+
+article_pageviews <- pageview_data |> 
+  dplyr::group_by(wikidata_id) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::mutate(prop = pageviews / sum(pageviews)) |> 
+  dplyr::left_join(
+    dplyr::distinct(places, wikidata_id, title),
+    by = "wikidata_id"
+  ) |> 
+  dplyr::arrange(desc(pageviews))
+
+project_pageviews <- pageview_data |>
+  dplyr::group_by(project) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::mutate(prop = pageviews / sum(pageviews)) |> 
+  dplyr::arrange(desc(pageviews))
+```
+
+Like its human editors, Wikipedia's readers prefer articles about places of human habitation or visitation. Among the top-ten-most-read-about places are six of Australia's capital cities (Sydney, Melbourne, Canberra, Brisbane, Perth and Adelaide), and Australia's three most famous tourist destinations (Uluru, the Sydney Opera House and the Great Barrier Reef). In this dataset, `r type_pageviews |> dplyr::slice_head(n=1) |> dplyr::pull(prop) |> scales::label_percent()()` of the recorded pageviews are for articles about cities.
+```{r}
+indonesian_articles <- places |> 
+  dplyr::filter(purrr::map_lgl(sitelinks, \(sl) "idwiki" %in% sl)) |> 
+  dplyr::distinct(wikidata_id)
+  
+indonesian_articles_pgv <- indonesian_articles |> 
+  dplyr::left_join(
+    pageview_data,
+    by = "wikidata_id"
+  ) |> 
+  tidyr::drop_na() |> 
+  dplyr::group_by(country_name) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::mutate(prop = pageviews / sum(pageviews)) |> 
+  dplyr::arrange(desc(pageviews))
+
+indonesian_share_top_10 <- article_pageviews |> 
+  dplyr::select(wikidata_id) |> 
+  dplyr::slice_head(n=10) |> 
+  dplyr::left_join(pageview_data, by="wikidata_id") |> 
+  dplyr::group_by(country_name) |> 
+  dplyr::summarise(pageviews = sum(pageviews)) |> 
+  dplyr::mutate(prop = pageviews / sum(pageviews)) |> 
+  dplyr::arrange(desc(pageviews)) |> 
+  dplyr::filter(country_name == "Indonesia") |> 
+  dplyr::pull(prop) |> 
+  scales::label_percent(accuracy = 0.1)()
+```
+
+These high-level statistics can obscure deeper patterns. Overall, for example, it would seem that Australian places are not hugely interesting to Indonesian readers, who contribute only `r country_percent("Indonesia", accuracy = 0.1)` of the pageviews in the dataset. But this is partly because Indonesian Wikipedia is relatively small: only `r nrow(indonesian_articles)` Australian places have an article in Indonesian Wikipedia. If we consider pageviews just for these `r nrow(indonesian_articles)` places, however, the Indonesian share climbs to `r indonesian_articles_pgv |> dplyr::filter(country_name == "Indonesia") |> dplyr::pull(prop) |> scales::label_percent(accuracy=0.1)()`. If we just look at the ten most-read articles in the dataset, the share of Indonesian pageviews climbs again to `r indonesian_share_top_10`. There are some places, like [Christmas Island](https://www.wikidata.org/wiki/Q31063), just off the Indonesian coast, where the Indonesian share is as high as `r pageview_data |> dplyr::filter(wikidata_id == "Q31063") |> dplyr::group_by(country_name) |> dplyr::summarise(pageviews = sum(pageviews)) |> dplyr::mutate(prop = pageviews / sum(pageviews)) |> dplyr::filter(country_name == "Indonesia") |> dplyr::pull(prop) |> scales::label_percent(accuracy=0.1)()`.
+
+Australia's readership on Wikipedia is affected by many causes that are hard to disentangle. Wikipedia is hugely popular in the USA, UK and India. These countries also have strong linguistic, cultural and historical links to Australia. Wikipedia has a much smaller audience in Indonesia, but Indonesia is geographically Australia's closest neighbour, and some Australian places—such as Christmas Island—are especially significant there. It is sometimes said that the internet has abolished distance, and created a "space of flows" or "global village" in which everyone is a next-door neighbour. This is clearly not the case when we look at Wikipedia reader data.
+
+### Which Australian places exist?
+
+TBC: Fran's section
+
+## Extent of Coverage
+
+In this section, we consider how English Wikipedia covers the Australian landmass. Which places are described? Which parts of the continent are densely described, and which are not? How are Indigenous places represented? 
+
+### The data
+
+`r places |> dplyr::filter(on_english_wikipedia) |> dplyr::distinct(wikidata_id) |> nrow() |> scales::comma()` Australian places have an article on English Wikipedia. We calculate this figure using [Wikidata's query engine](https://query.wikidata.org/). Using Wikidata, we find every [physical location](https://www.wikidata.org/wiki/Q17334923) or [geographic feature](https://www.wikidata.org/wiki/Q618123) that has the property [country](https://www.wikidata.org/wiki/Property:P17):[Australia](https://www.wikidata.org/wiki/Q408). Using Wikidata, we retrieve coordinates for each place. Using English Wikipedia, we retrieve the text of each article and the number of edits.[^7]
+
+[^7]: Wikidata data collected on `r date_data(places)`; article text retrieve `r date_data(text_data)`; edit data retrieved `r date_data(edit_data)`. The downloaded datasets are available in the [reports repository of the wikihistories project](https://github.com/wikihistories/reports).
+
+### What the data show
+
+English Wikipedia constructs Australia from a human, and more specifically and white-settler perspective. @fig-all-places show the distribution of place articles across the continent of Australia. There are many articles about the large capital cities of Perth, Adelaide, Melbourne, Sydney and Brisbane, whose central areas appear as bright yellow hexagons on the map. There may be more than 1000 articles describing places in each of these cities. The further you move from the cities, the fewer articles there are. Across Australia's arid centre, there are very few articles indeed.
+
+It may seem obvious that Wikipedians should focus their attention on cities and other places of human habitation. But this is not the only way. @fig-cebuano-map shows the distribution of Australian places in Cebuano Wikipedia. As shown in @fig-attention, Cebuano has a much stronger focus on natural features than English Wikipedia does. Since natural features such as rivers, knolls and valleys are distributed evenly across the landscape, Australian places in Cebuano Wikipedia are distributed more evenly across the continent.
+
+The human focus of English Wikipedia is accentuated in @fig-edit-map, which visualises edit activity. Not only are there more articles about the Australia's large cities on English Wikipedia, but editors devote considerably more attention to them. There are numerous small regions near the big cities where human editors have made more than 100,000 edits. To put this in perspective, the total number of human edits in the dataset is `r edit_data |> dplyr::transmute(edits = edits$count + reverts$count) |> sum(na.rm = T) |> scales::label_comma()()`. A few regions with more than 100,000 edits each form a significant part of this total.
+
+In sum, English Wikipedia is strongly anthropocentric. The places that matter are human places. More than this, they are white-settler places. English Wikipedia's focus is on the cities, states and country of Australia, as established by predominately British settlers in the Eighteenth and Nineteenth Centuries. In the next section, we consider one way that English Wikipedians have tried to redress this imbalance.
+
+```{r}
+hexmap <- function(data, scale_limits = NULL) {
+  data |> 
+    ggplot2::ggplot(ggplot2::aes(x = longitude, y = latitude)) +
+    ggplot2::geom_sf(data = ozmaps::ozmap_states, inherit.aes = F) +
+    ggplot2::geom_hex(binwidth = 0.5) +
+    ggplot2::theme_void() +
+    ggplot2::xlim(110, 155) +
+    ggplot2::scale_fill_viridis_c(trans = "log10", labels = scales::label_comma(big.mark=" "), limits = scale_limits)
+}
+```
+
+
+```{r}
+#| label: fig-all-places
+#| fig-cap: All Australian places in English Wikipedia that lie on or near the Australian mainland. Each hexagon represents an equally-sized zone of the earth's surface, and is coloured to represent how many articles are written about places in that zone.
+
+extent_data <- text_data |> 
+  dplyr::transmute(
+    title = title,
+    has_native_name = stringr::str_detect(content, "\\{\\{nativename|\\|\\s*native_name")
+  ) |> 
+  dplyr::left_join(
+    places |> 
+      dplyr::filter(on_english_wikipedia) |> 
+      dplyr::distinct(wikidata_id, .keep_all = T) |> 
+      dplyr::select(title, latitude, longitude) |> 
+      dplyr::mutate(longitude = as.numeric(longitude), latitude = as.numeric(latitude)),
+    by = "title"
+  ) |> 
+  dplyr::mutate(
+    in_region = longitude > 110 & longitude < 155 & latitude < -5 & latitude > -60 
+  ) |> 
+  dplyr::left_join(
+    edit_data |> 
+      dplyr::transmute(
+        title = title,
+        edits = edits$count + reverts$count),
+    by = "title"
+  )
+
+extent_data |> 
+  dplyr::filter(in_region) |> 
+  hexmap(scale_limits = c(1,2500)) +
+  ggplot2::labs(fill="Articles about\nplaces (English)")
+``` 
+
+```{r}
+#| label: fig-cebuano-map
+#| fig-cap: Like @fig-all-places, but for Cebuano Wikipedia. Since Cebuano Wikipedia focuses on geographic features rather than human habitation, its place articles are more evenly distributed across the continent.
+
+places |> 
+  tidyr::unnest(sitelinks) |> 
+  dplyr::filter(sitelinks == "cebwiki") |> 
+  dplyr::distinct(wikidata_id, .keep_all = T) |> 
+  dplyr::mutate(latitude = as.numeric(latitude), longitude = as.numeric(longitude)) |> 
+  dplyr::filter(longitude > 110 & longitude < 155 & latitude < -5 & latitude > -60) |>  
+  hexmap() +
+  ggplot2::labs(
+    fill = "Articles about\nplaces (Cebuano)"
+  )
+```
+
+```{r}
+#| label: fig-edit-map
+#| fig-cap: This map counts the number of edits rather than the number of places in each hexagon. English Wikipedia's editors focus their attention overwhelmingly on metropolitan centres and surrounding regions.
+
+# To use geom_contour, the data needs to be in a grid; that is, we need to
+# divide up the whole of Australia into little squares, and sum the edits for
+# each square. See `ggplot2::geom_contour`
+
+edit_data |>
+  dplyr::mutate(
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude),
+    human_edits = edits$count + reverts$count
+    ) |> 
+  dplyr::filter(
+    longitude > 110 & longitude < 155,
+    latitude < -5
+  ) |> 
+  ggplot2::ggplot(ggplot2::aes(
+      x = longitude,
+      y = latitude,
+      weight = human_edits
+    )) +
+  ggplot2::geom_sf(data = ozmaps::ozmap_states, inherit.aes = F) +
+  ggplot2::geom_hex(binwidth = 0.5) +
+  ggplot2::lims(
+    x = c(110, 155),
+    y = c(-45, -5)
+  ) +
+  ggplot2::theme_void() +
+  ggplot2::scale_fill_viridis_c(trans = "log10", option="magma", labels = scales::label_comma(big.mark=" ")) +
+  ggplot2::labs(
+    fill = "Number of\nHuman Edits"
+    )
+```
+
+### Indigenous places
+
+Wikipedia provides a "native name" system, which editors of Australian Wikipedia have used to achieve dual-naming of Australian places. There are two ways a Wikipedian can assign a "native name" to a Wikipedia article. They can insert `r art_url("Template:Native_name")` into the text of the article; or they can fill in the "native_name" field in articles "Infobox." These two approaches to dual-naming can be seen on the articles for `r art_url("Naarm")`, `r art_url("Boorloo")` and `r art_url("Deerubbin")`.
+
+@fig-indigenous-places shows all the places in the dataset that have been dual-named on Wikipedia. `r sum(extent_data$has_native_name) |> scales::label_comma()()` places in the dataset have been dual-named, or about `r (sum(extent_data$has_native_name) / places |> dplyr::filter(on_english_wikipedia) |> dplyr::distinct(wikidata_id) |> nrow()) |> scales::percent()` of the total. This is of course a small quantity, given that the entire Australian landmass had been occupied and named by Aboriginal and Torres Strait Islander people for tens of thousands of years prior to European settlement. But Wikipedia's efforts are comparable to those of state agencies like the Australian Broadcasting Corporation or the state-based Geographical Names Boards.
+
+There are two obvious flaws to Wikipedia's dual-naming system.
+
+**Offensive terminology:** The term "native" is offensive in Australia. Australian Wikipedians know this. The members of [Wikiproject Australia](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Australia/Conventions/Indigenous_draft) have cautioned other editors not to use the term in the text of articles, although they have not attempted to remove the term from Wikipedia's software. Of course, `r art_url("Template:Native_name")` is not *only* used in an Australian context. The article for the Italian city of `r art_url("Florence")`, for example, gives "Firenze" as the "native name."
+
+**European priority:** The dual-naming system prioritises the European construction of place. Invariably, the article on English Wikipedia gives the settler name as the primary name. Thus a visitor to `r art_url("Boorloo")` will be redirected to an article entitled "Perth." More deeply, for a place to even *exist* in Wikipedia, it first needs to exist in the European system of spatial divisions. When Europeans occupied Australia, they divided the landmass up into colonies, parishes, cities and later into states and suburbs, largely ignoring the structures that already existed in Aboriginal and Torres Strait Islander societies. The best that dual-naming can do is to attach an Indigenous name to one of these places established by settlers.
+
+What of Indigenous places that predated European colonisation? In the next section, we consider how these have been left out of the Wikipedia definition of "place."
+
+```{r}
+#| label: fig-indigenous-places
+#| fig-cap: Like @fig-all-places, but showing only those places with an Indigenous name. They form only a small portion of the total. 
+
+extent_data |> 
+  dplyr::filter(in_region, has_native_name) |> 
+  hexmap(scale_limits = c(1,2500)) + 
+  ggplot2::labs(fill = "Articles with\nIndigenous name")
+```
+
+### Limitations: what is a place?
+
+> The land and sea not empty shed that man has built. There's something in it.\
+—Matthew Dhulumburrk with Mark Dreygus (Northern Land Council), quoted in @rose_nourishing_1996 [p. 8]
+
+Together, Wikipedia and Wikidata construct space in particular way. Space is made up of physical locations and geographical features. Each feature or location is assigned a Wikidata ID, a Wikipedia article, and a set of coordinates. In this familiar model of space, the earth is a continuous surface, upon which individual places can be precisely located.
+
+Wikipedia's spatial system is typical, and interoperates with other digital systems. For example, a visitor to the Wikipedia page for [Townsville](https://en.wikipedia.org/wiki/Townsville) can view data derived directly from the [Australian Bureau of Statistics](https://dbr.abs.gov.au/), such as the population or area of the city. If the visitor clicks on Townsville's co-ordinates, they will be taken to the city's [geohack page](https://geohack.toolforge.org/geohack.php?pagename=Townsville&params=19_15_S_146_49_E_type:city_region:AU-QLD), which connects the Wikipedia article to dozens of other compatible systems, such as [Google Maps](https://www.google.com/maps?ll=-19.25,146.816667&q=-19.25,146.816667&hl=en&t=m&z=12) and [NASA Worldwind](worldwind://goto/world=Earth&lat=-19.25&lon=146.816667&view=0.1). If the user clicks `Tools` &rarr; `Wikidata Item`, they will arrive at [Townsville's Wikidata page](https://www.wikidata.org/wiki/Q190021), which links them to other-language Wikipedia articles about Townsville, and also links to Townsville's record in other databases, such as [VIAF](https://viaf.org/viaf/130175576/), [GeoNames](https://www.geonames.org/2146142) and the [National Library of Latvia](https://kopkatalogs.lv/F/?func=direct&local_base=lnc10&doc_number=000297837). Wikipedia is part of a vast network of systems that all cooperate to construct the space of the Earth in a certain way.
+
+This way of constructing space is not the only way. In particular, it is inconsistent with many of the ways that Aboriginal and Torres Strait Islander people construct space. We are not the right people, and this report is not the right document in which to give a full and careful account of the many ways Aboriginal and Torres Strait Islander understand space. But we can indicate how Indigenous concepts of *country* fail to register as "places" in the system.
+
+*Country* contrasts with the Wikipedia notion of "place" in at least two ways. First, *country* is not a "physical location" or "geographic feature": it is "multi-dimensional—it consists of people, animals, plants, Dreamings; underground, earth, soils, minerals and waters, surface water, and air" [@rose_nourishing_1996, p. 8]. Second, *country* is a local rather than a universal concept: "The fact of localised knowledge is itself Law. This system does not invite people to assume that they can or should know everything" [@rose_nourishing_1996, p. 13]. Since it is *holistic* and *local*, *country* conflicts with Wikipedia's *physical*/*geographical* and *universal* construction of space.
+
+As a result, *country* is not represented as a *place* in Wikipedia, and does not figure in our dataset. The Wikipedia spatial equation, `1 place = 1 article`, breaks down in Australia. The closest Wikipedia comes to representing *country* is in its articles about Aboriginal and Torres Strait Islander peoples and languages. For example, the articles about the `r art_url("Arrernte_people")` and `r art_url("Pitjantjatjara")` people indicate the extent and importance of their countries, but their countries are not represented as places in our dataset. In Wikipedia's terms, these are articles not about places, but about *peoples*.

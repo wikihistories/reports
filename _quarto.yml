@@ -27,9 +27,9 @@ website:
         text: Home
       - text: Reports
         menu:
-        - href: who-counts.qmd
+        - href: 2023.qmd
           text: "2023 | How Australians are Represented in Wikipedia"
-        - href: which-places.qmd
+        - href: 2024.qmd
           text: "2024 | How Australian Places are Represented in Wikipedia"
       - href: LICENSE.md
         text: Copyright
@@ -41,19 +41,6 @@ format:
       dark: darkly
     css: styles.css
     toc: true
-  pdf:
-    toc: true
-    number-sections: true
-    colorlinks: true
-    documentclass: scrreprt
-    papersize: A4
-    template-partials:
-      - partials/title.tex
-    header-includes:
-      - \usepackage{fancyhdr}
-      - \pagestyle{fancy}
-      - \fancyfoot[CO,CE]{}
-      - \fancyfoot[RO,RE]{\thepage}
 
 execute:
   freeze: auto

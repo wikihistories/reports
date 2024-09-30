@@ -1,0 +1,549 @@
+code,bcp47,name
+aa,aa,Afar
+aae,aae,Arbëresh
+ab,ab,Abkhazian
+abs,abs,Ambonese Malay
+ace,ace,Achinese
+acf,acf,Saint Lucian Creole
+acm,acm,Iraqi Arabic
+ady,ady,Adyghe
+ady-cyrl,ady-Cyrl,Adyghe (Cyrillic script)
+aeb,aeb,Tunisian Arabic
+aeb-arab,aeb-Arab,Tunisian Arabic (Arabic script)
+aeb-latn,aeb-Latn,Tunisian Arabic (Latin script)
+af,af,Afrikaans
+aln,aln,Gheg Albanian
+als,gsw,Alemannisch
+alt,alt,Southern Altai
+am,am,Amharic
+ami,ami,Amis
+an,an,Aragonese
+ang,ang,Old English
+ann,ann,Obolo
+anp,anp,Angika
+apc,apc,Levantine Arabic
+ar,ar,Arabic
+arc,arc,Aramaic
+arn,arn,Mapuche
+arq,arq,Algerian Arabic
+ary,ary,Moroccan Arabic
+arz,arz,Egyptian Arabic
+as,as,Assamese
+ase,ase,American Sign Language
+ast,ast,Asturian
+atj,atj,Atikamekw
+av,av,Avaric
+avk,avk,Kotava
+awa,awa,Awadhi
+ay,ay,Aymara
+az,az,Azerbaijani
+azb,azb,South Azerbaijani
+ba,ba,Bashkir
+ban,ban,Balinese
+ban-bali,ban-Bali,Balinese (Balinese script)
+bar,bar,Bavarian
+bat-smg,sgs,Samogitian
+bbc,bbc,Batak Toba
+bbc-latn,bbc-Latn,Batak Toba (Latin script)
+bcc,bcc,Southern Balochi
+bci,bci,Baoulé
+bcl,bcl,Central Bikol
+bdr,bdr,West Coast Bajau
+be,be,Belarusian
+be-tarask,be-tarask,Belarusian (Taraškievica orthography)
+be-x-old,be-tarask,Belarusian (Taraškievica orthography)
+bew,bew,Betawi
+bg,bg,Bulgarian
+bgc,bgc,Haryanvi
+bgn,bgn,Western Balochi
+bh,bh,Bhojpuri
+bho,bho,Bhojpuri
+bi,bi,Bislama
+bjn,bjn,Banjar
+blk,blk,Pa'O
+bm,bm,Bambara
+bn,bn,Bangla
+bo,bo,Tibetan
+bpy,bpy,Bishnupriya
+bqi,bqi,Bakhtiari
+br,br,Breton
+brh,brh,Brahui
+bs,bs,Bosnian
+btm,btm,Batak Mandailing
+bto,bto,Iriga Bicolano
+bug,bug,Buginese
+bxr,bxr,Russia Buriat
+ca,ca,Catalan
+cbk-zam,cbk,Chavacano
+ccp,ccp,Chakma
+cdo,cdo,Mindong
+ce,ce,Chechen
+ceb,ceb,Cebuano
+ch,ch,Chamorro
+chn,chn,Chinook Jargon
+cho,cho,Choctaw
+chr,chr,Cherokee
+chy,chy,Cheyenne
+ckb,ckb,Central Kurdish
+co,co,Corsican
+cps,cps,Capiznon
+cpx,cpx,Puxian
+cpx-hans,cpx-Hans,Puxian (Simplified Han script)
+cpx-hant,cpx-Hant,Puxian (Traditional Han script)
+cpx-latn,cpx-Latn,Puxian (Latin script)
+cr,cr,Cree
+crh,crh,Crimean Tatar
+crh-cyrl,crh-Cyrl,Crimean Tatar (Cyrillic script)
+crh-latn,crh-Latn,Crimean Tatar (Latin script)
+crh-ro,crh-Latn-RO,Dobrujan Tatar
+cs,cs,Czech
+csb,csb,Kashubian
+cu,cu,Church Slavic
+cv,cv,Chuvash
+cy,cy,Welsh
+da,da,Danish
+dag,dag,Dagbani
+de,de,German
+de-at,de-AT,Austrian German
+de-ch,de-CH,Swiss High German
+de-formal,de-x-formal,German (formal address)
+dga,dga,Dagaare
+din,din,Dinka
+diq,diq,Zazaki
+dsb,dsb,Lower Sorbian
+dtp,dtp,Central Dusun
+dty,dty,Doteli
+dv,dv,Divehi
+dz,dz,Dzongkha
+ee,ee,Ewe
+efi,efi,Efik
+egl,egl,Emilian
+el,el,Greek
+eml,egl,Emiliano-Romagnolo
+en,en,English
+en-ca,en-CA,Canadian English
+en-gb,en-GB,British English
+eo,eo,Esperanto
+es,es,Spanish
+es-419,es-419,Latin American Spanish
+es-formal,es-x-formal,Spanish (formal address)
+et,et,Estonian
+eu,eu,Basque
+ext,ext,Extremaduran
+fa,fa,Persian
+fat,fat,Fanti
+ff,ff,Fula
+fi,fi,Finnish
+fit,fit,Tornedalen Finnish
+fiu-vro,vro,võro
+fj,fj,Fijian
+fo,fo,Faroese
+fon,fon,Fon
+fr,fr,French
+frc,frc,Cajun French
+frp,frp,Arpitan
+frr,frr,Northern Frisian
+fur,fur,Friulian
+fy,fy,Western Frisian
+ga,ga,Irish
+gaa,gaa,Ga
+gag,gag,Gagauz
+gan,gan,Gan
+gan-hans,gan-Hans,Gan (Simplified Han script)
+gan-hant,gan-Hant,Gan (Traditional Han script)
+gcf,gcf,Guadeloupean Creole
+gcr,gcr,Guianan Creole
+gd,gd,Scottish Gaelic
+gl,gl,Galician
+gld,gld,Nanai
+glk,glk,Gilaki
+gn,gn,Guarani
+gom,gom,Goan Konkani
+gom-deva,gom-Deva,Goan Konkani (Devanagari script)
+gom-latn,gom-Latn,Goan Konkani (Latin script)
+gor,gor,Gorontalo
+got,got,Gothic
+gpe,gpe,Ghanaian Pidgin
+grc,grc,Ancient Greek
+gsw,gsw,Alemannic
+gu,gu,Gujarati
+guc,guc,Wayuu
+gur,gur,Frafra
+guw,guw,Gun
+gv,gv,Manx
+ha,ha,Hausa
+hak,hak,Hakka Chinese
+hak-hans,hak-Hans,Hakka (Simplified Han script)
+hak-hant,hak-Hant,Hakka (Traditional Han script)
+hak-latn,hak-Latn,Hak-kâ-ngî (Pha̍k-fa-sṳ)
+haw,haw,Hawaiian
+he,he,Hebrew
+hi,hi,Hindi
+hif,hif,Fiji Hindi
+hif-latn,hif-Latn,Fiji Hindi (Latin script)
+hil,hil,Hiligaynon
+hno,hno,Northern Hindko
+ho,ho,Hiri Motu
+hr,hr,Croatian
+hrx,hrx,Hunsrik
+hsb,hsb,Upper Sorbian
+hsn,hsn,Xiang
+ht,ht,Haitian Creole
+hu,hu,Hungarian
+hu-formal,hu-x-formal,Hungarian (formal address)
+hy,hy,Armenian
+hyw,hyw,Western Armenian
+hz,hz,Herero
+ia,ia,Interlingua
+iba,iba,Iban
+ibb,ibb,Ibibio
+id,id,Indonesian
+ie,ie,Interlingue
+ig,ig,Igbo
+igl,igl,Igala
+ii,ii,Sichuan Yi
+ik,ik,Inupiaq
+ike-cans,ike-Cans,Eastern Canadian (Aboriginal syllabics)
+ike-latn,ike-Latn,Eastern Canadian (Latin script)
+ilo,ilo,Iloko
+inh,inh,Ingush
+io,io,Ido
+is,is,Icelandic
+isv-cyrl,isv-Cyrl,меджусловјанскы
+isv-latn,isv-Latn,Interslavic (Latin script)
+it,it,Italian
+iu,iu,Inuktitut
+ja,ja,Japanese
+jam,jam,Jamaican Creole English
+jbo,jbo,Lojban
+jut,jut,Jutish
+jv,jv,Javanese
+ka,ka,Georgian
+kaa,kaa,Kara-Kalpak
+kab,kab,Kabyle
+kai,kai,Karekare
+kbd,kbd,Kabardian
+kbd-cyrl,kbd-Cyrl,Kabardian (Cyrillic script)
+kbp,kbp,Kabiye
+kcg,kcg,Tyap
+kea,kea,Kabuverdianu
+kg,kg,Kongo
+kge,kge,Komering
+khw,khw,Khowar
+ki,ki,Kikuyu
+kiu,kiu,Kirmanjki
+kj,kj,Kuanyama
+kjh,kjh,Khakas
+kjp,kjp,Eastern Pwo
+kk,kk,Kazakh
+kk-arab,kk-Arab,Kazakh (Arabic script)
+kk-cn,kk-Arab-CN,Kazakh (China)
+kk-cyrl,kk-Cyrl,Kazakh (Cyrillic script)
+kk-kz,kk-KZ,Kazakh (Kazakhstan)
+kk-latn,kk-Latn,Kazakh (Latin script)
+kk-tr,kk-Latn-TR,Kazakh (Turkey)
+kl,kl,Kalaallisut
+km,km,Khmer
+kn,kn,Kannada
+ko,ko,Korean
+ko-kp,ko-KP,Korean (North Korea)
+koi,koi,Komi-Permyak
+kr,kr,Kanuri
+krc,krc,Karachay-Balkar
+kri,kri,Krio
+krj,krj,Kinaray-a
+krl,krl,Karelian
+ks,ks,Kashmiri
+ks-arab,ks-Arab,Kashmiri (Arabic script)
+ks-deva,ks-Deva,Kashmiri (Devanagari script)
+ksh,ksh,Colognian
+ksw,ksw,S'gaw Karen
+ku,ku,Kurdish
+ku-arab,ku-Arab,Kurdish (Arabic script)
+ku-latn,ku-Latn,Kurdish (Latin script)
+kum,kum,Kumyk
+kus,kus,Kʋsaal
+kv,kv,Komi
+kw,kw,Cornish
+ky,ky,Kyrgyz
+la,la,Latin
+lad,lad,Ladino
+lb,lb,Luxembourgish
+lbe,lbe,Lak
+lez,lez,Lezghian
+lfn,lfn,Lingua Franca Nova
+lg,lg,Ganda
+li,li,Limburgish
+lij,lij,Ligurian
+liv,liv,Livonian
+lki,lki,Laki
+lld,lld,Ladin
+lmo,lmo,Lombard
+ln,ln,Lingala
+lo,lo,Lao
+loz,loz,Lozi
+lrc,lrc,Northern Luri
+lt,lt,Lithuanian
+ltg,ltg,Latgalian
+lus,lus,Mizo
+luz,luz,Southern Luri
+lv,lv,Latvian
+lzh,lzh,Literary Chinese
+lzz,lzz,Laz
+mad,mad,Madurese
+mag,mag,Magahi
+mai,mai,Maithili
+map-bms,jv-x-bms,Basa Banyumasan
+mdf,mdf,Moksha
+mg,mg,Malagasy
+mh,mh,Marshallese
+mhr,mhr,Eastern Mari
+mi,mi,Māori
+min,min,Minangkabau
+mk,mk,Macedonian
+ml,ml,Malayalam
+mn,mn,Mongolian
+mnc,mnc,Manchu
+mnc-latn,mnc-Latn,Manchu (Latin script)
+mnc-mong,mnc-Mong,Manchu (Mongolian script)
+mni,mni,Manipuri
+mnw,mnw,Mon
+mo,ro-Cyrl-MD,Moldovan
+mos,mos,Mossi
+mr,mr,Marathi
+mrh,mrh,Mara
+mrj,mrj,Western Mari
+ms,ms,Malay
+ms-arab,ms-Arab,Malay (Jawi script)
+mt,mt,Maltese
+mui,mui,Musi
+mus,mus,Muscogee
+mwl,mwl,Mirandese
+my,my,Burmese
+myv,myv,Erzya
+mzn,mzn,Mazanderani
+na,na,Nauru
+nah,nah,Nāhuatl
+nan,nan,Minnan
+nan-hant,nan-Hant,Minnan (Traditional Han script)
+nan-latn-pehoeji,nan-Latn-pehoeji,Minnan (Pe̍h-ōe-jī)
+nan-latn-tailo,nan-Latn-tailo,Minnan (Tâi-lô)
+nap,nap,Neapolitan
+nb,nb,Norwegian Bokmål
+nds,nds,Low German
+nds-nl,nds-NL,Low Saxon
+ne,ne,Nepali
+new,new,Newari
+ng,ng,Ndonga
+nia,nia,Nias
+nit,nit,కొలామి
+niu,niu,Niuean
+nl,nl,Dutch
+nl-informal,nl-x-informal,Dutch (informal address)
+nmz,nmz,Nawdm
+nn,nn,Norwegian Nynorsk
+no,no,Norwegian
+nod,nod,Northern Thai
+nog,nog,Nogai
+nov,nov,Novial
+nqo,nqo,N’Ko
+nrm,nrf,Norman
+nso,nso,Northern Sotho
+nup,nup,Nupe
+nv,nv,Navajo
+ny,ny,Nyanja
+nyn,nyn,Nyankole
+nyo,nyo,Nyoro
+nys,nys,Nyungar
+oc,oc,Occitan
+ojb,ojb,Northwestern Ojibwa
+olo,olo,Livvi-Karelian
+om,om,Oromo
+or,or,Odia
+os,os,Ossetic
+pa,pa,Punjabi
+pag,pag,Pangasinan
+pam,pam,Pampanga
+pap,pap,Papiamento
+pcd,pcd,Picard
+pcm,pcm,Nigerian Pidgin
+pdc,pdc,Pennsylvania German
+pdt,pdt,Plautdietsch
+pfl,pfl,Palatine German
+pi,pi,Pali
+pih,pih,Norfuk / Pitkern
+pl,pl,Polish
+pms,pms,Piedmontese
+pnb,pnb,Western Punjabi
+pnt,pnt,Pontic
+prg,prg,Prussian
+ps,ps,Pashto
+pt,pt,Portuguese
+pt-br,pt-BR,Brazilian Portuguese
+pwn,pwn,Paiwan
+qu,qu,Quechua
+qug,qug,Chimborazo Highland Quichua
+rgn,rgn,Romagnol
+rif,rif,Riffian
+rki,rki,Arakanese
+rm,rm,Romansh
+rmc,rmc,Carpathian Romani
+rmy,rmy,Vlax Romani
+rn,rn,Rundi
+ro,ro,Romanian
+roa-rup,rup,Aromanian
+roa-tara,nap-x-tara,Tarantino
+rsk,rsk,Pannonian Rusyn
+ru,ru,Russian
+rue,rue,Rusyn
+rup,rup,Aromanian
+ruq,ruq,Megleno-Romanian
+ruq-cyrl,ruq-Cyrl,Megleno-Romanian (Cyrillic script)
+ruq-latn,ruq-Latn,Megleno-Romanian (Latin script)
+rut,rut,Rutul
+rw,rw,Kinyarwanda
+ryu,ryu,Okinawan
+sa,sa,Sanskrit
+sah,sah,Yakut
+sat,sat,Santali
+sc,sc,Sardinian
+scn,scn,Sicilian
+sco,sco,Scots
+sd,sd,Sindhi
+sdc,sdc,Sassarese Sardinian
+sdh,sdh,Southern Kurdish
+se,se,Northern Sami
+se-fi,se-FI,Northern Sami (Finland)
+se-no,se-NO,Northern Sami (Norway)
+se-se,se-SE,Northern Sami (Sweden)
+sei,sei,Seri
+ses,ses,Koyraboro Senni
+sg,sg,Sango
+sgs,sgs,Samogitian
+sh,sh,Serbo-Croatian
+sh-cyrl,sh-Cyrl,Serbo-Croatian (Cyrillic script)
+sh-latn,sh-Latn,Serbo-Croatian (Latin script)
+shi,shi,Tachelhit
+shi-latn,shi-Latn,Tachelhit (Latin script)
+shi-tfng,shi-Tfng,Tachelhit (Tifinagh script)
+shn,shn,Shan
+shy,shy,Shawiya
+shy-latn,shy-Latn,Shawiya (Latin script)
+si,si,Sinhala
+simple,en-simple,Simple English
+sjd,sjd,Kildin Sami
+sje,sje,Pite Sami
+sk,sk,Slovak
+skr,skr,Saraiki
+skr-arab,skr-Arab,Saraiki (Arabic script)
+sl,sl,Slovenian
+sli,sli,Lower Silesian
+sm,sm,Samoan
+sma,sma,Southern Sami
+smn,smn,Inari Sami
+sms,sms,Skolt Sami
+sn,sn,Shona
+so,so,Somali
+sq,sq,Albanian
+sr,sr,Serbian
+sr-ec,sr-Cyrl,Serbian (Cyrillic script)
+sr-el,sr-Latn,Serbian (Latin script)
+srn,srn,Sranan Tongo
+sro,sro,Campidanese Sardinian
+ss,ss,Swati
+st,st,Southern Sotho
+stq,stq,Saterland Frisian
+sty,sty,Siberian Tatar
+su,su,Sundanese
+sv,sv,Swedish
+sw,sw,Swahili
+syl,syl,Sylheti
+szl,szl,Silesian
+szy,szy,Sakizaya
+ta,ta,Tamil
+tay,tay,Tayal
+tcy,tcy,Tulu
+tdd,tdd,Tai Nuea
+te,te,Telugu
+tet,tet,Tetum
+tg,tg,Tajik
+tg-cyrl,tg-Cyrl,Tajik (Cyrillic script)
+tg-latn,tg-Latn,Tajik (Latin script)
+th,th,Thai
+ti,ti,Tigrinya
+tig,tig,Tigre
+tk,tk,Turkmen
+tl,tl,Tagalog
+tly,tly,Talysh
+tly-cyrl,tly-Cyrl,Talysh (Cyrillic script)
+tn,tn,Tswana
+to,to,Tongan
+tok,tok,Toki Pona
+tpi,tpi,Tok Pisin
+tr,tr,Turkish
+tru,tru,Turoyo
+trv,trv,Taroko
+ts,ts,Tsonga
+tt,tt,Tatar
+tt-cyrl,tt-Cyrl,Tatar (Cyrillic script)
+tt-latn,tt-Latn,Tatar (Latin script)
+ttj,ttj,Tooro
+tum,tum,Tumbuka
+tw,tw,Twi
+ty,ty,Tahitian
+tyv,tyv,Tuvinian
+tzm,tzm,Central Atlas Tamazight
+udm,udm,Udmurt
+ug,ug,Uyghur
+ug-arab,ug-Arab,Uyghur (Arabic script)
+ug-latn,ug-Latn,Uyghur (Latin script)
+uk,uk,Ukrainian
+ur,ur,Urdu
+uz,uz,Uzbek
+uz-cyrl,uz-Cyrl,Uzbek (Cyrillic script)
+uz-latn,uz-Latn,Uzbek (Latin script)
+ve,ve,Venda
+vec,vec,Venetian
+vep,vep,Veps
+vi,vi,Vietnamese
+vls,vls,West Flemish
+vmf,vmf,Main-Franconian
+vmw,vmw,Makhuwa
+vo,vo,Volapük
+vot,vot,Votic
+vro,vro,Võro
+wa,wa,Walloon
+wal,wal,Wolaytta
+war,war,Waray
+wls,wls,Wallisian
+wo,wo,Wolof
+wuu,wuu,Wu
+wuu-hans,wuu-Hans,Wu (Simplified Han script)
+wuu-hant,wuu-Hant,Wu (Traditional Han script)
+xal,xal,Kalmyk
+xh,xh,Xhosa
+xmf,xmf,Mingrelian
+xsy,xsy,Saisiyat
+yi,yi,Yiddish
+yo,yo,Yoruba
+yrl,yrl,Nheengatu
+yue,yue,Cantonese
+yue-hans,yue-Hans,Cantonese (Simplified Han script)
+yue-hant,yue-Hant,Cantonese (Traditional Han script)
+za,za,Zhuang
+zea,zea,Zeelandic
+zgh,zgh,Standard Moroccan Tamazight
+zgh-latn,zgh-Latn,tamaziɣt tanawayt
+zh,zh,Chinese
+zh-classical,lzh,Literary Chinese
+zh-cn,zh-Hans-CN,Chinese (China)
+zh-hans,zh-Hans,Simplified Chinese
+zh-hant,zh-Hant,Traditional Chinese
+zh-hk,zh-Hant-HK,Chinese (Hong Kong)
+zh-min-nan,nan,Minnan
+zh-mo,zh-Hant-MO,Chinese (Macau)
+zh-my,zh-Hans-MY,Chinese (Malaysia)
+zh-sg,zh-Hans-SG,Chinese (Singapore)
+zh-tw,zh-Hant-TW,Chinese (Taiwan)
+zh-yue,yue,Cantonese
+zu,zu,Zulu
