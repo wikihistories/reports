@@ -1,19 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Reports",
-    "section": "",
-    "text": "This site hosts the annual reports of the wikihistories project. Each report considers a different aspect of Australian history in Wikipedia. The reports partly inform national debate about the nature of Australia’s past, but they also speak to a global audience, as examples of how we can interrogate Wikipedia to uncover the historiography of the world’s largest knowledge system.\nIn 2023, we consider people. How Australians are Represented in Wikipedia uses a dataset of more than 80,000 Wikipedia biographies to reveal Wikipedia represents the people who make up Australia.\nIn 2024, we consider places. How Australian Places are Represented in Wikipedia will consider how the world’s only continent-sized country makes its way into the world’s only planet-sized encyclopaedia.\nIn 2025, we consider events. How Australian Events are Represented in Wikipedia will range over 60,000 years of human history in Australia, revealing which structures, conjunctures and events emerge from deep time to take their place in the encyclopaedia.\nThese reports primarily fulfil Objectives 2 and 3 of the wikihistories project:\n\nObjective 2: Map the scope of entries relating to Australian historic events on Wikipedia in order to analyse who and what is systematically omitted.\n\nObjective 3: Investigate how Wikipedia’s representations are constructed through practice.\n\nSupported by Australian Research Council Grant DP220100662.\nThe Wikihistories project would like to acknowledge the Gadigal people of the Eora Nation, and the Wurundjeri Woi-wurrung and Bunurong peoples, upon whose ancestral lands our University campuses stand. We would also like to pay respect to the Elders both past and present, acknowledging them as the traditional custodians of knowledge for this land.\n\n\n\nHow are Wikipedia’s representations constructed through practice?"
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "CC BY-SA 3.0 License",
-    "section": "",
-    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
-  },
-  {
     "objectID": "who-counts.html",
     "href": "who-counts.html",
     "title": "How Australians are represented in Wikipedia",
@@ -54,5 +40,26 @@
     "title": "How Australians are represented in Wikipedia",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nIn this case, the article falls under Category:Clothing brands of Australia, which is a distant subcategory of Category:Australian designers, which is then linked through a number of other categories to Category:Australian people.↩︎\nThis has the notable corollary that there are no categories in Wikipedia for Métis or Inuit Australians.↩︎\nIn other parts of English Wikipedia, Australia is included as part of Oceania. For instance, Category:British people of Australian descent is a subcategory of Category:British people of Oceanian descent. The same holds true for American, French, and Indian people of Australian descent.↩︎"
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "CC BY-SA 3.0 License",
+    "section": "",
+    "text": "CC BY-SA 3.0 License\n\n2023-2025 wikihistories authors\n\nThis work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA."
+  },
+  {
+    "objectID": "2024.html",
+    "href": "2024.html",
+    "title": "Coming Soon: How Australian places are represented on Wikipedia",
+    "section": "",
+    "text": "Our next annual report will be released on the 29th of October, 2024.\nThe report draws on a dataset of 35,000 Wikipedia articles, and dozens of interviews with editors, to explore how Australian places are constructed in the encyclopaedia.\nCome back on October 29 to read the full story."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Reports",
+    "section": "",
+    "text": "This site hosts the annual reports of the wikihistories project. Each report considers a different aspect of Australian history in Wikipedia. The reports partly inform national debate about the nature of Australia’s past, but they also speak to a global audience, as examples of how we can interrogate Wikipedia to uncover the historiography of the world’s largest knowledge system.\nIn 2023, we consider people. How Australians are represented in Wikipedia uses a dataset of more than 80,000 Wikipedia biographies to reveal Wikipedia represents the people who make up Australia.\nIn 2024, we consider places. How Australian places are represented on Wikipedia will consider how the world’s only continent-sized country makes its way into the world’s only planet-sized encyclopaedia.\nIn 2025, we consider events. How Australian events are represented on Wikipedia will range over 60,000 years of human history in Australia, revealing which structures, conjunctures and events emerge from deep time to take their place in the encyclopaedia.\nThese reports primarily fulfil Objectives 2 and 3 of the wikihistories project:\n\nObjective 2: Map the scope of entries relating to Australian historic events on Wikipedia in order to analyse who and what is systematically omitted.\n\nObjective 3: Investigate how Wikipedia’s representations are constructed through practice.\n\nSupported by Australian Research Council Grant DP220100662.\nThe Wikihistories project would like to acknowledge the Gadigal people of the Eora Nation, and the Wurundjeri Woi-wurrung and Bunurong peoples, upon whose ancestral lands our University campuses stand. We would also like to pay respect to the Elders both past and present, acknowledging them as the traditional custodians of knowledge for this land.\n\n\n\nHow are Wikipedia’s representations constructed through practice?"
   }
 ]
