@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,7 +14,7 @@
 <meta name="keywords" content="Wikipedia, historiography, Australia, digital humanities, systemic bias">
 <meta name="description" content="How are Australians represented in Wikipedia? In this report, we use a corpus of 83k Wikipedia biographies to find out.">
 
-<title>Reports - How Australians are represented in Wikipedia</title>
+<title>How Australians are represented in Wikipedia – Reports</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -73,7 +74,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -82,18 +89,20 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Reports - How Australians are represented in Wikipedia">
+<meta property="og:title" content="How Australians are represented in Wikipedia – Reports">
 <meta property="og:description" content="The Annual Report of the Wikihistories Project">
 <meta property="og:image" content="https://wikihistories.github.io/reports/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
-<meta property="og:site-name" content="Reports">
-<meta name="twitter:title" content="Reports - How Australians are represented in Wikipedia">
+<meta property="og:site_name" content="Reports">
+<meta name="twitter:title" content="How Australians are represented in Wikipedia – Reports">
 <meta name="twitter:description" content="The Annual Report of the Wikihistories Project">
 <meta name="twitter:image" content="https://wikihistories.github.io/reports/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta name="twitter:creator" content="@wikihistories">
@@ -419,51 +428,56 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Reports</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reports" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reports" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Reports</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-reports">    
         <li>
-    <a class="dropdown-item" href="./who-counts.html" rel="" target="">
- <span class="dropdown-text">2023 | How Australians are Represented in Wikipedia</span></a>
+    <a class="dropdown-item" href="./who-counts.html">
+ <span class="dropdown-text">2023 | How Australians are represented on Wikipedia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./2024.html">
+ <span class="dropdown-text">2024 | How Australian places are represented on Wikipedia</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./LICENSE.html" rel="" target="">
- <span class="menu-text">Copyright</span></a>
+    <a class="nav-link" href="./LICENSE.html"> 
+<span class="menu-text">Copyright</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto tools-wide">
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://twitter.com/wikihistories" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <div class="dropdown">
-      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/wikihistories/reports">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/wikihistories/reports">
             Source Code
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/wikihistories/reports/issues">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/wikihistories/reports/issues">
             Report a Bug
             </a>
           </li>
@@ -471,7 +485,6 @@ div.csl-indent {
     </div>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -520,36 +533,36 @@ div.csl-indent {
     <div class="quarto-title-meta-contents">
     <p class="author"><a href="https://findanexpert.unimelb.edu.au/profile/1043380-michael-falk">Michael Falk</a> <a href="https://orcid.org/0000-0001-9261-8390" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
-    <div class="quarto-title-meta-contents">
+  <div class="quarto-title-meta-contents">
         <p class="affiliation">
             University of Melbourne
           </p>
       </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
     <p class="author"><a href="https://hblog.org/">Heather Ford</a> <a href="https://orcid.org/0000-0002-3500-9772" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
-    <div class="quarto-title-meta-contents">
+  <div class="quarto-title-meta-contents">
         <p class="affiliation">
             University of Technology, Sydney
           </p>
       </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
     <p class="author">Kelly Tall <a href="https://orcid.org/0000-0002-7876-4460" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
-    <div class="quarto-title-meta-contents">
+  <div class="quarto-title-meta-contents">
         <p class="affiliation">
             University of Technology, Sydney
           </p>
       </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
     <p class="author"><a href="https://capandgown.wordpress.com/">Tamson Pietsch</a> <a href="https://orcid.org/0000-0002-8304-7108" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
-    <div class="quarto-title-meta-contents">
+  <div class="quarto-title-meta-contents">
         <p class="affiliation">
             University of Technology, Sydney
           </p>
       </div>
-    </div>
+  </div>
 
 <div class="quarto-title-meta">
 
@@ -573,7 +586,15 @@ div.csl-indent {
   </div>
   
 
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Wikipedia, historiography, Australia, digital humanities, systemic bias</p>
+  </div>
+</div>
+
 </header>
+
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -582,13 +603,17 @@ div.csl-indent {
 <p>In this, our first year of the wikihistories project, our focus is on how Wikipedia represents <em>people</em>. We ask how English Wikipedia represents Australians. Do we see the same trends in terms of gender and ethnicity so that globally studies of Wikipedia have identified? How well has English Wikipedia done over time to represent people in Australia? These are important questions but they are by no means easy to answer. In order to map Wikipedia’s representation of Australians over time, we first need to understand which biographies on Wikipedia refer to Australians. The question of who is recognized as an Australian is a question beset with complexities and politics before we even get to Wikipedia. On Wikipedia, further complexities arise.</p>
 <p>Who counts as Australian in Wikipedia and its sister-projects? How are Wikipedia articles or Wikidata items marked as ‘Australian’ by the system? How does Wikipedia define or represent ‘Australianness’? In this report, we try to address these questions using a dataset of biographical articles culled from English Wikipedia. We have two primary aims: (1) to reveal the definition of ‘Australianess’ implicit in Wikipedia’s systems; (2) to assess how well Wikipedia represents the diversity of Australians. As we will see, Wikipedia works implicitly with numerous inconsistent definitions of ‘Australianness’, but it is nonetheless possible to make some reasonable observations about how well it represents the diversity of people who make up ‘Australia’.</p>
 <p>People can be represented in Wikipedia in many ways. They may have an empty article that redirects to another article that concerns them (e.g.&nbsp;<a href="https://en.wikipedia.org/wiki/Azaria_Chamberlain">Azaria Chamberlain</a>). They may be mentioned in the text of an article (e.g.&nbsp;Sasha Soldatow or the ‘manual workers’ in <a href="https://en.wikipedia.org/w/index.php?title=Sydney_Push&amp;oldid=1151477281">Sydney Push</a>). Or they might have a full-blown article devoted to their biography (e.g.&nbsp;<a href="https://en.wikipedia.org/wiki/Ada_Cambridge">Ada Cambridge</a>). For the sake of our analysis, we focus on the third kind of representation: the biographical article. This allows us to quantify our analysis, because each article in the dataset equals one person.</p>
-<p>We explain how we construct the dataset in <a href="#appendix-data">Appendix: Data</a>. Broadly, we use two methods to identify ‘Australian’ biographies in Wikipedia. First, we use <a href="#wikipedias-category-system">Wikipedia’s category system</a> to find all biographies contained in <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian people</a>. Second, we use <a href="#wikidatas-query-service">Wikidata’s query service</a> to find all biographies whose corresponding Wikidata item has a property suggestive of ‘Australianness’ (e.g.&nbsp;a <a href="https://www.wikidata.org/wiki/Property:P9159">People Australia ID</a>). Using these two methods, we identify 83,013 biographies on English Wikipedia that are marked as ‘Australian’ in some way. We enrich these biographies with additional <a href="#metadata">Metadata</a> for further analysis. As <a href="#fig-data-growth-over-time">Figure&nbsp;1</a> shows, the number of Australian biographies has consistently grown since the early days of Wikipedia.</p>
+<p>We explain how we construct the dataset in <a href="#appendix-data">Appendix: Data</a>. Broadly, we use two methods to identify ‘Australian’ biographies in Wikipedia. First, we use <a href="#wikipedias-category-system">Wikipedia’s category system</a> to find all biographies contained in <a href="https://en.wikipedia.org/wiki/Category:Australian_people">Category:Australian people</a>. Second, we use <a href="#wikidatas-query-service">Wikidata’s query service</a> to find all biographies whose corresponding Wikidata item has a property suggestive of ‘Australianness’ (e.g.&nbsp;a <a href="https://www.wikidata.org/wiki/Property:P9159">People Australia ID</a>). Using these two methods, we identify 83,013 biographies on English Wikipedia that are marked as ‘Australian’ in some way. We enrich these biographies with additional <a href="#metadata">Metadata</a> for further analysis. As <a href="#fig-data-growth-over-time" class="quarto-xref">Figure&nbsp;1</a> shows, the number of Australian biographies has consistently grown since the early days of Wikipedia.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-data-growth-over-time" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-data-growth-over-time-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Number of articles in the Australian biographies dataset over time</figcaption>
+<div id="fig-data-growth-over-time" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-data-growth-over-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-data-growth-over-time-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-growth-over-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Number of articles in the Australian biographies dataset over time
+</figcaption>
 </figure>
 </div>
 </div>
@@ -598,7 +623,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/objective-2.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">How do Wikipedians construct Australia online?</figcaption>
+<figcaption>How do Wikipedians construct Australia online?</figcaption>
 </figure>
 </div>
 </section>
@@ -623,13 +648,17 @@ div.csl-indent {
 </blockquote>
 <p>These definitions seem to offer a strong answer to the problems of space and time. ‘Australia’ is the ‘Commonwealth of Australia’, the sovereign state that has existed since 1901. In space, a person must be ‘born’ in Australia, or ‘identify themselves’ as a member of the country. In time, Australia is the Commonwealth of Australia, and so has only existed since 1901.</p>
 <p>The problem is, this explicit definition does not at all describe the contents of <code>Category:Australian people</code>. In the spatial dimension, the category includes living people such as <a href="https://en.wikipedia.org/w/index.php?title=Steve_Wozniak&amp;oldid=1182335281">Steve Wozniak</a> and <a href="https://en.wikipedia.org/w/index.php?title=Darrell_Duffie&amp;oldid=1168175801">Darrell Duffie</a> who were neither born in Australia nor identify themselves with it. In the time dimension, the category includes many historical figures who long preceded the Commonwealth of Australia, such as <a href="https://en.wikipedia.org/w/index.php?title=Bennelong&amp;oldid=1182881508">Bennelong</a>, <a href="https://en.wikipedia.org/w/index.php?title=Mary_Reibey&amp;oldid=1182294588">Mary Reiby</a>, <a href="https://en.wikipedia.org/w/index.php?title=Robert_Lowe&amp;oldid=1176772405">Robert Lowe</a> and <a href="https://en.wikipedia.org/w/index.php?title=Louisa_Atkinson&amp;oldid=1178386165">Louisa Atkinson</a>. Finally, it lists thousands of entities that aren’t people, such as <a href="https://en.wikipedia.org/w/index.php?title=First_Ever&amp;oldid=1177339020">First Ever</a>, the sportswear manufacturer, and ‘<a href="https://en.wikipedia.org/w/index.php?title=Hand_on_Your_Heart&amp;oldid=1181812572">Hand on Your Heart</a>’, the 1989 single by Kylie Minogue. How has <code>Category:Australian people</code> expanded to include so many pages that contradict its own explicit definition?</p>
-<p>The answer lies in the category’s size. When editors include articles in <code>Category:Australian people</code>, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast category <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph</a>. The editor who categorised <a href="https://en.wikipedia.org/wiki/Steve_Wozniak">Steve Wozniak</a> as a <a href="https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney">staff member of the University of Technology Sydney</a> was probably unaware that they were thereby categorising Wozniak as an ‘Australian person’. The category for academic staff at UTS lies several layers deep in the category graph, 4 steps away from the root (<a href="#fig-wozniak-distance-from-oz">Figure&nbsp;2</a>). Perhaps an editor may quibble that a person who works at UTS is not necessarily ‘from Sydney’, but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.</p>
+<p>The answer lies in the category’s size. When editors include articles in <code>Category:Australian people</code>, they do not necessarily do so intentionally. Category:Australian people is the root node of a vast category <a href="https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)">graph</a>. The editor who categorised <a href="https://en.wikipedia.org/wiki/Steve_Wozniak">Steve Wozniak</a> as a <a href="https://en.wikipedia.org/wiki/Category:Academic_staff_of_the_University_of_Technology_Sydney">staff member of the University of Technology Sydney</a> was probably unaware that they were thereby categorising Wozniak as an ‘Australian person’. The category for academic staff at UTS lies several layers deep in the category graph, 4 steps away from the root (<a href="#fig-wozniak-distance-from-oz" class="quarto-xref">Figure&nbsp;2</a>). Perhaps an editor may quibble that a person who works at UTS is not necessarily ‘from Sydney’, but in the present state of the category graph, there is no other way to mark a staff member of UTS. The category graph is strictly hierarchical. A subcategory cannot be removed from its parent category for the sake of a single page.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-wozniak-distance-from-oz" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-wozniak-distance-from-oz-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: The category for UTS staff lies four steps away from Category:Australian people</figcaption>
+<div id="fig-wozniak-distance-from-oz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wozniak-distance-from-oz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-wozniak-distance-from-oz-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wozniak-distance-from-oz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The category for UTS staff lies four steps away from Category:Australian people
+</figcaption>
 </figure>
 </div>
 </div>
@@ -648,11 +677,15 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>Separate items for citizenships and nationalities have been proposed previously. Perhaps it would help. The term “Australian” for people living in Australia was already used in the 19th century, before Australia had even been federated as a state, e.g., [<a href="https://trove.nla.gov.au/newspaper/article/197054485">2</a>]. According to [<a href="https://www.passport-collector.com/evolution-australian-passport/">3</a>], Australia started issuing passports after federation, and didn’t even restrict it to British subjects until 1938, but it seems that passports were not used much prior to WW1, and there was a more flexible attitude to nationality.</p>
 </blockquote>
-<p>At the time of writing, there is <a href="https://www.wikidata.org/w/index.php?title=Wikidata:Property_proposal/Nationality&amp;oldid=1232071609">no Wikidata property for ‘nationality’</a>. Instead, the property of citizenship is limited according to the ‘inception’ (<a href="https://www.wikidata.org/wiki/Property:P571">P571</a>) of the given country and the death date of the given person. The start date of Australia is given as <a href="https://www.wikidata.org/wiki/Q408#P571">1 January 1901 in Wikidata</a>. If a person is assigned Australian citizenship in Wikidata, and their death date occurs before 1 January 1901, then a warning appears in their Wikidata page. At the time of writing, <a href="https://www.wikidata.org/w/index.php?title=Q1064745&amp;oldid=1933534532">the Wikidata item for colonial poet Charles Harpur</a> contains such a warning (<a href="#fig-citizenship-warning">Figure&nbsp;3</a>). Harpur, who proudly described himself as as ‘An Australian’ <a href="http://nla.gov.au/nla.news-article32148201">in newspaper publications from the 1830s</a>, died in 1868.</p>
-<div id="fig-citizenship-warning" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/citizenship-warning.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Citzenship warning banner for Charles Harpur</figcaption>
+<p>At the time of writing, there is <a href="https://www.wikidata.org/w/index.php?title=Wikidata:Property_proposal/Nationality&amp;oldid=1232071609">no Wikidata property for ‘nationality’</a>. Instead, the property of citizenship is limited according to the ‘inception’ (<a href="https://www.wikidata.org/wiki/Property:P571">P571</a>) of the given country and the death date of the given person. The start date of Australia is given as <a href="https://www.wikidata.org/wiki/Q408#P571">1 January 1901 in Wikidata</a>. If a person is assigned Australian citizenship in Wikidata, and their death date occurs before 1 January 1901, then a warning appears in their Wikidata page. At the time of writing, <a href="https://www.wikidata.org/w/index.php?title=Q1064745&amp;oldid=1933534532">the Wikidata item for colonial poet Charles Harpur</a> contains such a warning (<a href="#fig-citizenship-warning" class="quarto-xref">Figure&nbsp;3</a>). Harpur, who proudly described himself as as ‘An Australian’ <a href="http://nla.gov.au/nla.news-article32148201">in newspaper publications from the 1830s</a>, died in 1868.</p>
+<div id="fig-citizenship-warning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-citizenship-warning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/citizenship-warning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-citizenship-warning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Citzenship warning banner for Charles Harpur
+</figcaption>
 </figure>
 </div>
 <p>This solution combines flexibility with clarity.</p>
@@ -677,11 +710,12 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <section id="gender" class="level3">
 <h3 class="anchored" data-anchor-id="gender">Gender</h3>
 <p>Although it is impossible to provide a unitary definition for ‘Australian’ in Wikidata and Wikipedia, we have shown that it is possible to derive a large list of people who are marked as ‘Australian’ in some way across the encyclopaedia and database. What is the composition of this list? We begin with gender.</p>
-<p>To determine the gender of a person in our dataset, we rely on the Wikidata property <a href="https://www.wikidata.org/wiki/Property:P21">P21:Sex or gender</a>. In our dataset, nearly all records have a sex or gender recorded (<a href="#fig-genders-in-dataset">Figure&nbsp;4</a>). Only 6 records lack a <code>P21</code> statement about their sex or gender.</p>
+<p>To determine the gender of a person in our dataset, we rely on the Wikidata property <a href="https://www.wikidata.org/wiki/Property:P21">P21:Sex or gender</a>. In our dataset, nearly all records have a sex or gender recorded (<a href="#fig-genders-in-dataset" class="quarto-xref">Figure&nbsp;4</a>). Only 6 records lack a <code>P21</code> statement about their sex or gender.</p>
 <div class="cell">
-<div id="fig-genders-in-dataset" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<table class="table table-sm table-striped small">
+<div id="fig-genders-in-dataset" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-genders-in-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Sex or Gender Label</th>
@@ -739,28 +773,39 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </tr>
 </tbody>
 </table>
-<figcaption class="figure-caption">Figure&nbsp;4: Gender breakdown of the Australian biographies dataset</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-genders-in-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Gender breakdown of the Australian biographies dataset
+</figcaption>
 </figure>
 </div>
 </div>
 <p><span class="citation" data-cites="weathington_queer_2023">Weathington and Brubaker (<a href="#ref-weathington_queer_2023" role="doc-biblioref">2023</a>)</span> have strongly critiqued Wikidata’s representation of sex and gender, observing that “Queer identities are recorded in a database in clunky, inaccurate, or self-contradictory ways” (p.&nbsp;2) and that the database ignores the individual’s right to determine their own sexual presentation. Nonetheless, we are compelled to rely on Wikidata’s representation of individuals’ sex and/or gender if we wish to assess its representation of human diversity in Australia. To this end, we categorise our dataset into three broad groups: <code>male</code>, <code>female</code> and <code>trans, non-binary or intersex</code>. While we may assume that most of those marked as ‘male’ or ‘female’ are <em>cis</em>-male or -female, we cannot determine this from the available data, and so opt for the less specific ‘male’ and ‘female’.</p>
-<p><code>Female</code> biographies are clearly under-represented among Wikipedia’s Australian articles. (<a href="#fig-genders-in-dataset">Figure&nbsp;4</a>) shows all the articles in the dataset, categorised by their gender on Wikidata. The gap between <code>male</code> and <code>female</code> biographies appears to have remained constant over time (<a href="#fig-gender-by-page-creation">Figure&nbsp;5</a>). Viewing the data on a logarithmic scale emphasises the parallel track of <code>male</code> and <code>female</code> biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of <code>trans, non-binary or intersex</code> biographies (<a href="#fig-gender-by-page-creation-log">Figure&nbsp;6</a>).</p>
+<p><code>Female</code> biographies are clearly under-represented among Wikipedia’s Australian articles. (<a href="#fig-genders-in-dataset" class="quarto-xref">Figure&nbsp;4</a>) shows all the articles in the dataset, categorised by their gender on Wikidata. The gap between <code>male</code> and <code>female</code> biographies appears to have remained constant over time (<a href="#fig-gender-by-page-creation" class="quarto-xref">Figure&nbsp;5</a>). Viewing the data on a logarithmic scale emphasises the parallel track of <code>male</code> and <code>female</code> biographies in Australian Wikipedia, while also allowing us to visualise the similar growth of <code>trans, non-binary or intersex</code> biographies (<a href="#fig-gender-by-page-creation-log" class="quarto-xref">Figure&nbsp;6</a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gender-by-page-creation" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-gender-by-page-creation-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Growth of the Australian biographies dataset over time, broken down by gender</figcaption>
+<div id="fig-gender-by-page-creation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gender-by-page-creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-gender-by-page-creation-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gender-by-page-creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Growth of the Australian biographies dataset over time, broken down by gender
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gender-by-page-creation-log" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-gender-by-page-creation-log-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Growth of the Australian biographies dataset over time, broken down by gender, on a log scale to compare growth rates for each gender.</figcaption>
+<div id="fig-gender-by-page-creation-log" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gender-by-page-creation-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-gender-by-page-creation-log-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gender-by-page-creation-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Growth of the Australian biographies dataset over time, broken down by gender, on a log scale to compare growth rates for each gender.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -768,28 +813,36 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <p>Not only are male, female and LGBTQI+ Australians represented in different numbers in the encyclopaedia, they are represented by different words. To show this, we downloaded the introductions of each article in the encyclopaedia, and used the tf-idf statistic to determine which words were most distinctive for each group of biographies. Which words tend to appear more often in the introductions of articles about <code>male</code>, <code>female</code> and <code>trans, non-binary or intersex</code> Australians?</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-intro-words-by-gender" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-intro-words-by-gender-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Comparing the introductions of each article in the Australian biographies dataset, using the tf-idf metric to reveal the most distinctive words in the introductions for each gender grouping.</figcaption>
+<div id="fig-intro-words-by-gender" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-words-by-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-intro-words-by-gender-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-words-by-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Comparing the introductions of each article in the Australian biographies dataset, using the tf-idf metric to reveal the most distinctive words in the introductions for each gender grouping.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-intro-words-by-gender">Figure&nbsp;7</a> discloses two significant patterns:</p>
+<p><a href="#fig-intro-words-by-gender" class="quarto-xref">Figure&nbsp;7</a> discloses two significant patterns:</p>
 <ul>
 <li><em>Explicit marking of non-Male genders</em>: First, Wikipedia articles are more likely to explicitly mention the sex or gender of a <code>female</code> or <code>trans, non-binary or intersex</code> Australian. The high tf-idf score for “women’s” in biographies of Females probably reflects the fact that female sporting teams often have “women’s” in their names. Thus Sam Kerr is said to represent Australian in the “<a href="https://en.wikipedia.org/w/index.php?title=Sam_Kerr&amp;oldid=1174642959">national women’s team</a>”, while Harry Kewell was simply a member of “<a href="https://en.wikipedia.org/w/index.php?title=Harry_Kewell&amp;oldid=1177164031">the Australian national team</a>”. The situation for <code>trans, non-binary or intersex</code> Australians is even more marked. ‘Transgender’, ‘sex’ and ‘woman’ all appear as distinctive terms in the introductions of Wikipedia biographies in this group.</li>
 <li><em>Dominance of sport and entertainment</em>: Across all three gender categories, sport and entertainment are dominant themes. The <code>male</code> biographies seem less likely to describe entertainers than those in the other categories. Unsuprisingly, the <code>trans, non-binary or intersex</code> biographies seem more likely to discuss social affairs, ‘activist’ and ‘rights’ being prominent terms in the introductions of these biographies.</li>
 </ul>
 <p>The data support the views of <span class="citation" data-cites="weathington_queer_2023">Weathington and Brubaker (<a href="#ref-weathington_queer_2023" role="doc-biblioref">2023</a>)</span>. In Australian Wikipedia, maleness is the unmarked default. <code>Female</code> and especially <code>trans, non-binary or intersex</code> Australians are described using terms such as ‘women’ or ‘transgender’; there is no need to explicitly mention that a person is male or cisgender. In the case of <code>trans, non-binary or intersex</code> people, this explicit marking of gender goes a step further. Australians in this group are likely to be described as ‘activists’, presumbly on gender issues. Biographies of <code>trans, non-binary or intersex</code> Australians problematise gender in a manner that biographies of <code>male</code> Australians do not.</p>
 <p>Wikipedia’s defaulting to maleness probably reflects the linguistic habits of broader Australian society, but it could also be exacerbated by the encylopaedia’s obsession with sport and entertainment. Both sport and entertainment are highly gendered fields. Men and women compete in gendered competitions such as the soccer or cricket World Cups and receive gendered commendations such as Best Actress at the Academy Awards. While <code>male</code> Australians may dominate non-<code>male</code> Australians in fields such as politics, business and the arts, these fields are not so explicitly gendered. Sam Kerr may indeed be captain of the “women’s national team,” but it makes no sense to describe <a href="https://en.wikipedia.org/wiki/Vanessa_Hudson_(executive)">Vanessa Hudson</a> as the CEO of a “women’s corporation.” Sport and entertainment are fields that reflect society’s deepest-held and most immoveable convictions. Wikipedia’s powerful focus on these fields may place the encyclopaedia behind other parts of Australia in the evolution of non-gendered language.</p>
-<p><a href="#fig-assessment-by-gender">Figure&nbsp;8</a> suggests a silver lining to this story of the gender gap. Although <code>male</code> Australians continue to greatly outnumber <code>female</code> and <code>trans, non-binary or intersex</code> on Wikipedia, many of the <code>male</code> biographies are of low quality. In fact, if we consider only C-Class articles and above, the proportion of <code>female</code> biographies rises from 19.9% to 33.0%. It appears that editors have devoted considerably more effort to creating pages about men than about women or people of other genders, but that editors devote more effort on average to maintaining pages about non-<code>male</code> Australians.</p>
+<p><a href="#fig-assessment-by-gender" class="quarto-xref">Figure&nbsp;8</a> suggests a silver lining to this story of the gender gap. Although <code>male</code> Australians continue to greatly outnumber <code>female</code> and <code>trans, non-binary or intersex</code> on Wikipedia, many of the <code>male</code> biographies are of low quality. In fact, if we consider only C-Class articles and above, the proportion of <code>female</code> biographies rises from 19.9% to 33.0%. It appears that editors have devoted considerably more effort to creating pages about men than about women or people of other genders, but that editors devote more effort on average to maintaining pages about non-<code>male</code> Australians.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-assessment-by-gender" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-assessment-by-gender-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Page assessment class by gender in the Australian biographies dataset</figcaption>
+<div id="fig-assessment-by-gender" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-assessment-by-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-assessment-by-gender-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-assessment-by-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Page assessment class by gender in the Australian biographies dataset
+</figcaption>
 </figure>
 </div>
 </div>
@@ -799,25 +852,33 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <h3 class="anchored" data-anchor-id="indigeneity">Indigeneity</h3>
 <p>The distinction between ‘settler’ and ‘indigenous’ Australian pervades Wikipedia in a cryptic way. Race and ethncity are portrayed in a lopsided manner in Wikipedia, much like gender. In English Wikipedia, <span class="citation" data-cites="mandiberg_wikipedias_2023">Mandiberg (<a href="#ref-mandiberg_wikipedias_2023" role="doc-biblioref">2023</a>)</span> observes, people are not officially classified by ‘race’, but whiteness is assumed as a default, and a person is far more likely to be categorised by their ethnic or national origin if they are non-white.</p>
 <p>There is no explicit category for ‘settler’ or ‘white’ Australian. There are categories for <a href="https://en.wikipedia.org/wiki/Category:Immigrants_to_Australia">Category:Immigrants to Australia</a> and <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_European_descent">Category:Australian people of European Descent</a>, but these are applied only haphazardly to indicate the ‘settler’ status of a minority of Australians. A good example is <a href="https://en.wikipedia.org/w/index.php?title=Tony_Abbott&amp;oldid=1178396384">Tony Abbott</a>. According to his Wikipedia biography, he was born in London to English parents, and ‘migrated to Australia at the age of two’. <a href="https://en.wikipedia.org/w/index.php?title=Tony_Abbott&amp;action=info">His page is nearly 20 years old, and has been edited more than 4000 times.</a>. Nonetheless, no-one has thought to categorise him either as an ‘immigrant’ or as an Australian ‘of European descent’. Extending Mandiberg’s arguments, we can hypothesise that ‘settler’ status is assumed in Australian Wikipedia, and a person’s whiteness or migrant status is considered unremarkable if they are British. We substantiate this hypothesis below.</p>
-<p>There may be no single category for ‘settler’ or ‘white’ Australian, but there is certainly a single overarching category for <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Indigenous Australian people</a>. Within this category, editors are instructed to sub-categorise Aboriginal and Torres Strait Islander Australians as precisely as possible (<a href="#fig-template-catdiffuse-indig-aus">Figure&nbsp;9</a>). These subcategories fall into three main kinds:</p>
+<p>There may be no single category for ‘settler’ or ‘white’ Australian, but there is certainly a single overarching category for <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Indigenous Australian people</a>. Within this category, editors are instructed to sub-categorise Aboriginal and Torres Strait Islander Australians as precisely as possible (<a href="#fig-template-catdiffuse-indig-aus" class="quarto-xref">Figure&nbsp;9</a>). These subcategories fall into three main kinds:</p>
 <ol type="1">
 <li>Sub-categories for mob or language group, e.g.&nbsp;<a href="https://en.wikipedia.org/w/index.php?title=Category:Pitjantjatjara_people&amp;oldid=1141634439">Category:Pitjantjatjara people</a>.</li>
 <li>Sub-categories for occupation, e.g.&nbsp;<a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_linguists&amp;oldid=1139800186">Category:Indigenous Australian linguists</a> (Curiously, neither <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_Aboriginal_guides&amp;action=info">guide</a> nor <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_Aboriginal_trackers&amp;oldid=1141656309">tracker</a> is considered an occupation in this scheme.)</li>
 <li>Miscellaneous subcategories, including <a href="https://en.wikipedia.org/w/index.php?title=Category:Members_of_the_Stolen_Generations&amp;oldid=825612121">Category:Members of the Stolen Generations</a>, <a href="https://en.wikipedia.org/w/index.php?title=Category:Last_known_speakers_of_an_Australian_Aboriginal_language&amp;oldid=951554350">Category:Last known speakers of an Aboriginal language</a>, <a href="https://en.wikipedia.org/wiki/Category:Indigenous_Australian_feminists">Category:Indigenous Australian feminists</a> and <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_Aboriginal_elders&amp;oldid=940594168">Category:Australian Aboriginal elders</a>.</li>
 </ol>
-<div id="fig-template-catdiffuse-indig-aus" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/template-catdiffuse-indig-aus.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;9: <code>Template:Category diffuse</code> instructs editors to categorise Indigenous Australian People more precisely</figcaption>
+<div id="fig-template-catdiffuse-indig-aus" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-template-catdiffuse-indig-aus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/template-catdiffuse-indig-aus.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-template-catdiffuse-indig-aus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: <code>Template:Category diffuse</code> instructs editors to categorise Indigenous Australian People more precisely
+</figcaption>
 </figure>
 </div>
-<p><code>Category:Indigenous Australian people</code> is actually nested quite deeply within the Australian category graph (<a href="#fig-ethnic-categorisation-graph">Figure&nbsp;10</a>). <a href="#fig-ethnic-categorisation-graph">Figure&nbsp;10</a> may at first be confusing to Australian readers, because it is common in Australia to refer to Aboriginal and Torres Strait Islander people as “First Nations Australians.” In English Wikipedia’s category graph, however, the term “First Nations” is used <a href="https://en.wikipedia.org/wiki/First_Nations_in_Canada">the Canadian sense</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In this instance, Wikipedia’s category graph is potentially incendiary, because it appears to imply there is no special connection between Indigenous Australians and the continent to which they are indigenous. The overarching <code>Category:Australian people by ethnic or national origin</code> is organised predominantly by continent or region. There are sub-categories for Australians of <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_African_descent">African</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Asian_descent">Asian</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Caribbean_descent">Carribean</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Latin_American_descent">Latin American</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Middle_Eastern_descent">Middle Eastern</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_North_American_descent">North American</a> and <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Oceanian_descent">Oceanian</a> descent. There is no category for “Australians of Australian descent”, nor is <code>Category:Australian people of Indigenous Australian descent</code> included as a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_Oceanian_descent&amp;oldid=607565632"><code>Category:Australian people of Oceanian descent</code></a>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> By contrast, <code>Category:Australians of First Nations descent</code> is included as a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_Canadian_descent&amp;oldid=649754186"><code>Category:Australian people of Canadian descent</code></a>, which is itself a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_North_American_descent&amp;oldid=839030224"><code>Category:Australians of North American descent</code></a>. In this local portion of the graph, the link between First Nations Canadians and Canada is formally encoded. The link between Indigenous Australian people and Australia is not. A naïve reader of the graph (such as a computer program) might erroneously conclude that <code>First Nations</code> Australians have the same relationship to Australia as <code>Indigenous</code> Australians.</p>
+<p><code>Category:Indigenous Australian people</code> is actually nested quite deeply within the Australian category graph (<a href="#fig-ethnic-categorisation-graph" class="quarto-xref">Figure&nbsp;10</a>). <a href="#fig-ethnic-categorisation-graph" class="quarto-xref">Figure&nbsp;10</a> may at first be confusing to Australian readers, because it is common in Australia to refer to Aboriginal and Torres Strait Islander people as “First Nations Australians.” In English Wikipedia’s category graph, however, the term “First Nations” is used <a href="https://en.wikipedia.org/wiki/First_Nations_in_Canada">the Canadian sense</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In this instance, Wikipedia’s category graph is potentially incendiary, because it appears to imply there is no special connection between Indigenous Australians and the continent to which they are indigenous. The overarching <code>Category:Australian people by ethnic or national origin</code> is organised predominantly by continent or region. There are sub-categories for Australians of <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_African_descent">African</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Asian_descent">Asian</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Caribbean_descent">Carribean</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Latin_American_descent">Latin American</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Middle_Eastern_descent">Middle Eastern</a>, <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_North_American_descent">North American</a> and <a href="https://en.wikipedia.org/wiki/Category:Australian_people_of_Oceanian_descent">Oceanian</a> descent. There is no category for “Australians of Australian descent”, nor is <code>Category:Australian people of Indigenous Australian descent</code> included as a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_Oceanian_descent&amp;oldid=607565632"><code>Category:Australian people of Oceanian descent</code></a>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> By contrast, <code>Category:Australians of First Nations descent</code> is included as a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_Canadian_descent&amp;oldid=649754186"><code>Category:Australian people of Canadian descent</code></a>, which is itself a subcategory of <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people_of_North_American_descent&amp;oldid=839030224"><code>Category:Australians of North American descent</code></a>. In this local portion of the graph, the link between First Nations Canadians and Canada is formally encoded. The link between Indigenous Australian people and Australia is not. A naïve reader of the graph (such as a computer program) might erroneously conclude that <code>First Nations</code> Australians have the same relationship to Australia as <code>Indigenous</code> Australians.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ethnic-categorisation-graph" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-ethnic-categorisation-graph-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;10: Local portion of the category graph for <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people&amp;oldid=1148961840">Category:Australian people</a>, showing how <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a> fits into the system</figcaption>
+<div id="fig-ethnic-categorisation-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ethnic-categorisation-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-ethnic-categorisation-graph-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ethnic-categorisation-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Local portion of the category graph for <a href="https://en.wikipedia.org/w/index.php?title=Category:Australian_people&amp;oldid=1148961840">Category:Australian people</a>, showing how <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a> fits into the system
+</figcaption>
 </figure>
 </div>
 </div>
@@ -827,24 +888,32 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <p>There is a second notable difference between the category graphs for Australia and Mexico. We have seen that Australia’s <code>Category:Australian people of indigenous peoples descent</code> is used to classify people who are indigenous anywhere. The analogous Mexican category, <a href="https://en.wikipedia.org/w/index.php?title=Category:Mexican_people_of_indigenous_peoples_descent&amp;oldid=812065156"><code>Category:Mexican people of indigenous peoples descent</code></a>, is used exclusively to classify indigenous peoples of Mexico itself. <a href="https://en.wikipedia.org/wiki/Category:Brazilian_people_by_ethnic_or_national_origin">Brazil</a> and <a href="https://en.wikipedia.org/wiki/Category:Brazilian_people_by_ethnic_or_national_origin">Argentina</a> similarly reserve their ‘indigenous peoples’ category for their own indigenous peoples.</p>
 <p>Australia is not entirely alone. The subgraph for <a href="https://en.wikipedia.org/wiki/Category:Japanese_people_by_ethnic_or_national_origin"><code>Category:Japanese people by ethnic or national origin</code></a> also obfuscates the indigeneity of Japan’s indigenous peoples. There is no explicit category for Japanese people ‘of indigenous descent’. Instead, <a href="https://en.wikipedia.org/wiki/Category:Japanese_Ainu_people"><code>Category:Japanese Ainu people</code></a> is included as a subcategory of <a href="https://en.wikipedia.org/wiki/Category:Japanese_people_of_East_Asian_descent"><code>Category:Japanese people of East Asian descent</code></a>. In this way, the link between Ainu people and the region is locally marked in the category graph, but one must look elsewhere in the graph to discover that Ainu people are <em>indigenous</em> to Japan.</p>
 <p>It is clear that quantifying indigenous representation in Wikipedia is a fraught exercise. Scholars are well advised to carefully consider how indigeneity is understood in different parts of the world, and then to pay close attention to the particular structure of ethnic and national classification in any particular part of Wikipedia.</p>
-<p>Nonetheless, we can use the category graph to estimate the number of biographies of Indigenous Australians in Wikipedia. <a href="#fig-indigenous-growth-wikipedia">Figure&nbsp;11</a> suggests that in recent years, Wikipedians may have begun to address the representation gap between Indigenous and settler Australians. <a href="#fig-indigenous-growth-wikipedia">Figure&nbsp;11</a> shows the proportion of biographies in our dataset that fall within <code>Category:Indigenous Australian people</code>. The representation gap for Indigenous Australians is not so stark as the representation gap for non-male Australians. According to the Australian Census, the number of Indigenous Australians <a href="https://www.abs.gov.au/statistics/people/people-and-communities/snapshot-australia/2021#aboriginal-and-torres-strait-islander-communities">grew from 2.5% of Australia’s population to 3.2% between 2011 and 2021</a>. In our estimate, the proportion of Indigenous biographies in <code>Category:Australian people</code>, went from 2.29% on January 1 2011 to 2.05% on January 1 2021. At the time of our data collection, the proportion had risen again to 2.16%. Although comparison with the census would suggest that Wikipedia under-represents Indigenous Australians, the representation gap is currently narrowing.</p>
+<p>Nonetheless, we can use the category graph to estimate the number of biographies of Indigenous Australians in Wikipedia. <a href="#fig-indigenous-growth-wikipedia" class="quarto-xref">Figure&nbsp;11</a> suggests that in recent years, Wikipedians may have begun to address the representation gap between Indigenous and settler Australians. <a href="#fig-indigenous-growth-wikipedia" class="quarto-xref">Figure&nbsp;11</a> shows the proportion of biographies in our dataset that fall within <code>Category:Indigenous Australian people</code>. The representation gap for Indigenous Australians is not so stark as the representation gap for non-male Australians. According to the Australian Census, the number of Indigenous Australians <a href="https://www.abs.gov.au/statistics/people/people-and-communities/snapshot-australia/2021#aboriginal-and-torres-strait-islander-communities">grew from 2.5% of Australia’s population to 3.2% between 2011 and 2021</a>. In our estimate, the proportion of Indigenous biographies in <code>Category:Australian people</code>, went from 2.29% on January 1 2011 to 2.05% on January 1 2021. At the time of our data collection, the proportion had risen again to 2.16%. Although comparison with the census would suggest that Wikipedia under-represents Indigenous Australians, the representation gap is currently narrowing.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-indigenous-growth-wikipedia" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-indigenous-growth-wikipedia-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11: Proportion of Indigenous biographies in the Australian biographies dataset over time.</figcaption>
+<div id="fig-indigenous-growth-wikipedia" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-indigenous-growth-wikipedia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-indigenous-growth-wikipedia-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-indigenous-growth-wikipedia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Proportion of Indigenous biographies in the Australian biographies dataset over time.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As for gender <a href="#fig-assessment-by-gender">see&nbsp;8</a>, we can consider how indicators of page quality alter the picture. <a href="#fig-assessment-by-indigeneity">Figure&nbsp;12</a> does indeed suggest that the Aboriginal and Torres Strait Islander biographies repeat the same pattern as for gender. Although biographies of Aboriginal and Torres Strait Islander Australians are less numerous than biographies of other Australians, they are generally of higher quality according to Wikipedia’s own quality assessment standards. If we consider only articles of C-Class and above, then the proportion of Aboriginal and Torres Strait Islander biographies in the dataset climbs from 2.2% to 3.7%.</p>
+<p>As for gender <a href="#fig-assessment-by-gender" class="quarto-xref">see&nbsp;8</a>, we can consider how indicators of page quality alter the picture. <a href="#fig-assessment-by-indigeneity" class="quarto-xref">Figure&nbsp;12</a> does indeed suggest that the Aboriginal and Torres Strait Islander biographies repeat the same pattern as for gender. Although biographies of Aboriginal and Torres Strait Islander Australians are less numerous than biographies of other Australians, they are generally of higher quality according to Wikipedia’s own quality assessment standards. If we consider only articles of C-Class and above, then the proportion of Aboriginal and Torres Strait Islander biographies in the dataset climbs from 2.2% to 3.7%.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-assessment-by-indigeneity" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-assessment-by-indigeneity-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12: Page assessment class broken down by membership of <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a></figcaption>
+<div id="fig-assessment-by-indigeneity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-assessment-by-indigeneity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-assessment-by-indigeneity-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-assessment-by-indigeneity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Page assessment class broken down by membership of <a href="https://en.wikipedia.org/w/index.php?title=Category:Indigenous_Australian_people&amp;oldid=971541573">Category:Indigenous Australian people</a>
+</figcaption>
 </figure>
 </div>
 </div>
@@ -853,25 +922,33 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </section>
 <section id="historical-period" class="level3">
 <h3 class="anchored" data-anchor-id="historical-period">Historical period</h3>
-<p>The final aspect of human diversity we consider is historical period. How are people from different periods in Australia’s history represented in the encyclopaedia? To estimate this, we rely on date of birth data from Wikidata. Wikidata records a date of birth for 70,741 of the articles in our dataset. This data is displayed in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, which shows the number of biographies in the dataset according to the decade in which the person was born.</p>
+<p>The final aspect of human diversity we consider is historical period. How are people from different periods in Australia’s history represented in the encyclopaedia? To estimate this, we rely on date of birth data from Wikidata. Wikidata records a date of birth for 70,741 of the articles in our dataset. This data is displayed in <a href="#fig-page-creation-by-decade-of-birth" class="quarto-xref">Figure&nbsp;13</a>, which shows the number of biographies in the dataset according to the decade in which the person was born.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-page-creation-by-decade-of-birth" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-page-creation-by-decade-of-birth-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;13: Articles in the Australian biographies dataset broken down by the decade in which the subject of the biography was born.</figcaption>
+<div id="fig-page-creation-by-decade-of-birth" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-page-creation-by-decade-of-birth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-page-creation-by-decade-of-birth-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-page-creation-by-decade-of-birth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Articles in the Australian biographies dataset broken down by the decade in which the subject of the biography was born.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a> displays the obvious colonial bias in the dataset. There are very few biographies of any persons prior to British colonisation of Australia. This is partly a product of our focus on biography. There is very little biographical data available about individual persons living in Australia prior to 1788. But this colonial bias also represents a darker side of Australian history. In the first half of the Nineteenth Century, the majority of Australia’s population was probably indigenous. <span class="citation" data-cites="butlin_forming_1994">Butlin (<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994</a>)</span> estimates that that colonial population only overtook the indigenous population in the 1840s. According to his estimates, the population of Australia hovered around 600,000 from around 1800 until the 1840s, because the number of new migrants into the colony was roughly equal to the decline of the indigenous population due to British depradations <span class="citation" data-cites="butlin_forming_1994">(<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994, 212</a>)</span>. In <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, this history is obscured. A naive interpreter of the figure might assume that Australia’s population grew continuously from the British invasion of 1788 until the present. In fact, there was a sharp decline in Australia’s population in the first two decades of settlement, followed by a period of relative stagnation.</p>
-<p>We can conclude that Wikipedia’s Australian biographies broadly reflect the growth of colonial society in Australia since 1788. How closely does Wikipedia reflect this growth? <a href="#fig-comp-wiki-abs">Figure&nbsp;14</a> compares our dataset to historical population growth figures from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>. This data records the growth of colonial society, because Indigenous Australians were excluded from the census until 1961. From this data, we calculate the colonial population growth for each decade from the 1780s to the 2010s. For example, in the 1810s, Australia’s population grew by 21,977 people. We then find the number of Wikipedia biographies for people whose date of birth lies in this decade, as in <a href="#fig-page-creation-by-decade-of-birth">Figure&nbsp;13</a>, and calculate this as a percentage of the Australian population growth in that decade. For example, there are 662 biographies for people born in the 1810s in our dataset, which is equal to 3% of the colonial population growth for that decade. The two datasets are not perfectly comparable, because our data does not account for when a person migrated to Australia, but <a href="#fig-comp-wiki-abs">Figure&nbsp;14</a> nonetheless clearly shows the historical bias of Wikipedia’s Australian biographies. There are many more articles per person in the early years of the colony compared to later on in Australia’s colonial history. Since the 1850s, the historical coverage of Australian Wikipedia biographies has been more equal.</p>
+<p><a href="#fig-page-creation-by-decade-of-birth" class="quarto-xref">Figure&nbsp;13</a> displays the obvious colonial bias in the dataset. There are very few biographies of any persons prior to British colonisation of Australia. This is partly a product of our focus on biography. There is very little biographical data available about individual persons living in Australia prior to 1788. But this colonial bias also represents a darker side of Australian history. In the first half of the Nineteenth Century, the majority of Australia’s population was probably indigenous. <span class="citation" data-cites="butlin_forming_1994">Butlin (<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994</a>)</span> estimates that that colonial population only overtook the indigenous population in the 1840s. According to his estimates, the population of Australia hovered around 600,000 from around 1800 until the 1840s, because the number of new migrants into the colony was roughly equal to the decline of the indigenous population due to British depradations <span class="citation" data-cites="butlin_forming_1994">(<a href="#ref-butlin_forming_1994" role="doc-biblioref">1994, 212</a>)</span>. In <a href="#fig-page-creation-by-decade-of-birth" class="quarto-xref">Figure&nbsp;13</a>, this history is obscured. A naive interpreter of the figure might assume that Australia’s population grew continuously from the British invasion of 1788 until the present. In fact, there was a sharp decline in Australia’s population in the first two decades of settlement, followed by a period of relative stagnation.</p>
+<p>We can conclude that Wikipedia’s Australian biographies broadly reflect the growth of colonial society in Australia since 1788. How closely does Wikipedia reflect this growth? <a href="#fig-comp-wiki-abs" class="quarto-xref">Figure&nbsp;14</a> compares our dataset to historical population growth figures from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>. This data records the growth of colonial society, because Indigenous Australians were excluded from the census until 1961. From this data, we calculate the colonial population growth for each decade from the 1780s to the 2010s. For example, in the 1810s, Australia’s population grew by 21,977 people. We then find the number of Wikipedia biographies for people whose date of birth lies in this decade, as in <a href="#fig-page-creation-by-decade-of-birth" class="quarto-xref">Figure&nbsp;13</a>, and calculate this as a percentage of the Australian population growth in that decade. For example, there are 662 biographies for people born in the 1810s in our dataset, which is equal to 3% of the colonial population growth for that decade. The two datasets are not perfectly comparable, because our data does not account for when a person migrated to Australia, but <a href="#fig-comp-wiki-abs" class="quarto-xref">Figure&nbsp;14</a> nonetheless clearly shows the historical bias of Wikipedia’s Australian biographies. There are many more articles per person in the early years of the colony compared to later on in Australia’s colonial history. Since the 1850s, the historical coverage of Australian Wikipedia biographies has been more equal.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-comp-wiki-abs" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="who-counts_files/figure-html/fig-comp-wiki-abs-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;14: Number of articles in Australian biographies dataset compared to historical population growth statistics from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>.</figcaption>
+<div id="fig-comp-wiki-abs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comp-wiki-abs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="who-counts_files/figure-html/fig-comp-wiki-abs-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comp-wiki-abs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Number of articles in Australian biographies dataset compared to historical population growth statistics from the <span class="citation" data-cites="australian_bureau_of_statistics_historical_2016">Australian Bureau of Statistics (<a href="#ref-australian_bureau_of_statistics_historical_2016" role="doc-biblioref">2016</a>)</span>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -909,11 +986,12 @@ The ADB includes anyone who has made a significant contribution to the Australia
 <li>It can implicitly link a person to Australia by identifying them in a database of Australians, such as the Dictionary of Australian Biography (<a href="https://www.wikidata.org/wiki/Property:P1907">P1907</a>), Indigenous Australia (<a href="https://www.wikidata.org/wiki/Property:P9246">P9246</a>), or Convict Records of Australia (<a href="https://www.wikidata.org/wiki/Property:P9919">P9919</a>)</li>
 </ol>
 <p>We queried Wikidata by 45 such properties suggesting Australianness. Using these properties, we were able to identify 85,773 Wikidata items representing Australian people. Of these Wikidata items, 63,692 items had a corresponding Wikipedia article.</p>
-<p>The two datasets overlap substantially, but not completely (<a href="#fig-biography-overlap-table">Figure&nbsp;15</a>). There are thousands of biographical articles in <code>Category:Australian people</code> whose Wikidata items do not clearly identify them as ‘Australian’. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do <em>not</em> appear in <code>Category:Australian people</code>, even though the Wikidata item has P31(Q5), ‘instance of:human’, and also contains one or more ‘markers of Australianness’.</p>
+<p>The two datasets overlap substantially, but not completely (<a href="#fig-biography-overlap-table" class="quarto-xref">Figure&nbsp;15</a>). There are thousands of biographical articles in <code>Category:Australian people</code> whose Wikidata items do not clearly identify them as ‘Australian’. Likewise, there are hundreds of Wikidata items whose corresponding Wikipedia articles do <em>not</em> appear in <code>Category:Australian people</code>, even though the Wikidata item has P31(Q5), ‘instance of:human’, and also contains one or more ‘markers of Australianness’.</p>
 <div class="cell">
-<div id="fig-biography-overlap-table" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<table class="table table-sm table-striped small">
+<div id="fig-biography-overlap-table" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biography-overlap-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Dataset</th>
@@ -935,7 +1013,10 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </tr>
 </tbody>
 </table>
-<figcaption class="figure-caption">Figure&nbsp;15: There is substantial, but incomplete overlap between the biographies in the two datasets</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biography-overlap-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: There is substantial, but incomplete overlap between the biographies in the two datasets
+</figcaption>
 </figure>
 </div>
 </div>
@@ -958,7 +1039,7 @@ The ADB includes anyone who has made a significant contribution to the Australia
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-australian_bureau_of_statistics_historical_2016" class="csl-entry" role="listitem">
 Australian Bureau of Statistics. 2016. <span>“Historical <span>Population</span>.”</span> ABS Website. <a href="https://www.abs.gov.au/statistics/people/population/historical-population/2016">https://www.abs.gov.au/statistics/people/population/historical-population/2016</a>.
 </div>
@@ -993,7 +1074,7 @@ Weathington, Katy, and Jed R. Brubaker. 2023. <span>“Queer <span>Identities</s
 <li id="fn2"><p>This has the notable corollary that there are no categories in Wikipedia for <a href="https://en.wikipedia.org/wiki/M%C3%A9tis">Métis</a> or <a href="https://en.wikipedia.org/wiki/Inuit">Inuit</a> Australians.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>In other parts of English Wikipedia, Australia is included as part of Oceania. For instance, <code>Category:British people of Australian descent</code> is a subcategory of <code>Category:British people of Oceanian descent</code>. The same holds true for <a href="https://en.wikipedia.org/wiki/Category:American_people_of_Oceanian_descent">American</a>, <a href="https://en.wikipedia.org/wiki/Category:French_people_of_Oceanian_descent">French</a>, and <a href="https://en.wikipedia.org/wiki/Category:Indian_people_of_Oceanian_descent">Indian</a> people of Australian descent.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@report{falk2023,
+</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@report{falk2023,
   author = {Falk, Michael and Ford, Heather and Tall, Kelly and Pietsch,
     Tamson},
   publisher = {University of Technology, Sydney},
@@ -1051,6 +1132,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1119,13 +1227,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1160,18 +1270,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1203,11 +1302,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/wikihistories\.github\.io\/reports");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1217,8 +1355,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1230,7 +1377,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1274,6 +1544,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1299,6 +1570,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1359,6 +1656,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

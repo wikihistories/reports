@@ -5,11 +5,11 @@ doi: 10.5281/zenodo.10637914
 
 This site hosts the annual reports of the [wikihistories](https://wikihistories.net) project. Each report considers a different aspect of Australian history in Wikipedia. The reports partly inform national debate about the nature of Australia's past, but they also speak to a global audience, as examples of how we can interrogate Wikipedia to uncover the historiography of the world's largest knowledge system.
 
-In 2023, we consider **people**. [How Australians are Represented in Wikipedia](who-counts.html) uses a dataset of more than 80,000 Wikipedia biographies to reveal Wikipedia represents the people who make up Australia.
+In 2023, we consider **people**. [How Australians are represented in Wikipedia](who-counts.html) uses a dataset of more than 80,000 Wikipedia biographies to reveal Wikipedia represents the people who make up Australia.
 
-In 2024, we consider **places**. `How Australian Places are Represented in Wikipedia` will consider how the world's only continent-sized country makes its way into the world's only planet-sized encyclopaedia.
+In 2024, we consider **places**. `How Australian places are represented on Wikipedia` will consider how the world's only continent-sized country makes its way into the world's only planet-sized encyclopaedia.
 
-In 2025, we consider **events**. `How Australian Events are Represented in Wikipedia` will range over 60,000 years of human history in Australia, revealing which structures, conjunctures and events emerge from deep time to take their place in the encyclopaedia.
+In 2025, we consider **events**. `How Australian events are represented on Wikipedia` will range over 60,000 years of human history in Australia, revealing which structures, conjunctures and events emerge from deep time to take their place in the encyclopaedia.
 
 These reports primarily fulfil [Objectives 2 and 3](https://wikihistories.net/about) of the `wikihistories` project:
 
