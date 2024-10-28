@@ -21,7 +21,7 @@ author:
   - name: Michael Falk
     orcid: 0000-0001-9261-8390
     affiliation: University of Melbourne
-    url: https://findanexpert.unimelb.edu.au/profile/1043380-michael-falk
+    url: https://michaelfalk.io
   - name: Tamson Pietsch
     orcid: 0000-0002-8304-7108
     affiliation: University of Technology, Sydney
