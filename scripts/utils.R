@@ -135,3 +135,23 @@ read_file_with_date <- function(path) {
 
   return(data)
 }
+
+# Get formatted date of dataset
+date_data <- function(x) {
+  attr(x, "date_created") |> format('%e %B %Y') |> stringr::str_trim()
+}
+
+# Helpers to produce urls for wiki articles
+art_url <- function(title, lang = "en") {
+  purrr::map_chr(
+    title,
+    \(t) paste0(
+      "[", sanitise_title(t), "]",
+      "(https://", lang, ".wikipedia.org/wiki/", stringr::str_replace_all(t, " ", "_"), ")"
+    )
+  )
+}
+
+sanitise_title <- function(title) {
+  title <- stringr::str_replace_all(title, "Nigger", "N****r")
+}

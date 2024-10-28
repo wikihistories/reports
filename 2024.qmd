@@ -42,11 +42,11 @@ format:
   html:
     description-meta: "How are Australian places represented in Wikipedia? In the second report of the wikihistories project, we explore the complex historical geography of Australia in the world's largest encyclopedia."
     # fig-dpi: 600 # Uncomment this line to produce high-res figures for designer
-format-links: 
+other-links: 
   - text: PDF
-    href: 2024.pdf
+    href: https://wikihistories.github.io/reports/2024.pdf
     icon: file-pdf
-abstract: "This year, the wikihistories team set out to understand how well Wikipedia represents Australian places and what kinds of editing practices drive those representations. Examining 35,000 articles about Australian places and interviewing volunteer editors, we found that English Wikipedia reflects an anthropocentric and neo-colonial image of Australia as a place."
+abstract: "This year, the wikihistories team set out to understand how well Wikipedia represents Australian places and what kinds of editing practices drive those representations. Examining 35,000 articles about Australian places and interviewing volunteer editors, we found that English Wikipedia reflects an anthropocentric and neo-colonial image of Australia as a place. [Download the full report](2024.pdf), or scroll down to read an html version suitable for your smaller screen device."
 ---
 
 ```{r message=FALSE, include=FALSE}
@@ -56,25 +56,9 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 file.path("scripts", "which-places-data.R") |> source()
-
-art_url <- function(title, lang = "en") {
-  purrr::map_chr(
-    title,
-    \(t) paste0(
-      "[", sanitise_title(t), "]",
-      "(https://", lang, ".wikipedia.org/wiki/", stringr::str_replace_all(t, " ", "_"), ")"
-    )
-  )
-}
-
-sanitise_title <- function(title) {
-  title <- stringr::str_replace_all(title, "Nigger", "N****r")
-}
-
-date_data <- function(x) {
-  attr(x, "date_created") |> format('%e %B %Y') |> stringr::str_trim()
-}
 ```
+
+[![Click the image to access the pdf version, or scroll down to read on your smaller screen device.](assets/2024-title-page.png)](2024.pdf)
 
 ## Executive Summary
 
@@ -151,7 +135,7 @@ hexmap <- function(data, scale_limits = NULL) {
     ggplot2::geom_hex(binwidth = 0.5) +
     ggplot2::theme_void() +
     ggplot2::xlim(110, 155) +
-    ggplot2::scale_fill_viridis_c(trans = "log10", labels = scales::label_comma(big.mark=" "), limits = scale_limits)
+    ggplot2::scale_fill_viridis_c(trans = "log10", option="magma", labels = scales::label_comma(big.mark=" "), limits = scale_limits)
 }
 ```
 
@@ -235,7 +219,7 @@ edit_data |>
     y = c(-45, -5)
   ) +
   ggplot2::theme_void() +
-  ggplot2::scale_fill_viridis_c(trans = "log10", option="magma", labels = scales::label_comma(big.mark=" ")) +
+  ggplot2::scale_fill_viridis_c(trans = "log10", labels = scales::label_comma(big.mark=" ")) +
   ggplot2::labs(
     fill = "Number of\nHuman Edits"
     )
@@ -510,7 +494,7 @@ First Nations place names generate so much interest for several reasons. James f
 
 The principal way that editors can attach a First Nations name to a place is the “native name” system. There are two ways a Wikipedian can assign a "native name" to a Wikipedia article. They can insert `r art_url("Template:Native_name")` into the text of the article; or they can fill in the "native_name" field in articles "Infobox." These two approaches to dual-naming can be seen on the articles for `r art_url("Naarm")`, `r art_url("Boorloo")` and `r art_url("Deerubbin")`.
 
-@fig-indigenous-places shows all the places in the dataset that have been dual-named on Wikipedia. `r sum(extent_data$has_native_name) |> scales::label_comma()()` places in the dataset have been dual-named, or about `r (sum(extent_data$has_native_name) / places |> dplyr::filter(on_english_wikipedia) |> dplyr::distinct(wikidata_id) |> nrow()) |> scales::percent()` of the total. This is of course a small quantity, given that the entire Australian landmass had been occupied and named by Aboriginal and Torres Strait Islander people for tens of thousands of years prior to European settlement. But Wikipedia's efforts are comparable to those of state agencies like the Australian Broadcasting Corporation or the state-based Geographical Names Boards.
+@fig-indigenous-places shows all the places in the dataset that have been dual-named on Wikipedia. `r sum(extent_data$has_native_name) |> scales::label_comma()()` places in the dataset have been dual-named, or about `r (sum(extent_data$has_native_name) / places |> dplyr::filter(on_english_wikipedia) |> dplyr::distinct(wikidata_id) |> nrow()) |> scales::percent()` of the total. This is of course a small quantity, given that the entire Australian landmass had been occupied and named by Aboriginal and Torres Strait Islander people for tens of thousands of years prior to European settlement.
 
 There are two obvious flaws to Wikipedia's dual-naming system.
 

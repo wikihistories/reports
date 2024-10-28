@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - 2024.pdf
 
 website:
   title: "Reports"
