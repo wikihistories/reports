@@ -154,7 +154,7 @@ get_personal_data <- function(combined_data, use_cache, data_dir) {
     personal_data <- read_csv(save_path)
   } else {
     message(glue::glue("Getting additional data from Wikidata. Output will be written to {save_path}"))
-    entities <- get_entities(combined_data$person)
+    entities <- get_entities(combined_data$person, .progress = "Getting personal data")
     personal_data <- tibble(
       person = map_chr(entities, "id"),
       !!!extract_personal_data(entities),
@@ -237,38 +237,7 @@ get_quality_indicators_batch <- function(title, idx, save_path, resume = FALSE) 
   data
 }
 
-get_batches <- function(url) {
-  response <- httr2::request(url) %>%
-    httr2::req_error(is_error = function(x) FALSE) %>%
-    httr2::req_perform()
-  if (!httr2::resp_is_error(response)) {
-    response_body <- httr2::resp_body_json(response)
-  } else {
-    response_body <- NA
-  }
-}
 
-get_one_claim <- function(claims, claim_id, value_type) {
-  statements <- pluck(claims, claim_id, .default = NA)
-  if (rlang::is_na(statements)) {
-    NA
-  } else {
-    rank <- map_chr(statements, \(stmt) pluck(stmt, "rank", .default = NA))
-    rank <- case_when(
-      rank == "preferred" ~ 2,
-      rank == "normal" ~ 1,
-      .default = 0
-    )
-    preferred_idx <- if (length(rank) > 0) max(rank) else NULL
-    value <- pluck(claims, claim_id, preferred_idx, "mainsnak", "datavalue", "value", value_type, .default = NA)
-    as.character(value)
-  }
-}
-
-get_claims <- function(claims, claim_id, value_type) {
-  params <- vctrs::vec_recycle_common(list(claims), claim_id, value_type)
-  pmap_chr(params, \(claims, id, type) get_one_claim(claims, id, type))
-}
 
 PERSONAL_DATA_PROPS <- tibble::tribble(
   ~label,   ~claim_id, ~value_type,
@@ -277,7 +246,6 @@ PERSONAL_DATA_PROPS <- tibble::tribble(
   "dod",    "P570",    "time",
   "pob",    "P19",     "id"
 )
-
 
 extract_personal_data <- function(entity) {
   personal_data <- map(entity, extract_one_personal_data) %>%
@@ -315,44 +283,6 @@ extract_metadata <- function(entity) {
 is_human <- function(entity) {
   instance_of <- map(entity, list("claims", "P31", 1, "mainsnak", "datavalue", "value", "id"), .default = as.character())
   map_lgl(instance_of, \(prop) "Q5" %in% prop)
-}
-
-# Get Wikidata item, extract gender, dob, dod and pob if available
-get_entities <- function(wikidata_id) {
-  batches <- split_batches(wikidata_id, 50)
-  url <- paste0(
-    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
-    batches,
-    "&props=claims|descriptions|sitelinks|labels&languages=en&sitefilter=enwiki&format=json"
-  )
-  batched_entities <- map(url, get_batches, .progress = "Getting personal data")
-  entities <- reduce(
-    batched_entities,
-    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
-    .init = list()
-  )
-}
-
-# Get labels of Wikidata entities (e.g. places, genders)
-get_labels <- function(wikidata_id, label_name) {
-  batches <- split_batches(wikidata_id, 50)
-  url <- paste0(
-    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=",
-    batches,
-    "&props=labels&format=json&languages=en"
-  )
-  batched_entities <- map(url, get_batches, .progress = "Getting labels")
-  entities <- reduce(
-    batched_entities,
-    \(lhs, rhs) {c(lhs, pluck(rhs, "entities", .default = NA))},
-    .init = list()
-  )
-  labels <- map(entities, \(x) rlang::list2(
-    wikibase_id = pluck(x, "id"),
-    !!label_name := pluck(x, "labels", "en", "value")
-  )) %>%
-    bind_rows()
-  labels
 }
 
 label_genders_and_places <- function(personal_data) {

@@ -1,0 +1,396 @@
+---
+title: "2024 Report Figures with anonymous edits included"
+embed-resources: true
+---
+
+This document reproduces figures from the 2024 report that use edit data. But they include edits from anonymous users.
+
+```{r message=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+source("scripts/which-places-data.R")
+```
+
+In the current version of the report, anonymous edits have been left out of the count of 'human' edits. @fig-edit-counts shows the breakdown of the edits dataset:
+
+```{r}
+#| label: fig-edit-counts
+#| fig-cap: "The four types of edit in the dataset, counted."
+
+edit_types <- edit_data |> 
+  dplyr::transmute(
+    logged_in_edits = edits$count,
+    reverts = reverts$count,
+    bots = bots$count,
+    anonymous = anonymous$count
+  ) |> 
+  dplyr::summarise_all(\(col) sum(col, na.rm = TRUE)) |> 
+  tidyr::pivot_longer(cols = dplyr::everything(), names_to = "Edit type", values_to = "Count") |> 
+  dplyr::mutate(Count = scales::label_comma()(Count))
+
+edit_types |> 
+  knitr::kable()
+```
+
+## Place types figure
+
+This figure does not focus on edits, but it does adjust the colour of the points based on edits, to emphasise editors' attention. As one might expect, this figure is not visibly different.
+
+```{r}
+#| label: fig-attention
+#| fig-cap: The original figure, where anonymous edits were not counted.
+
+n_articles <- places |> 
+  dplyr::distinct(wikidata_id, .keep_all = T) |> 
+  tidyr::unnest(sitelinks) |> 
+  dplyr::filter(sitelinks == "enwiki" | sitelinks == "cebwiki") |> 
+  dplyr::group_by(sitelinks) |> 
+  dplyr::summarise(n = dplyr::n()) |> 
+  tidyr::pivot_wider(names_from = "sitelinks", values_from = "n")
+
+n_edits <- edit_data |> 
+  dplyr::summarise(n = sum(edits$count, na.rm = TRUE) + sum(reverts$count, na.rm = TRUE)) |> 
+  dplyr::pull(n)
+
+type_threshold <- 50 # only keep place types with more than n articles
+
+edits_by_type <- edit_data |> 
+  # The edit table just has one place type for each article. Thus some place
+  # types are recording no edits in English Wikipedia, even if they have been
+  # edited. Get all the place type data back in
+  dplyr::select(-instance_of) |> # The column will be re-added from the join
+  # There was some error, which may have been because dplyr::join doesn't really
+  # like data.frame columns. So lift out the two columns we want
+  dplyr::mutate(
+    edits = edits$count,
+    reverts = reverts$count
+  ) |> 
+  dplyr::full_join(
+    dplyr::select(places, wikidata_id, instance_of),
+    by = "wikidata_id"
+  ) |> 
+  dplyr::group_by(instance_of) |> 
+  # na.rm = TRUE seems to help with the aforementioned error
+  # where some edit data was being dropped
+  dplyr::summarise(total_edits = sum(edits, na.rm = TRUE) + sum(reverts, na.rm = TRUE))
+
+attention_data <- places |> 
+  tidyr::unnest(sitelinks) |>
+  dplyr::filter(sitelinks %in% c("cebwiki", "enwiki")) |> 
+  dplyr::group_by(instance_of, sitelinks) |> 
+  dplyr::summarise(total_pages = dplyr::n()) |> 
+  dplyr::ungroup() |> 
+  tidyr::pivot_wider(
+    names_from = "sitelinks",
+    values_from = "total_pages",
+    values_fill = 0
+  ) |> 
+  dplyr::left_join(edits_by_type, by = "instance_of") |> 
+  dplyr::left_join(
+    dplyr::select(types, type, label),
+    by = dplyr::join_by(instance_of == type)
+  ) |> 
+  tidyr::replace_na(list(total_edits=0)) |> 
+  dplyr::filter(
+    enwiki > type_threshold,
+    cebwiki > type_threshold
+  ) |> 
+  dplyr::mutate(
+    enwiki = enwiki / n_articles$enwiki,
+    cebwiki = cebwiki / n_articles$cebwiki
+  )
+
+attention_data |> 
+  ggplot2::ggplot(
+    ggplot2::aes(x = enwiki, y = cebwiki, colour = total_edits, label = label)
+  ) +
+  ggplot2::geom_abline(slope = 1, intercept = c(0,0), colour = "lightgrey") + 
+  ggplot2::annotate(
+    "text",
+    x = 0.0075,
+    y = 1,
+    label = "Higher % in Cebuano",
+    hjust = "right",
+    vjust = "bottom",
+    angle = 45
+  ) +
+  ggplot2::annotate(
+    "text",
+    x = 0.1,
+    y = 0.0005,
+    label = "Higher % in English",
+    hjust = "left",
+    angle = 45
+  ) +
+  ggplot2::geom_point() +
+  ggrepel::geom_label_repel(min.segment.length=0) +
+  # Force label for city: otherwise geom_label_repel excludes it due to too many overlaps
+  ggrepel::geom_label_repel(data = attention_data |> dplyr::filter(instance_of == "Q515"), min.segment.length=0) +
+  ggplot2::scale_x_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) + 
+  ggplot2::scale_y_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) +
+  ggplot2::scale_colour_continuous(trans = "log10", labels = scales::label_comma(big.mark = " ")) +
+  ggplot2::theme_minimal() +
+  ggplot2::labs(
+    x = "Places with this type in English Wikipedia",
+    y = "Places with this type in Cebuano Wikipedia",
+    color = "Edits (English)",
+    title = "Place types in English and Cebuano Wikipedia",
+    subtitle = glue::glue("Type data {date_data(places)}; edit data {date_data(edit_data)}.\nPlace types with {type_threshold} or fewer articles excluded.")
+  ) +
+  ggplot2::coord_fixed(ratio = 1) # Force square plot area
+```
+
+```{r}
+#| label: fig-attention-with-anonymous
+#| fig-cap: A new version of the figure, with anonymous edits counted.
+
+n_articles <- places |> 
+  dplyr::distinct(wikidata_id, .keep_all = T) |> 
+  tidyr::unnest(sitelinks) |> 
+  dplyr::filter(sitelinks == "enwiki" | sitelinks == "cebwiki") |> 
+  dplyr::group_by(sitelinks) |> 
+  dplyr::summarise(n = dplyr::n()) |> 
+  tidyr::pivot_wider(names_from = "sitelinks", values_from = "n")
+
+n_edits <- edit_data |> 
+  dplyr::summarise(n = sum(edits$count, na.rm = TRUE) + sum(reverts$count, na.rm = TRUE) + + sum(anonymous$count, na.rm = TRUE)) |> 
+  dplyr::pull(n)
+
+type_threshold <- 50 # only keep place types with more than n articles
+
+edits_by_type <- edit_data |> 
+  # The edit table just has one place type for each article. Thus some place
+  # types are recording no edits in English Wikipedia, even if they have been
+  # edited. Get all the place type data back in
+  dplyr::select(-instance_of) |> # The column will be re-added from the join
+  # There was some error, which may have been because dplyr::join doesn't really
+  # like data.frame columns. So lift out the two columns we want
+  dplyr::mutate(
+    edits = edits$count,
+    reverts = reverts$count
+  ) |> 
+  dplyr::full_join(
+    dplyr::select(places, wikidata_id, instance_of),
+    by = "wikidata_id"
+  ) |> 
+  dplyr::group_by(instance_of) |> 
+  # na.rm = TRUE seems to help with the aforementioned error
+  # where some edit data was being dropped
+  dplyr::summarise(total_edits = sum(edits, na.rm = TRUE) + sum(reverts, na.rm = TRUE))
+
+attention_data <- places |> 
+  tidyr::unnest(sitelinks) |>
+  dplyr::filter(sitelinks %in% c("cebwiki", "enwiki")) |> 
+  dplyr::group_by(instance_of, sitelinks) |> 
+  dplyr::summarise(total_pages = dplyr::n()) |> 
+  dplyr::ungroup() |> 
+  tidyr::pivot_wider(
+    names_from = "sitelinks",
+    values_from = "total_pages",
+    values_fill = 0
+  ) |> 
+  dplyr::left_join(edits_by_type, by = "instance_of") |> 
+  dplyr::left_join(
+    dplyr::select(types, type, label),
+    by = dplyr::join_by(instance_of == type)
+  ) |> 
+  tidyr::replace_na(list(total_edits=0)) |> 
+  dplyr::filter(
+    enwiki > type_threshold,
+    cebwiki > type_threshold
+  ) |> 
+  dplyr::mutate(
+    enwiki = enwiki / n_articles$enwiki,
+    cebwiki = cebwiki / n_articles$cebwiki
+  )
+
+attention_data |> 
+  ggplot2::ggplot(
+    ggplot2::aes(x = enwiki, y = cebwiki, colour = total_edits, label = label)
+  ) +
+  ggplot2::geom_abline(slope = 1, intercept = c(0,0), colour = "lightgrey") + 
+  ggplot2::annotate(
+    "text",
+    x = 0.0075,
+    y = 1,
+    label = "Higher % in Cebuano",
+    hjust = "right",
+    vjust = "bottom",
+    angle = 45
+  ) +
+  ggplot2::annotate(
+    "text",
+    x = 0.1,
+    y = 0.0005,
+    label = "Higher % in English",
+    hjust = "left",
+    angle = 45
+  ) +
+  ggplot2::geom_point() +
+  ggrepel::geom_label_repel(min.segment.length=0) +
+  # Force label for city: otherwise geom_label_repel excludes it due to too many overlaps
+  ggrepel::geom_label_repel(data = attention_data |> dplyr::filter(instance_of == "Q515"), min.segment.length=0) +
+  ggplot2::scale_x_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) + 
+  ggplot2::scale_y_log10(labels = scales::label_percent(), limits = c(0.0005, 1)) +
+  ggplot2::scale_colour_continuous(trans = "log10", labels = scales::label_comma(big.mark = " ")) +
+  ggplot2::theme_minimal() +
+  ggplot2::labs(
+    x = "Places with this type in English Wikipedia",
+    y = "Places with this type in Cebuano Wikipedia",
+    color = "Edits (English)",
+    title = "Place types in English and Cebuano Wikipedia",
+    subtitle = glue::glue("Type data {date_data(places)}; edit data {date_data(edit_data)}.\nPlace types with {type_threshold} or fewer articles excluded.")
+  ) +
+  ggplot2::coord_fixed(ratio = 1) # Force square plot area
+```
+
+## Edits map
+
+As expected, the map is not visibly different.
+
+```{r}
+#| label: fig-edit-map
+#| fig-cap: Original figure, anonymous edits excluded.
+
+# To use geom_contour, the data needs to be in a grid; that is, we need to
+# divide up the whole of Australia into little squares, and sum the edits for
+# each square. See `ggplot2::geom_contour`
+
+edit_data |>
+  dplyr::mutate(
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude),
+    human_edits = edits$count + reverts$count
+    ) |> 
+  dplyr::filter(
+    longitude > 110 & longitude < 155,
+    latitude < -5
+  ) |> 
+  ggplot2::ggplot(ggplot2::aes(
+      x = longitude,
+      y = latitude,
+      weight = human_edits
+    )) +
+  ggplot2::geom_sf(data = ozmaps::ozmap_states, inherit.aes = F) +
+  ggplot2::geom_hex(binwidth = 0.5) +
+  ggplot2::lims(
+    x = c(110, 155),
+    y = c(-45, -5)
+  ) +
+  ggplot2::theme_void() +
+  ggplot2::scale_fill_viridis_c(trans = "log10", option="magma", labels = scales::label_comma(big.mark=" ")) +
+  ggplot2::labs(
+    fill = "Number of\nHuman Edits"
+    )
+```
+
+```{r}
+#| label: fig-edit-map-with-anonymous
+#| fig-cap: New figure, with anonymous edits.
+
+# To use geom_contour, the data needs to be in a grid; that is, we need to
+# divide up the whole of Australia into little squares, and sum the edits for
+# each square. See `ggplot2::geom_contour`
+
+edit_data |>
+  dplyr::mutate(
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude),
+    human_edits = edits$count + reverts$count + anonymous$count
+    ) |> 
+  dplyr::filter(
+    longitude > 110 & longitude < 155,
+    latitude < -5
+  ) |> 
+  ggplot2::ggplot(ggplot2::aes(
+      x = longitude,
+      y = latitude,
+      weight = human_edits
+    )) +
+  ggplot2::geom_sf(data = ozmaps::ozmap_states, inherit.aes = F) +
+  ggplot2::geom_hex(binwidth = 0.5) +
+  ggplot2::lims(
+    x = c(110, 155),
+    y = c(-45, -5)
+  ) +
+  ggplot2::theme_void() +
+  ggplot2::scale_fill_viridis_c(trans = "log10", option="magma", labels = scales::label_comma(big.mark=" ")) +
+  ggplot2::labs(
+    fill = "Number of\nHuman Edits"
+    )
+```
+
+## Contentious articles table
+
+Our list of contentious articles changed by five articles once anonymous edits are included. In the context of 35,000 articles, I would class this as insignificant.
+
+```{r}
+#| label: fig-contention
+#| fig-cap: Original table. Anonymous edits excluded.
+
+edit_threshold <- 50
+num_articles <- 10
+
+figure_1_data <- edit_data |>
+  dplyr::mutate(
+    reverts = reverts$count,
+    edits = edits$count,
+    revert_ratio = reverts / edits
+  ) |> 
+  dplyr::filter(
+    reverts + edits > edit_threshold
+  ) |>
+  dplyr::arrange(desc(revert_ratio)) |> 
+  dplyr::slice_head(n=num_articles) |> 
+  dplyr::mutate(
+    display_title = art_url(title),
+    revert_ratio = round(revert_ratio, digits = 2))
+
+figure_1_data |> 
+  dplyr::select(
+    Article = display_title,
+    Edits = edits,
+    Reverts = reverts,
+    `Reverts per Edit` = revert_ratio
+  ) |>
+  knitr::kable(
+    caption = glue::glue("{num_articles} articles (> {edit_threshold} edits) with most reverts per edit. Data collected {date_data(edit_data)}.")
+  )
+```
+
+```{r}
+#| label: fig-contention-with-anonymous
+#| fig-cap: New table. Anonymous edits included.
+
+edit_threshold <- 50
+num_articles <- 10
+
+figure_1_data <- edit_data |>
+  dplyr::mutate(
+    reverts = reverts$count,
+    edits = edits$count + anonymous$count,
+    revert_ratio = reverts / edits
+  ) |> 
+  dplyr::filter(
+    reverts + edits > edit_threshold
+  ) |>
+  dplyr::arrange(desc(revert_ratio)) |> 
+  dplyr::slice_head(n=num_articles) |> 
+  dplyr::mutate(
+    display_title = art_url(title),
+    revert_ratio = round(revert_ratio, digits = 2))
+
+figure_1_data |> 
+  dplyr::select(
+    Article = display_title,
+    Edits = edits,
+    Reverts = reverts,
+    `Reverts per Edit` = revert_ratio
+  ) |>
+  knitr::kable(
+    caption = glue::glue("{num_articles} articles (> {edit_threshold} edits) with most reverts per edit. Data collected {date_data(edit_data)}.")
+  )
+```

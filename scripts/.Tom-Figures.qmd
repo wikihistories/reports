@@ -1,0 +1,399 @@
+# Tom's Figures
+
+#Libraries:
+```{r}
+library(tidyverse)
+library(gridExtra)
+library(treemapify)
+library(wordcloud)
+library(wordcloud2)
+library(randomcoloR)
+```
+#First attempt - data visualistation ruined by NA type.
+```{r}
+source(file.path("scripts", "which-places-data.R"))
+
+# Top 10 most common types of places (without cleaning)
+top_place_counts <- places %>%
+  count(instance_of, sort = TRUE) %>%
+  top_n(10, n) %>%
+  left_join(types, by = c("instance_of" = "type"))
+
+#Plot
+ggplot(top_place_counts, aes(x = reorder(title, n), y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+#Second attempt removing NA type and colouring the graph.
+```{r}
+places_clean <- places %>%
+  filter(!is.na(instance_of))
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+#Plot
+ggplot(top_place_counts, aes(x = reorder(type_title, n), y = n, fill = type_title)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.3, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type of Place",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none")
+```
+#Third visualisation - Pie chart:
+```{r}
+# Reorder the factor levels of type_title based on their counts
+top_place_counts <- top_place_counts %>%
+  mutate(type_title = fct_reorder(type_title, n, .desc = TRUE))
+
+# Plot
+ggplot(top_place_counts, aes(x = factor(1), y = n, fill = type_title)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = NULL,
+    y = NULL,
+    fill = "Types of Places" # Change legend title
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(),  
+    axis.ticks = element_blank(),
+    panel.grid = element_blank()  
+  )
+```
+#Now only including places "on english wikipedia" or wikidata pages.
+```{r}
+places_clean <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE)
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+#Plot
+ggplot(top_place_counts, aes(x = reorder(type_title, n), y = n, fill = type_title)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.3, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type of Place",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+```
+#Piechart for Wikidata results:
+```{r}
+places_clean <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE)
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+# Reorder the factor levels of type_title based on their counts
+top_place_counts <- top_place_counts %>%
+  mutate(type_title = fct_reorder(type_title, n, .desc = TRUE))
+
+# Plot
+ggplot(top_place_counts, aes(x = factor(1), y = n, fill = type_title)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = NULL,
+    y = NULL,
+    fill = "Types of Places"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank()
+  )
+```
+#Side by side of the original:
+```{r, fig.width=14.5, fig.height=6}
+places_clean <- places %>%
+  filter(!is.na(instance_of))
+         
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+# Plot 1
+plot1 <- ggplot(top_place_counts, aes(x = reorder(type_title, n), y = n, fill = type_title)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.3, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type of Place",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none")
+
+places_clean <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+# Plot 2
+plot2 <- ggplot(top_place_counts, aes(x = reorder(type_title, n), y = n, fill = type_title)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.3, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places with Wikidata",
+    x = "Type of Place",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+
+# Grid.arrange
+grid.arrange(plot1, plot2, ncol = 2, widths = c(1, 1), padding = plot(2))
+```
+#Comparison Stacked Graph for Most Types of Places and their counts on Wikidata.
+```{r, fig.width=14.5, fig.height=6}
+places_clean <- places %>%
+  filter(!is.na(instance_of))
+
+places_clean_wiki <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE)
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places
+top_place_counts <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+# Top 10 most common types of places on English Wikipedia
+top_place_counts_wiki <- places_clean_wiki %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  filter(type_title %in% top_place_counts$type_title)
+
+# Combine
+combined_counts <- top_place_counts %>%
+  mutate(source = "Total") %>%
+  bind_rows(top_place_counts_wiki %>%
+              mutate(source = "On English Wikipedia"))
+
+# Plot
+ggplot(combined_counts, aes(x = reorder(type_title, n), y = n, fill = source)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 1)) +
+  geom_text(data = subset(combined_counts, source == "Total"),
+            aes(label = n), 
+            position = position_dodge(width = 0),
+            hjust = -.2, vjust = -1.5, size = 2) +
+  geom_text(data = subset(combined_counts, source == "On English Wikipedia"),
+            aes(label = n),
+            position = position_dodge(width = 0),
+            hjust = -.2, vjust = 2.5, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type of Place",
+    y = "Count",
+    fill = "Source"
+  ) +
+  theme_minimal()
+```
+#Alternative Comparison Stacked Graph for Most Types of Places withWikidat compared to their total counts.
+```{r, fig.width=14.5, fig.height=6}
+places_clean_wiki <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE)
+
+places_clean_total <- places %>%
+  filter(!is.na(instance_of))
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+# Top 10 most common types of places on English Wikipedia
+top_place_counts_wiki <- places_clean_wiki %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE) %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+# Total counts for the same top places
+top_place_counts_total <- places_clean_total %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(type_title %in% top_place_counts_wiki$type_title) %>%
+  count(instance_of, type_title, sort = TRUE)
+
+# Combine
+combined_counts <- top_place_counts_total %>%
+  mutate(source = "Total") %>%
+  bind_rows(top_place_counts_wiki %>%
+              mutate(source = "On English Wikipedia"))
+
+# Wiki counts in descending order
+combined_counts$type_title <- factor(combined_counts$type_title, 
+                                     levels = rev(top_place_counts_wiki$type_title[order(top_place_counts_wiki$n, decreasing = TRUE)]))
+
+# Dodge width
+dodge_width <- 1
+
+# Plot
+ggplot(combined_counts, aes(x = type_title, y = n, fill = source)) +
+  geom_bar(stat = "identity", position = position_dodge(width = dodge_width)) +
+  geom_text(aes(label = n), 
+            position = position_dodge(width = dodge_width), 
+            hjust = ifelse(combined_counts$source == "Total", -0.3, -0.3), 
+            size = 2, 
+            vjust = 0.5) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places",
+    x = "Type of Place",
+    y = "Count",
+    fill = "Source"
+  ) +
+  theme_minimal()
+```
+#A hypotheical code for native name pages:
+```{r}
+# This code assumes the dataset will include 'native_australian_name'and cleans the data to only include places that are on Wikidata and have native Australian names (hopefully)
+places_clean <- places %>%
+  filter(!is.na(instance_of) & on_english_wikipedia == TRUE & native_australian_name == TRUE)
+
+types_clean <- types %>%
+  filter(!is.na(type)) %>%
+  rename(type_title = title)
+
+total_counts_native <- places_clean %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(instance_of, type_title, sort = TRUE)
+
+top_place_counts_native <- total_counts_native %>%
+  slice_max(order_by = n, n = 10, with_ties = TRUE)
+
+#Plot
+ggplot(top_place_counts_native, aes(x = reorder(type_title, n), y = n, fill = type_title)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.3, size = 2) +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Types of Places with Native Australian Names",
+    x = "Type of Place",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+```
+#Wanted to check how many unique types of places there were:
+```{r}
+unique_types_count <- types_clean %>%
+  summarize(unique_types = n_distinct(type_title))
+
+unique_types_count
+```
+#Playing with visualisation options with the data available:
+```{r}
+category_distribution <- places %>%
+  left_join(types_clean, by = c("instance_of" = "type")) %>%
+  filter(!is.na(type_title)) %>%
+  count(type_title, sort = TRUE)
+
+# Plot category distribution using a treemap
+ggplot(category_distribution, aes(area = n, fill = type_title, label = type_title)) +
+  geom_treemap() +
+  geom_treemap_text(fontface = "italic", colour = "white", place = "centre", grow = TRUE) +
+  labs(
+    title = "Distribution of Australian Places by Category",
+    fill = "Category"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+```
+#Wordcloud for types of places:
+```{r}
+word_data <- category_distribution %>%
+  select(type_title, n) %>%
+  rename(word = type_title, freq = n)
+
+# Colours and Size
+wordcloud2(data = word_data, size = .7, color = 'random-light', backgroundColor = "white")
+#.7 is as high as it can be to show Mountain as number 1.
+```
+#Alternative Wordcloud for types of places:
+```{r}
+#Random colors
+set.seed(123)  # For reproducibility
+color_palette <- randomColor(count = 785, luminosity = "dark", hue = "random")
+
+wordcloud(words = category_distribution$type_title, freq = category_distribution$n, min.freq = 1,
+          max.words = 785, random.order = FALSE, rot.per = 0.35, colors = color_palette)
+```
+
+
