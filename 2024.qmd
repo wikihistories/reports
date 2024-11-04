@@ -47,6 +47,7 @@ other-links:
     href: https://wikihistories.github.io/reports/2024.pdf
     icon: file-pdf
 abstract: "This year, the wikihistories team set out to understand how well Wikipedia represents Australian places and what kinds of editing practices drive those representations. Examining 35,000 articles about Australian places and interviewing volunteer editors, we found that English Wikipedia reflects an anthropocentric and neo-colonial image of Australia as a place. [Download the full report](2024.pdf), or scroll down to read an html version suitable for your smaller screen device."
+image: assets/2024-title-page-medium.jpeg
 ---
 
 ```{r message=FALSE, include=FALSE}
@@ -58,7 +59,7 @@ knitr::opts_chunk$set(
 file.path("scripts", "which-places-data.R") |> source()
 ```
 
-[![Click the image to access the pdf version, or scroll down to read on your smaller screen device.](assets/2024-title-page.png)](2024.pdf)
+[![Click the image to access the pdf version, or scroll down to read on your smaller screen device.](assets/2024-title-page-large.jpeg)](2024.pdf)
 
 ## Executive Summary
 
