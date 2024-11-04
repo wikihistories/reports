@@ -58,6 +58,8 @@ knitr::opts_chunk$set(
 file.path("scripts", "which-places-data.R") |> source()
 ```
 
+
+
 [![Click the image to access the pdf version, or scroll down to read on your smaller screen device.](assets/2024-title-page.png)](2024.pdf)
 
 ## Executive Summary
@@ -126,6 +128,8 @@ It may seem obvious that Wikipedians should focus their attention on cities and 
 The human focus of English Wikipedia is accentuated in @fig-edit-map, which visualises edit activity. Not only are there more articles about the Australia's large cities on English Wikipedia, but editors devote considerably more attention to them. There are numerous small regions near the big cities where human editors have made more than 100,000 edits. To put this in perspective, the total number of human edits in the dataset is `r edit_data |> dplyr::transmute(edits = edits$count + reverts$count) |> sum(na.rm = T) |> scales::label_comma()()`. A few regions with more than 100,000 edits each form a significant part of this total.
 
 In sum, English Wikipedia is strongly anthropocentric. The places that matter are human places. More than this, they are white-settler places. English Wikipedia's focus is on the cities, states and country of Australia, as established by predominately British settlers in the Eighteenth and Nineteenth Centuries.
+
+
 
 ```{r}
 hexmap <- function(data, scale_limits = NULL) {
@@ -225,7 +229,11 @@ edit_data |>
     )
 ```
 
+
+
 ### Which language edition has the most Australian places?
+
+
 
 ```{r}
 #| label: fig-lang-edition
@@ -267,6 +275,8 @@ language_data |>
   )
 ```
 
+
+
 Wikipedia is available in more than 300 languages. You might expect that English Wikipedia would have the most articles about Australian places—but you'd be wrong. @fig-lang-edition shows that [Cebuano Wikipedia](https://ceb.wikipedia.org) has by far the largest number of articles about Australian places. Tens of thousands of Australian places, such as [Molecap Hill](https://ceb.wikipedia.org/wiki/Molecap_Hill), [Dindum Island](https://ceb.wikipedia.org/wiki/Dindum_Island) and [Mount Finlayson Range](https://ceb.wikipedia.org/wiki/Mount_Finlayson_Range), have articles *only* in Cebuano Wikipedia. Why is this?
 
 It is *not* because the speakers of the [Cebuano language](https://en.wikipedia.org/wiki/Cebuano_language) in Philippines are obsessed with Australian geography. It is because virtually the whole Cebuano Wikipedia has been written by a bot, [lsjbot](https://en.wikipedia.org/wiki/Lsjbot), programmed by [Sverker Johansson](https://en.wikipedia.org/wiki/Sverker_Johansson), a Swedish computational linguist. `lsjbot` was historically responsible for a large portion of Swedish Wikipedia too, and despite efforts by Swedish Wikipedians to delete its formulaic articles, `lsjbot` is still responsible for many Swedish articles about obscure Australian places, including [Dawes National Park](https://sv.wikipedia.org/wiki/Dawes_nationalpark) and [Lake Baker](https://sv.wikipedia.org/wiki/Lake_Baker). The story is similar on [Egyptian Arabic Wikipedia](https://arz.wikipedia.org/wiki/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D9%87_%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D9%87). Egyptian Arabic Wikipedia contains thousands of articles about Australian places because of one editor, [Mahar Asaad Baker](https://arz.wikipedia.org/wiki/%D9%85%D8%B3%D8%AA%D8%AE%D8%AF%D9%85:HitomiAkane), who describes [in a published booklet](https://search.worldcat.org/title/1341182226) how they wrote 1.6 million articles by downloading data from Wikidata and converting it into [Masri](https://en.wikipedia.org/wiki/Masri) text for the site.
@@ -284,9 +294,11 @@ All three follow a similar structure, foregrounding economics, politics and geog
 The article headings also contribute to locate each place in space and time: history, geography, demography, culture. The Australia and Tasmania pages have sections on government and economy, the Katoomba page includes sections on tourism–a major industry in Katoomba–and heritage listings. This small sample suggests that Wikipedia's editors are primarily focussed on locating and ranking places on the surface of the globe. What matters most is how a place fits into the geographical and political divisions of the human world. On the one hand, this is an objective focus—the meaning of a place to its inhabitants is relatively unimportant. On the other hand, this is an anthropocentric focus—the meaning of a place to non-human entities is at best only secondary.
 
 We also looked at another kind of Australian place representation: that of fictional Australian places. The category for ‘Fictional populated places in Australia’ contains 19 places. Three have their own article: `r art_url("Erinsborough")`, the suburb of Melbourne where TV soap ‘Neighbours’ is set; `r art_url("Mount Thomas")`, the rural setting of TV show ‘Blue Heelers’, and `r art_url("Summer Bay")`, the coastal town where TV soap ‘Home and Away’ takes place. 
-There is also the category ‘fictional locations in Australia’ of which there is only one: `r art_url("The Speewah")`. While there is a Speewah property in the Northern Territory, “the Speewah” refers to ‘an imaginary Australian cattle station or place used as a setting for tall stories of the outback’ [@knowles_speewah_2006]. The Speewah “moves”, according to the needs and contexts of the storyteller. It is an idea that has some resonances with how Australian place articles themselves function on English Wikipedia.
+There is also the category ‘fictional locations in Australia’ of which there is only one: `r art_url("The Speewah")`. While there is a Speewah property in the Northern Territory, “the Speewah” refers to an ‘an imaginary Australian cattle station or place used as a setting for tall stories of the outback’ [@knowles_speewah_2006]. The Speewah “moves”, according to the needs and contexts of the storyteller. It is an idea that has some resonances with how Australian place articles themselves function on English Wikipedia.
 
-## 2. What editing practices drive this partiality?
+## 2. What editing practices drive this shaping?
+
+
 
 ```{r}
 #| label: fig-attention
@@ -392,6 +404,8 @@ attention_data |>
   ggplot2::coord_fixed(ratio = 1) # Force square plot area
 ```
 
+
+
 If we compare Cebuano and English Wikipedias, we see that human and bot editors have different priorities. Broadly speaking, Cebuano Wikipedia is bot-authored, while English Wikipedia is human-authored.[^3] In English Wikipedia, places of human occupation make up a bigger proportion of the total. Towns, localities, cities, urban parks and villages all make up a larger proportion of the place articles in English Wikipedia than in Cebuano Wikipedia. By contrast, in bot-authored Cebuano Wikipedia, geographical features such as mountains, lakes, bights and hills make up a much larger share of the Australian place articles. This difference is even more pronounced when we consider edit statistics on English Wikipedia. Consider articles about cities. Cities account for only `r attention_data |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("enwiki") |> scales::label_percent(accuracy = 0.01)()` of the Australian places on English Wikipedia (`r attention_data |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("cebwiki") |> scales::label_percent(accuracy = 0.01)()` in Cebuano), but they have received `r attention_data |> dplyr::mutate(edit_prop = total_edits / n_edits) |> dplyr::filter(instance_of == "Q515") |> dplyr::pull("edit_prop") |> scales::label_percent()()` of the human edits.[^4] Not only are human editors more likely to create articles about places with a strong human connection. They are also more likely to spend their time editing them.
 
 English Wikipedia is strongly anthropocentric, at least compared to the geographical databases that form the basis of bot-authored Cebuano Wikipedia. English Wikipedia prioritises human over physical geography.
@@ -402,7 +416,7 @@ English Wikipedia is strongly anthropocentric, at least compared to the geograph
 
 ### Who edits Wikipedia articles about Australian places?
 
-This research is the first to engage with who edits articles about Australia on English Wikipedia. To do so is inevitably challenging. Wikipedia editors contribute under pseudonyms (called usernames) and, in some instances, “anonymously”  (where edits are represented using their IP addresses). Participants described experiences where they were unsure whether, in contentious debates, they were arguing with a group of people or one person using a variety of usernames. The latter is called sockpuppetry and, even though it is forbidden on Wikipedia, it is difficult to control. Although not involved in sockpuppetry, at least one editor involved in this project has two usernames. Anonymity is taken seriously. Charlie[^10] suggested that other Wikipedians may not want to participate in the research as it would reveal their identity to the research team. Some other participants were careful about mentioning other people’s usernames and asked us not to mention that they had to the editor in question. 
+This research is the first to engage with who edits articles about Australia on English Wikipedia. To do so is inevitably challenging. Wikipedia editors contribute under pseudonyms (called usernames) and, in some instances, “anonymously”  (where edits are represented using their IP addresses). Participants described experiences where they were unsure whether, in contentious debates, they were arguing with a group of people or one person using a variety of usernames. The latter is called sockpuppetry and, even though it is forbidden on Wikipedia, it is difficult to control. At least one editor involved in this project has two usernames. Anonymity is taken seriously. Charlie[^10] suggested that other Wikipedians may not want to participate in the research as it would reveal their identity to the research team. Some other participants were careful about mentioning other people’s usernames and asked us not to mention that they had to the editor in question. 
 
 [^10]: Participants have been de-identified for this report. All names are pseudonyms.
 
@@ -410,7 +424,7 @@ The  Wikipedians we spoke with had some assumptions about who edited Australian 
 
 Available time and tech savviness were common suggestions. James argued that Wikipedia “favoured people that either had a lot of time on their hands or [are] tech savvy.” To participate in Wikipedia, Ellis said, you need a computer, “some level of education” and regular access to the Internet. With that said, even Wikipedians can’t be positive as to who is contributing. After Jack had described who he thought edited Australia place articles, he concluded “but maybe that's not true”. Nate was equally unsure. “Sometimes I don't know how old they are. I don't know whether they're male or female. I don't know what they do when they're not editing Wikipedia,” he said. 
 
-The tech-savvy, white, educated and men-dominated demographic suggested above was reflected in our interview cohort. One participant identified as a woman and one participant identified as non-binary. As Ellis and James suggested, the people we spoke with were technologically adept: most interviews were conducted over Zoom and, as the interview progressed, the participant would often simultaneously check Wikipedia revision histories, their edits, or a relevant Wikiproject throughout to assist in answering questions. David made an edit to Wikipedia as we were speaking. Interview participants were academics, librarians, postgraduate students, lawyers, high school teachers, bloggers, community workers, and store managers, although several are retired now. Two have PhDs and a majority have a university education.
+The tech-savvy, white, educated and men-dominated demographic suggested above was reflected in our interview cohort. One participant identified as a woman and one participant identified as non-binary. As Ellis and James suggested, the people we spoke with were technologically adept: most interviews were conducted over Zoom and, as the interview progressed, the participant would often simultaneously check Wikipedia revision histories, their edits, or a relevant Wikiproject throughout to assist in answering questions. David made an edit to Wikipedia as we were speaking. Interview participants were academics, librarians, postgraduate students, lawyers, high school teachers, bloggers, community workers, and store managers, although several are retired now. Two had PhDs and a majority had a university education.
 
 The people we spoke with are not homogenous. There is a picture of Wikipedia editors that has emerged in recent years. In this picture, Wikipedians are rigid, inflexible about enforcing Wikipedian policy, and resistant to other ways of producing knowledge outside of a rationalist, Eurocentric, written source-based approach. What emerged in the research is more complex. The editors we spoke with encompassed a wide range of positions on how and what Wikipedia should be. Certainly, a few were very committed to rules and Wikipedia policy. Conversely, several were aware of common perceptions about Wikipedians and were reflexive about their position and practice.  As Ellis described,
 
@@ -422,11 +436,11 @@ Jack was similarly aware of how his experience as a white man may influence his 
 
 For some people, editing a Wikipedia page about an Australian place is personal: they are writing about a place in which they live now and/or grew up. James has been editing Wikipedia for 20 years and started editing through a mixture of curiosity and interest in Wikipedia’s new technology. An equal motivation, however, was “a sense of pride. Sort of liking Tasmania, liking living there, wanting Tasmania to be presented well”. Gabriel described editing the Tasmania page as editing about something “close to my own heart”. For Jack, editing Wikipedia is, in some ways, a conversation he is having with his younger self: “I add stuff to Wikipedia that I think I wish I knew about,” he said.
 
-Some Wikipedians edit Australian place articles as part of their usual Wikipedia practice and not about an interest in a specific place. Charlie is interested in demographic data and so will update multiple place articles when new Census data is released. Likewise, Nate focuses on copyediting across a number of articles, fixing errors in spelling, punctuation or appearance. 
+For others, editing an Australian place article is the result of their usual Wikipedia practice and not about an interest in a specific place. Charlie is interested in demographic data and so will update multiple place articles when new Census data is released. Likewise, Nate focuses on copyediting across a number of articles, fixing errors in spelling, punctuation or appearance. 
 
 For others, there is a sense of Wikipedia’s role in the wider knowledge ecosystem and the “big responsibility of Wikipedia,” as Blake described it. Blake recounted once hearing Siri, a voice assistant, tell “something really awful like, you know, it’ll say ‘Oh the demonym of Tasmanians is, you know, two heads’.” His response was inflected with personal responsibility: “I panic and go ‘Oh is that on Wikipedia?!’.” It’s one of the reasons Blake keeps an eye on all the “state” pages, including Tasmania. Judy has a longer-term view and describes her commitment to ensuring Australian places, particularly smaller places, are represented on the Internet and for posterity. Judy treasures almanacs and “old gazetteers” and feels that Wikipedia has similarities: “I'm leaving the equivalent thing behind, that this stuff will survive me.” 
 
-The motivations, practices, and experiences of editing Australian place articles vary according to the place and whether or not the article is a “main page”. Bill and David both pointed out that editing practices for main pages–such as Australia or Tasmania–are different to working on smaller pages. Not only are main pages more contentious, they also “often attract a certain sort of edit and edit style” such as small alterations to expression or punctuation, rather than significant new contributions, mostly as a result of how long the article has existed in its current form and its size.
+The motivations, practices, and experiences of editing Australian place articles vary according to the place and whether or not the article is a “main page”. Bill and David both pointed out that editing practices for main pages–such as Australia or Tasmania–are different to working on smaller pages. Not only are main pages more contentious,  they also “attract a certain sort of edit and edit style” such as small alterations to expression or punctuation, rather than significant new contributions, mostly as a result of how long the article has existed in its current form and its size.
 
 The variety in editing practice is evident when examining the analysed pages. Of all the Katoomba article editors interviewed, only one had a personal connection to Katoomba. All other editors were “practice-focused” editors: they update demographic data across many articles; they focus on copyediting rather than content; or they tend to pop a fact into any Wikipedia page if they come across something interesting in their everyday reading. In these instances, their Wikipedia foci and practices led them to edit to the Katoomba page. The Australia article editors interviewed for this research were usually high-edit Wikipedians with extensive experience and have contributed to the page–among many others–at some point. 
 
@@ -437,6 +451,8 @@ Only one of the Tasmania page editors still lives in Tasmania, a fact that did n
 ### What drives conflict around Australian places?
 
 Some Wikipedia pages are more controversial than others. Wikipedia contributors have argued for years over whether [Pavolva](https://en.wikipedia.org/wiki/Talk:Pavlova_(dessert)) was invented in Australia or New Zealand. Other pages inspire little debate. It is not easy to locate or rank contentious articles using computerised methods. Contention can take many forms: editors might 'revert' (i.e. undo) one another's edits; they might debate topics in-depth on Wikipedia Talk pages; they might abuse one another 'off-wiki'; they might accuse one another of misconduct, and be subject to administrative redress. For simplicity's sake, we focus just on the first manifestation of contention, when Wikipedians 'revert' or undo each others' edits.
+
+
 
 ```{r}
 #| label: fig-contention
@@ -472,6 +488,8 @@ figure_1_data |>
   )
 ```
 
+
+
 In @fig-contention, we have attempted to find 10 highly contentious Places using a simple metric. The figure shows the 10 Australian places that have been edited at least `r edit_threshold` times, with the highest ratio of 'reverted' edits to human edits. For example, the little article on [Barmah National Park](https://en.wikipedia.org/wiki/Barmah_National_Park) has only had text added to it `r figure_1_data |> dplyr::filter(title == "Barmah National Park") |> dplyr::pull(edits)` times, but more than half (`r figure_1_data |> dplyr::filter(title == "Barmah National Park") |> dplyr::pull(reverts)`) of those edits have been reverted! The reason is a long-running dispute over whether horses in the national park should be considered as 'wild' or 'feral'. This debate reflects a deep anxiety in Australia about the moral value of European settlement. Some White Australians see the horses (or '[brumbies](https://en.wikipedia.org/wiki/Brumby)') as part of Australia's [European heritage](https://www.abc.net.au/news/2020-05-08/brumby-culling-to-go-ahead-following-federal-court-decision/12228896). Others view them as an invasive species that represent the destructive history of European colonisation. Other examples in @fig-contention reflect similarly emotional conflicts in Australian society. The page for [Howard Springs](https://en.wikipedia.org/wiki/Howard_Springs,_Northern_Territory) was subject to an 'edit war' during the pandemic, when one editor wished to redefine the local COVID-19 Quarantine Facility as a "Concentration Camp." The page for [Airport Drive](https://en.wikipedia.org/wiki/Airport_Drive_(Melbourne)), meanwhile, was subject to an altogether less emotional dispute: the editors could not agree which other roads intersect with this Melbourne motorway.
 
 As these few examples demonstrate, Australian places can inspire many kinds of dispute: disputes about Australia's colonisation, disputes about civil liberties, disputes about arid matters of geographical fact. Sometimes apparent disputes are actually simple vandalism, as in the page for `r art_url("Giru, Queensland")` whose Infobox has been vandalised numerous times to place the city "1,283 km (797 mi) NNW of `r art_url("Miley Cyrus")`."
@@ -503,6 +521,8 @@ There are two obvious flaws to Wikipedia's dual-naming system.
 **European priority:** The dual-naming system prioritises the European construction of place. Invariably, the article on English Wikipedia gives the settler name as the primary name. Thus a visitor to `r art_url("Boorloo")` will be redirected to an article entitled "Perth." More deeply, for a place to even *exist* in Wikipedia, it first needs to exist in the European system of spatial divisions. When Europeans occupied Australia, they divided the landmass up into colonies, parishes, cities and later into states and suburbs, largely ignoring the structures that already existed in Aboriginal and Torres Strait Islander societies. The best that dual-naming can do is to attach an Indigenous name to one of these places established by settlers.
 
 
+
+
 ```{r}
 #| label: fig-indigenous-places
 #| fig-cap: Like @fig-all-places, but showing only those places with a First Nations name. They form only a small portion of the total. 
@@ -512,6 +532,8 @@ extent_data |>
   hexmap(scale_limits = c(1,2500)) + 
   ggplot2::labs(fill = "Articles with\nIndigenous name")
 ```
+
+
 
 ### Do emotions drive Wikipedia editing? 
 
@@ -575,3 +597,4 @@ As demonstrated throughout this report, the Wikipedia representation of Australi
 This matters because how a place is represented on Wikipedia affects what is known about a place. It is important to illuminate these processes. When a place or information about a place is missing from Wikipedia or when a place seems to be mis-classified or even unclassifiable that doesn’t indicate an objective idea of their lack of importance or notability. What Wikipedia represents and doesn’t represent is the contingent result of negotiation. As shown in this report, Wikipedia editors are heterogeneous and have a broad range of views, approaches and practices. Editors are regularly discussing, debating, arguing and wrestling with how to represent the world from a range of possibilities. Sometimes those with the most endurance will win such arguments. Sometimes arguments don’t even happen because Wikipedia’s policies and culture exclude certain people and their knowledges outright (as is the case for many forms of First Nations knowledges).  
 
 The findings of this report have important implications for Australia. For Australian readers, the research provides insight into the strengths and weaknesses of Wikipedia articles about Australian places. For government policymakers, there are implications for education curricula, especially in incorporating critical digital literacy skills in using Wikipedia and understanding its role in the wider digital and knowledge ecosystems. Finally, for Wikimedia Foundation and Wikipedia editors there are significant implications for implementing the recommendations of @thorpe_wikimedia_2023 and @carlson_i_2024 to improve policy and practice in relation to engagement with First Nations content and experience. 
+
