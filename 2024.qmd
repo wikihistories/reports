@@ -8,7 +8,8 @@ keywords:
   - digital humanities
   - systemic bias
   - historical geography
-date: now
+date: 2024-10-29
+date-modified: last-modified
 doi: 10.5281/zenodo.13910503
 author:
   - name: Heather Ford
@@ -46,6 +47,16 @@ other-links:
   - text: PDF
     href: https://wikihistories.github.io/reports/2024.pdf
     icon: file-pdf
+code-links:
+  - text: Report Source Code
+    icon: file-code
+    href: https://github.com/wikihistories/reports/blob/main/2024.qmd
+  - text: Data Import Code
+    icon: file-code
+    href: https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R
+  - text: Data Import Functions
+    icon: file-code
+    href: https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R
 abstract: "This year, the wikihistories team set out to understand how well Wikipedia represents Australian places and what kinds of editing practices drive those representations. Examining 35,000 articles about Australian places and interviewing volunteer editors, we found that English Wikipedia reflects an anthropocentric and neo-colonial image of Australia as a place. [Download the full report](2024.pdf), or scroll down to read an html version suitable for your smaller screen device."
 image: assets/2024-title-page-medium.jpeg
 ---
