@@ -529,8 +529,12 @@ div.csl-indent {
   <li><a href="#do-emotions-drive-wikipedia-editing" id="toc-do-emotions-drive-wikipedia-editing" class="nav-link" data-scroll-target="#do-emotions-drive-wikipedia-editing">Do emotions drive Wikipedia editing?</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#appendix-methodology" id="toc-appendix-methodology" class="nav-link" data-scroll-target="#appendix-methodology">Appendix: Methodology</a>
+  <ul class="collapse">
+  <li><a href="#quantitative-methods" id="toc-quantitative-methods" class="nav-link" data-scroll-target="#quantitative-methods">Quantitative Methods</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://wikihistories.github.io/reports/2024.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/wikihistories/reports/blob/main/2024.qmd"><i class="bi bi-file-code"></i>Report Source Code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R"><i class="bi bi-file-code"></i>Data Import Code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R"><i class="bi bi-file-code"></i>Data Import Functions</a></li></ul></div></nav>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://wikihistories.github.io/reports/2024.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/wikihistories/reports/blob/main/2024.qmd"><i class="bi bi-journal-code"></i>Report source code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R"><i class="bi bi-file-code"></i>Data import code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R"><i class="bi bi-file-code"></i>Data import functions</a></li><li><a href="https://github.com/wikihistories/reports/tree/main/data/which-places"><i class="bi bi-archive"></i>Data files</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -955,9 +959,105 @@ Figure&nbsp;7: Like <a href="#fig-all-places" class="quarto-xref">Figure&nbsp;1<
 <p>As demonstrated throughout this report, the Wikipedia representation of Australian places is anthropocentric and neocolonial. Rather than the result of a systematic approach or one particular factor, this representation emerges as the result of a complex amalgam of categorisation, editor practices, affective relations, Wikipedia policies and norms, as well as some of the conceptualisations that Wikipedia is founded on, such as a Western-centric understanding of space and place. What emerged from this research is more complex than the idea of gaps in what is and isn’t on Wikipedia: it is equally what is half-said or implied, what editors themselves find hard to say, and what isn’t understood as an omission because the framework Wikipedia is based on doesn’t work with ideas outside of Western epistemological traditions, such as Country.</p>
 <p>This matters because how a place is represented on Wikipedia affects what is known about a place. It is important to illuminate these processes. When a place or information about a place is missing from Wikipedia or when a place seems to be mis-classified or even unclassifiable that doesn’t indicate an objective idea of their lack of importance or notability. What Wikipedia represents and doesn’t represent is the contingent result of negotiation. As shown in this report, Wikipedia editors are heterogeneous and have a broad range of views, approaches and practices. Editors are regularly discussing, debating, arguing and wrestling with how to represent the world from a range of possibilities. Sometimes those with the most endurance will win such arguments. Sometimes arguments don’t even happen because Wikipedia’s policies and culture exclude certain people and their knowledges outright (as is the case for many forms of First Nations knowledges).</p>
 <p>The findings of this report have important implications for Australia. For Australian readers, the research provides insight into the strengths and weaknesses of Wikipedia articles about Australian places. For government policymakers, there are implications for education curricula, especially in incorporating critical digital literacy skills in using Wikipedia and understanding its role in the wider digital and knowledge ecosystems. Finally, for Wikimedia Foundation and Wikipedia editors there are significant implications for implementing the recommendations of <span class="citation" data-cites="thorpe_wikimedia_2023">Thorpe, Sentance, and Booker (<a href="#ref-thorpe_wikimedia_2023" role="doc-biblioref">2023</a>)</span> and <span class="citation" data-cites="carlson_i_2024">Carlson and Rana (<a href="#ref-carlson_i_2024" role="doc-biblioref">2024</a>)</span> to improve policy and practice in relation to engagement with First Nations content and experience.</p>
+</section>
+<section id="appendix-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-methodology">Appendix: Methodology</h2>
+<section id="quantitative-methods" class="level3">
+<h3 class="anchored" data-anchor-id="quantitative-methods">Quantitative Methods</h3>
+<p>To create our dataset of Australian place articles, we used the <a href="https://query.wikidata.org/">Wikidata Query Service</a>. First we retrieved every Wikidata item with the property <code>country:Australia</code> (<a href="https://www.wikidata.org/wiki/Property:P17">P17</a>:<a href="https://www.wikidata.org/wiki/Q408">Q14</a>). Since not all these items are places, we then filtered them by type. We retrieved a list from Wikidata of all the different kinds of <code>geographical feature</code> (<a href="https://www.wikidata.org/wiki/Q618123">Q618123</a>) or <code>physical location</code> (<a href="https://www.wikidata.org/wiki/Q17334923">Q17334923</a>), and only kept those items that fell into one of these categories. This excluded items such as awards or government offices that have the property <code>country:Australia</code>, leaving just the places. Using Wikidata, we were then able to retrieve the following information about each place:</p>
+<ul>
+<li><strong>basic metadata</strong>: the name, type and id of the place</li>
+<li><strong>sitelinks</strong>: hyperlinks to every Wikipedia article about the place, across all language editions</li>
+<li><strong>coordinates</strong>: a pair of co-ordinates identifying the place with a point on the earth’s surface; this is how Wikipedia and related projects locate places in space.</li>
+</ul>
+<p><a href="#fig-dataset-summary" class="quarto-xref">Figure&nbsp;8</a> provides a high-level overview of the resulting dataset.</p>
+<div class="cell">
+<div id="fig-dataset-summary" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dataset-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Items</th>
+<th style="text-align: right;">Num Articles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Places</td>
+<td style="text-align: right;">174,473</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">On English Wikipedia</td>
+<td style="text-align: right;">35,077</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Has Co-ordinates</td>
+<td style="text-align: right;">162,383</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">English + Coordinates</td>
+<td style="text-align: right;">31,861</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dataset-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Summary statistics for the place dataset.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>For further information, we turned to Wikipedia itself. For each of the places with an English Wikipedia page, we used the <a href="https://www.mediawiki.org/wiki/API:REST_API/Reference#Get_page_history">history counts</a> API to retrieve edit statistics, and downloaded the full text of the English article in order to detect the presence of <a href="https://en.wikipedia.org/wiki/Template:Native_name">Template:Native_name</a> in the article text, or the <code>native_name</code> field in the <a href="https://en.wikipedia.org/wiki/Help:Infobox">Infobox</a>. <a href="#fig-enwiki-data-summary" class="quarto-xref">Figure&nbsp;9</a> summarises the edit data we retrieved from Wikipedia.</p>
+<div class="cell">
+<div id="fig-enwiki-data-summary" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-enwiki-data-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Edit Type</th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Logged in edits</td>
+<td style="text-align: right;">1,450,809</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reverts</td>
+<td style="text-align: right;">48,973</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bot edits</td>
+<td style="text-align: right;">200,933</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Anonymous edits</td>
+<td style="text-align: right;">552,386</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-enwiki-data-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Edit statistics retrieved for English Wikipedia articles in the dataset.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>When counting edits, we debated whether to include “anonymous” edits among the “human” edits in the statistics. Anonymous edits are edits made by users who are not logged in. In the end, we decided <em>not</em> to count these in general, though it is impossible to distinguish between anonymous and logged-in “reverts” using Wikipedia’s API. By focussing just on edits by logged-in users, our quantitative and qualitative analyses are closer in focus. All the editors we interviewed log in to make their edits. We did, however, generate all our figures including anonymous edits also, and the results were not significantly different to the figures included in this report; these alternative figures are included in our Github repository.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> The primary difference was in <a href="#fig-contention" class="quarto-xref">Figure&nbsp;6</a>, where the 10 contentious articles included five different articles to our published figure; this table, however, is not intended as a ranking, but simply as a means to identify some especially contentious articles for closer analysis.</p>
+<p>We used <a href="https://wikihistories.github.io/wikkitidy">wikkitidy</a> <span class="citation" data-cites="falk_wikkitidy_2023">(<a href="#ref-falk_wikkitidy_2023" role="doc-biblioref">Falk 2023</a>)</span> and <a href="https://cran.r-project.org/web/packages/WikidataR/index.html">WikidataR</a> to access Wikipedia and Wikidata. We used the <a href="https://www.tidyverse.org/">tidyverse</a> family of R packages for data analysis and visualisation <span class="citation" data-cites="wickham_welcome_2019">(<a href="#ref-wickham_welcome_2019" role="doc-biblioref">Wickham et al. 2019</a>)</span>. You can access the code and data for this report at the <a href="https://github.com/wikihistories/reports">wikihistories reports Github repository</a>, which has also been deposited in Zenodo (<a href="https://doi.org/10.5281/zenodo.10637914">doi:10.5281/zenodo.10637914</a>):</p>
+<ul>
+<li><a href="https://github.com/wikihistories/reports/blob/main/2024.qmd">Report source code</a>: a qmd file that can be executed using <a href="https://quarto.org">quarto</a> to regenerate this report</li>
+<li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R">Data import code</a></li>
+<li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R">Data import functions</a></li>
+<li><a href="https://github.com/wikihistories/reports/tree/main/data/which-places">Data files</a>: some of these are in rds format, and can only be opened in an R session.</li>
+</ul>
 
 
 
+</section>
 </section>
 
 
@@ -970,6 +1070,9 @@ Bjork-James, C. 2021. <span>“New Maps for an Inclusive <span>Wikipedia</span>:
 </div>
 <div id="ref-carlson_i_2024" class="csl-entry" role="listitem">
 Carlson, Bronwyn, and Lotus Rana. 2024. <span>“"<span>I</span> Really Like <span>Wikipedia</span>, but <span>I</span> Don’t Trust It": Understanding <span>First</span> <span>Nations</span> Peoples’ Experiences Using <span>Wikipedia</span> as Readers and/or Editors.”</span> Macquarie University. <a href="https://doi.org/10.25949/76YK-G627">https://doi.org/10.25949/76YK-G627</a>.
+</div>
+<div id="ref-falk_wikkitidy_2023" class="csl-entry" role="listitem">
+Falk, Michael. 2023. <em>Wikkitidy: <span>Tidy</span> Analysis of <span>Wikipedia</span> in <span>R</span></em>. <a href="https://wikihistories.github.io/wikkitidy/">https://wikihistories.github.io/wikkitidy/</a>.
 </div>
 <div id="ref-falk_how_2023" class="csl-entry" role="listitem">
 Falk, Michael, Heather Ford, Kelly Tall, and Tamson Pietsch. 2023. <span>“How <span>Australians</span> Are Represented in <span>Wikipedia</span>.”</span> 1. University of Technology, Sydney. <a href="https://doi.org/10.5281/zenodo.10296217">https://doi.org/10.5281/zenodo.10296217</a>.
@@ -1001,6 +1104,9 @@ Rose, Deborah Bird. 1996. <em>Nourishing Terrains: <span>Australian</span> <span
 <div id="ref-thorpe_wikimedia_2023" class="csl-entry" role="listitem">
 Thorpe, Kirsten, Nathan Sentance, and Lauren Booker. 2023. <span>“Wikimedia <span>Australia</span> and <span>First</span> <span>Nations</span> <span>Metadata</span>: <span>ATSILIRN</span> <span>Protocols</span> for <span>Description</span> and <span>Access</span>.”</span> University of Technology Sydney. <a href="https://doi.org/10.57956/B05F-CF08">https://doi.org/10.57956/B05F-CF08</a>.
 </div>
+<div id="ref-wickham_welcome_2019" class="csl-entry" role="listitem">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span>Tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+</div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
@@ -1009,6 +1115,7 @@ Thorpe, Kirsten, Nathan Sentance, and Lauren Booker. 2023. <span>“Wikimedia <s
 <li id="fn3"><p>“Human edits” means “edits by autoconfirmed users” plus “reverts.” We do not include edits by anonymous users in this analysis.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Participants have been de-identified for this report. All names are pseudonyms.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>An “Aboriginal Place” is an official designation from the NSW Government denoting ‘places of spiritual, historical, social, educational, natural resource use or other types of significance to Aboriginal people’ (NSW Department of Planning and Environment 2022).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Interested readers can download the <a href="https://github.com/wikihistories/reports/blob/main/scripts/.figures-with-anon.qmd">code notebook</a> or a <a href="https://github.com/wikihistories/reports/blob/main/scripts/.figures-with-anon.html">rendered html file with the alternative figures</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@report{ford2024,
   author = {Ford, Heather and Sidoti, Francesca and Falk, Michael and

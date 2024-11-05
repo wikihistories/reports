@@ -48,15 +48,19 @@ other-links:
     href: https://wikihistories.github.io/reports/2024.pdf
     icon: file-pdf
 code-links:
-  - text: Report Source Code
-    icon: file-code
+  - text: Report source code
+    icon: journal-code
     href: https://github.com/wikihistories/reports/blob/main/2024.qmd
-  - text: Data Import Code
+  - text: Data import code
     icon: file-code
     href: https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R
-  - text: Data Import Functions
+  - text: Data import functions
     icon: file-code
     href: https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R
+  - text: Data files
+    icon: archive
+    href: https://github.com/wikihistories/reports/tree/main/data/which-places
+    
 abstract: "This year, the wikihistories team set out to understand how well Wikipedia represents Australian places and what kinds of editing practices drive those representations. Examining 35,000 articles about Australian places and interviewing volunteer editors, we found that English Wikipedia reflects an anthropocentric and neo-colonial image of Australia as a place. [Download the full report](2024.pdf), or scroll down to read an html version suitable for your smaller screen device."
 image: assets/2024-title-page-medium.jpeg
 ---
@@ -587,3 +591,64 @@ As demonstrated throughout this report, the Wikipedia representation of Australi
 This matters because how a place is represented on Wikipedia affects what is known about a place. It is important to illuminate these processes. When a place or information about a place is missing from Wikipedia or when a place seems to be mis-classified or even unclassifiable that doesn’t indicate an objective idea of their lack of importance or notability. What Wikipedia represents and doesn’t represent is the contingent result of negotiation. As shown in this report, Wikipedia editors are heterogeneous and have a broad range of views, approaches and practices. Editors are regularly discussing, debating, arguing and wrestling with how to represent the world from a range of possibilities. Sometimes those with the most endurance will win such arguments. Sometimes arguments don’t even happen because Wikipedia’s policies and culture exclude certain people and their knowledges outright (as is the case for many forms of First Nations knowledges).  
 
 The findings of this report have important implications for Australia. For Australian readers, the research provides insight into the strengths and weaknesses of Wikipedia articles about Australian places. For government policymakers, there are implications for education curricula, especially in incorporating critical digital literacy skills in using Wikipedia and understanding its role in the wider digital and knowledge ecosystems. Finally, for Wikimedia Foundation and Wikipedia editors there are significant implications for implementing the recommendations of @thorpe_wikimedia_2023 and @carlson_i_2024 to improve policy and practice in relation to engagement with First Nations content and experience. 
+
+## Appendix: Methodology
+
+### Quantitative Methods
+
+To create our dataset of Australian place articles, we used the [Wikidata Query Service](https://query.wikidata.org/). First we retrieved every Wikidata item with the property `country:Australia` ([P17](https://www.wikidata.org/wiki/Property:P17):[Q14](https://www.wikidata.org/wiki/Q408)). Since not all these items are places, we then filtered them by type. We retrieved a list from Wikidata of all the different kinds of `geographical feature` ([Q618123](https://www.wikidata.org/wiki/Q618123)) or `physical location` ([Q17334923](https://www.wikidata.org/wiki/Q17334923)), and only kept those items that fell into one of these categories. This excluded items such as awards or government offices that have the property `country:Australia`, leaving just the places. Using Wikidata, we were then able to retrieve the following information about each place:
+
+- **basic metadata**: the name, type and id of the place
+- **sitelinks**: hyperlinks to every Wikipedia article about the place, across all language editions
+- **coordinates**: a pair of co-ordinates identifying the place with a point on the earth's surface; this is how Wikipedia and related projects locate places in space.
+
+@fig-dataset-summary provides a high-level overview of the resulting dataset.
+
+```{r}
+#| label: fig-dataset-summary
+#| fig-cap: Summary statistics for the place dataset.
+places |> 
+  dplyr::distinct(wikidata_id, .keep_all = TRUE) |> 
+  dplyr::mutate(has_coordinates = !is.na(latitude) & !is.na(longitude)) |> 
+  dplyr::summarise(
+    `Places` = dplyr::n(),
+    `On English Wikipedia` = sum(on_english_wikipedia),
+    `Has Co-ordinates` = sum(has_coordinates),
+    `English + Coordinates` = sum(on_english_wikipedia & has_coordinates)
+  ) |> 
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Items", values_to = "Num Articles") |> 
+  dplyr::mutate(
+    `Num Articles` = scales::label_comma()(`Num Articles`)
+  ) |> 
+  knitr::kable(align="lr")
+```
+
+For further information, we turned to Wikipedia itself. For each of the places with an English Wikipedia page, we used the [history counts](https://www.mediawiki.org/wiki/API:REST_API/Reference#Get_page_history) API to retrieve edit statistics, and downloaded the full text of the English article in order to detect the presence of `r art_url("Template:Native_name")` in the article text, or the `native_name` field in the [Infobox](https://en.wikipedia.org/wiki/Help:Infobox). @fig-enwiki-data-summary summarises the edit data we retrieved from Wikipedia. 
+
+```{r}
+#| label: fig-enwiki-data-summary
+#| fig-cap: Edit statistics retrieved for English Wikipedia articles in the dataset.
+edit_data |> 
+  dplyr::transmute(
+    `Logged in edits` = edits$count,
+    `Reverts` = reverts$count,
+    `Bot edits` = bots$count,
+    `Anonymous edits` = anonymous$count
+  ) |> 
+  dplyr::summarise(dplyr::across(dplyr::everything(), \(c) sum(c, na.rm = T))) |> 
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Edit Type", values_to = "Count") |> 
+  dplyr::mutate(Count = scales::label_comma()(Count)) |> 
+  knitr::kable(align="lr")
+```
+
+When counting edits, we debated whether to include "anonymous" edits among the "human" edits in the statistics. Anonymous edits are edits made by users who are not logged in. In the end, we decided *not* to count these in general, though it is impossible to distinguish between anonymous and logged-in "reverts" using Wikipedia's API. By focussing just on edits by logged-in users, our quantitative and qualitative analyses are closer in focus. All the editors we interviewed log in to make their edits. We did, however, generate all our figures including anonymous edits also, and the results were not significantly different to the figures included in this report; these alternative figures are included in our Github repository.[^20] The primary difference was in @fig-contention, where the 10 contentious articles included five different articles to our published figure; this table, however, is not intended as a ranking, but simply as a means to identify some especially contentious articles for closer analysis.
+
+[^20]: Interested readers can download the [code notebook](https://github.com/wikihistories/reports/blob/main/scripts/.figures-with-anon.qmd) or a [rendered html file with the alternative figures](https://github.com/wikihistories/reports/blob/main/scripts/.figures-with-anon.html).
+
+We used [wikkitidy](https://wikihistories.github.io/wikkitidy) [@falk_wikkitidy_2023] and [WikidataR](https://cran.r-project.org/web/packages/WikidataR/index.html) to access Wikipedia and Wikidata. We used the [tidyverse](https://www.tidyverse.org/) family of R packages for data analysis and visualisation [@wickham_welcome_2019]. You can access the code and data for this report at the [wikihistories reports Github repository](https://github.com/wikihistories/reports), which has also been deposited in Zenodo ([doi:10.5281/zenodo.10637914](https://doi.org/10.5281/zenodo.10637914)):
+
+- [Report source code](https://github.com/wikihistories/reports/blob/main/2024.qmd): a qmd file that can be executed using [quarto](https://quarto.org) to regenerate this report
+- [Data import code](https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R)
+- [Data import functions](https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R)
+- [Data files](https://github.com/wikihistories/reports/tree/main/data/which-places): some of these are in rds format, and can only be opened in an R session.
+  
