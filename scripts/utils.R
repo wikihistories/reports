@@ -146,12 +146,13 @@ art_url <- function(title, lang = "en") {
   purrr::map_chr(
     title,
     \(t) paste0(
-      "[", sanitise_title(t), "]",
+      "[", clean_title(t), "]",
       "(https://", lang, ".wikipedia.org/wiki/", stringr::str_replace_all(t, " ", "_"), ")"
     )
   )
 }
 
-sanitise_title <- function(title) {
+clean_title <- function(title) {
+  title <- stringr::str_replace_all(title, "_", " ")
   title <- stringr::str_replace_all(title, "Nigger", "N****r")
 }

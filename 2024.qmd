@@ -293,7 +293,7 @@ How is it possible for simple software to generate so many factually accurate ar
 
 ### What is included in articles about Australian places?
 
-To see how Wikipedians describe individual places, we closely analysed three articles at three geographical scales: the national (`r art_url("Australia")`), state (`r art_url("Tasmania")`) and local (`r art_url("Katoomba")`).
+To see how Wikipedians describe individual places, we closely analysed three articles at three geographical scales: the national (`r art_url("Australia")`), state (`r art_url("Tasmania")`) and local (`r art_url("Katoomba,_New_South_Wales")`).
 
 All three follow a similar structure, foregrounding economics, politics and geography. A key function of each article is to locate each place in relation to other political and economic entities on the surface of the earth. The Infobox locates each place politically and physically: a map; locating coordinates, some information about the relevant government for the area. The first few paragraphs–the ‘lead section’–is crucial: several editors we spoke with suggested that most people only read the lead section so it is the section that must do the heavy lifting. For these three articles, the lead section mentions the place’s geographical location, history, and notable characteristics. Notable characteristics are typically economic or political. For instance, Katoomba “is a base for bush and nature walks,” while Australia is “a major non-NATO ally of the United States” To prove the notability of these facts, Wikipedians often rank them. For instance, Tasmania is the “most decentralised state in Australia” with 42% of its land earmarked as “protected”,  while Australia has“one of the highest per capita incomes globally” and ranks “highly” for quality of life, health and education, and civil liberties. 
 
@@ -594,6 +594,41 @@ This matters because how a place is represented on Wikipedia affects what is kno
 The findings of this report have important implications for Australia. For Australian readers, the research provides insight into the strengths and weaknesses of Wikipedia articles about Australian places. For government policymakers, there are implications for education curricula, especially in incorporating critical digital literacy skills in using Wikipedia and understanding its role in the wider digital and knowledge ecosystems. Finally, for Wikimedia Foundation and Wikipedia editors there are significant implications for implementing the recommendations of @thorpe_wikimedia_2023 and @carlson_i_2024 to improve policy and practice in relation to engagement with First Nations content and experience. 
 
 ## Appendix: Methodology
+
+### Qualitative Methods
+
+The research was approved by the UTS Human Research Ethics Committee, reference number ETH23-7962.
+
+We closely analysed three articles at three geographical scales: national (`r art_url("Australia")`), state (`r art_url("Tasmania")`), and local (`r art_url("Katoomba,_New_South_Wales")`). We chose the “Australia” article to reflect the project’s research focus on the nation. With a Tasmanian state election in 2024, the research team included the “Tasmania” article in case there was additional interest in the article as a result. We included the “Katoomba” page due to researcher expertise and as an example of a non-contentious article to supplement the overall engagement with contention in the report. The research team analysed these articles using nVivo.
+
+We interviewed 14 Wikipedia editors for this research, all of whom had edited one of the analysed place articles. The research team contacted the top 25 editors of each article as well as 5 editors responsible for the most recent edits of the article. Potential participants were approached through the Wikipedia platform, via either a user's “Talk” page or the email option on their user page. Toward the end of recruitment, the research team also attempted to sample editors who identified as women or non-binary and editors who identified as First Nations. This recruitment attempt was unsuccessful.
+
+Participants undertook a semi-structured interview, based on the below [Interview Schedule](2024.qmd#sec-interview-schedule). Interviews lasted from 1-2 hours, with an average of 1.25 hours. Interviews were initially transcribed using MacWhisper, and then edited by the research team. The research team conducted thematic data analysis on nVivo.
+
+#### Interview Schedule {#sec-interview-schedule}
+
+1. To start, can you tell me about how you ended up editing the article about [place]?
+2. Why is it important for there to be an article about [place], do you think?
+3. Did you have specific aims when you were editing this article?
+4. What kinds of people do you think edit this [place] article? 
+5. A harder question: do you think there are people who could edit about this place but aren’t interested in editing articles about [place].
+6. Do you edit/have you edited any other articles about Australian places?
+Is editing articles about [place] or Australian places one of your main foci or one of many?
+7. In the timeline of your editing experience of Wikipedia, when did you edit this article?
+8. Do you continue to edit or keep an eye on this article?
+9. Are there any things you tried to include in the [place] article that other editors have contested?
+10. Are there things that other people have tried to include that you haven’t agreed with?
+11. Are there particular topics/aspects of [place] you found tricky to navigate or write about?
+12. Was/is there anything you thought about including about [place] but decided against including?
+13. Was/is there anything about [place] that you really wanted to highlight or share?
+14. Was/is there anything you really wished people didn’t know about [place]?
+15. Have there been any moments in writing about [place] that have made you feel:
+    a. Proud?
+    b. Embarrassed/shameful?
+    c. Sad?
+    d. Like you wished everyone knew about this?
+16. Thinking back to the aims you had for the article about [place] and why you think it’s important, how do you feel about the article overall?
+17. Is there anything else you’d like to mention? Anything else you think I should be looking at, thinking about or anyone I should be talking to?
 
 ### Quantitative Methods
 
