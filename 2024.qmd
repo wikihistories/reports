@@ -248,10 +248,11 @@ edit_data |>
 #| fig-cap: The Cebuano and Swedish Wikipedias have many articles written by a software program, lsjbot. Swedish Wikipedians have in recent years deleted most of lsjbot's articles, but the small community of Cebuano editors in the Philippines have not done so in their encyclopaedia.
 
 language_data <- places |> 
-  dplyr::select(sitelinks) |> 
+  dplyr::select(wikidata_id, sitelinks) |> 
   tidyr::unnest(sitelinks) |> 
+  dplyr::distinct() |> 
   dplyr::group_by(sitelinks) |> 
-  dplyr::summarise(n = n()) |> 
+  dplyr::summarise(n = dplyr::n()) |> 
   dplyr::rename(wiki_code = sitelinks) |> 
   dplyr::arrange(desc(n)) |> 
   dplyr::mutate(
@@ -687,4 +688,8 @@ We used [wikkitidy](https://wikihistories.github.io/wikkitidy) [@falk_wikkitidy_
 - [Data import code](https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R)
 - [Data import functions](https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R)
 - [Data files](https://github.com/wikihistories/reports/tree/main/data/which-places): some of these are in rds format, and can only be opened in an R session.
+
+### Errata
+
+In an earlier version of this notebook, there was an error in @fig-lang-edition. Some duplicates in the data had not been removed, and the number of articles was inflated on the graph. This has now been corrected (14/4/2025). The numbers in the text are, to our knowledge, correct.
   
