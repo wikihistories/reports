@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,12 +63,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4379b0ccadffce622b03caf4c46266b3.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-d75320580429fd03ccc14abf5aea7e44.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-03cff2e87a80ce85282700c0d3d2a4d3.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -533,6 +533,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#qualitative-methods" id="toc-qualitative-methods" class="nav-link" data-scroll-target="#qualitative-methods">Qualitative Methods</a></li>
   <li><a href="#quantitative-methods" id="toc-quantitative-methods" class="nav-link" data-scroll-target="#quantitative-methods">Quantitative Methods</a></li>
+  <li><a href="#errata" id="toc-errata" class="nav-link" data-scroll-target="#errata">Errata</a></li>
   </ul></li>
   </ul>
 <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://wikihistories.github.io/reports/2024.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/wikihistories/reports/blob/main/2024.qmd"><i class="bi bi-journal-code"></i>Report source code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-data.R"><i class="bi bi-file-code"></i>Data import code</a></li><li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R"><i class="bi bi-file-code"></i>Data import functions</a></li><li><a href="https://github.com/wikihistories/reports/tree/main/data/which-places"><i class="bi bi-archive"></i>Data files</a></li></ul></div></nav>
@@ -606,7 +607,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">November 6, 2024</p>
+      <p class="date-modified">April 14, 2025</p>
     </div>
   </div>
     
@@ -1091,6 +1092,10 @@ Figure&nbsp;9: Edit statistics retrieved for English Wikipedia articles in the d
 <li><a href="https://github.com/wikihistories/reports/blob/main/scripts/which-places-lib.R">Data import functions</a></li>
 <li><a href="https://github.com/wikihistories/reports/tree/main/data/which-places">Data files</a>: some of these are in rds format, and can only be opened in an R session.</li>
 </ul>
+</section>
+<section id="errata" class="level3">
+<h3 class="anchored" data-anchor-id="errata">Errata</h3>
+<p>In an earlier version of this notebook, there was an error in <a href="#fig-lang-edition" class="quarto-xref">Figure&nbsp;4</a>. Some duplicates in the data had not been removed, and the number of articles was inflated on the graph. This has now been corrected (14/4/2025). The numbers in the text are, to our knowledge, correct.</p>
 
 
 
@@ -1405,8 +1410,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1517,7 +1520,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
