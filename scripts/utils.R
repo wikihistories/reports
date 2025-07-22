@@ -115,6 +115,21 @@ extract_metadata <- function(entity) {
   map(entity, extract_one_metadata) %>% bind_rows()
 }
 
+# All sitelinks
+extract_sitelinks <- function(entities) {
+
+  sitelinks <- purrr::map(
+    entities,
+    \(ent) purrr::pluck(ent, "sitelinks", .default = NA) |> names()
+  )
+
+  tibble::tibble(
+    wikidata_id = names(sitelinks),
+    sitelinks = sitelinks
+  )
+
+}
+
 # Read file and tag with date created
 read_file_with_date <- function(path) {
   # Allow extra characters after 'csv', to enable compression of larger
@@ -156,3 +171,4 @@ clean_title <- function(title) {
   title <- stringr::str_replace_all(title, "_", " ")
   title <- stringr::str_replace_all(title, "Nigger", "N****r")
 }
+

@@ -112,22 +112,6 @@ get_all_types <- function(places, out_path) {
 
 # Additional columns
 
-# All sitelinks
-
-extract_sitelinks <- function(entities) {
-
-  sitelinks <- purrr::map(
-    entities,
-    \(ent) purrr::pluck(ent, "sitelinks", .default = NA) |> names()
-    )
-
-  tibble::tibble(
-    wikidata_id = names(sitelinks),
-    sitelinks = sitelinks
-  )
-
-}
-
 # Coordinates
 extract_coordinates <- function(entities) {
 
@@ -284,7 +268,6 @@ get_granular_pageviews <- function(out_path, from = "2023-02-06", to = "2024-02-
 
   return(pageview_data)
 }
-
 
 # Data loading
 make_loader <- function(getter) {

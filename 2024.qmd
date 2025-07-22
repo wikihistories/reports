@@ -691,5 +691,5 @@ We used [wikkitidy](https://wikihistories.github.io/wikkitidy) [@falk_wikkitidy_
 
 ### Errata
 
-In an earlier version of this notebook, there was an error in @fig-lang-edition. Some duplicates in the data had not been removed, and the number of articles was inflated on the graph. This has now been corrected (14/4/2025). The numbers in the text are, to our knowledge, correct.
+In an earlier version of this notebook, there was an error in @fig-lang-edition. Some duplicates in the data had not been removed, and the number of articles was inflated on the graph. This has now been corrected (14/4/2025).
   
